@@ -27,6 +27,7 @@ android {
         release {
             // Assinatura de produção: configurar android/key.properties antes de publicar na loja.
             signingConfig = signingConfigs.getByName("debug")
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
 }
