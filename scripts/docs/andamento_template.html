@@ -1,0 +1,266 @@
+<title>Andamento do gasprice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: painel de acompanhamento; fases no topo, pendências do usuário em destaque, galeria de telas reais, verificação e riscos. */
+:root {
+  --bg: #f4f7f6;
+  --surface: #ffffff;
+  --surface-2: #eaf1ee;
+  --ink: #12201a;
+  --ink-2: #435049;
+  --muted: #6b7a73;
+  --rule: #d6e0db;
+  --accent: #0f7a5c;
+  --accent-tint: #d9eee6;
+  --ok: #1a8a4b;
+  --ok-tint: #dff3e7;
+  --espera: #9a6a00;
+  --espera-tint: #fbefd2;
+  --prox: #56646e;
+  --prox-tint: #e9edf0;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --r: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0d1311; --surface: #151d1a; --surface-2: #1b2622; --ink: #e8f1ec; --ink-2: #b3c2bb; --muted: #86958e; --rule: #28342f;
+    --accent: #43c29a; --accent-tint: #173a2f; --ok: #45d17c; --ok-tint: #173a26; --espera: #f0b429; --espera-tint: #3a2e10;
+    --prox: #a9b6bf; --prox-tint: #242c31;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0d1311; --surface: #151d1a; --surface-2: #1b2622; --ink: #e8f1ec; --ink-2: #b3c2bb; --muted: #86958e; --rule: #28342f;
+  --accent: #43c29a; --accent-tint: #173a2f; --ok: #45d17c; --ok-tint: #173a26; --espera: #f0b429; --espera-tint: #3a2e10;
+  --prox: #a9b6bf; --prox-tint: #242c31;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 var(--body); padding-inline: clamp(16px, 4vw, 48px); padding-block: 32px 72px; }
+main { max-width: 1180px; margin: 0 auto; display: grid; gap: 60px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: .01em; line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 700; }
+h2 { font-size: 2.1rem; }
+h3 { font-size: 1.35rem; }
+p { margin: 0; max-width: 70ch; }
+.eyebrow { font: 600 .74rem/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 1.1rem; color: var(--ink-2); }
+section { display: grid; gap: 20px; }
+.cab { display: grid; gap: 8px; }
+code { font: .86em ui-monospace, "Cascadia Code", Consolas, monospace; background: var(--surface-2); padding: .1em .35em; border-radius: 5px; }
+
+.fases { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+@media (max-width: 900px) { .fases { grid-template-columns: 1fr; } }
+.fase { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 14px 16px 16px; display: grid; gap: 6px; align-content: start; border-top: 4px solid var(--c, var(--rule)); }
+.fase .num { font: 600 .74rem/1 var(--body); letter-spacing: .1em; color: var(--muted); }
+.fase b { font: 600 1.3rem/1.1 var(--display); }
+.fase span.d { color: var(--ink-2); font-size: .88rem; }
+.estado { display: inline-flex; align-items: center; gap: 6px; font: 700 .72rem/1 var(--body); letter-spacing: .05em; text-transform: uppercase; padding: 5px 9px; border-radius: 99px; width: fit-content; white-space: nowrap; }
+.estado::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.ok { color: var(--ok); background: var(--ok-tint); }
+.espera { color: var(--espera); background: var(--espera-tint); }
+.prox { color: var(--prox); background: var(--prox-tint); }
+
+.numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; }
+.numero { background: var(--surface); padding: 16px 18px; display: grid; gap: 2px; }
+.numero b { font: 600 2.3rem/1 var(--display); }
+.numero span { color: var(--ink-2); font-size: .88rem; }
+
+.pedidos { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.pedido { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--espera); border-radius: var(--r); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+.pedido ol { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; color: var(--ink-2); }
+.aviso { background: var(--espera-tint); color: var(--ink); border-radius: var(--r); padding: 12px 16px; font-size: .92rem; }
+
+.galeria { display: grid; gap: 28px; }
+.grupo h3 { margin-bottom: 12px; }
+.telas { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+.telas figure, .tablets figure { margin: 0; display: grid; gap: 8px; align-content: start; }
+.telas img { width: 100%; aspect-ratio: 520 / 1125; object-fit: cover; object-position: top; border-radius: 16px; border: 1px solid var(--rule); background: var(--surface); }
+.tablets { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.tablets img { width: 100%; aspect-ratio: 1200 / 838; object-fit: cover; object-position: top; border-radius: 12px; border: 1px solid var(--rule); }
+figcaption { font-size: .84rem; color: var(--ink-2); }
+figcaption b { color: var(--ink); display: block; font-weight: 600; }
+
+.tabela { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 .72rem/1.3 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+td.n { font-variant-numeric: tabular-nums; text-align: right; width: 1%; white-space: nowrap; }
+td.e { width: 1%; white-space: nowrap; }
+.riscos { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.riscos li { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 12px 16px; }
+.riscos b { display: block; }
+.riscos span { color: var(--ink-2); font-size: .92rem; }
+footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+footer a { color: var(--accent); font-weight: 600; }
+footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<main>
+  <header class="cab">
+    <span class="eyebrow">gasprice · acompanhamento</span>
+    <h1>Andamento do gasprice</h1>
+    <p class="lead">Situação da construção em {{DATA}}. O app, o backend e os testes estão prontos. Falta ligar tudo ao seu Supabase e ao seu GitHub.</p>
+    <ol class="fases" aria-label="Fases do projeto">
+      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 1</span><b>Dados da ANP</b><span class="estado ok">Concluída</span><span class="d">Limpeza, cobertura e experimento do modelo.</span></li>
+      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 2</span><b>Backend Supabase</b><span class="estado ok">Pronto e testado</span><span class="d">Testado num Postgres 17 com PostGIS. Falta aplicar no seu projeto.</span></li>
+      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 3</span><b>App Flutter</b><span class="estado ok">Pronto para teste</span><span class="d">Todas as telas, para celular e tablet. Falta rodar num aparelho real.</span></li>
+      <li class="fase" style="--c: var(--espera)"><span class="num">FASE 4</span><b>Publicação</b><span class="estado espera">Aguardando você</span><span class="d">Supabase, GitHub e chave do Google Maps.</span></li>
+      <li class="fase" style="--c: var(--prox)"><span class="num">FASE 5</span><b>Evolução</b><span class="estado prox">Próxima</span><span class="d">Avisos com o app fechado, previsão de preço e lojas.</span></li>
+    </ol>
+  </header>
+
+  <section aria-labelledby="t-numeros">
+    <h2 id="t-numeros" class="eyebrow" style="font: 600 .74rem/1 var(--body)">Em números</h2>
+    <div class="numeros">
+      <div class="numero"><b>21</b><span>telas, mais 2 painéis de filtros e contribuições</span></div>
+      <div class="numero"><b>95</b><span>testes automáticos, todos passando</span></div>
+      <div class="numero"><b>51</b><span>regras de negócio implementadas</span></div>
+      <div class="numero"><b>19</b><span>tabelas no banco e 3 funções no servidor</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-pedidos">
+    <div class="cab">
+      <span class="eyebrow">Próximo passo</span>
+      <h2 id="t-pedidos">O que preciso de você</h2>
+      <p class="lead">Com estes três itens eu aplico o banco, publico as funções, carrego os dados da ANP e envio o código ao GitHub.</p>
+    </div>
+    <div class="pedidos">
+      <div class="pedido">
+        <h3>1. Projeto no Supabase</h3>
+        <ol>
+          <li>Crie um projeto no plano gratuito, na região São Paulo.</li>
+          <li>Na pasta do projeto, copie <code>.env.example</code> para <code>.env</code>.</li>
+          <li>Preencha URL, chave publishable, chave secreta, senha do banco, string de conexão e token de acesso. O README mostra onde achar cada uma.</li>
+          <li>Invente uma senha longa para <code>CRON_SECRET</code>.</li>
+        </ol>
+      </div>
+      <div class="pedido">
+        <h3>2. Repositório no GitHub</h3>
+        <ol>
+          <li>Crie um repositório vazio, sem README, e me envie o endereço.</li>
+          <li>Crie um token de acesso fino só para esse repositório, com permissão de escrita em <em>Contents</em>, e coloque no <code>.env</code> como <code>GITHUB_TOKEN</code>.</li>
+          <li>Se preferir não criar o token, você mesmo roda <code>git push</code>: o commit já está pronto.</li>
+        </ol>
+      </div>
+      <div class="pedido">
+        <h3>3. Chave do Google Maps</h3>
+        <ol>
+          <li>No Google Cloud Console, ative o Maps SDK for Android e o Maps SDK for iOS.</li>
+          <li>Crie uma chave restrita ao pacote <code>br.com.gasprice.gasprice</code>.</li>
+          <li>Coloque no <code>.env</code> como <code>GOOGLE_MAPS_API_KEY</code>. O Google exige uma conta de faturamento, com cota gratuita mensal.</li>
+        </ol>
+      </div>
+    </div>
+    <p class="aviso"><b>Não envie chaves secretas pelo chat.</b> Deixe tudo no arquivo <code>.env</code>, que fica só no seu computador e nunca vai para o GitHub. Os scripts leem o arquivo sem exibir os valores.</p>
+  </section>
+
+  <section aria-labelledby="t-telas">
+    <div class="cab">
+      <span class="eyebrow">Telas reais</span>
+      <h2 id="t-telas">Como o app está hoje</h2>
+      <p class="lead">Capturas do próprio app, no modo de demonstração, com dados de exemplo de Fortaleza. Nenhum preço desta galeria é real.</p>
+    </div>
+    <div class="galeria">
+      <div class="grupo">
+        <h3>Encontrar o preço</h3>
+        <div class="telas">
+          <figure><img src="{{IMG:02-busca}}" alt="Tela de busca com lista de postos, preço da gasolina e selo da origem"><figcaption><b>Busca</b>Filtros e ordenação rodam no aparelho.</figcaption></figure>
+          <figure><img src="{{IMG:03-filtros}}" alt="Painel de filtros por combustível, faixa de preço, distância e avaliação"><figcaption><b>Filtros</b>Combustível, preço, distância, nota e data.</figcaption></figure>
+          <figure><img src="{{IMG:05-posto}}" alt="Tela do posto com preços por combustível e a origem de cada um"><figcaption><b>Posto</b>Cada preço mostra origem e idade.</figcaption></figure>
+          <figure><img src="{{IMG:06-contribuicoes}}" alt="Painel de contribuições com três confirmações de 5,99 e uma variação"><figcaption><b>Contribuições</b>Quem confirmou, variações e dado oficial.</figcaption></figure>
+          <figure><img src="{{IMG:07-posto-estimativa}}" alt="Posto sem pesquisa da ANP com preço estimado e margem"><figcaption><b>Posto sem ANP</b>Estimativa com margem de erro.</figcaption></figure>
+          <figure><img src="{{IMG:08-historico}}" alt="Gráfico de histórico com linhas da ANP e da comunidade"><figcaption><b>Histórico</b>ANP e comunidade separadas.</figcaption></figure>
+        </div>
+      </div>
+      <div class="grupo">
+        <h3>Enviar um preço</h3>
+        <div class="telas">
+          <figure><img src="{{IMG:11-enviar-instrucoes}}" alt="Instruções para fotografar o painel"><figcaption><b>Antes da foto</b>Explica que a foto não sai do celular.</figcaption></figure>
+          <figure><img src="{{IMG:12-enviar-revisao}}" alt="Revisão dos quatro preços lidos do painel"><figcaption><b>Revisão</b>Valores lidos pelo leitor real do app.</figcaption></figure>
+          <figure><img src="{{IMG:13-enviar-concluido}}" alt="Confirmação do envio com status de cada preço"><figcaption><b>Envio concluído</b>Status de cada preço e pontos.</figcaption></figure>
+        </div>
+      </div>
+      <div class="grupo">
+        <h3>Conta</h3>
+        <div class="telas">
+          <figure><img src="{{IMG:01-boas-vindas}}" alt="Tela de boas-vindas"><figcaption><b>Boas-vindas</b>Primeira abertura e pedido de localização.</figcaption></figure>
+          <figure><img src="{{IMG:14-entrar}}" alt="Tela de login"><figcaption><b>Entrar</b>E-mail e senha.</figcaption></figure>
+          <figure><img src="{{IMG:15-cadastro}}" alt="Tela de cadastro"><figcaption><b>Criar conta</b>Só nome, e-mail e senha.</figcaption></figure>
+          <figure><img src="{{IMG:16-recuperar-senha}}" alt="Tela de recuperação de senha"><figcaption><b>Recuperar senha</b>Link por e-mail.</figcaption></figure>
+          <figure><img src="{{IMG:17-perfil-visitante}}" alt="Perfil de quem ainda não entrou"><figcaption><b>Perfil sem login</b>Convite para criar conta.</figcaption></figure>
+        </div>
+      </div>
+      <div class="grupo">
+        <h3>Comunidade</h3>
+        <div class="telas">
+          <figure><img src="{{IMG:09-avaliacoes}}" alt="Avaliações com distribuição das notas"><figcaption><b>Avaliações</b>Distribuição, recentes e mais úteis.</figcaption></figure>
+          <figure><img src="{{IMG:10-avaliar}}" alt="Formulário de avaliação com estrelas"><figcaption><b>Avaliar</b>De 0 a 5 estrelas e comentário.</figcaption></figure>
+          <figure><img src="{{IMG:18-ranking}}" alt="Ranking da comunidade por pontos"><figcaption><b>Ranking</b>Nomes sempre abreviados.</figcaption></figure>
+          <figure><img src="{{IMG:19-favoritos}}" alt="Favoritos vazios com convite para entrar"><figcaption><b>Favoritos</b>No aparelho até a pessoa entrar.</figcaption></figure>
+          <figure><img src="{{IMG:20-sobre}}" alt="Tela sobre os dados e privacidade"><figcaption><b>Sobre os dados</b>Fontes, cores e privacidade.</figcaption></figure>
+        </div>
+      </div>
+      <div class="grupo">
+        <h3>Tablet</h3>
+        <div class="tablets">
+          <figure><img src="{{IMG:30-tablet-posto}}" alt="Tela do posto em duas colunas no tablet"><figcaption><b>Posto em duas colunas</b>Preços à esquerda, histórico e avaliações à direita.</figcaption></figure>
+          <figure><img src="{{IMG:31-tablet-busca}}" alt="Busca em grade de duas colunas com navegação lateral"><figcaption><b>Busca em grade</b>Navegação lateral no lugar da barra inferior.</figcaption></figure>
+          <figure><img src="{{IMG:32-tablet-cadastro}}" alt="Cadastro centralizado no tablet"><figcaption><b>Cadastro</b>Formulário com largura confortável.</figcaption></figure>
+        </div>
+      </div>
+      <p style="color: var(--ink-2)">Também estão prontas, mas só aparecem com login ou com a chave do mapa: mapa, perfil com pontos, editar perfil, alterar senha, extrato de pontos, notificações, verificação de e-mail e nova senha.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-etapas">
+    <div class="cab">
+      <span class="eyebrow">Etapas</span>
+      <h2 id="t-etapas">O que foi feito e o que falta</h2>
+    </div>
+    {{ETAPAS}}
+  </section>
+
+  <section aria-labelledby="t-testes">
+    <div class="cab">
+      <span class="eyebrow">Verificação</span>
+      <h2 id="t-testes">Testes automáticos</h2>
+      <p class="lead">Rodam a cada envio ao GitHub. As regras do banco foram testadas num Postgres 17 com PostGIS 3.6, as mesmas versões do Supabase.</p>
+    </div>
+    <div class="tabela">
+      <table>
+        <thead><tr><th>Conjunto</th><th>Testes</th><th>O que verifica</th><th>Resultado</th></tr></thead>
+        <tbody>
+          <tr><td>Regras no banco</td><td class="n">66</td><td>Consenso, revisão, contestação, pontos com teto, bloqueio, avisos, permissões de acesso, consultas do app e importação do cadastro</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>App Flutter</td><td class="n">19</td><td>Leitor do painel, filtros e ordenação, idade do preço e componentes de preço</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>Edge Functions</td><td class="n">10</td><td>Validação do envio e normalização da API da ANP com um registro real</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>Análise estática do Dart</td><td class="n">–</td><td>Erros de tipo, APIs obsoletas e estilo</td><td class="e"><span class="estado ok">Sem problemas</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-riscos">
+    <div class="cab">
+      <span class="eyebrow">Atenção</span>
+      <h2 id="t-riscos">Pendências e riscos</h2>
+    </div>
+    <ul class="riscos">
+      <li><b>O app ainda não rodou num celular de verdade</b><span>Este computador não tem Android SDK nem Xcode. O APK sai pelo GitHub Actions quando os segredos estiverem configurados.</span></li>
+      <li><b>O leitor do painel precisa de fotos reais</b><span>Ele foi testado com textos simulados de painéis. Com as primeiras fotos reais, ajusto os padrões de leitura.</span></li>
+      <li><b>O aviso com o app fechado depende do Firebase</b><span>Hoje o aviso chega com o app aberto ou em segundo plano e fica guardado na lista de notificações.</span></li>
+      <li><b>E-mails de cadastro têm limite no plano gratuito</b><span>O servidor de e-mail padrão do Supabase envia poucas mensagens por hora. Antes de lançar, configure um SMTP próprio.</span></li>
+      <li><b>A previsão de preço ainda não entra no app</b><span>O modelo só será ligado quando errar menos que repetir o preço atual, como mostrou o experimento.</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>Atualizado em {{DATA}} · commit {{COMMIT}} · código em <code>C:\Users\michael\Desktop\gasprice</code>.</span>
+    <span>Documentos relacionados: <a href="https://claude.ai/artifact/KhFg4sdUGt7ErUntPA8ZWz" target="_blank" rel="noopener">Regras do gasprice</a> · <a href="https://claude.ai/artifact/LZN5fGhHNtjK5TY6H6CPsS" target="_blank" rel="noopener">Onde a ANP não mede</a> · limpeza dos dados da ANP e experimento do modelo, na pasta <code>documentacao</code> do projeto.</span>
+  </footer>
+</main>
