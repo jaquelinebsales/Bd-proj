@@ -46,6 +46,7 @@ ETAPAS = [
         ("Repositório Git local com o primeiro commit", OK),
         ("Testes automáticos no GitHub Actions", OK),
         ("Publicação automática do banco e das funções", OK),
+        ("Verificador do .env e publicação com um comando, sem copiar a string de conexão", OK),
         ("Geração do APK pelo GitHub Actions", OK),
         ("Enviar o código ao seu GitHub e cadastrar os segredos", ESPERA),
     ]),

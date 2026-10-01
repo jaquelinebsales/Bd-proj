@@ -118,7 +118,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     <h2 id="t-numeros" class="eyebrow" style="font: 600 .74rem/1 var(--body)">Em números</h2>
     <div class="numeros">
       <div class="numero"><b>21</b><span>telas, mais 2 painéis de filtros e contribuições</span></div>
-      <div class="numero"><b>95</b><span>testes automáticos, todos passando</span></div>
+      <div class="numero"><b>113</b><span>testes automáticos, todos passando</span></div>
       <div class="numero"><b>51</b><span>regras de negócio implementadas</span></div>
       <div class="numero"><b>19</b><span>tabelas no banco e 3 funções no servidor</span></div>
     </div>
@@ -135,9 +135,9 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
         <h3>1. Projeto no Supabase</h3>
         <ol>
           <li>Crie um projeto no plano gratuito, na região São Paulo.</li>
-          <li>Na pasta do projeto, copie <code>.env.example</code> para <code>.env</code>.</li>
-          <li>Preencha URL, chave publishable, chave secreta, senha do banco, string de conexão e token de acesso. O README mostra onde achar cada uma.</li>
-          <li>Invente uma senha longa para <code>CRON_SECRET</code>.</li>
+          <li>Preencha o arquivo <code>.env</code> da pasta do projeto: URL, chave publishable, chave secreta, senha do banco e token de acesso. O README mostra onde achar cada uma.</li>
+          <li>Deixe a <code>DATABASE_URL</code> vazia: o script descobre o endereço do banco sozinho.</li>
+          <li><b>Salve o arquivo</b> e rode <code>python scripts/supabase/verificar_env.py --gerar-cron-secret</code>. Ele cria a senha da sincronização e lista o que ainda falta, sem mostrar valores.</li>
         </ol>
       </div>
       <div class="pedido">
@@ -239,6 +239,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
           <tr><td>Regras no banco</td><td class="n">66</td><td>Consenso, revisão, contestação, pontos com teto, bloqueio, avisos, permissões de acesso, consultas do app e importação do cadastro</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>App Flutter</td><td class="n">19</td><td>Leitor do painel, filtros e ordenação, idade do preço e componentes de preço</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Edge Functions</td><td class="n">10</td><td>Validação do envio e normalização da API da ANP com um registro real</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>Scripts de publicação</td><td class="n">18</td><td>Leitura do <code>.env</code>, detecção de textos de exemplo, montagem da conexão com senha especial, máscara de segredos e simulação da publicação</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Análise estática do Dart</td><td class="n">–</td><td>Erros de tipo, APIs obsoletas e estilo</td><td class="e"><span class="estado ok">Sem problemas</span></td></tr>
         </tbody>
       </table>

@@ -35,6 +35,16 @@ jobs:
       - run: deno check enviar-precos/index.ts sincronizar-cadastro-anp/index.ts excluir-conta/index.ts
       - run: deno test
 
+  scripts:
+    name: Scripts de publicação
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s scripts/supabase -p "test_*.py"
+
   banco:
     name: Regras no banco (Postgres 17 + PostGIS)
     runs-on: ubuntu-latest

@@ -9,9 +9,12 @@ Passos (cada um pode ser pulado com --pular NOME):
   calculos   marca municípios pesquisados, recalcula estimativas e preços exibidos
 
 Lê as chaves do arquivo .env na raiz do projeto (nunca imprime os valores):
-  SUPABASE_URL, SUPABASE_SECRET_KEY (ou SUPABASE_SERVICE_ROLE_KEY), DATABASE_URL, CRON_SECRET
+  SUPABASE_URL, SUPABASE_SECRET_KEY (ou SUPABASE_SERVICE_ROLE_KEY), CRON_SECRET, e a conexão com o banco.
+  A conexão vem da DATABASE_URL ou, se ela estiver vazia, é montada com SUPABASE_DB_PASSWORD e
+  SUPABASE_ACCESS_TOKEN (a API do Supabase informa o endereço do pooler).
 
 Uso:
+  python scripts/supabase/verificar_env.py          # antes: confere as chaves
   python scripts/supabase/importar_anp.py
   python scripts/supabase/importar_anp.py --pular cadastro storage
 Requer: psycopg[binary]
@@ -23,13 +26,15 @@ import csv
 import gzip
 import io
 import json
-import os
 import sys
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
 import psycopg
+
+import env_util as eu
 
 RAIZ = Path(__file__).resolve().parents[2]
 LIMPO = RAIZ / "dados" / "anp_limpo"
@@ -38,23 +43,18 @@ UFS = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "
        "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"]
 
 
-def carregar_env() -> dict[str, str]:
-    arq = RAIZ / ".env"
-    if not arq.exists():
-        sys.exit("Arquivo .env não encontrado na raiz do projeto. Copie .env.example para .env e preencha.")
-    env = {}
-    for linha in arq.read_text(encoding="utf-8").splitlines():
-        linha = linha.strip()
-        if linha and not linha.startswith("#") and "=" in linha:
-            k, v = linha.split("=", 1)
-            env[k.strip()] = v.strip().strip('"').strip("'")
-    return env
-
-
 def exigir(env: dict, *chaves: str) -> None:
-    faltando = [c for c in chaves if not env.get(c)]
+    faltando = [c for c in chaves if not eu.preenchido(env, c)]
     if faltando:
-        sys.exit(f"Preencha no .env: {', '.join(faltando)}")
+        sys.exit(f"Preencha no .env (e salve o arquivo): {', '.join(faltando)}. "
+                 "Para conferir: python scripts/supabase/verificar_env.py")
+
+
+def chave_secreta(env: dict) -> str:
+    for k in ("SUPABASE_SECRET_KEY", "SUPABASE_SERVICE_ROLE_KEY"):
+        if eu.preenchido(env, k):
+            return env[k].strip()
+    sys.exit("Preencha no .env (e salve o arquivo): SUPABASE_SECRET_KEY")
 
 
 def post_json(url: str, corpo: dict, cabecalhos: dict, timeout: int = 180) -> tuple[int, dict]:
@@ -126,9 +126,11 @@ def passo_precos(con: psycopg.Connection) -> None:
 
 def passo_storage(env: dict) -> None:
     exigir(env, "SUPABASE_URL")
-    chave = env.get("SUPABASE_SECRET_KEY") or env.get("SUPABASE_SERVICE_ROLE_KEY")
-    if not chave:
-        sys.exit("Preencha no .env: SUPABASE_SECRET_KEY")
+    chave = chave_secreta(env)
+    # Chaves novas (sb_...) vão só em "apikey"; as antigas (JWT) também em Authorization.
+    autenticacao = {"apikey": chave}
+    if chave.startswith("eyJ"):
+        autenticacao["Authorization"] = f"Bearer {chave}"
     buf = io.BytesIO()
     with gzip.GzipFile(fileobj=buf, mode="wb", compresslevel=9) as gz, open(LIMPO / "precos_anp.csv", "rb") as f:
         while bloco := f.read(1 << 20):
@@ -136,10 +138,13 @@ def passo_storage(env: dict) -> None:
     dados = buf.getvalue()
     url = env["SUPABASE_URL"].rstrip("/") + "/storage/v1/object/anp-historico/precos_anp_2020_2026.csv.gz"
     req = urllib.request.Request(url, data=dados, method="POST", headers={
-        "Authorization": f"Bearer {chave}", "apikey": chave,
-        "Content-Type": "application/gzip", "x-upsert": "true"})
-    with urllib.request.urlopen(req, timeout=600) as r:
-        print(f"  storage: série completa enviada ({len(dados) / 1e6:.1f} MB), status {r.status}")
+        **autenticacao, "Content-Type": "application/gzip", "x-upsert": "true"})
+    try:
+        with urllib.request.urlopen(req, timeout=600) as r:
+            print(f"  storage: série completa enviada ({len(dados) / 1e6:.1f} MB), status {r.status}")
+    except urllib.error.HTTPError as e:
+        sys.exit(f"O Storage recusou o envio (HTTP {e.code}). O bucket anp-historico é criado pela migração; "
+                 "confira se o banco já foi publicado e se a chave secreta está correta.")
 
 
 def passo_calculos(con: psycopg.Connection) -> None:
@@ -157,13 +162,24 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--pular", nargs="*", default=[], choices=["cadastro", "historico", "precos", "storage", "calculos"])
     args = ap.parse_args()
-    env = carregar_env()
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    try:
+        env = eu.carregar_env()
+        url_banco, origem = eu.resolver_database_url(env)
+    except eu.ErroEnv as e:
+        sys.exit(str(e))
+    print(f"Conexão com o banco: {origem}")
 
     if "cadastro" not in args.pular:
         print("1/5 Sincronizando cadastro de postos pela API da ANP")
         passo_cadastro(env)
-    exigir(env, "DATABASE_URL")
-    with psycopg.connect(env["DATABASE_URL"], prepare_threshold=None) as con:
+    try:
+        con_ctx = psycopg.connect(url_banco, connect_timeout=30, prepare_threshold=None)
+    except psycopg.Error as e:
+        sys.exit("Não consegui conectar ao banco: " + eu.mascarar(str(e).strip().splitlines()[0], env)
+                 + "\nRode: python scripts/supabase/verificar_env.py")
+    with con_ctx as con:
         if "historico" not in args.pular:
             print("2/5 Postos do histórico")
             passo_historico(con)
