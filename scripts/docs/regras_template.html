@@ -1,4 +1,4 @@
-<title>Regras do gasprice</title>
+﻿<title>Regras do gasprice</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
@@ -130,6 +130,30 @@ td.valor { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(-
 footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
 @media (max-width: 640px) { .ordem li { grid-template-columns: 34px 1fr; } .ordem li .selo { grid-column: 2; justify-self: start; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Impressão e PDF: A4 em paisagem, tudo visível, nada cortado */
+@page { size: A4 landscape; margin: 12mm 11mm 14mm; }
+@media print {
+  :root { --bg: #ffffff; }
+  body { padding: 0; background: #fff; font-size: 13px; }
+  main { max-width: none; gap: 30px; }
+  h1 { font-size: 3rem; }
+  h2 { font-size: 1.8rem; }
+  .painel, .tabela { overflow: visible; }
+  .painel svg { min-width: 0; }
+  .filtros { display: none; }
+  figure, .cartao, .principio, .ordem li, tr, section > .cab { break-inside: avoid; }
+  h2, h3, .eyebrow, section > .cab, .legenda { break-after: avoid; }
+  thead { display: table-header-group; }
+  .ent-campo { font-size: 12.5px; }
+  .ent-nome { font-size: 13.5px; }
+  .grupo { break-inside: auto; }
+  section { display: block; }
+  section > * + * { margin-top: 16px; }
+  .secao-er { break-before: page; }
+  .er-fig .painel { padding: 6px; }
+  .er-fig .painel svg { width: auto; max-width: 100%; max-height: 110mm; margin: 0 auto; }
+}
 </style>
 
 <main>
@@ -275,7 +299,7 @@ footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rul
     </div>
   </section>
 
-  <section aria-labelledby="t-er">
+  <section aria-labelledby="t-er" class="secao-er">
     <div class="cab">
       <span class="eyebrow">Banco de dados</span>
       <h2 id="t-er">Entidades e relacionamentos</h2>
@@ -286,7 +310,7 @@ footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rul
       <span><svg viewBox="0 0 64 14" aria-hidden="true"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="2" x2="8" y2="12" stroke="currentColor" stroke-width="1.2"/><line x1="56" y1="2" x2="56" y2="12" stroke="currentColor" stroke-width="1.2"/></svg>um para um</span>
       <span><b style="color: var(--accent); font-size: .75rem">PK · FK</b> chave primária · chave estrangeira</span>
     </div>
-    <figure>
+    <figure class="er-fig">
       <div class="painel">{{ER}}</div>
       <figcaption>O posto concentra os preços de todas as fontes; o perfil concentra envios, avaliações, favoritos, pontos e avisos. A coluna produto_id aparece em oito tabelas e suas linhas até produtos foram omitidas para o desenho continuar legível. parametros e sincronizacoes_anp não se relacionam com outras tabelas.</figcaption>
     </figure>
@@ -336,3 +360,7 @@ footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rul
   });
 })();
 </script>
+
+
+
+

@@ -1,4 +1,4 @@
-"""
+﻿"""
 Gera documentacao/regras_de_negocio.html a partir de scripts/docs/regras_template.html.
 
 Monta o diagrama do caminho de um preço, o diagrama de entidades e relacionamentos,
@@ -156,20 +156,20 @@ ENTIDADES = {
     "precos_estimados":  (3, 20, [("posto_id", "FK"), ("produto_id", "FK"), ("preco", ""), ("margem", ""), ("distancia_km", "")], False, None),
     "precos_atuais":     (4, 20, [("posto_id", "FK"), ("produto_id", "FK"), ("preco · fonte · situacao", ""), ("confirmacoes", ""), ("ultimo_confiavel", "")], False, None),
     "precos_comunidade": (5, 20, [("posto_id", "FK"), ("produto_id", "FK"), ("dia", "PK"), ("preco", ""), ("confirmado", "")], False, None),
-    "produtos":          (1, 200, [("id", "PK"), ("codigo", ""), ("nome", ""), ("preco_min · preco_max", "")], False, None),
-    "previsoes":         (2, 200, [("uf · municipio", "PK"), ("produto_id", "FK"), ("semana", "PK"), ("preco_previsto", "")], False, None),
-    "postos":            (3, 200, [("id", "PK"), ("cnpj", "ÚNICO"), ("razao_social · bandeira", ""), ("localizacao (PostGIS)", ""), ("municipio_pesquisado_anp", "")], True, None),
-    "sincronizacoes_anp": (4, 200, [("uf", "PK"), ("executado_em", ""), ("registros", "")], False, None),
-    "parametros":        (5, 200, [("chave", "PK"), ("valor", ""), ("descricao", "")], False, None),
-    "envios":            (1, 400, [("id", "PK"), ("usuario_id", "FK"), ("posto_id", "FK"), ("posicao · distancia_m", ""), ("ocr_texto", "")], False, "SEM FOTO"),
-    "avaliacoes":        (2, 400, [("id", "PK"), ("posto_id", "FK"), ("usuario_id", "FK"), ("nota 0–5 · comentario", "")], False, None),
-    "favoritos":         (3, 400, [("usuario_id", "FK"), ("posto_id", "FK"), ("notificar", "")], False, None),
-    "notificacoes":      (4, 400, [("usuario_id", "FK"), ("posto_id", "FK"), ("produto_id", "FK"), ("preco_anterior → novo", ""), ("lida", "")], False, None),
-    "envio_itens":       (1, 600, [("id", "PK"), ("envio_id", "FK"), ("produto_id", "FK"), ("preco · preco_lido", ""), ("status · em_revisao", "")], False, None),
-    "avaliacao_votos":   (2, 600, [("avaliacao_id", "FK"), ("usuario_id", "FK")], False, None),
-    "perfis":            (3, 600, [("id", "PK · FK"), ("nome", ""), ("pontos", ""), ("confiabilidade", ""), ("bloqueado_ate · banido", "")], True, None),
-    "auth.users":        (4, 600, [("id", "PK"), ("email", ""), ("senha: hash no Auth", "")], False, None),
-    "pontos_movimentos": (2, 790, [("usuario_id", "FK"), ("envio_item_id", "FK"), ("pontos", ""), ("tipo", "")], False, None),
+    "produtos":          (1, 190, [("id", "PK"), ("codigo", ""), ("nome", ""), ("preco_min · preco_max", "")], False, None),
+    "previsoes":         (2, 190, [("uf · municipio", "PK"), ("produto_id", "FK"), ("semana", "PK"), ("preco_previsto", "")], False, None),
+    "postos":            (3, 190, [("id", "PK"), ("cnpj", "ÚNICO"), ("razao_social · bandeira", ""), ("localizacao (PostGIS)", ""), ("municipio_pesquisado_anp", "")], True, None),
+    "sincronizacoes_anp": (4, 190, [("uf", "PK"), ("executado_em", ""), ("registros", "")], False, None),
+    "parametros":        (5, 190, [("chave", "PK"), ("valor", ""), ("descricao", "")], False, None),
+    "envios":            (1, 370, [("id", "PK"), ("usuario_id", "FK"), ("posto_id", "FK"), ("posicao · distancia_m", ""), ("ocr_texto", "")], False, "SEM FOTO"),
+    "avaliacoes":        (2, 370, [("id", "PK"), ("posto_id", "FK"), ("usuario_id", "FK"), ("nota 0–5 · comentario", "")], False, None),
+    "favoritos":         (3, 370, [("usuario_id", "FK"), ("posto_id", "FK"), ("notificar", "")], False, None),
+    "notificacoes":      (4, 370, [("usuario_id", "FK"), ("posto_id", "FK"), ("produto_id", "FK"), ("preco_anterior → novo", ""), ("lida", "")], False, None),
+    "envio_itens":       (1, 540, [("id", "PK"), ("envio_id", "FK"), ("produto_id", "FK"), ("preco · preco_lido", ""), ("status · em_revisao", "")], False, None),
+    "avaliacao_votos":   (2, 540, [("avaliacao_id", "FK"), ("usuario_id", "FK")], False, None),
+    "perfis":            (3, 540, [("id", "PK · FK"), ("nome", ""), ("pontos", ""), ("confiabilidade", ""), ("bloqueado_ate · banido", "")], True, None),
+    "auth.users":        (4, 540, [("id", "PK"), ("email", ""), ("senha: hash no Auth", "")], False, None),
+    "pontos_movimentos": (5, 540, [("usuario_id", "FK"), ("envio_item_id", "FK"), ("pontos", ""), ("tipo", "")], False, None),
 }
 
 
@@ -204,7 +204,7 @@ def dir_(nome, y):
 
 
 def er() -> str:
-    s = ['<svg viewBox="0 0 1160 910" role="img" aria-label="Diagrama de entidades e relacionamentos: postos se liga às '
+    s = ['<svg viewBox="0 0 1160 700" role="img" aria-label="Diagrama de entidades e relacionamentos: postos se liga às '
          'tabelas de preço, envios, avaliações, favoritos e avisos; perfis se liga a envios, avaliações, favoritos, '
          'avisos, votos e pontos; envios têm itens por combustível.">',
          '<defs>'
@@ -229,11 +229,21 @@ def er() -> str:
         rel(topo("perfis", dx), base(filho, fdx))
     rel(base("envios", -20), topo("envio_itens", -20))
     rel(base("avaliacoes", -30), topo("avaliacao_votos", -30))
-    rel(esq("perfis", 633), dir_("avaliacao_votos", 633))
-    rel(dir_("perfis", 641), esq("auth.users", 641), fim="er-um-fim")
-    rel(base("envio_itens"), topo("pontos_movimentos", -50))
-    rel(base("perfis"), topo("pontos_movimentos", 50))
-    rel(dir_("produtos", 249), esq("previsoes", 249))
+    rel(esq("perfis", 573), dir_("avaliacao_votos", 573))
+    rel(dir_("perfis", 581), esq("auth.users", 581), fim="er-um-fim")
+    rel(dir_("produtos", 239), esq("previsoes", 239))
+
+    # Pontos: dois conectores em cotovelo, por baixo da última fileira, para não atravessar caixas
+    def cotovelo(pontos):
+        d = " ".join(f"{x},{y}" for x, y in pontos)
+        s.append(f'<polyline class="rel" points="{d}" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/>')
+
+    fundo = max(caixa_de(n)[1] + caixa_de(n)[3] for n in ("envio_itens", "perfis"))
+    pxm, pym = base("pontos_movimentos")
+    ex, ey = base("envio_itens", 40)
+    cotovelo([(ex, ey), (ex, fundo + 34), (pxm - 40, fundo + 34), (pxm - 40, pym)])
+    gx, gy = base("perfis")
+    cotovelo([(gx, gy), (gx, fundo + 16), (pxm + 40, fundo + 16), (pxm + 40, pym)])
 
     for nome, (col, y, campos, destaque, etiqueta) in ENTIDADES.items():
         x = X[col]
@@ -368,3 +378,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
