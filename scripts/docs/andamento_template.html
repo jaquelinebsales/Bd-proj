@@ -109,12 +109,12 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
   <header class="cab">
     <span class="eyebrow">gasprice · acompanhamento</span>
     <h1>Andamento do gasprice</h1>
-    <p class="lead">Situação da construção em {{DATA}}. O backend já está publicado no seu Supabase, com os dados da ANP carregados. O mapa agora usa o OpenStreetMap, sem chave. Falta enviar o código ao seu GitHub.</p>
+    <p class="lead">Situação da construção em {{DATA}}. O backend já está publicado no seu Supabase, com os dados da ANP carregados. O mapa agora usa o OpenStreetMap, sem chave. O código está no seu GitHub, com os testes e a publicação do Supabase passando e o APK de teste gerado. Falta instalar o APK num celular.</p>
     <ol class="fases" aria-label="Fases do projeto">
       <li class="fase" style="--c: var(--ok)"><span class="num">FASE 1</span><b>Dados da ANP</b><span class="estado ok">Concluída</span><span class="d">Limpeza, cobertura e experimento do modelo.</span></li>
-      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 2</span><b>Backend Supabase</b><span class="estado ok">Publicado</span><span class="d">No seu projeto, com 45.823 postos e 1,65 milhão de preços. 16 verificações públicas ok.</span></li>
-      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 3</span><b>App Flutter</b><span class="estado ok">Pronto para teste</span><span class="d">Todas as telas, para celular e tablet. Falta rodar num aparelho real.</span></li>
-      <li class="fase" style="--c: var(--espera)"><span class="num">FASE 4</span><b>Publicação</b><span class="estado espera">Aguardando você</span><span class="d">Supabase feito. Falta o envio ao GitHub.</span></li>
+      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 2</span><b>Backend Supabase</b><span class="estado ok">Publicado</span><span class="d">No seu projeto, com 45.823 postos e 1,65 milhão de preços. 23 verificações públicas ok.</span></li>
+      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 3</span><b>App Flutter</b><span class="estado ok">Pronto para teste</span><span class="d">Todas as telas, para celular e tablet. APK gerado; falta rodar num aparelho real.</span></li>
+      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 4</span><b>Publicação</b><span class="estado ok">Concluída</span><span class="d">Supabase publicado, código no GitHub e testes automáticos passando.</span></li>
       <li class="fase" style="--c: var(--prox)"><span class="num">FASE 5</span><b>Evolução</b><span class="estado prox">Próxima</span><span class="d">Avisos com o app fechado, previsão de preço e lojas.</span></li>
     </ol>
   </header>
@@ -133,7 +133,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     <div class="cab">
       <span class="eyebrow">Próximo passo</span>
       <h2 id="t-pedidos">O que preciso de você</h2>
-      <p class="lead">O Supabase está feito. Para enviar o código e ver o mapa, faltam estes dois itens.</p>
+      <p class="lead">O Supabase e o GitHub estão prontos. O que falta é testar o app num celular.</p>
     </div>
     <div class="pedidos">
       <div class="pedido" style="border-left-color: var(--ok)">
@@ -145,15 +145,23 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
         </ol>
       </div>
       <div class="pedido">
-        <h3>2. Repositório no GitHub</h3>
+        <h3>2. Testar no celular</h3>
         <ol>
-          <li>Crie um repositório vazio, sem README, e me envie o endereço.</li>
-          <li>Crie um token fino só para esse repositório, com <em>Contents</em> e <em>Workflows</em> em leitura e escrita, e coloque no <code>.env</code> como <code>GITHUB_TOKEN</code>. Sem <em>Workflows</em>, o GitHub recusa os arquivos de <code>.github/workflows</code>.</li>
-          <li>Se preferir não criar o token, você mesmo roda <code>git push</code>: os commits já estão prontos.</li>
+          <li>Em Actions, Gerar APK, baixe o arquivo <code>gasprice-apk</code> e instale no Android.</li>
+          <li>Crie uma conta, confirme o e-mail e envie o preço de um posto com a foto de um painel real.</li>
+          <li>Me mande as fotos em que o leitor errar e qualquer tela que quebrar.</li>
         </ol>
       </div>
       <div class="pedido" style="border-left-color: var(--ok)">
-        <h3>3. Mapa · resolvido sem chave</h3>
+        <h3>3. GitHub · feito</h3>
+        <ol>
+          <li>Código enviado para o repositório, com os segredos cadastrados.</li>
+          <li>Os testes e a publicação do Supabase passam a cada envio.</li>
+          <li>O token antigo do Supabase deve ser apagado, e o novo fica só no GitHub.</li>
+        </ol>
+      </div>
+      <div class="pedido" style="border-left-color: var(--ok)">
+        <h3>4. Mapa · resolvido sem chave</h3>
         <ol>
           <li>O Google pedia R$ 150 antecipados para liberar a chave do mapa.</li>
           <li>O app passou a usar o mapa do OpenStreetMap, que não pede chave, cartão nem cadastro.</li>
@@ -270,7 +278,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
       <h2 id="t-riscos">Pendências e riscos</h2>
     </div>
     <ul class="riscos">
-      <li><b>O app ainda não rodou num celular de verdade</b><span>Este computador não tem Android SDK nem Xcode. O APK sai pelo GitHub Actions quando os segredos estiverem configurados.</span></li>
+      <li><b>O app ainda não rodou num celular de verdade</b><span>Este computador não tem Android SDK nem Xcode. O APK já sai pelo GitHub Actions; falta instalá-lo e testar num celular.</span></li>
       <li><b>15% dos postos ativos estão sem coordenada</b><span>São 6.942 de 45.823 no cadastro da ANP. Eles não aparecem no mapa nem recebem estimativa. O teste com uma amostra achou a rua de 57% deles, mas com erro mediano de meio quilômetro. A seção "Postos sem coordenada" traz os números e a regra adotada.</span></li>
       <li><b>Os preços da ANP só são atualizados quando você recarrega uma planilha</b><span>Hoje o banco tem a pesquisa até 30/06/2026. Ainda não existe a carga automática das semanas novas. Sem ela, os preços oficiais envelhecem e ficam com o ponto vermelho.</span></li>
       <li><b>A estimativa erra em média de R$ 0,25 a R$ 0,39</b><span>Medido nos dados reais. O app mostra o erro médio de cada estimativa e a marca com "≈". Ela serve como referência, não para escolher entre dois postos vizinhos.</span></li>

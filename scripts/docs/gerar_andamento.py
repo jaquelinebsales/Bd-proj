@@ -44,6 +44,8 @@ ETAPAS = [
         ("Avisos de preço em tempo real para favoritos", OK),
         ("Modo de demonstração com dados de exemplo", OK),
         ("Mapa do OpenStreetMap no lugar do Google Maps: sem chave e sem cartão", OK),
+        ("Documento com todas as telas (documentacao/telas_do_app.html)", OK),
+        ("APK de teste gerado pelo GitHub Actions", OK),
         ("Rodar em aparelho Android e iOS", ESPERA),
         ("Ajustar o leitor com fotos reais de painéis", PROX),
     ]),
@@ -53,7 +55,7 @@ ETAPAS = [
         ("Publicação automática do banco e das funções", OK),
         ("Verificador do .env e publicação com um comando, sem copiar a string de conexão", OK),
         ("Geração do APK pelo GitHub Actions", OK),
-        ("Enviar o código ao seu GitHub e cadastrar os segredos", ESPERA),
+        ("Código no GitHub, segredos cadastrados e testes e publicação do Supabase passando", OK),
     ]),
     ("Fase 5 · Evolução", [
         ("Carga automática das semanas novas da pesquisa da ANP", PROX),
