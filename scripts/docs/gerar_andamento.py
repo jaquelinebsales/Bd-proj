@@ -30,6 +30,7 @@ ETAPAS = [
         ("Edge Functions: envio de preços, sincronização com a ANP e exclusão de conta", OK),
         ("Importador dos dados da ANP para o plano gratuito", OK),
         ("Testes das regras num Postgres 17 com PostGIS", OK),
+        ("Rotinas pesadas medidas com 45 mil postos e 954 mil preços: de 2 s a 18 s; banco em cerca de 260 MB dos 500 MB", OK),
         ("Aplicar no seu projeto Supabase e carregar os dados", ESPERA),
     ]),
     ("Fase 3 · App Flutter", [
