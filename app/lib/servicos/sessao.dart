@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config.dart';
 import '../modelos/modelos.dart';
 import 'api.dart';
+import 'demo.dart';
 
 /// Estado de login. Consulta não exige conta; só alterar ou acrescentar dados.
 class Sessao extends ChangeNotifier {
@@ -19,11 +20,16 @@ class Sessao extends ChangeNotifier {
   bool recuperandoSenha = false;
   StreamSubscription<AuthState>? _assinatura;
 
-  bool get logado => usuario != null;
-  bool get emailConfirmado => usuario?.emailConfirmedAt != null;
+  bool get logado => usuario != null || Config.demoLogado;
+  bool get emailConfirmado => Config.demoLogado || usuario?.emailConfirmedAt != null;
+  String? get email => Config.demoLogado ? 'carla.m@exemplo.com' : usuario?.email;
   SupabaseClient get _auth => Supabase.instance.client;
 
   void iniciar() {
+    if (Config.demoLogado) {
+      perfil = Demo.perfil();
+      return;
+    }
     if (!Config.configurado) return;
     usuario = _auth.auth.currentUser;
     _assinatura = _auth.auth.onAuthStateChange.listen((estado) {

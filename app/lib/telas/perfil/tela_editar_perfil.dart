@@ -100,7 +100,7 @@ class _TelaEditarPerfilState extends State<TelaEditarPerfil> {
             ),
             const SizedBox(height: 8),
             TextFormField(
-              initialValue: Sessao.instancia.usuario?.email,
+              initialValue: Sessao.instancia.email,
               enabled: false,
               decoration: const InputDecoration(labelText: 'E-mail', prefixIcon: Icon(Icons.mail_outline)),
             ),

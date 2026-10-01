@@ -150,14 +150,16 @@ class Api {
 
   // ------------------------------------------------------------------ usuário logado
 
-  Future<ResumoPerfil?> meuResumo() => _proteger(() async {
+  Future<ResumoPerfil?> meuResumo() => Config.demo ? Future.value(Demo.perfil()) : _proteger(() async {
         final d = await _db.rpc('meu_resumo');
         return d == null ? null : ResumoPerfil.deJson(Map<String, dynamic>.from(d as Map));
       });
 
-  Future<List<PostoResumo>> meusFavoritos() => _proteger(() async => _postos(await _db.rpc('meus_favoritos')));
+  Future<List<PostoResumo>> meusFavoritos() => Config.demo
+      ? Future.value(Demo.postos.where((p) => p.id == 1 || p.id == 2).toList())
+      : _proteger(() async => _postos(await _db.rpc('meus_favoritos')));
 
-  Future<void> favoritar(int posto, bool favorito) => _proteger(() async {
+  Future<void> favoritar(int posto, bool favorito) => Config.demo ? Future.value() : _proteger(() async {
         final uid = _db.auth.currentUser!.id;
         if (favorito) {
           await _db.from('favoritos').upsert({'usuario_id': uid, 'posto_id': posto});
@@ -167,7 +169,7 @@ class Api {
         _cache.remove('posto:$posto');
       });
 
-  Future<void> notificarFavorito(int posto, bool notificar) => _proteger(() async {
+  Future<void> notificarFavorito(int posto, bool notificar) => Config.demo ? Future.value() : _proteger(() async {
         final uid = _db.auth.currentUser!.id;
         await _db.from('favoritos').update({'notificar': notificar}).eq('usuario_id', uid).eq('posto_id', posto);
       });
@@ -197,7 +199,7 @@ class Api {
         }
       });
 
-  Future<List<MovimentoPontos>> extratoPontos() => _proteger(() async {
+  Future<List<MovimentoPontos>> extratoPontos() => Config.demo ? Future.value(Demo.extrato()) : _proteger(() async {
         final d = await _db
             .from('pontos_movimentos')
             .select('tipo, pontos, descricao, criado_em')
@@ -206,7 +208,7 @@ class Api {
         return d.map((e) => MovimentoPontos.deJson(e)).toList();
       });
 
-  Future<List<Notificacao>> notificacoes() => _proteger(() async {
+  Future<List<Notificacao>> notificacoes() => Config.demo ? Future.value(Demo.notificacoes()) : _proteger(() async {
         final d = await _db
             .from('notificacoes')
             .select('id, posto_id, produto_id, preco_anterior, preco_novo, lida, criado_em, postos(nome_exibicao, razao_social)')
@@ -215,7 +217,7 @@ class Api {
         return d.map((e) => Notificacao.deJson(e)).toList();
       });
 
-  Future<void> marcarLidas() => _proteger(() async {
+  Future<void> marcarLidas() => Config.demo ? Future.value() : _proteger(() async {
         await _db.from('notificacoes').update({'lida': true}).eq('lida', false);
       });
 

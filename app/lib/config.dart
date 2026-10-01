@@ -15,6 +15,10 @@ class Config {
 
   /// Modo demonstração: dados de exemplo, sem Supabase (--dart-define=DEMO=true).
   static const demo = bool.fromEnvironment('DEMO');
+
+  /// Com DEMO, entra como uma usuária de exemplo já logada (--dart-define=DEMO_LOGADO=true).
+  /// Serve para ver as telas que exigem conta.
+  static const demoLogado = demo && bool.fromEnvironment('DEMO_LOGADO');
   static const esquemaRetorno = 'br.com.gasprice.app://auth-callback';
 
   static bool get configurado => supabaseUrl.isNotEmpty && supabaseChavePublica.isNotEmpty;

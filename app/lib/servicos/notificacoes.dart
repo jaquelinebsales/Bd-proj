@@ -34,6 +34,7 @@ class ServicoNotificacoes extends ChangeNotifier {
     } catch (_) {}
     Sessao.instancia.addListener(_aoMudarSessao);
     _aoMudarSessao();
+    if (Config.demoLogado) atualizarContagem();
   }
 
   Future<void> pedirPermissao() async {

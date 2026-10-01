@@ -21,6 +21,7 @@ class _TelaPontosState extends State<TelaPontos> {
     (Icons.verified_outlined, '+10', 'Envio confirmado por outra pessoa em até 24 horas'),
     (Icons.bolt_outlined, '+5', 'Primeiro envio em posto sem atualização há mais de 24 horas'),
     (Icons.looks_two_outlined, '×2', 'Em cidades onde a ANP não pesquisa preços'),
+    (Icons.my_location_outlined, '+5', 'Posição de um posto confirmada por outra pessoa'),
     (Icons.report_outlined, '−5', 'Envio contrariado por outros usuários'),
     (Icons.timer_outlined, '200', 'Máximo de pontos ganhos por dia'),
   ];

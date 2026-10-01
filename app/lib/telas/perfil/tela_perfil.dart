@@ -18,7 +18,7 @@ class TelaPerfil extends StatelessWidget {
         builder: (context, _) {
           final s = Sessao.instancia;
           if (!s.logado) return const _Visitante();
-          return _Logado(perfil: s.perfil, email: s.usuario?.email ?? '');
+          return _Logado(perfil: s.perfil, email: s.email ?? '');
         },
       );
 }

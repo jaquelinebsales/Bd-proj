@@ -132,6 +132,40 @@ class Demo {
         Avaliacao(id: 3, autor: 'Lúcia F.', nota: 5, comentario: 'Conveniência limpa e banheiro aberto a noite toda.', votosUteis: 2, criadoEm: _ha(const Duration(days: 11))),
       ];
 
+  static ResumoPerfil perfil() => ResumoPerfil(
+        id: 'demo',
+        nome: 'Carla M.',
+        pontos: 1840,
+        confiabilidade: 0.86,
+        totalAvaliacoes: 4,
+        totalEnvios: 37,
+        enviosConfirmados: 33,
+        posicaoRanking: 1,
+        ultimosEnvios: [
+          {'posto_id': 1, 'posto': 'Posto Vale Verde', 'produto_id': 1, 'status': 'confirmado', 'preco': 5.99, 'criado_em': _ha(const Duration(hours: 2)).toUtc().toIso8601String()},
+          {'posto_id': 4, 'posto': 'Posto Messejana', 'produto_id': 3, 'status': 'pendente', 'preco': 4.19, 'criado_em': _ha(const Duration(days: 1)).toUtc().toIso8601String()},
+          {'posto_id': 2, 'posto': 'Auto Posto Aldeota', 'produto_id': 1, 'status': 'confirmado', 'preco': 6.09, 'criado_em': _ha(const Duration(days: 3)).toUtc().toIso8601String()},
+        ],
+        ultimasAvaliacoes: const [
+          {'posto_id': 1, 'posto': 'Posto Vale Verde', 'nota': 5, 'comentario': 'Atendimento rápido e o preço da gasolina bate com o painel.'},
+          {'posto_id': 3, 'posto': 'Posto Beira Mar', 'nota': 4, 'comentario': null},
+        ],
+      );
+
+  static List<MovimentoPontos> extrato() => [
+        MovimentoPontos('envio_confirmado', 10, 'Preço confirmado: Gasolina comum no Posto Vale Verde', _ha(const Duration(hours: 2))),
+        MovimentoPontos('bonus_primeiro', 5, 'Primeiro envio do consenso', _ha(const Duration(hours: 2))),
+        MovimentoPontos('posicao_confirmada', 5, 'Posição confirmada: Posto Messejana', _ha(const Duration(days: 2))),
+        MovimentoPontos('envio_contestado', -5, 'Envio contestado: Etanol no Auto Posto Aldeota', _ha(const Duration(days: 4))),
+        MovimentoPontos('envio_confirmado', 20, 'Preço confirmado em cidade sem pesquisa da ANP', _ha(const Duration(days: 6))),
+      ];
+
+  static List<Notificacao> notificacoes() => [
+        Notificacao(id: 1, postoId: 1, produtoId: 1, precoAnterior: 6.09, precoNovo: 5.99, lida: false, criadoEm: _ha(const Duration(hours: 3)), nomePosto: 'Posto Vale Verde'),
+        Notificacao(id: 2, postoId: 2, produtoId: 3, precoAnterior: 4.29, precoNovo: 4.39, lida: false, criadoEm: _ha(const Duration(hours: 20)), nomePosto: 'Auto Posto Aldeota'),
+        Notificacao(id: 3, postoId: 1, produtoId: 5, precoAnterior: 6.45, precoNovo: 6.32, lida: true, criadoEm: _ha(const Duration(days: 5)), nomePosto: 'Posto Vale Verde'),
+      ];
+
   static List<ItemRanking> ranking() => const [
         ItemRanking(1, 'Carla M.', 1840, false),
         ItemRanking(2, 'Bruno L.', 1575, false),
