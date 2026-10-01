@@ -51,7 +51,7 @@ def fluxo() -> str:
     no(24, y, 128, h, "Foto do painel", "câmera do celular")
     no(192, y, 154, h, "Leitura no aparelho", "ML Kit, sem internet")
     no(388, y, 134, h, "Revisão", "corrige e escolhe")
-    no(578, y, 200, h, "Validação", "login, 300 m, faixa, limites")
+    no(578, y, 200, h, "Validação", "login, raio, faixa, limites")
     no(836, y, 140, h, "Consenso", "2 pessoas, 24 h")
     no(1012, y, 136, h, "Preço confirmado", "exibido + pontos", chave=True)
     m = y + h / 2
@@ -158,13 +158,14 @@ ENTIDADES = {
     "precos_comunidade": (5, 20, [("posto_id", "FK"), ("produto_id", "FK"), ("dia", "PK"), ("preco", ""), ("confirmado", "")], False, None),
     "produtos":          (1, 190, [("id", "PK"), ("codigo", ""), ("nome", ""), ("preco_min · preco_max", "")], False, None),
     "previsoes":         (2, 190, [("uf · municipio", "PK"), ("produto_id", "FK"), ("semana", "PK"), ("preco_previsto", "")], False, None),
-    "postos":            (3, 190, [("id", "PK"), ("cnpj", "ÚNICO"), ("razao_social · bandeira", ""), ("localizacao (PostGIS)", ""), ("municipio_pesquisado_anp", "")], True, None),
+    "postos":            (3, 190, [("id", "PK"), ("cnpj", "ÚNICO"), ("razao_social · bandeira", ""), ("localizacao (PostGIS)", ""), ("precisao_localizacao", ""), ("municipio_pesquisado_anp", "")], True, None),
     "sincronizacoes_anp": (4, 190, [("uf", "PK"), ("executado_em", ""), ("registros", "")], False, None),
     "parametros":        (5, 190, [("chave", "PK"), ("valor", ""), ("descricao", "")], False, None),
     "envios":            (1, 370, [("id", "PK"), ("usuario_id", "FK"), ("posto_id", "FK"), ("posicao · distancia_m", ""), ("ocr_texto", "")], False, "SEM FOTO"),
     "avaliacoes":        (2, 370, [("id", "PK"), ("posto_id", "FK"), ("usuario_id", "FK"), ("nota 0–5 · comentario", "")], False, None),
     "favoritos":         (3, 370, [("usuario_id", "FK"), ("posto_id", "FK"), ("notificar", "")], False, None),
     "notificacoes":      (4, 370, [("usuario_id", "FK"), ("posto_id", "FK"), ("produto_id", "FK"), ("preco_anterior → novo", ""), ("lida", "")], False, None),
+    "correcoes_posicao": (5, 370, [("usuario_id", "FK"), ("posto_id", "FK"), ("posicao", ""), ("precisao_gps_m", ""), ("criado_em", "")], False, None),
     "envio_itens":       (1, 540, [("id", "PK"), ("envio_id", "FK"), ("produto_id", "FK"), ("preco · preco_lido", ""), ("status · em_revisao", "")], False, None),
     "avaliacao_votos":   (2, 540, [("avaliacao_id", "FK"), ("usuario_id", "FK")], False, None),
     "perfis":            (3, 540, [("id", "PK · FK"), ("nome", ""), ("pontos", ""), ("confiabilidade", ""), ("bloqueado_ate · banido", "")], True, None),
@@ -227,6 +228,7 @@ def er() -> str:
         rel(base("postos", dx), topo(filho, fdx))
     for dx, filho, fdx in zip((-50, -25, 0, 25), ("envios", "avaliacoes", "favoritos", "notificacoes"), (50, 30, 0, 0)):
         rel(topo("perfis", dx), base(filho, fdx))
+    rel(base("postos", 50), topo("correcoes_posicao"))
     rel(base("envios", -20), topo("envio_itens", -20))
     rel(base("avaliacoes", -30), topo("avaliacao_votos", -30))
     rel(esq("perfis", 573), dir_("avaliacao_votos", 573))
@@ -279,11 +281,22 @@ REGRAS = [
         ("O envio começa pela foto do painel. O texto é lido no aparelho, sem internet.", [C], ""),
         ("A foto é apagada logo após a leitura e nunca é enviada nem guardada.", [C], ""),
         ("O usuário revisa os valores lidos, corrige o que estiver errado e escolhe o que enviar.", [C], ""),
-        ("O envio só é aceito com o aparelho a até 300 metros do posto.", [C, S], "300 m"),
+        ("Em posto com posição exata, o envio só é aceito com o aparelho a até 300 metros do posto.", [C, S], "300 m"),
         ("Cada preço precisa estar na faixa do combustível.", [C, S], "R$ 2,00 a 15,00 · etanol e GNV R$ 1,50 a 12,00"),
         ("Cada usuário faz no máximo 20 envios em 24 horas.", [S], "20 por 24 h"),
         ("O mesmo usuário só reenvia o mesmo combustível do mesmo posto depois de 6 horas.", [S], "6 h"),
         ("O envio é uma proposta: ele nunca altera o preço exibido diretamente.", [S, B], ""),
+    ]),
+    ("Localização dos postos", [
+        ("Cada posto tem uma precisão de localização: exata, rua, CEP de rua, CEP da cidade, município ou nenhuma.", [B], ""),
+        ("Posição exata vem da coordenada da ANP, do número do endereço ou de confirmação pela comunidade.", [B], ""),
+        ("Em posto com posição aproximada (rua ou CEP de rua), o envio de preço é aceito a até 1 km do ponto no mapa.", [C, S], "1 km"),
+        ("Posto com posição aproximada aparece no mapa com um marcador de localização aproximada.", [C], ""),
+        ("Posto com CEP da cidade, município ou sem localização não aparece no mapa e não aceita envio de preço.", [C, S, B], ""),
+        ("O botão Estou neste posto corrige a posição, sem limite de distância. Exige GPS com precisão de até 100 metros.", [C, S], "100 m"),
+        ("A posição informada só vale como exata quando 2 usuários diferentes informam pontos a até 150 metros um do outro.", [B], "2 pessoas · 150 m"),
+        ("A posição informada espera por confirmação por 30 dias. Cada confirmação rende 5 pontos.", [B], "30 dias · +5"),
+        ("Cada usuário informa no máximo 10 posições de posto em 24 horas, a até 100 km da posição aproximada.", [S, B], "10 por 24 h · 100 km"),
     ]),
     ("Consenso e revisão", [
         ("O preço é confirmado quando 2 usuários diferentes informam valores com diferença de até R$ 0,02 em 24 horas.", [B], "2 pessoas · R$ 0,02 · 24 h"),
@@ -355,11 +368,18 @@ def regras() -> str:
     return "".join(partes)
 
 
+def ler_parametros() -> list[tuple[str, str, str]]:
+    """Todos os parâmetros inseridos por qualquer migração, na ordem em que foram criados."""
+    itens = []
+    for arq in sorted((RAIZ / "supabase" / "migrations").glob("*.sql")):
+        sql = arq.read_text(encoding="utf-8")
+        for bloco in re.findall(r"insert into public\.parametros[^;]*;", sql):
+            itens += re.findall(r"\('(\w+)',\s*([-\d.]+),\s*'([^']*)'\)", bloco)
+    return itens
+
+
 def parametros() -> str:
-    sql = (RAIZ / "supabase" / "migrations" / "20260929000003_regras.sql").read_text(encoding="utf-8")
-    trecho = sql[sql.index("insert into public.parametros"):]
-    trecho = trecho[:trecho.index(";")]
-    itens = re.findall(r"\('(\w+)',\s*([-\d.]+),\s*'([^']*)'\)", trecho)
+    itens = ler_parametros()
     linhas = "".join(f"<tr><td><code>{e(k)}</code></td><td class=\"valor\">{e(v.replace('.', ','))}</td><td>{e(d)}</td></tr>"
                      for k, v, d in itens)
     return ('<div class="tabela"><table><thead><tr><th>Chave</th><th>Valor</th><th>O que controla</th></tr></thead>'

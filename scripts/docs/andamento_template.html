@@ -122,10 +122,10 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
   <section aria-labelledby="t-numeros">
     <h2 id="t-numeros" class="eyebrow" style="font: 600 .74rem/1 var(--body)">Em números</h2>
     <div class="numeros">
-      <div class="numero"><b>21</b><span>telas, mais 2 painéis de filtros e contribuições</span></div>
-      <div class="numero"><b>122</b><span>testes automáticos, todos passando</span></div>
-      <div class="numero"><b>53</b><span>regras de negócio implementadas</span></div>
-      <div class="numero"><b>19</b><span>tabelas no banco e 3 funções no servidor</span></div>
+      <div class="numero"><b>22</b><span>telas, mais 2 painéis de filtros e contribuições</span></div>
+      <div class="numero"><b>162</b><span>testes automáticos, todos passando</span></div>
+      <div class="numero"><b>62</b><span>regras de negócio implementadas</span></div>
+      <div class="numero"><b>20</b><span>tabelas no banco e 4 funções no servidor</span></div>
     </div>
   </section>
 
@@ -139,8 +139,8 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
       <div class="pedido" style="border-left-color: var(--ok)">
         <h3>1. Supabase · feito</h3>
         <ol>
-          <li>Quatro migrações e mais duas correções aplicadas.</li>
-          <li>Três funções no ar e segredo da sincronização gravado.</li>
+          <li>Sete migrações aplicadas, a última com a precisão da localização dos postos.</li>
+          <li>Quatro funções no ar e segredo da sincronização gravado.</li>
           <li>Depois da publicação, apague o token de acesso em supabase.com/dashboard/account/tokens. Ele expira em 7 dias de qualquer forma.</li>
         </ol>
       </div>
@@ -180,7 +180,9 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
           <figure><img src="{{IMG:03-filtros}}" alt="Painel de filtros por combustível, faixa de preço, distância e avaliação"><figcaption><b>Filtros</b>Combustível, preço, distância, nota e data.</figcaption></figure>
           <figure><img src="{{IMG:05-posto}}" alt="Tela do posto com preços por combustível e a origem de cada um"><figcaption><b>Posto</b>Cada preço mostra origem e idade.</figcaption></figure>
           <figure><img src="{{IMG:06-contribuicoes}}" alt="Painel de contribuições com três confirmações de 5,99 e uma variação"><figcaption><b>Contribuições</b>Quem confirmou, variações e dado oficial.</figcaption></figure>
-          <figure><img src="{{IMG:07-posto-estimativa}}" alt="Posto sem pesquisa da ANP com preço estimado e margem"><figcaption><b>Posto sem ANP</b>Estimativa com margem de erro.</figcaption></figure>
+          <figure><img src="{{IMG:07-posto-estimativa}}" alt="Posto sem pesquisa da ANP, com localização desconhecida, botão Estou neste posto e preço estimado"><figcaption><b>Posto sem ANP e sem local</b>Estimativa com margem de erro. Sem local conhecido, não recebe envio de preço.</figcaption></figure>
+          <figure><img src="{{IMG:21-posto-aproximado}}" alt="Posto com localização aproximada pela rua e botão Estou neste posto"><figcaption><b>Local aproximado</b>Envio a até 1 km. Quem está no posto corrige a posição.</figcaption></figure>
+          <figure><img src="{{IMG:22-posicao-posto}}" alt="Tela Estou neste posto com as regras da confirmação e o botão para informar a posição"><figcaption><b>Estou neste posto</b>Duas pessoas a até 150 m confirmam a posição.</figcaption></figure>
           <figure><img src="{{IMG:08-historico}}" alt="Gráfico de histórico com linhas da ANP e da comunidade"><figcaption><b>Histórico</b>ANP e comunidade separadas.</figcaption></figure>
         </div>
       </div>
@@ -252,9 +254,9 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
       <table>
         <thead><tr><th>Conjunto</th><th>Testes</th><th>O que verifica</th><th>Resultado</th></tr></thead>
         <tbody>
-          <tr><td>Regras no banco</td><td class="n">75</td><td>Consenso, revisão, contestação, pontos com teto, bloqueio, avisos, recálculo semanal em bloco, permissões de acesso, consultas do app e importação do cadastro</td><td class="e"><span class="estado ok">Passou</span></td></tr>
-          <tr><td>App Flutter</td><td class="n">19</td><td>Leitor do painel, filtros e ordenação, idade do preço e componentes de preço</td><td class="e"><span class="estado ok">Passou</span></td></tr>
-          <tr><td>Edge Functions</td><td class="n">10</td><td>Validação do envio e normalização da API da ANP com um registro real</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>Regras no banco</td><td class="n">103</td><td>Consenso, revisão, contestação, pontos com teto, bloqueio, avisos, recálculo semanal em bloco, permissões de acesso, consultas do app, importação do cadastro e precisão da localização dos postos</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>App Flutter</td><td class="n">24</td><td>Leitor do painel, filtros e ordenação, idade do preço, componentes de preço e precisão da localização</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>Edge Functions</td><td class="n">17</td><td>Validação do envio e da posição do posto e normalização da API da ANP com um registro real</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Scripts de publicação</td><td class="n">18</td><td>Leitura do <code>.env</code>, detecção de textos de exemplo, montagem da conexão com senha especial, máscara de segredos e simulação da publicação</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Análise estática do Dart</td><td class="n">–</td><td>Erros de tipo, APIs obsoletas e estilo</td><td class="e"><span class="estado ok">Sem problemas</span></td></tr>
         </tbody>
@@ -269,7 +271,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     </div>
     <ul class="riscos">
       <li><b>O app ainda não rodou num celular de verdade</b><span>Este computador não tem Android SDK nem Xcode. O APK sai pelo GitHub Actions quando os segredos estiverem configurados.</span></li>
-      <li><b>15% dos postos ativos estão sem coordenada</b><span>São 6.942 de 45.823 no cadastro da ANP. Eles não aparecem no mapa nem recebem estimativa. O teste com uma amostra achou a rua de 57% deles, mas com erro mediano de meio quilômetro. A seção "Postos sem coordenada" traz os números e a proposta.</span></li>
+      <li><b>15% dos postos ativos estão sem coordenada</b><span>São 6.942 de 45.823 no cadastro da ANP. Eles não aparecem no mapa nem recebem estimativa. O teste com uma amostra achou a rua de 57% deles, mas com erro mediano de meio quilômetro. A seção "Postos sem coordenada" traz os números e a regra adotada.</span></li>
       <li><b>Os preços da ANP só são atualizados quando você recarrega uma planilha</b><span>Hoje o banco tem a pesquisa até 30/06/2026. Ainda não existe a carga automática das semanas novas. Sem ela, os preços oficiais envelhecem e ficam com o ponto vermelho.</span></li>
       <li><b>A estimativa erra em média de R$ 0,25 a R$ 0,39</b><span>Medido nos dados reais. O app mostra o erro médio de cada estimativa e a marca com "≈". Ela serve como referência, não para escolher entre dois postos vizinhos.</span></li>
       <li><b>O leitor do painel precisa de fotos reais</b><span>Ele foi testado com textos simulados de painéis. Com as primeiras fotos reais, ajusto os padrões de leitura.</span></li>

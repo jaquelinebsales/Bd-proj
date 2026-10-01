@@ -32,7 +32,7 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
-      - run: deno check enviar-precos/index.ts sincronizar-cadastro-anp/index.ts excluir-conta/index.ts
+      - run: deno check enviar-precos/index.ts corrigir-posicao/index.ts sincronizar-cadastro-anp/index.ts excluir-conta/index.ts
       - run: deno test
 
   scripts:

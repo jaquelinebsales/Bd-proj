@@ -71,7 +71,7 @@ class Api {
   Future<List<PostoResumo>> postosNaArea(double latMin, double lonMin, double latMax, double lonMax) {
     if (Config.demo) {
       return Future.value(Demo.postos
-          .where((p) => p.lat! >= latMin && p.lat! <= latMax && p.lon! >= lonMin && p.lon! <= lonMax)
+          .where((p) => p.precisao.noMapa && p.lat! >= latMin && p.lat! <= latMax && p.lon! >= lonMin && p.lon! <= lonMax)
           .toList());
     }
     double r(double v) => (v * 50).floorToDouble() / 50;
@@ -92,7 +92,7 @@ class Api {
   }
 
   Future<List<PostoResumo>> postosProximos(double lat, double lon, {double raioKm = 20}) => Config.demo
-      ? Future.value(Demo.postos)
+      ? Future.value(Demo.postos.where((p) => p.precisao.noMapa).toList())
       : _proteger(() => _comCache('prox:${lat.toStringAsFixed(3)}:${lon.toStringAsFixed(3)}:$raioKm',
           const Duration(minutes: 3), () async {
         final d = await _db.rpc('postos_proximos', params: {'p_lat': lat, 'p_lon': lon, 'p_raio_km': raioKm, 'p_limite': 300});
@@ -255,6 +255,30 @@ class Api {
         invalidarPosto(postoId);
         return Map<String, dynamic>.from(r.data as Map);
       });
+
+  /// "Estou neste posto": informa a posição do posto. Não envia preço.
+  Future<Map<String, dynamic>> corrigirPosicao({
+    required int postoId,
+    required double latitude,
+    required double longitude,
+    required double precisaoGpsM,
+  }) =>
+      Config.demo
+          ? Future.value({
+              'status': 'aguardando',
+              'mensagem': 'Obrigado! Quando outra pessoa que esteja neste posto também informar a posição, '
+                  'ela será confirmada e você ganha pontos.',
+            })
+          : _proteger(() async {
+              final r = await _db.functions.invoke('corrigir-posicao', body: {
+                'posto_id': postoId,
+                'latitude': latitude,
+                'longitude': longitude,
+                'precisao_gps_m': precisaoGpsM,
+              });
+              invalidarPosto(postoId);
+              return Map<String, dynamic>.from(r.data as Map);
+            });
 
   Future<void> excluirConta() => _proteger(() async {
         await _db.functions.invoke('excluir-conta');

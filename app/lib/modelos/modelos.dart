@@ -85,6 +85,47 @@ class PrecoAtual {
   }
 }
 
+/// Quão confiável é a posição do posto no mapa. O servidor decide o raio de envio a partir dela.
+enum PrecisaoLocalizacao {
+  exata,
+  rua,
+  cepRua,
+  cepCidade,
+  municipio,
+  nenhuma;
+
+  static PrecisaoLocalizacao deTexto(String? t) => switch (t) {
+        'rua' => rua,
+        'cep_rua' => cepRua,
+        'cep_cidade' => cepCidade,
+        'municipio' => municipio,
+        'nenhuma' => nenhuma,
+        _ => exata,
+      };
+
+  /// Posição só aproximada: o pino aparece no mapa com aviso.
+  bool get aproximada => this == rua || this == cepRua;
+
+  /// Aparece no mapa e na lista por distância.
+  bool get noMapa => this == exata || aproximada;
+
+  /// Aceita envio de preço (o raio depende da precisão).
+  bool get aceitaEnvio => noMapa;
+
+  /// Raio de envio em metros, ou null se o posto não aceita envio.
+  int? raioEnvioM({int exataM = 300, int aproximadoM = 1000}) =>
+      this == exata ? exataM : (aproximada ? aproximadoM : null);
+
+  String get rotulo => switch (this) {
+        exata => 'Localização confirmada',
+        rua => 'Localização aproximada (rua)',
+        cepRua => 'Localização aproximada (CEP)',
+        cepCidade => 'Localização desconhecida',
+        municipio => 'Localização desconhecida',
+        nenhuma => 'Localização desconhecida',
+      };
+}
+
 class PostoResumo {
   final int id;
   final String nome;
@@ -101,6 +142,7 @@ class PostoResumo {
   final List<PrecoAtual> precos;
   final double? distanciaKm;
   final bool notificar;
+  final PrecisaoLocalizacao precisao;
 
   const PostoResumo({
     required this.id,
@@ -118,6 +160,7 @@ class PostoResumo {
     this.precos = const [],
     this.distanciaKm,
     this.notificar = true,
+    this.precisao = PrecisaoLocalizacao.exata,
   });
 
   factory PostoResumo.deJson(Map<String, dynamic> j) => PostoResumo(
@@ -138,6 +181,7 @@ class PostoResumo {
             .toList(),
         distanciaKm: _num(j['distancia_km']),
         notificar: j['notificar'] != false,
+        precisao: PrecisaoLocalizacao.deTexto((j['precisao'] ?? j['precisao_localizacao'])?.toString()),
       );
 
   PrecoAtual? preco(int produtoId) {
@@ -163,6 +207,7 @@ class PostoResumo {
         precos: precos,
         distanciaKm: km,
         notificar: notificar,
+        precisao: precisao,
       );
 
   String get cidade => '$municipio, $uf';
@@ -182,6 +227,12 @@ class PostoDetalhe {
   final MinhaAvaliacao? minhaAvaliacao;
   final DateTime? sincronizadoEm;
 
+  /// Raio de envio de preço em metros, vindo do servidor. Null quando o posto não aceita envio.
+  final int? raioEnvioM;
+
+  /// O próprio usuário já informou a posição e aguarda a confirmação de outra pessoa.
+  final bool posicaoInformada;
+
   const PostoDetalhe({
     required this.resumo,
     required this.cnpj,
@@ -195,6 +246,8 @@ class PostoDetalhe {
     this.favorito = false,
     this.minhaAvaliacao,
     this.sincronizadoEm,
+    this.raioEnvioM,
+    this.posicaoInformada = false,
   });
 
   factory PostoDetalhe.deJson(Map<String, dynamic> j) {
@@ -215,6 +268,8 @@ class PostoDetalhe {
       favorito: j['favorito'] == true,
       minhaAvaliacao: minha == null ? null : MinhaAvaliacao.deJson(Map<String, dynamic>.from(minha as Map)),
       sincronizadoEm: _data(j['sincronizado_em']),
+      raioEnvioM: j['raio_envio_m'] == null ? null : _int(j['raio_envio_m']),
+      posicaoInformada: j['posicao_informada'] == true,
     );
   }
 

@@ -24,18 +24,20 @@ ETAPAS = [
         ("Experimento do modelo de previsão com janelas de 2, 4 e 6 anos", OK),
     ]),
     ("Fase 2 · Backend Supabase", [
-        ("Esquema com 19 tabelas, PostGIS e busca sem acento", OK),
+        ("Esquema com 20 tabelas, PostGIS e busca sem acento", OK),
         ("Regras de acesso: consulta pública, alteração só com login", OK),
         ("Consenso, revisão, pontos, bloqueio, avisos e estimativas", OK),
-        ("Edge Functions: envio de preços, sincronização com a ANP e exclusão de conta", OK),
+        ("Edge Functions: envio de preços, correção de posição, sincronização com a ANP e exclusão de conta", OK),
+        ("Precisão da localização dos postos: envio a 1 km em posição aproximada e confirmação por 2 usuários", OK),
         ("Importador dos dados da ANP para o plano gratuito", OK),
         ("Testes das regras num Postgres 17 com PostGIS", OK),
         ("Rotinas pesadas medidas com 45 mil postos e 954 mil preços: de 2 s a 18 s; banco em cerca de 260 MB dos 500 MB", OK),
         ("Aplicado no seu projeto Supabase, com 45.823 postos, 1,65 milhão de preços e 135 mil estimativas", OK),
-        ("Consulta pública e bloqueios conferidos no projeto real: 16 de 16 verificações", OK),
+        ("Consulta pública e bloqueios conferidos no projeto real: 23 de 23 verificações", OK),
     ]),
     ("Fase 3 · App Flutter", [
-        ("21 telas com layout para celular e tablet", OK),
+        ("22 telas com layout para celular e tablet", OK),
+        ("Postos com localização aproximada: marcador no mapa, aviso e botão Estou neste posto", OK),
         ("Cadastro, login, confirmação de e-mail e recuperação de senha", OK),
         ("Leitura do painel no aparelho, com a foto apagada em seguida", OK),
         ("Filtros, ordenação e cache no aparelho", OK),
@@ -56,7 +58,8 @@ ETAPAS = [
     ("Fase 5 · Evolução", [
         ("Carga automática das semanas novas da pesquisa da ANP", PROX),
         ("Teste de localização dos postos sem coordenada com 200 postos de amostra", OK),
-        ("Localizar os 6.942 postos sem coordenada e mudar a regra de envio para posições aproximadas", PROX),
+        ("Nova regra de envio para posições aproximadas, no app e no servidor", OK),
+        ("Localizar os 6.942 postos sem coordenada e carregar o resultado no banco", PROX),
         ("Avisos com o app fechado, via Firebase", PROX),
         ("Previsão de preço no app, quando o modelo superar a regra simples", PROX),
         ("SMTP próprio para os e-mails de cadastro", PROX),
@@ -145,11 +148,11 @@ def geocodificacao() -> tuple[str, str]:
         '<li>Em Brasília, endereços por quadra e setor se repetem entre regiões e levam a resultados errados. O DF precisa de tratamento à parte.</li>'
         '<li>As coordenadas da ANP também não são validadas. Parte da distância medida pode ser erro da própria ANP.</li>'
         '</ul></div>'
-        '<div class="cartao"><h3>Proposta para o app</h3><ul>'
-        '<li><b>Número da casa:</b> pino normal no mapa e envio de preço no raio de 300 m, como hoje.</li>'
-        '<li><b>Rua ou CEP de rua:</b> pino com aviso de localização aproximada. Envio aceito num raio de 2 km.</li>'
-        '<li><b>Só cidade:</b> o posto aparece na busca e na lista da cidade, mas não no mapa.</li>'
-        '<li><b>Correção pela comunidade:</b> o primeiro envio em posto aproximado registra a posição de quem está lá. Quando duas pessoas concordam, a posição vira a oficial e o posto passa a ter pino normal.</li>'
+        '<div class="cartao"><h3>O que o app faz agora</h3><ul>'
+        '<li><b>Posição exata</b> (coordenada da ANP, número da casa ou confirmada pela comunidade): pino normal no mapa e envio de preço no raio de 300 m.</li>'
+        '<li><b>Rua ou CEP de rua:</b> pino com marcador de localização aproximada. Envio de preço aceito num raio de 1 km.</li>'
+        '<li><b>Só CEP da cidade, município ou nada:</b> o posto aparece na busca, mas não no mapa e não recebe envio de preço.</li>'
+        '<li><b>Estou neste posto:</b> botão que só corrige a posição, sem limite de distância. Quando duas pessoas diferentes informam pontos a até 150 m um do outro, a posição vira exata e rende 5 pontos a cada uma.</li>'
         '<li><b>Próximo teste:</b> procurar os postos de combustível já mapeados no OpenStreetMap perto da rua encontrada. Pode dar posição exata para parte dos casos de rua.</li>'
         '</ul></div></div>'
     )

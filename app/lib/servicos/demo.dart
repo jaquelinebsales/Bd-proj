@@ -54,7 +54,7 @@ class Demo {
     PostoResumo(
       id: 4, nome: 'Posto Messejana', bandeira: 'Bandeira branca', endereco: 'Rua Coronel Guilherme Alencar, 120',
       bairro: 'Messejana', municipio: 'Fortaleza', uf: 'CE', lat: -3.8300, lon: -38.4900, notaMedia: 4.4,
-      totalAvaliacoes: 33, municipioPesquisadoAnp: true,
+      totalAvaliacoes: 33, municipioPesquisadoAnp: true, precisao: PrecisaoLocalizacao.rua,
       precos: [_com(1, 5.89, const Duration(hours: 1), conf: 5), _com(3, 4.19, const Duration(hours: 1), conf: 4)],
     ),
     PostoResumo(
@@ -66,6 +66,7 @@ class Demo {
     PostoResumo(
       id: 6, nome: 'Posto Itaitinga', bandeira: 'Bandeira branca', endereco: 'Rua Principal, 10', bairro: 'Centro',
       municipio: 'Itaitinga', uf: 'CE', lat: -3.9690, lon: -38.5280, totalAvaliacoes: 0,
+      precisao: PrecisaoLocalizacao.cepCidade,
       precos: [
         PrecoAtual(
           produtoId: 1, preco: 6.14, fonte: FontePreco.estimativa, situacao: SituacaoPreco.estimado,
@@ -89,7 +90,8 @@ class Demo {
       cnpj: '0${id}123456000190'.padRight(14, '0').substring(0, 14),
       razaoSocial: '${p.nome.toUpperCase()} COMERCIO DE COMBUSTIVEIS LTDA',
       cep: '60410000',
-      localizacaoValidada: id != 6,
+      localizacaoValidada: p.precisao == PrecisaoLocalizacao.exata,
+      raioEnvioM: p.precisao.raioEnvioM(),
       produtosVendidos: p.precos.map((e) => e.produtoId).toList(),
       distribuicaoNotas: id == 1 ? const {5: 84, 4: 28, 3: 9, 2: 4, 1: 2, 0: 1} : const {5: 3, 4: 2, 3: 1, 2: 0, 1: 0, 0: 0},
       enviosAguardando: id == 1 ? const {6: 1} : const {},

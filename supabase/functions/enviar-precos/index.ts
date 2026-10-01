@@ -1,7 +1,7 @@
 // Recebe os preços lidos da foto do painel (a foto fica no celular) e registra
 // uma proposta de atualização. Toda validação é repetida aqui no servidor.
 import { cabecalhosCors, clienteAdmin, erro, parametros, resposta, usuarioDaRequisicao } from "../_shared/comum.ts";
-import { motivoRevisao, Produto, validarCorpo } from "./validacao.ts";
+import { motivoRevisao, Produto, raioParaPrecisao, validarCorpo } from "./validacao.ts";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cabecalhosCors });
@@ -33,16 +33,25 @@ Deno.serve(async (req) => {
     const { envio, itens } = validado.valor;
     const par = await parametros(admin);
 
-    // Distância até o posto
-    const { data: distancia, error: eDist } = await admin.rpc("distancia_ate_posto", {
+    // Distância até o posto e precisão da posição dele
+    const { data: dadosAlvo, error: eDist } = await admin.rpc("distancia_e_precisao", {
       p_posto: envio.posto_id, p_lat: envio.latitude, p_lon: envio.longitude,
     });
     if (eDist) throw eDist;
-    if (distancia === null || distancia === undefined) return erro(404, "Posto não encontrado ou sem localização.");
-    if (distancia > par.raio_envio_m) {
-      return erro(422, `Você precisa estar a até ${par.raio_envio_m} m do posto para enviar preços. Distância atual: ${
-        Math.round(distancia)
-      } m.`);
+    const alvo = Array.isArray(dadosAlvo) ? dadosAlvo[0] : dadosAlvo;
+    if (!alvo) return erro(404, "Posto não encontrado.");
+    const raio = raioParaPrecisao(alvo.precisao, par as { raio_envio_m: number; raio_envio_aproximado_m: number });
+    if (raio === null || alvo.distancia_m === null) {
+      return erro(
+        422,
+        'A localização deste posto ainda não é conhecida. Se você está nele, toque em "Estou neste posto" para ajudar a localizá-lo. Depois disso o envio de preço fica liberado.',
+      );
+    }
+    if (alvo.distancia_m > raio) {
+      const km = raio >= 1000 ? `${raio / 1000} km` : `${raio} m`;
+      return erro(422, `Você precisa estar a até ${km} do posto para enviar preços. Distância atual: ${
+        Math.round(alvo.distancia_m)
+      } m.${raio > 300 ? " A localização deste posto é aproximada." : ""}`);
     }
 
     // Limite diário de envios
@@ -72,7 +81,7 @@ Deno.serve(async (req) => {
       usuario_id: usuario.id,
       posto_id: envio.posto_id,
       posicao: `SRID=4326;POINT(${envio.longitude} ${envio.latitude})`,
-      distancia_m: Math.round(distancia),
+      distancia_m: Math.round(alvo.distancia_m),
       ocr_texto: envio.ocr_texto,
       ocr_duracao_ms: envio.ocr_duracao_ms,
       app_versao: envio.app_versao,

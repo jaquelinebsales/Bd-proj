@@ -47,10 +47,10 @@ select pg_temp.checar(public.abreviar_nome('Carla Mendes Souza') = 'Carla S.' an
 select pg_temp.checar(public.normalizar('Ação São João') = 'acao sao joao', 'busca ignora acentos e maiúsculas');
 
 -- ============================================================ postos e dados da ANP
-insert into public.postos (id, cnpj, razao_social, bandeira, endereco, bairro, municipio, uf, localizacao, localizacao_fonte) values
-  (1, '11111111000191', 'POSTO CENTRO LTDA',       'IPIRANGA',        'AV DUQUE DE CAXIAS, 100', 'CENTRO',  'FORTALEZA', 'CE', 'SRID=4326;POINT(-38.5270 -3.7300)', 'anp'),
-  (2, '22222222000191', 'AUTO POSTO ALDEOTA LTDA', 'VIBRA',           'AV SANTOS DUMONT, 2000',  'ALDEOTA', 'FORTALEZA', 'CE', 'SRID=4326;POINT(-38.5100 -3.7350)', 'anp'),
-  (3, '33333333000191', 'POSTO ITAITINGA EIRELI',  'Bandeira branca', 'RUA PRINCIPAL, 10',       'CENTRO',  'ITAITINGA', 'CE', 'SRID=4326;POINT(-38.5280 -3.9690)', 'anp');
+insert into public.postos (id, cnpj, razao_social, bandeira, endereco, bairro, municipio, uf, localizacao, localizacao_fonte, precisao_localizacao) values
+  (1, '11111111000191', 'POSTO CENTRO LTDA',       'IPIRANGA',        'AV DUQUE DE CAXIAS, 100', 'CENTRO',  'FORTALEZA', 'CE', 'SRID=4326;POINT(-38.5270 -3.7300)', 'anp', 'exata'),
+  (2, '22222222000191', 'AUTO POSTO ALDEOTA LTDA', 'VIBRA',           'AV SANTOS DUMONT, 2000',  'ALDEOTA', 'FORTALEZA', 'CE', 'SRID=4326;POINT(-38.5100 -3.7350)', 'anp', 'exata'),
+  (3, '33333333000191', 'POSTO ITAITINGA EIRELI',  'Bandeira branca', 'RUA PRINCIPAL, 10',       'CENTRO',  'ITAITINGA', 'CE', 'SRID=4326;POINT(-38.5280 -3.9690)', 'anp', 'exata');
 select setval(pg_get_serial_sequence('public.postos', 'id'), 3);
 
 insert into public.posto_produtos (posto_id, produto_id, bicos) values (1, 1, 4), (1, 3, 2), (2, 1, 4), (3, 1, 2), (3, 3, 2);
@@ -189,8 +189,8 @@ select pg_temp.checar((select preco = 5.990 and situacao = 'confirmado' and conf
                        from public.precos_atuais where posto_id = 1 and produto_id = 1),
                       'recálculo preserva o preço confirmado pela comunidade');
 
-insert into public.postos (id, cnpj, razao_social, municipio, uf, localizacao, localizacao_fonte)
-values (9, '99999999000191', 'POSTO NOVO NOVE LTDA', 'FORTALEZA', 'CE', 'SRID=4326;POINT(-38.52 -3.75)', 'anp');
+insert into public.postos (id, cnpj, razao_social, municipio, uf, localizacao, localizacao_fonte, precisao_localizacao)
+values (9, '99999999000191', 'POSTO NOVO NOVE LTDA', 'FORTALEZA', 'CE', 'SRID=4326;POINT(-38.52 -3.75)', 'anp', 'exata');
 insert into public.posto_produtos (posto_id, produto_id, bicos) values (9, 1, 2);
 insert into public.precos_anp (posto_id, produto_id, data_coleta, preco) values (9, 1, current_date - 7, 6.000);
 insert into public.favoritos (usuario_id, posto_id) values ('00000000-0000-0000-0000-00000000000a', 9);
@@ -341,6 +341,97 @@ begin
 end
 $$;
 
+-- ============================================================ precisão da localização dos postos
+insert into public.postos (id, cnpj, razao_social, municipio, uf, localizacao, localizacao_fonte, precisao_localizacao) values
+  (20, '20000000000191', 'POSTO RUA UM LTDA',        'FORTALEZA', 'CE', 'SRID=4326;POINT(-38.5200 -3.7500)', 'geocodificacao', 'rua'),
+  (21, '21000000000191', 'POSTO CEP CIDADE LTDA',    'ITAITINGA', 'CE', 'SRID=4326;POINT(-38.5500 -3.9990)', 'geocodificacao', 'cep_cidade'),
+  (22, '22000000000191', 'POSTO SEM POSICAO LTDA',   'ITAITINGA', 'CE', null, null, 'nenhuma');
+
+do $$
+declare
+  n int;
+  j jsonb;
+  r record;
+begin
+  set local role anon;
+  select count(*) into n from public.postos_na_area(-4.10, -38.70, -3.60, -38.40) where id in (20, 21, 22);
+  perform pg_temp.checar(n = 1, 'mapa mostra posto de rua e esconde os de CEP da cidade e sem posição');
+  select count(*) into n from public.postos_proximos(-3.75, -38.52, 80) where id in (21, 22);
+  perform pg_temp.checar(n = 0, 'lista por distância também esconde os de posição fraca');
+  select * into r from public.postos_na_area(-4.10, -38.70, -3.60, -38.40) where id = 20;
+  perform pg_temp.checar(r.precisao = 'rua', 'o mapa informa a precisão da posição');
+  select * into r from public.buscar_postos('sem posicao', -3.75, -38.52) where id = 22;
+  perform pg_temp.checar(r.id = 22 and r.distancia_km is null and r.precisao = 'nenhuma',
+                         'busca encontra o posto sem posição, sem distância');
+  j := public.detalhe_posto(1);
+  perform pg_temp.checar((j ->> 'raio_envio_m')::int = 300 and j ->> 'precisao' = 'exata', 'posição exata: envio em 300 m');
+  j := public.detalhe_posto(20);
+  perform pg_temp.checar((j ->> 'raio_envio_m')::int = 1000 and j ->> 'precisao' = 'rua', 'posição de rua: envio em 1 km');
+  j := public.detalhe_posto(21);
+  perform pg_temp.checar(j -> 'raio_envio_m' = 'null'::jsonb or j -> 'raio_envio_m' is null, 'CEP da cidade: não aceita envio');
+  reset role;
+end
+$$;
+select pg_temp.checar((select precisao = 'rua' and distancia_m < 1 from public.distancia_e_precisao(20, -3.75, -38.52)),
+                      'validação do envio recebe distância e precisão do posto');
+select pg_temp.checar((select distancia_m is null and precisao = 'nenhuma' from public.distancia_e_precisao(22, -3.75, -38.52)),
+                      'posto sem posição não tem distância');
+
+-- "Estou neste posto": posição informada por quem está lá
+select pg_temp.checar((public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000a', 1, -3.73, -38.527) ->> 'motivo') = 'posicao_confirmada',
+                      'posto de posição exata não aceita correção');
+select pg_temp.checar((public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000a', 21, -1.0, -38.55) ->> 'motivo') = 'longe_do_posto',
+                      'posição a mais de 100 km da aproximada é recusada');
+select pg_temp.checar((public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000a', 22, -3.9900, -38.5400) ->> 'status') = 'aguardando',
+                      'primeira pessoa informa a posição e o posto aguarda confirmação');
+select pg_temp.checar((public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000a', 22, -3.9901, -38.5401) ->> 'status') = 'aguardando'
+                      and (select count(*) from public.correcoes_posicao where posto_id = 22) = 1,
+                      'a mesma pessoa informando de novo atualiza a posição e não conta duas vezes');
+select pg_temp.checar((select precisao_localizacao = 'nenhuma' and localizacao is null from public.postos where id = 22),
+                      'enquanto aguarda, a posição do posto não muda');
+create temp table pontos_antes as select id, pontos from public.perfis;
+select pg_temp.checar((public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000d', 22, -3.9902, -38.5402) ->> 'status') = 'confirmada',
+                      'segunda pessoa a menos de 150 m confirma a posição');
+select pg_temp.checar((select precisao_localizacao = 'exata' and localizacao_fonte = 'usuario' and localizacao_validada
+                              and extensions.st_distance(localizacao, 'SRID=4326;POINT(-38.5401 -3.9901)'::extensions.geography) < 50
+                       from public.postos where id = 22),
+                      'posto passa a ter posição exata, no meio das duas informadas');
+select pg_temp.checar((select p.pontos - a.pontos = 5 from public.perfis p join pontos_antes a using (id)
+                       where p.id = '00000000-0000-0000-0000-00000000000d'),
+                      'quem confirma a posição ganha 5 pontos');
+select pg_temp.checar((select count(*) from public.correcoes_posicao where posto_id = 22 and status = 'confirmada') = 2,
+                      'as duas posições ficam como confirmadas');
+select pg_temp.checar((public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000b', 22, -3.99, -38.54) ->> 'motivo') = 'posicao_confirmada',
+                      'depois de confirmada, a posição não aceita nova correção');
+
+-- Duas posições distantes não se confirmam; a terceira, perto da primeira, confirma e encerra a que discorda
+select public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000a', 20, -3.7500, -38.5200);
+select pg_temp.checar((public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000d', 20, -3.7900, -38.5200) ->> 'status') = 'aguardando',
+                      'posições a mais de 150 m uma da outra não se confirmam');
+select pg_temp.checar((public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000b', 20, -3.7501, -38.5201) ->> 'status') = 'confirmada',
+                      'a terceira posição, perto da primeira, confirma');
+select pg_temp.checar((select status = 'contestada' from public.correcoes_posicao
+                       where posto_id = 20 and usuario_id = '00000000-0000-0000-0000-00000000000d'),
+                      'a posição que discorda do consenso é encerrada como contestada');
+select pg_temp.checar((select count(*) from public.correcoes_posicao where posto_id = 20 and status = 'pendente') = 0,
+                      'nenhuma posição fica pendente depois do consenso');
+
+-- Limite diário
+do $$
+declare i int; r jsonb;
+begin
+  for i in 1..10 loop
+    insert into public.postos (id, cnpj, razao_social, municipio, uf, precisao_localizacao)
+    values (100 + i, '1000000000' || lpad(i::text, 4, '0'), 'POSTO LOTE ' || i, 'ITAITINGA', 'CE', 'nenhuma');
+    perform public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000c', 100 + i, -3.9, -38.5);
+  end loop;
+  insert into public.postos (id, cnpj, razao_social, municipio, uf, precisao_localizacao)
+  values (111, '10000000009999', 'POSTO LOTE 11', 'ITAITINGA', 'CE', 'nenhuma');
+  r := public.registrar_correcao_posicao('00000000-0000-0000-0000-00000000000c', 111, -3.9, -38.5);
+  perform pg_temp.checar(r ->> 'motivo' = 'limite_diario', 'cada pessoa informa no máximo 10 posições por dia');
+end
+$$;
+
 -- ============================================================ importação do cadastro da ANP
 update public.postos set localizacao_fonte = 'usuario', localizacao = 'SRID=4326;POINT(-38.5 -3.7)' where id = 1;
 select pg_temp.checar(public.importar_postos_anp('CE', '[
@@ -361,5 +452,16 @@ select pg_temp.checar((select localizacao is not null and ativo from public.post
                       'posto novo do cadastro entra com localização');
 select pg_temp.checar(not (select ativo from public.postos where id = 2), 'posto que saiu do cadastro fica inativo');
 select pg_temp.checar((select count(*) from cron.job) = 4, 'quatro tarefas agendadas registradas');
+select pg_temp.checar((select precisao_localizacao = 'exata' from public.postos where cnpj = '44444444000191'),
+                      'posto novo do cadastro com coordenada da ANP entra com posição exata');
+select pg_temp.checar(public.importar_postos_anp('CE', '[
+  {"cnpj": "21000000000191", "razao_social": "POSTO CEP CIDADE LTDA", "bandeira": "Bandeira branca", "endereco": "RUA A, 1",
+   "complemento": null, "bairro": "CENTRO", "municipio": "ITAITINGA", "cep": "61880000", "lat": -3.9700, "lon": -38.5300,
+   "validada": false, "autorizacao": "PR/CE003", "produtos": [{"produto_id": 1, "bicos": 2}]}
+]'::jsonb, false) = 1, 'importação de um posto que já tinha posição aproximada');
+select pg_temp.checar((select precisao_localizacao = 'exata' and localizacao_fonte = 'anp' from public.postos where id = 21),
+                      'coordenada da ANP substitui a posição aproximada');
+select pg_temp.checar((select precisao_localizacao = 'exata' and localizacao_fonte = 'usuario' from public.postos where id = 22),
+                      'posição confirmada por usuários não é trocada pela sincronização');
 
 \echo 'TODOS OS TESTES PASSARAM'

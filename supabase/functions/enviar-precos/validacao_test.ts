@@ -1,5 +1,16 @@
 import { assertEquals } from "jsr:@std/assert@1";
-import { motivoRevisao, validarCorpo } from "./validacao.ts";
+import { motivoRevisao, raioParaPrecisao, validarCorpo } from "./validacao.ts";
+
+Deno.test("raio de envio depende da precisão da posição do posto", () => {
+  const par = { raio_envio_m: 300, raio_envio_aproximado_m: 1000 };
+  assertEquals(raioParaPrecisao("exata", par), 300);
+  assertEquals(raioParaPrecisao("rua", par), 1000);
+  assertEquals(raioParaPrecisao("cep_rua", par), 1000);
+  assertEquals(raioParaPrecisao("cep_cidade", par), null);
+  assertEquals(raioParaPrecisao("municipio", par), null);
+  assertEquals(raioParaPrecisao("nenhuma", par), null);
+  assertEquals(raioParaPrecisao(undefined, par), null);
+});
 
 const produtos = [
   { id: 1, nome: "Gasolina comum", preco_min: 2, preco_max: 15 },

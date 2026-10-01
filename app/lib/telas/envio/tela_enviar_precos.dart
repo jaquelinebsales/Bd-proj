@@ -63,6 +63,11 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
     super.dispose();
   }
 
+  /// Raio de envio do posto, vindo do servidor: 300 m com posição exata, 1 km com posição aproximada.
+  int get _raioM => _posto?.raioEnvioM ?? 300;
+
+  String _textoRaio() => _raioM >= 1000 ? '${_raioM ~/ 1000} km' : '$_raioM m';
+
   Future<void> _atualizarDistancia() async {
     final pos = await Localizacao.instancia.obter(precisa: true);
     final p = _posto?.resumo;
@@ -193,7 +198,7 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
         child: Column(children: [
           passo(Icons.crop_free, 'Enquadre o painel inteiro, de frente'),
           passo(Icons.wb_sunny_outlined, 'Evite reflexo e contraluz'),
-          passo(Icons.place_outlined, 'Esteja no posto: a localização confirma o envio (até 300 m)'),
+          passo(Icons.place_outlined, 'Esteja no posto: a localização confirma o envio (até ${_textoRaio()})'),
           passo(Icons.lock_outline, 'A foto é lida no seu celular e apagada. Ela nunca é enviada nem guardada.'),
         ]),
       ),
@@ -215,7 +220,7 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
     final tt = Theme.of(context).textTheme;
     final cs = Theme.of(context).colorScheme;
     final leitura = _leitura!;
-    final longe = _distanciaM != null && _distanciaM! > 300;
+    final longe = _distanciaM != null && _distanciaM! > _raioM;
     return ListView(padding: const EdgeInsets.all(16), children: [
       Text('Confira os preços', style: tt.headlineSmall),
       const SizedBox(height: 4),
@@ -239,7 +244,7 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
             leading: Icon(Icons.wrong_location_outlined, color: cs.onErrorContainer),
             title: Text('Você está a ${distancia(_distanciaM! / 1000)} do posto',
                 style: TextStyle(color: cs.onErrorContainer, fontWeight: FontWeight.w700)),
-            subtitle: Text('O envio só é aceito a até 300 m.', style: TextStyle(color: cs.onErrorContainer)),
+            subtitle: Text('O envio só é aceito a até ${_textoRaio()}.', style: TextStyle(color: cs.onErrorContainer)),
             trailing: IconButton(onPressed: _atualizarDistancia, icon: const Icon(Icons.refresh), tooltip: 'Atualizar localização'),
           ),
         ),

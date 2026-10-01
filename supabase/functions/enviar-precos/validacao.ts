@@ -97,6 +97,24 @@ export function validarCorpo(corpo: unknown, produtos: Produto[]): Resultado<{ e
   };
 }
 
+export type Precisao = "exata" | "rua" | "cep_rua" | "cep_cidade" | "municipio" | "nenhuma";
+
+/** Raio em metros para enviar preço, conforme a precisão da posição do posto. null: o posto não aceita envio. */
+export function raioParaPrecisao(
+  precisao: string | null | undefined,
+  par: { raio_envio_m: number; raio_envio_aproximado_m: number },
+): number | null {
+  switch (precisao) {
+    case "exata":
+      return par.raio_envio_m;
+    case "rua":
+    case "cep_rua":
+      return par.raio_envio_aproximado_m;
+    default:
+      return null;
+  }
+}
+
 /** Envio entra em revisão (exige mais confirmações) se destoar da referência ou se o usuário tiver baixa confiabilidade. */
 export function motivoRevisao(
   preco: number,

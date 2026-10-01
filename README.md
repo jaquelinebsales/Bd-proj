@@ -6,7 +6,7 @@ App de preços de combustíveis para Android e iOS, em celular e tablet. Combina
 |---|---|
 | `app/` | App Flutter (Material 3, go_router, mapa do OpenStreetMap com flutter_map, ML Kit para ler o painel) |
 | `supabase/migrations/` | Banco: tabelas, regras de acesso (RLS), regras de negócio e tarefas agendadas |
-| `supabase/functions/` | Edge Functions em TypeScript: envio de preços, sincronização com a ANP, exclusão de conta |
+| `supabase/functions/` | Edge Functions em TypeScript: envio de preços, posição dos postos ("Estou neste posto"), sincronização com a ANP, exclusão de conta |
 | `supabase/tests/` | Testes das regras de negócio no banco |
 | `scripts/` | Python: limpeza das planilhas da ANP, cobertura, experimento do modelo, publicação e importação no Supabase |
 | `documentacao/` | Requisitos, relatórios e mockups |
@@ -46,7 +46,7 @@ Requer a [Supabase CLI](https://supabase.com/docs/guides/cli) e Python 3.10+ com
 
 2. **Publique:** `python scripts/supabase/publicar.py`. Para ver os passos sem executar nada, use `--simular`. O script:
    - aplica as migrações no banco (`supabase db push`);
-   - publica as três Edge Functions, sem precisar de Docker;
+   - publica as quatro Edge Functions, sem precisar de Docker;
    - grava o `CRON_SECRET` nas funções e o endereço e a senha da sincronização no Vault do banco;
    - chama cada função sem login e confere que ela respondeu certo.
 

@@ -25,6 +25,7 @@ import 'telas/perfil/tela_ranking.dart';
 import 'telas/posto/tela_avaliacoes.dart';
 import 'telas/posto/tela_avaliar.dart';
 import 'telas/posto/tela_historico.dart';
+import 'telas/posto/tela_posicao_posto.dart';
 import 'telas/posto/tela_posto.dart';
 import 'telas/sobre/tela_sobre.dart';
 import 'util/responsivo.dart';
@@ -93,6 +94,7 @@ GoRouter criarRotas(bool boasVindas) => GoRouter(
         GoRoute(path: '/posto/:id/avaliacoes', builder: (_, s) => TelaAvaliacoes(postoId: _id(s))),
         GoRoute(path: '/posto/:id/avaliar', builder: (_, s) => TelaAvaliar(postoId: _id(s))),
         GoRoute(path: '/posto/:id/enviar', builder: (_, s) => TelaEnviarPrecos(postoId: _id(s))),
+        GoRoute(path: '/posto/:id/posicao', builder: (_, s) => TelaPosicaoPosto(postoId: _id(s))),
         GoRoute(path: '/entrar', builder: (_, _) => const TelaEntrar()),
         GoRoute(path: '/cadastro', builder: (_, _) => const TelaCadastro()),
         GoRoute(path: '/recuperar-senha', builder: (_, _) => const TelaRecuperarSenha()),

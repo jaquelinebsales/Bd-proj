@@ -32,5 +32,6 @@ jobs:
       - name: Publicar Edge Functions
         run: |
           supabase functions deploy enviar-precos --project-ref "$SUPABASE_PROJECT_REF"
+          supabase functions deploy corrigir-posicao --project-ref "$SUPABASE_PROJECT_REF"
           supabase functions deploy sincronizar-cadastro-anp --project-ref "$SUPABASE_PROJECT_REF"
           supabase functions deploy excluir-conta --project-ref "$SUPABASE_PROJECT_REF"

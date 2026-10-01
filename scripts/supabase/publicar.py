@@ -31,10 +31,11 @@ from pathlib import Path
 
 import env_util as eu
 
-FUNCOES = ["enviar-precos", "sincronizar-cadastro-anp", "excluir-conta"]
+FUNCOES = ["enviar-precos", "corrigir-posicao", "sincronizar-cadastro-anp", "excluir-conta"]
 # Mensagem que cada função devolve quando chamada sem login: prova que o código dela rodou.
 RESPOSTA_ESPERADA = {
     "enviar-precos": "Entre na sua conta",
+    "corrigir-posicao": "Entre na sua conta",
     "sincronizar-cadastro-anp": "Não autorizado",
     "excluir-conta": "Entre na sua conta",
 }

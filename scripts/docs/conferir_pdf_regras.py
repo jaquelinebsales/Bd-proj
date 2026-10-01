@@ -43,9 +43,7 @@ def main() -> int:
     ids = {m for m in re.findall(r"RN-(\d\d)", bruto)}
     print(f"regras no catálogo: {n}; ids RN no PDF: {len(ids)}")
 
-    sql = (RAIZ / "supabase" / "migrations" / "20260929000003_regras.sql").read_text(encoding="utf-8")
-    trecho = sql[sql.index("insert into public.parametros"):]
-    params = re.findall(r"\('(\w+)',\s*([-\d.]+),\s*'([^']*)'\)", trecho)
+    params = g.ler_parametros()
     for k, _v, d in params:
         if norm(k) not in T:
             faltam.append("parâmetro: " + k)

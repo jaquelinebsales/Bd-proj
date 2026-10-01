@@ -45,15 +45,49 @@ class _TelaPostoState extends State<TelaPosto> {
     }
   }
 
+  /// Posição exata vai por coordenada. Posição aproximada ou desconhecida vai pelo endereço,
+  /// que o Google Maps localiza melhor do que o ponto aproximado do app.
   Future<void> _rotas(PostoResumo p) async {
-    if (p.lat == null) return;
-    final url = Uri.parse('https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}');
+    final Uri url;
+    if (p.precisao == PrecisaoLocalizacao.exata && p.lat != null) {
+      url = Uri.parse('https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}');
+    } else {
+      final consulta = [p.endereco, p.bairro, p.municipio, p.uf, 'Brasil'].where((e) => e != null && e.isNotEmpty).join(', ');
+      url = Uri.https('www.google.com', '/maps/dir/', {'api': '1', 'destination': consulta});
+    }
     if (!await launchUrl(url, mode: LaunchMode.externalApplication) && mounted) {
       mostrarMensagem(context, 'Não foi possível abrir o aplicativo de mapas.');
     }
   }
 
-  Future<void> _atualizarPrecos() async {
+  Future<void> _informarPosicao() async {
+    if (!await exigirLogin(context, 'Para informar a posição de um posto, entre na sua conta.')) return;
+    if (!mounted) return;
+    final informou = await context.push<bool>('/posto/${widget.postoId}/posicao');
+    if (informou == true) _recarregar();
+  }
+
+  Future<void> _atualizarPrecos(PostoDetalhe d) async {
+    if (!d.resumo.precisao.aceitaEnvio) {
+      final informar = await showDialog<bool>(
+        context: context,
+        builder: (c) => AlertDialog(
+          title: const Text('Ainda não sabemos onde este posto fica'),
+          content: const Text('Para enviar preços, precisamos da posição do posto. Se você está nele agora, toque em '
+              '"Estou neste posto". Quando outra pessoa também confirmar, o envio de preço fica liberado.'),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Agora não')),
+            FilledButton(
+              style: FilledButton.styleFrom(minimumSize: const Size(0, 40)),
+              onPressed: () => Navigator.pop(c, true),
+              child: const Text('Estou neste posto'),
+            ),
+          ],
+        ),
+      );
+      if (informar == true) await _informarPosicao();
+      return;
+    }
     if (!await exigirLogin(context, 'Para enviar preços, entre na sua conta.')) return;
     if (!mounted) return;
     final enviou = await context.push<bool>('/posto/${widget.postoId}/enviar');
@@ -111,7 +145,7 @@ class _TelaPostoState extends State<TelaPosto> {
           style: tt.bodyLarge?.copyWith(color: cs.onSurfaceVariant)),
       const SizedBox(height: 12),
       Wrap(spacing: 8, runSpacing: 8, children: [
-        OutlinedButton.icon(onPressed: p.lat == null ? null : () => _rotas(p), icon: const Icon(Icons.directions), label: const Text('Como chegar')),
+        OutlinedButton.icon(onPressed: () => _rotas(p), icon: const Icon(Icons.directions), label: const Text('Como chegar')),
         OutlinedButton.icon(onPressed: _avaliar, icon: const Icon(Icons.rate_review_outlined), label: Text(d.minhaAvaliacao == null ? 'Avaliar' : 'Editar avaliação')),
       ]),
     ]);
@@ -149,7 +183,7 @@ class _TelaPostoState extends State<TelaPosto> {
         ),
         const SizedBox(height: 16),
         FilledButton.icon(
-          onPressed: _atualizarPrecos,
+          onPressed: () => _atualizarPrecos(d),
           icon: const Icon(Icons.photo_camera_outlined),
           label: const Text('Atualizar preços com uma foto'),
         ),
@@ -211,7 +245,9 @@ class _TelaPostoState extends State<TelaPosto> {
           ),
           ListTile(
             title: const Text('Localização no mapa'),
-            subtitle: Text(d.localizacaoValidada ? 'Validada pela ANP' : 'Informada pela ANP, ainda não validada'),
+            subtitle: Text(p.precisao != PrecisaoLocalizacao.exata
+                ? p.precisao.rotulo
+                : (d.localizacaoValidada ? 'Confirmada por usuários' : 'Informada pela ANP, ainda não validada')),
           ),
           if (d.sincronizadoEm != null)
             ListTile(title: const Text('Cadastro atualizado em'), subtitle: Text(data(d.sincronizadoEm!))),
@@ -219,7 +255,42 @@ class _TelaPostoState extends State<TelaPosto> {
       ),
     );
 
-    final coluna1 = [cabecalho, const SizedBox(height: 24), precos];
+    final aviso = p.precisao == PrecisaoLocalizacao.exata
+        ? null
+        : Card(
+            color: cs.tertiaryContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(children: [
+                  Icon(Icons.location_searching, color: cs.onTertiaryContainer),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(p.precisao.rotulo,
+                        style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w700, color: cs.onTertiaryContainer)),
+                  ),
+                ]),
+                const SizedBox(height: 8),
+                Text(
+                  p.precisao.aproximada
+                      ? 'O ponto deste posto no mapa pode estar a algumas centenas de metros do lugar certo. '
+                          'Se você está nele, toque em "Estou neste posto". Quando duas pessoas confirmarem, '
+                          'ele passa a aparecer com a posição exata.'
+                      : 'Ainda não sabemos onde este posto fica, então ele não aparece no mapa e não recebe envio de preço. '
+                          'Se você está nele, toque em "Estou neste posto". Quando duas pessoas confirmarem, o envio de preço fica liberado.',
+                  style: tt.bodyMedium?.copyWith(color: cs.onTertiaryContainer),
+                ),
+                const SizedBox(height: 12),
+                FilledButton.icon(
+                  onPressed: d.posicaoInformada ? null : _informarPosicao,
+                  icon: const Icon(Icons.my_location),
+                  label: Text(d.posicaoInformada ? 'Posição informada, aguardando outra pessoa' : 'Estou neste posto'),
+                ),
+              ]),
+            ),
+          );
+
+    final coluna1 = [cabecalho, if (aviso != null) ...[const SizedBox(height: 16), aviso], const SizedBox(height: 24), precos];
     final coluna2 = [historico, const SizedBox(height: 24), avaliacoes, const SizedBox(height: 24), dados];
 
     return RefreshIndicator(

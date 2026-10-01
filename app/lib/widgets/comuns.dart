@@ -183,6 +183,13 @@ class CartaoPosto extends StatelessWidget {
                 Wrap(spacing: 8, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.center, children: [
                   NotaCompacta(posto.notaMedia, posto.totalAvaliacoes),
                   if (posto.distanciaKm != null) Text(distancia(posto.distanciaKm), style: tt.bodyMedium),
+                  if (posto.precisao != PrecisaoLocalizacao.exata)
+                    Row(mainAxisSize: MainAxisSize.min, children: [
+                      Icon(Icons.location_searching, size: 14, color: cs.tertiary),
+                      const SizedBox(width: 3),
+                      Text(posto.precisao.aproximada ? 'Local aproximado' : 'Local desconhecido',
+                          style: tt.bodySmall?.copyWith(color: cs.tertiary, fontWeight: FontWeight.w600)),
+                    ]),
                   if (posto.bandeira != null) Text(posto.bandeira!, style: tt.bodySmall?.copyWith(color: cs.outline)),
                 ]),
                 const SizedBox(height: 4),

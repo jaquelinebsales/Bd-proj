@@ -142,7 +142,7 @@ class _TelaMapaState extends State<TelaMapa> {
       for (final p in visiveis)
         Marker(
           point: LatLng(p.lat!, p.lon!),
-          width: 96,
+          width: 110,
           height: 44,
           alignment: Alignment.topCenter,
           child: _PinoPreco(
@@ -288,9 +288,10 @@ class _PinoPreco extends StatelessWidget {
     final texto = p == null
         ? '–'
         : (p.fonte == FontePreco.estimativa ? '≈${preco_(p.preco)}' : preco_(p.preco)).replaceAll('R\$ ', '').replaceAll('R\$', '');
-    final rotulo = p == null
-        ? '${posto.nome}, sem preço'
-        : '${posto.nome}, ${preco_(p.preco)}${p.fonte == FontePreco.estimativa ? ', estimativa' : ''}';
+    final rotulo = (p == null
+            ? '${posto.nome}, sem preço'
+            : '${posto.nome}, ${preco_(p.preco)}${p.fonte == FontePreco.estimativa ? ', estimativa' : ''}') +
+        (posto.precisao.aproximada ? ', localização aproximada' : '');
     return Semantics(
       button: true,
       label: rotulo,
@@ -305,8 +306,14 @@ class _PinoPreco extends StatelessWidget {
               border: Border.all(color: selecionado ? Colors.black : Colors.white, width: selecionado ? 2.5 : 1.5),
               boxShadow: const [BoxShadow(color: Color(0x40000000), blurRadius: 4, offset: Offset(0, 1))],
             ),
-            child: Text(texto,
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 13, height: 1.1)),
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              if (posto.precisao.aproximada) ...[
+                const Icon(Icons.location_searching, size: 13, color: Colors.white),
+                const SizedBox(width: 3),
+              ],
+              Text(texto,
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 13, height: 1.1)),
+            ]),
           ),
           CustomPaint(size: const Size(12, 7), painter: _Ponta(cor)),
         ]),
