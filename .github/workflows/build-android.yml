@@ -1,7 +1,7 @@
 name: Gerar APK
 
 # Gera o APK de teste sob demanda (aba Actions → Gerar APK → Run workflow).
-# Segredos necessários: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, GOOGLE_MAPS_API_KEY.
+# Segredos necessários: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY. O mapa (OpenStreetMap) não usa chave.
 on:
   workflow_dispatch:
 
@@ -25,10 +25,8 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
-          MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
         run: |
           printf '{"SUPABASE_URL":"%s","SUPABASE_PUBLISHABLE_KEY":"%s"}' "$SUPABASE_URL" "$SUPABASE_PUBLISHABLE_KEY" > config/app.json
-          echo "MAPS_API_KEY=$MAPS_API_KEY" >> android/local.properties
       - run: flutter pub get
       - run: flutter build apk --release --dart-define-from-file=config/app.json
       - uses: actions/upload-artifact@v4

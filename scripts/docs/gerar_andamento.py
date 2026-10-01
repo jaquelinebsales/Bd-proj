@@ -41,6 +41,7 @@ ETAPAS = [
         ("Filtros, ordenação e cache no aparelho", OK),
         ("Avisos de preço em tempo real para favoritos", OK),
         ("Modo de demonstração com dados de exemplo", OK),
+        ("Mapa do OpenStreetMap no lugar do Google Maps: sem chave e sem cartão", OK),
         ("Rodar em aparelho Android e iOS", ESPERA),
         ("Ajustar o leitor com fotos reais de painéis", PROX),
     ]),

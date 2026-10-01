@@ -4,7 +4,7 @@ App de preços de combustíveis para Android e iOS, em celular e tablet. Combina
 
 | Pasta | Conteúdo |
 |---|---|
-| `app/` | App Flutter (Material 3, go_router, Google Maps, ML Kit para ler o painel) |
+| `app/` | App Flutter (Material 3, go_router, mapa do OpenStreetMap com flutter_map, ML Kit para ler o painel) |
 | `supabase/migrations/` | Banco: tabelas, regras de acesso (RLS), regras de negócio e tarefas agendadas |
 | `supabase/functions/` | Edge Functions em TypeScript: envio de preços, sincronização com a ANP, exclusão de conta |
 | `supabase/tests/` | Testes das regras de negócio no banco |
@@ -29,18 +29,14 @@ O script testa cada chave contra o Supabase e diz o que falta, sem nunca mostrar
 | `SUPABASE_DB_PASSWORD` | A senha definida ao criar o projeto. Se esqueceu: Project Settings → Database → Reset database password | **Não** |
 | `SUPABASE_ACCESS_TOKEN` (`sbp_...`) | supabase.com/dashboard/account/tokens | **Não** |
 | `CRON_SECRET` | Você inventa. Para gerar uma: `python scripts/supabase/verificar_env.py --gerar-cron-secret` | **Não** |
-| `GOOGLE_MAPS_API_KEY` | Google Cloud Console, com *Maps SDK for Android* e *Maps SDK for iOS* ativados | Sim, com restrição ao pacote do app |
 | `DATABASE_URL` | **Deixe vazia.** Os scripts montam a conexão sozinhos com a senha do banco e o token de acesso | **Não** |
 | `SUPABASE_PROJECT_REF` | **Deixe vazia.** Sai da `SUPABASE_URL` | Sim |
 
 Se preferir informar a `DATABASE_URL` à mão, copie do botão **Connect** no topo do painel, opção **Session pooler**, e troque `[YOUR-PASSWORD]` pela senha. Se a senha tiver `@ : / # ? %`, não use essa linha: deixe-a vazia e preencha só `SUPABASE_DB_PASSWORD`. A conexão direta (`db.xxx.supabase.co`) só funciona em redes com IPv6; o Session pooler funciona em qualquer rede.
 
-Para o mapa, a chave do Google Maps também vai em dois lugares no seu computador:
+O mapa usa o OpenStreetMap e não precisa de chave nem de cartão. Os blocos do mapa vêm dos servidores públicos do OpenStreetMap, que servem bem para testes e para um projeto acadêmico. Se o app passar a ter muitos usuários, troque só o endereço `urlTemplate` em `app/lib/telas/mapa/tela_mapa.dart` por um serviço com plano gratuito, como MapTiler ou Stadia Maps, e mantenha a atribuição do OpenStreetMap visível.
 
-- Android: `app/android/local.properties` com a linha `MAPS_API_KEY=...`
-- iOS: copie `app/ios/Flutter/Secrets.xcconfig.example` para `Secrets.xcconfig` e preencha
-
-Os arquivos `.env`, `app/config/app.json`, `local.properties` e `Secrets.xcconfig` estão no `.gitignore`.
+Os arquivos `.env` e `app/config/app.json` estão no `.gitignore`.
 
 ## Colocar o backend no ar
 
@@ -96,7 +92,7 @@ Com os segredos cadastrados em *Settings → Secrets and variables → Actions* 
 | Segredo | Usado por |
 |---|---|
 | `SUPABASE_ACCESS_TOKEN`, `SUPABASE_DB_PASSWORD`, `SUPABASE_PROJECT_REF` | deploy-supabase.yml |
-| `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `GOOGLE_MAPS_API_KEY` | build-android.yml |
+| `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` | build-android.yml |
 
 - **ci.yml:** roda os testes do app, das Edge Functions, dos scripts e do banco em todo push e pull request.
 - **deploy-supabase.yml:** a cada push na `main` que mude `supabase/`, aplica as migrações e publica as Edge Functions.

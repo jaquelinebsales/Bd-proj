@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart' show LatLng;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../config.dart';
 import '../../modelos/modelos.dart';
@@ -13,10 +15,10 @@ import '../../tema.dart';
 import '../../util/formatos.dart';
 import '../../util/responsivo.dart';
 import '../../widgets/comuns.dart';
-import '../../widgets/marcador.dart';
 import '../../widgets/seletor_produto.dart';
 
-/// Tela inicial: mapa com os postos da área visível e o preço do combustível escolhido.
+/// Tela inicial: mapa do OpenStreetMap com os postos da área visível e o preço do combustível escolhido.
+/// Não usa chave de API. Os blocos do mapa vêm de tile.openstreetmap.org, que exige a atribuição visível.
 class TelaMapa extends StatefulWidget {
   const TelaMapa({super.key});
   @override
@@ -24,74 +26,75 @@ class TelaMapa extends StatefulWidget {
 }
 
 class _TelaMapaState extends State<TelaMapa> {
-  static const _brasil = CameraPosition(target: LatLng(-15.79, -47.88), zoom: 4.2);
+  static const _brasil = LatLng(-15.79, -47.88);
   static const _zoomMinimo = 11.0;
+  static const _zoomLocal = 13.0;
 
-  GoogleMapController? _mapa;
-  final _marcadores = FabricaMarcadores();
-  Set<Marker> _pinos = {};
+  final _mapa = MapController();
   List<PostoResumo> _postos = [];
   PostoResumo? _selecionado;
   bool _carregando = false;
   bool _longeDemais = false;
+  bool _mapaPronto = false;
   String? _erro;
   Timer? _espera;
-  double _zoom = _brasil.zoom;
 
   @override
   void initState() {
     super.initState();
     Preferencias.produto.addListener(_redesenhar);
+    Localizacao.instancia.addListener(_redesenhar);
   }
 
   @override
   void dispose() {
     Preferencias.produto.removeListener(_redesenhar);
+    Localizacao.instancia.removeListener(_redesenhar);
     _espera?.cancel();
+    _mapa.dispose();
     super.dispose();
   }
 
+  void _redesenhar() {
+    if (mounted) setState(() {});
+  }
+
   Future<void> _iniciar() async {
+    _mapaPronto = true;
     final salvos = await Api.instancia.ultimaAreaSalva();
-    if (salvos.isNotEmpty && mounted) {
-      _postos = salvos;
-      await _redesenhar();
-    }
+    if (salvos.isNotEmpty && mounted) setState(() => _postos = salvos);
     final pos = await Localizacao.instancia.obter(pedirPermissao: false);
-    if (pos != null) {
-      await _mapa?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(pos.latitude, pos.longitude), 14));
+    if (pos != null && mounted) {
+      _mapa.move(LatLng(pos.latitude, pos.longitude), _zoomLocal);
     }
+    _carregarArea();
   }
 
   Future<void> _centralizar() async {
     final pos = await Localizacao.instancia.obter();
+    if (!mounted) return;
     if (pos == null) {
-      if (!mounted) return;
-      final estado = Localizacao.instancia.estado;
       mostrarMensagem(
         context,
-        estado == EstadoLocalizacao.desligada
+        Localizacao.instancia.estado == EstadoLocalizacao.desligada
             ? 'Ative a localização do aparelho para ver os postos perto de você.'
             : 'Permita o acesso à localização nas configurações do app.',
       );
       return;
     }
-    await _mapa?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(pos.latitude, pos.longitude), 14));
+    _mapa.move(LatLng(pos.latitude, pos.longitude), _zoomLocal);
   }
 
-  void _aoParar() {
+  void _aoMover(MapCamera camera, bool porGesto) {
     _espera?.cancel();
     _espera = Timer(const Duration(milliseconds: 450), _carregarArea);
   }
 
   Future<void> _carregarArea() async {
-    final mapa = _mapa;
-    if (mapa == null || (!Config.configurado && !Config.demo)) return;
-    if (_zoom < _zoomMinimo) {
-      setState(() {
-        _longeDemais = true;
-        _pinos = {};
-      });
+    if (!_mapaPronto || !mounted || (!Config.configurado && !Config.demo)) return;
+    final camera = _mapa.camera;
+    if (camera.zoom < _zoomMinimo) {
+      setState(() => _longeDemais = true);
       return;
     }
     setState(() {
@@ -100,45 +103,20 @@ class _TelaMapaState extends State<TelaMapa> {
       _erro = null;
     });
     try {
-      final area = await mapa.getVisibleRegion();
-      final lista = await Api.instancia.postosNaArea(
-        area.southwest.latitude, area.southwest.longitude, area.northeast.latitude, area.northeast.longitude);
+      final area = camera.visibleBounds;
+      final lista = await Api.instancia.postosNaArea(area.south, area.west, area.north, area.east);
       final loc = Localizacao.instancia;
       _postos = lista.map((p) => p.comDistancia(loc.distanciaKm(p.lat, p.lon))).toList();
-      await _redesenhar();
     } catch (e) {
-      if (mounted) setState(() => _erro = e.toString());
+      _erro = e.toString();
     } finally {
       if (mounted) setState(() => _carregando = false);
     }
   }
 
-  Future<void> _redesenhar() async {
-    final produto = Preferencias.produto.value;
-    final pinos = <Marker>{};
-    final cs = Theme.of(context).colorScheme;
-    for (final p in _postos) {
-      if (p.lat == null || p.lon == null) continue;
-      final pr = p.preco(produto);
-      final cor = pr == null ? const Color(0xFF6B7280) : (pr.fonte == FontePreco.estimativa ? Tema.estimativa : corFrescor(pr.frescor()));
-      final texto = pr == null ? '–' : (pr.fonte == FontePreco.estimativa ? '≈${preco(pr.preco)}' : preco(pr.preco)).replaceAll('R\$ ', '');
-      final icone = await _marcadores.pilula(texto, cor, _selecionado?.id == p.id ? cs.onSurface : Colors.white);
-      pinos.add(Marker(
-        markerId: MarkerId('${p.id}'),
-        position: LatLng(p.lat!, p.lon!),
-        icon: icone,
-        anchor: const Offset(0.5, 1),
-        zIndexInt: pr == null ? 0 : 1,
-        onTap: () => _selecionar(p, mover: false),
-      ));
-    }
-    if (mounted) setState(() => _pinos = pinos);
-  }
-
   void _selecionar(PostoResumo p, {bool mover = true}) {
     setState(() => _selecionado = p);
-    _redesenhar();
-    if (mover && p.lat != null) _mapa?.animateCamera(CameraUpdate.newLatLng(LatLng(p.lat!, p.lon!)));
+    if (mover && p.lat != null) _mapa.move(LatLng(p.lat!, p.lon!), _mapa.camera.zoom);
   }
 
   List<PostoResumo> get _ordenadosPorPreco {
@@ -154,25 +132,74 @@ class _TelaMapaState extends State<TelaMapa> {
     return l;
   }
 
+  List<Marker> _marcadores() {
+    final produto = Preferencias.produto.value;
+    final visiveis = _longeDemais ? <PostoResumo>[] : _postos.where((p) => p.lat != null && p.lon != null).toList();
+    // Postos com preço por cima dos sem preço
+    visiveis.sort((a, b) => (a.preco(produto) == null ? 0 : 1).compareTo(b.preco(produto) == null ? 0 : 1));
+    final pos = Localizacao.instancia.atual;
+    return [
+      for (final p in visiveis)
+        Marker(
+          point: LatLng(p.lat!, p.lon!),
+          width: 96,
+          height: 44,
+          alignment: Alignment.topCenter,
+          child: _PinoPreco(
+            posto: p,
+            preco: p.preco(produto),
+            selecionado: _selecionado?.id == p.id,
+            aoTocar: () => _selecionar(p, mover: false),
+          ),
+        ),
+      if (pos != null)
+        Marker(
+          point: LatLng(pos.latitude, pos.longitude),
+          width: 22,
+          height: 22,
+          child: const _PontoUsuario(),
+        ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final expandido = tamanhoDe(context) == Tamanho.expandido;
+    final cartaoAberto = _selecionado != null && !expandido;
+
     final mapa = Stack(children: [
-      GoogleMap(
-        initialCameraPosition: _brasil,
-        onMapCreated: (c) {
-          _mapa = c;
-          _iniciar();
-        },
-        onCameraMove: (pos) => _zoom = pos.zoom,
-        onCameraIdle: _aoParar,
-        onTap: (_) => setState(() => _selecionado = null),
-        markers: _pinos,
-        myLocationEnabled: Localizacao.instancia.estado == EstadoLocalizacao.permitida,
-        myLocationButtonEnabled: false,
-        mapToolbarEnabled: false,
-        zoomControlsEnabled: false,
-        padding: EdgeInsets.only(top: 120, bottom: _selecionado != null && !expandido ? 200 : 0),
+      FlutterMap(
+        mapController: _mapa,
+        options: MapOptions(
+          initialCenter: _brasil,
+          initialZoom: 4.2,
+          minZoom: 3,
+          maxZoom: 18,
+          onMapReady: _iniciar,
+          onPositionChanged: _aoMover,
+          onTap: (_, _) => setState(() => _selecionado = null),
+        ),
+        children: [
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            userAgentPackageName: 'br.com.gasprice.gasprice',
+            maxNativeZoom: 19,
+          ),
+          MarkerLayer(markers: _marcadores()),
+          Padding(
+            padding: EdgeInsets.only(bottom: cartaoAberto ? 212 : 0),
+            child: RichAttributionWidget(
+              alignment: AttributionAlignment.bottomLeft,
+              showFlutterMapAttribution: false,
+              attributions: [
+                TextSourceAttribution(
+                  'Colaboradores do OpenStreetMap',
+                  onTap: () => launchUrl(Uri.parse('https://www.openstreetmap.org/copyright')),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       SafeArea(
         child: Column(children: [
@@ -208,7 +235,7 @@ class _TelaMapaState extends State<TelaMapa> {
       ),
       Positioned(
         right: 16,
-        bottom: _selecionado != null && !expandido ? 216 : 16,
+        bottom: cartaoAberto ? 228 : 16,
         child: FloatingActionButton(
           heroTag: 'centralizar',
           tooltip: 'Minha localização',
@@ -216,7 +243,7 @@ class _TelaMapaState extends State<TelaMapa> {
           child: const Icon(Icons.my_location),
         ),
       ),
-      if (_selecionado != null && !expandido)
+      if (cartaoAberto)
         Positioned(
           left: 12,
           right: 12,
@@ -242,6 +269,83 @@ class _TelaMapaState extends State<TelaMapa> {
           : mapa,
     );
   }
+}
+
+/// Pino com o preço, colorido pela idade do dado.
+class _PinoPreco extends StatelessWidget {
+  final PostoResumo posto;
+  final PrecoAtual? preco;
+  final bool selecionado;
+  final VoidCallback aoTocar;
+  const _PinoPreco({required this.posto, required this.preco, required this.selecionado, required this.aoTocar});
+
+  @override
+  Widget build(BuildContext context) {
+    final p = preco;
+    final cor = p == null
+        ? const Color(0xFF6B7280)
+        : (p.fonte == FontePreco.estimativa ? Tema.estimativa : corFrescor(p.frescor()));
+    final texto = p == null
+        ? '–'
+        : (p.fonte == FontePreco.estimativa ? '≈${preco_(p.preco)}' : preco_(p.preco)).replaceAll('R\$ ', '').replaceAll('R\$', '');
+    final rotulo = p == null
+        ? '${posto.nome}, sem preço'
+        : '${posto.nome}, ${preco_(p.preco)}${p.fonte == FontePreco.estimativa ? ', estimativa' : ''}';
+    return Semantics(
+      button: true,
+      label: rotulo,
+      child: GestureDetector(
+        onTap: aoTocar,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+            decoration: BoxDecoration(
+              color: cor,
+              borderRadius: BorderRadius.circular(99),
+              border: Border.all(color: selecionado ? Colors.black : Colors.white, width: selecionado ? 2.5 : 1.5),
+              boxShadow: const [BoxShadow(color: Color(0x40000000), blurRadius: 4, offset: Offset(0, 1))],
+            ),
+            child: Text(texto,
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 13, height: 1.1)),
+          ),
+          CustomPaint(size: const Size(12, 7), painter: _Ponta(cor)),
+        ]),
+      ),
+    );
+  }
+}
+
+class _Ponta extends CustomPainter {
+  final Color cor;
+  const _Ponta(this.cor);
+  @override
+  void paint(Canvas canvas, Size size) {
+    final path = Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width / 2, size.height)
+      ..lineTo(size.width, 0)
+      ..close();
+    canvas.drawPath(path, Paint()..color = cor);
+  }
+
+  @override
+  bool shouldRepaint(_Ponta old) => old.cor != cor;
+}
+
+class _PontoUsuario extends StatelessWidget {
+  const _PontoUsuario();
+  @override
+  Widget build(BuildContext context) => Semantics(
+        label: 'Sua localização',
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF1A73E8),
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white, width: 3),
+            boxShadow: const [BoxShadow(color: Color(0x551A73E8), blurRadius: 8, spreadRadius: 4)],
+          ),
+        ),
+      );
 }
 
 class _Aviso extends StatelessWidget {

@@ -10,7 +10,7 @@ Testes feitos (cada um só mostra ok, falha ou aviso):
   2. Chave secreta (e se ela vazou para o app/config/app.json)
   3. Token de acesso (nome, região e situação do projeto)
   4. Conexão com o banco (a DATABASE_URL ou a URL montada pela API), PostGIS e tabelas do gasprice
-  5. CRON_SECRET e chave do Google Maps
+  5. CRON_SECRET
 Sai com código 0 quando tudo o que é obrigatório está pronto.
 """
 from __future__ import annotations
@@ -69,8 +69,7 @@ def conferir_preenchimento(env: dict) -> None:
             est = "preenchido"
         texto = {"vazio": "vazio", "exemplo": "ainda com o texto de exemplo", "preenchido": "preenchido"}[est]
         print(f"  {chave:<26} {texto}")
-    opcionais = [("DATABASE_URL", "montada sozinha se ficar vazia"), ("SUPABASE_PROJECT_REF", "sai da SUPABASE_URL"),
-                 ("GOOGLE_MAPS_API_KEY", "só para o mapa")]
+    opcionais = [("DATABASE_URL", "montada sozinha se ficar vazia"), ("SUPABASE_PROJECT_REF", "sai da SUPABASE_URL")]
     for chave, nota in opcionais:
         print(f"  {chave:<26} {eu.estado(chave, env.get(chave))} ({nota})")
     print()
@@ -211,13 +210,6 @@ def conferir_cron(env: dict, gerar: bool) -> None:
     registrar(OK, nome, "preenchido")
 
 
-def conferir_maps(env: dict) -> None:
-    if eu.preenchido(env, "GOOGLE_MAPS_API_KEY"):
-        registrar(OK, "Chave do Google Maps", "preenchida (o Google só confirma no app)")
-    else:
-        registrar(AVISO, "Chave do Google Maps", "vazia. Sem ela o app funciona, mas o mapa aparece em branco")
-
-
 def main() -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -237,7 +229,6 @@ def main() -> int:
     testar_token(env)
     testar_banco(env)
     conferir_cron(env, args.gerar_cron_secret)
-    conferir_maps(env)
 
     falhas = [r for r in resultados if r[0] == FALHA]
     print()
