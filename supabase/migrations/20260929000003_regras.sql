@@ -554,7 +554,16 @@ begin
 end;
 $$;
 
--- Recalcula precos_atuais de todos os postos com alguma fonte (após importação ANP)
+-- Recalcula precos_atuais de todos os postos (após importar a ANP e toda semana).
+--
+-- Combinações com dados da comunidade em jogo passam pelo caminho completo, uma a uma: são poucas.
+-- O restante, que é a grande maioria, é calculado em bloco: a pesquisa da ANP mais recente sem
+-- anomalia e, sem ela, a estimativa regional. É o mesmo resultado que calcular_preco_exibido
+-- daria para essas combinações, verificado no teste de regras.
+--
+-- Não usar um laço posto a posto para o restante: na primeira execução, com precos_atuais vazia,
+-- o plano de cada consulta é fixado com a tabela pequena e a leitura cresce a cada linha gravada,
+-- o que levou mais de 10 minutos para 130 mil combinações, contra cerca de 20 segundos em bloco.
 create or replace function public.recalcular_precos_atuais()
 returns integer
 language plpgsql
@@ -565,16 +574,86 @@ as $$
 declare
   v_chave record;
   v_total integer := 0;
+  v_em_bloco integer;
+  v_janela interval := make_interval(hours => public.parametro('janela_consenso_h')::int);
+  v_validade integer := public.parametro('validade_confirmado_d')::int;
+  v_limite numeric := public.parametro('variacao_notificacao');
 begin
-  for v_chave in
-    select posto_id, produto_id from public.precos_anp where data_coleta >= current_date - 730
-    union select posto_id, produto_id from public.precos_estimados
-    union select posto_id, produto_id from public.precos_comunidade
-  loop
+  -- Se a rotina rodar duas vezes na mesma transação, as tabelas temporárias da primeira ainda existem
+  if to_regclass('pg_temp.combos_comunidade') is not null then drop table pg_temp.combos_comunidade; end if;
+  if to_regclass('pg_temp.novos_precos') is not null then drop table pg_temp.novos_precos; end if;
+
+  -- 1. Combinações em que a comunidade tem algo em jogo (ou que hoje exibem dado da comunidade)
+  create temporary table combos_comunidade on commit drop as
+    select posto_id, produto_id from public.precos_comunidade where dia >= current_date - v_validade
+    union
+    select posto_id, produto_id from public.envio_itens where status = 'pendente' and criado_em >= now() - v_janela
+    union
+    select posto_id, produto_id from public.precos_atuais where fonte = 'comunidade';
+  create unique index on pg_temp.combos_comunidade (posto_id, produto_id);
+
+  for v_chave in select posto_id, produto_id from pg_temp.combos_comunidade loop
     perform public.atualizar_preco_atual(v_chave.posto_id, v_chave.produto_id);
     v_total := v_total + 1;
   end loop;
-  return v_total;
+
+  -- 2. O resto em bloco: ANP mais recente sem anomalia; sem ela, a estimativa
+  create temporary table novos_precos on commit drop as
+    select coalesce(a.posto_id, e.posto_id) as posto_id,
+           coalesce(a.produto_id, e.produto_id) as produto_id,
+           case when a.posto_id is not null then a.preco else e.preco end as preco,
+           (case when a.posto_id is not null then 'anp' else 'estimativa' end)::public.fonte_preco as fonte,
+           (case when a.posto_id is not null then 'oficial' else 'estimado' end)::public.situacao_preco as situacao,
+           case when a.posto_id is not null then a.data_coleta::timestamptz else e.calculado_em end as atualizado_em,
+           case when a.posto_id is null then e.margem end as margem,
+           case when a.posto_id is null then e.distancia_km end as distancia_km
+    from (select distinct on (posto_id, produto_id) posto_id, produto_id, preco, data_coleta
+            from public.precos_anp
+           where not anomalia
+           order by posto_id, produto_id, data_coleta desc) a
+    full join public.precos_estimados e on e.posto_id = a.posto_id and e.produto_id = a.produto_id
+    where not exists (
+      select 1 from pg_temp.combos_comunidade c
+       where c.posto_id = coalesce(a.posto_id, e.posto_id) and c.produto_id = coalesce(a.produto_id, e.produto_id));
+  create unique index on pg_temp.novos_precos (posto_id, produto_id);
+  analyze pg_temp.novos_precos;
+  select count(*) into v_em_bloco from pg_temp.novos_precos;
+
+  -- Avisos para quem favoritou: preço oficial novo que muda R$ 0,05 ou mais em relação ao último preço confiável
+  insert into public.notificacoes (usuario_id, posto_id, produto_id, preco_anterior, preco_novo)
+  select f.usuario_id, n.posto_id, n.produto_id, x.antes, n.preco
+  from pg_temp.novos_precos n
+  join public.precos_atuais pa on pa.posto_id = n.posto_id and pa.produto_id = n.produto_id
+  cross join lateral (
+    select coalesce(pa.ultimo_confiavel, case when pa.situacao in ('confirmado', 'oficial') then pa.preco end) as antes
+  ) x
+  join public.favoritos f on f.posto_id = n.posto_id and f.notificar
+  join public.perfis u on u.id = f.usuario_id and u.notificacoes_ativas
+  where n.situacao = 'oficial' and x.antes is not null and abs(n.preco - x.antes) >= v_limite;
+
+  -- Grava só o que mudou, para a rotina semanal não reescrever 130 mil linhas à toa
+  insert into public.precos_atuais as a
+    (posto_id, produto_id, preco, fonte, situacao, atualizado_em, confirmacoes, margem, distancia_km, ultimo_confiavel)
+  select n.posto_id, n.produto_id, n.preco, n.fonte, n.situacao, n.atualizado_em, 0, n.margem, n.distancia_km,
+         case when n.situacao = 'oficial' then n.preco
+              else coalesce(pa.ultimo_confiavel, case when pa.situacao in ('confirmado', 'oficial') then pa.preco end) end
+  from pg_temp.novos_precos n
+  left join public.precos_atuais pa on pa.posto_id = n.posto_id and pa.produto_id = n.produto_id
+  on conflict (posto_id, produto_id) do update set
+    preco = excluded.preco, fonte = excluded.fonte, situacao = excluded.situacao,
+    atualizado_em = excluded.atualizado_em, confirmacoes = 0, margem = excluded.margem,
+    distancia_km = excluded.distancia_km, ultimo_confiavel = excluded.ultimo_confiavel
+  where (a.preco, a.fonte, a.situacao, a.atualizado_em, a.margem, a.distancia_km, a.ultimo_confiavel)
+        is distinct from
+        (excluded.preco, excluded.fonte, excluded.situacao, excluded.atualizado_em, excluded.margem,
+         excluded.distancia_km, excluded.ultimo_confiavel);
+
+  -- Linhas que ficaram sem nenhuma fonte saem
+  delete from public.precos_atuais pa
+   where not exists (select 1 from pg_temp.novos_precos n where n.posto_id = pa.posto_id and n.produto_id = pa.produto_id)
+     and not exists (select 1 from pg_temp.combos_comunidade c where c.posto_id = pa.posto_id and c.produto_id = pa.produto_id);
+
+  return v_total + v_em_bloco;
 end;
 $$;
 

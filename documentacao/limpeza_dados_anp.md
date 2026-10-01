@@ -140,7 +140,7 @@ Os arquivos foram carregados num PostgreSQL 16 local, igual ao do Supabase, com 
 | Opção | Banco usado pela ANP | Cabe no Free? |
 |---|---:|---|
 | A. Série completa no banco | cerca de 462 MB | Não. Sobram menos de 40 MB para usuários, envios e avaliações. |
-| B. Últimos 2 anos no banco e série completa em arquivo no Storage | cerca de 143 MB no banco e 20 MB no Storage | Sim, com folga. |
+| B. Últimos 2 anos no banco e série completa em arquivo no Storage | cerca de 143 MB só de preços, e 20 MB no Storage. O total com o app está na seção 6.1 | Sim. |
 | C. Últimos 2 anos diários e o período anterior agregado por mês | cerca de 268 MB | Sim, mas sobra pouco espaço. |
 
 **Recomendação: opção B.**
@@ -148,3 +148,33 @@ Os arquivos foram carregados num PostgreSQL 16 local, igual ao do Supabase, com 
 - O modelo de previsão treina fora do Supabase, lendo o arquivo compactado no Storage.
 - Cada semestre novo acrescenta cerca de 35 MB. Uma rotina semestral move para o Storage o que passar de 2 anos.
 - No plano Pro, a opção A cabe sem problema e pode ser adotada depois.
+
+### 6.1 Total com o cadastro completo e as tabelas do app
+
+A tabela de postos acima tem só os 21 mil postos que aparecem nos preços. Com o cadastro completo da ANP, as tabelas de preço exibido e de estimativas e os índices de busca e de mapa, o espaço é maior. Medi num PostgreSQL 17 com PostGIS, com dados sintéticos do tamanho real: 45.800 postos, 137 mil combinações de posto e combustível, 954 mil preços da ANP e 129 mil preços exibidos.
+
+| Tabela | Linhas | Espaço, com índices |
+|---|---:|---:|
+| `precos_anp`, últimos 2 anos | 954 mil medidos; 1,65 milhão reais | 89 MB medidos; cerca de 154 MB reais |
+| `postos`, com texto de busca e ponto no mapa | 45.800 | 47 MB |
+| `precos_atuais` | 129 mil | 22 MB |
+| `posto_produtos` | 137 mil | 10 MB |
+| `precos_estimados` | 103 mil | 10 MB |
+| Catálogo e extensões | | 16 MB |
+
+**Total estimado: cerca de 260 MB dos 500 MB do plano gratuito**, sem contar as tabelas internas do Supabase para login e Storage, que não medi. Sobra algo perto de 200 MB para usuários, envios, avaliações e as semanas novas da ANP, que somam cerca de 35 MB por semestre. Acompanhe o uso em Project Settings, Database, Database size. Se passar de 400 MB, a saída é mover mais um semestre de preços para o Storage.
+
+### 6.2 Tempo das rotinas pesadas
+
+Medido com os mesmos dados sintéticos, num computador de mesa. O Supabase gratuito tem bem menos processador, então espere de 3 a 5 vezes mais.
+
+| Rotina | Quando roda | Tempo medido |
+|---|---|---:|
+| Marcar cidades com pesquisa da ANP | toda segunda-feira | 5 s |
+| Recalcular as estimativas regionais | toda segunda-feira | 18 s |
+| Recalcular os preços exibidos, primeira vez | na importação inicial | 5 s |
+| Recalcular os preços exibidos, semanas seguintes | toda segunda-feira | 2 s |
+| Mapa de um bairro, com 400 postos e preços | a cada movimento do mapa | 42 ms |
+| Busca por nome, endereço ou cidade | a cada busca | de 48 a 73 ms |
+
+Uma primeira versão do recálculo dos preços exibidos calculava posto por posto e levou mais de 10 minutos na primeira execução. O plano de cada consulta era fixado com a tabela ainda vazia, e a leitura crescia a cada linha gravada. A versão atual calcula em bloco e dá o mesmo resultado do cálculo individual, o que foi conferido em 5 mil combinações.

@@ -177,6 +177,43 @@ $$;
 select pg_temp.checar((select bloqueado_ate > now() from public.perfis where id = '00000000-0000-0000-0000-00000000000c'),
                       '3 envios contestados em 7 dias pausam novos envios');
 
+-- ============================================================ recálculo semanal em bloco
+create temp table antes as
+  select posto_id, produto_id, preco, fonte, situacao, confirmacoes from public.precos_atuais;
+select public.recalcular_precos_atuais();
+select pg_temp.checar(not exists (
+    select 1 from antes a full join public.precos_atuais p using (posto_id, produto_id)
+    where (a.preco, a.fonte, a.situacao, a.confirmacoes) is distinct from (p.preco, p.fonte, p.situacao, p.confirmacoes)),
+  'recálculo em bloco reproduz o que o caminho individual já tinha calculado');
+select pg_temp.checar((select preco = 5.990 and situacao = 'confirmado' and confirmacoes = 2
+                       from public.precos_atuais where posto_id = 1 and produto_id = 1),
+                      'recálculo preserva o preço confirmado pela comunidade');
+
+insert into public.postos (id, cnpj, razao_social, municipio, uf, localizacao, localizacao_fonte)
+values (9, '99999999000191', 'POSTO NOVO NOVE LTDA', 'FORTALEZA', 'CE', 'SRID=4326;POINT(-38.52 -3.75)', 'anp');
+insert into public.posto_produtos (posto_id, produto_id, bicos) values (9, 1, 2);
+insert into public.precos_anp (posto_id, produto_id, data_coleta, preco) values (9, 1, current_date - 7, 6.000);
+insert into public.favoritos (usuario_id, posto_id) values ('00000000-0000-0000-0000-00000000000a', 9);
+select public.recalcular_precos_atuais();
+select pg_temp.checar((select preco = 6.000 and fonte = 'anp' and situacao = 'oficial' and ultimo_confiavel = 6.000
+                       from public.precos_atuais where posto_id = 9 and produto_id = 1),
+                      'em bloco, o preço da ANP vira o preço exibido');
+select pg_temp.checar((select count(*) from public.notificacoes where posto_id = 9) = 0,
+                      'primeiro preço oficial do posto não gera aviso');
+insert into public.precos_anp (posto_id, produto_id, data_coleta, preco) values (9, 1, current_date - 1, 6.200);
+select public.recalcular_precos_atuais();
+select pg_temp.checar((select count(*) = 1 and min(preco_anterior) = 6.000 and min(preco_novo) = 6.200
+                       from public.notificacoes where posto_id = 9),
+                      'nova pesquisa da ANP com mudança de R$ 0,20 avisa quem favoritou');
+select public.recalcular_precos_atuais();
+select pg_temp.checar((select count(*) from public.notificacoes where posto_id = 9) = 1,
+                      'recalcular de novo não repete o aviso');
+delete from public.precos_anp where posto_id = 9;
+select public.recalcular_precos_atuais();
+select pg_temp.checar(not exists (select 1 from public.precos_atuais where posto_id = 9),
+                      'posto que perdeu todas as fontes sai dos preços exibidos');
+delete from public.postos where id = 9;   -- limpa o posto de teste (favoritos e avisos saem em cascata)
+
 -- ============================================================ regras de acesso (RLS)
 do $$
 declare
