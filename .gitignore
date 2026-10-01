@@ -39,3 +39,6 @@ app/android/app/release
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Configuracao pessoal do Claude Code
+.claude/settings.local.json
