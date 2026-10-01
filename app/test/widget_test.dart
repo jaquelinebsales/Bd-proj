@@ -51,12 +51,13 @@ void main() {
         fonte: FontePreco.estimativa,
         situacao: SituacaoPreco.estimado,
         atualizadoEm: DateTime.now(),
-        margem: 0.22,
+        margem: 0.29,
         distanciaKm: 26.1,
       ),
     )));
     expect(find.textContaining('≈'), findsOneWidget);
-    expect(find.textContaining('Estimativa ±'), findsOneWidget);
+    expect(find.textContaining('Estimativa · erro médio'), findsOneWidget);
+    expect(find.textContaining('0,29'), findsOneWidget);
     expect(find.text('ESTIMATIVA'), findsOneWidget);
   });
 

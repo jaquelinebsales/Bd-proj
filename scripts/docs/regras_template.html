@@ -76,6 +76,14 @@ figcaption { color: var(--muted); font-size: .88rem; max-width: 90ch; }
 .rotulo { font: 11.5px var(--body); fill: var(--ink-2); }
 .rotulo-destaque { font: 700 11.5px var(--body); fill: var(--accent); }
 .fronteira { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.raio { fill: var(--accent-tint); fill-opacity: .35; stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.ponto { fill: var(--anp); stroke: var(--surface); stroke-width: 2; }
+.ponto-fora { fill: var(--muted); stroke: var(--surface); stroke-width: 2; }
+.alvo { fill: var(--accent); stroke: var(--surface); stroke-width: 3; }
+.liga { stroke: var(--anp); stroke-width: 1.4; }
+.preco-viz { font: 700 12px var(--body); fill: var(--ink); }
+.preco-fora { font: 12px var(--body); fill: var(--muted); }
+.mediana { fill: var(--accent-tint); stroke: var(--accent); stroke-width: 1.5; }
 .ent-caixa { fill: var(--surface); stroke: var(--rule); stroke-width: 1.25; }
 .ent-destaque .ent-caixa { stroke: var(--accent); stroke-width: 2; }
 .ent-topo { fill: var(--surface-2); }
@@ -160,13 +168,65 @@ footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rul
       <li><div><b>Envio recente sem divergência</b><span>Um ou mais envios das últimas 24 horas com o mesmo valor. Envios em revisão não entram aqui.</span></div><span class="selo" style="color: var(--warn)">AGUARDANDO CONFIRMAÇÃO</span></li>
       <li><div><b>Envios divergentes: vale a ANP</b><span>Se os envios recentes discordam, aparece a última pesquisa da ANP. Sem ANP, a mediana dos envios, marcada como divergente.</span></div><span class="selo" style="color: var(--anp)">ANP</span></li>
       <li><div><b>O mais recente entre comunidade não confirmada e ANP</b><span>Envios sem confirmação dos últimos 7 dias contra a pesquisa oficial. Em caso de empate de data, a ANP vence.</span></div><span class="selo" style="color: var(--anp)">ANP OU COMUNIDADE</span></li>
-      <li><div><b>Estimativa regional</b><span>Só quando o posto não tem nenhuma das fontes acima. Sempre exibida com "≈" e margem de erro.</span></div><span class="selo" style="color: var(--c-agendado)">ESTIMATIVA</span></li>
+      <li><div><b>Estimativa regional</b><span>Só quando o posto não tem nenhuma das fontes acima. Sempre exibida com "≈" e o erro médio da faixa de distância. A seção abaixo mostra como é calculada.</span></div><span class="selo" style="color: var(--c-agendado)">ESTIMATIVA</span></li>
     </ol>
     <div class="cores" aria-label="Cores da idade do preço">
       <span><i class="bola" style="background: var(--good)"></i>Atualizado há até 24 h</span>
       <span><i class="bola" style="background: var(--warn)"></i>De 2 a 7 dias</span>
       <span><i class="bola" style="background: var(--bad)"></i>Mais de 7 dias ou estimativa</span>
     </div>
+  </section>
+
+  <section aria-labelledby="t-estimativa">
+    <div class="cab">
+      <span class="eyebrow">Estimativa</span>
+      <h2 id="t-estimativa">Como a estimativa é calculada</h2>
+      <p class="lead">Só aparece quando o posto não tem preço da comunidade nem da ANP. É a mediana dos postos pesquisados mais próximos, sempre marcada com "≈" e com o erro médio esperado.</p>
+    </div>
+    <figure>
+      <div class="painel">{{ESTIMATIVA}}</div>
+      <figcaption>Exemplo com números inventados. O posto do centro não tem preço. O cálculo pega os 5 postos pesquisados mais próximos que vendem o mesmo combustível, descarta quem está a mais de 200 km, e usa a mediana. A margem vem da distância até o vizinho mais próximo.</figcaption>
+    </figure>
+    <div class="duas">
+      <div class="cartao">
+        <h3>Passo a passo</h3>
+        <ul>
+          <li><b>Referências.</b> Para cada combustível, os postos com preço da ANP nos 60 dias anteriores à coleta mais recente que está no banco. Vale o preço mais recente de cada posto. Só entram postos com coordenada, e as anomalias ficam de fora.</li>
+          <li><b>Alvos.</b> Postos ativos com coordenada que vendem o combustível, segundo o cadastro da ANP, e que não estão entre as referências.</li>
+          <li><b>Vizinhos.</b> Para cada alvo, os 5 postos de referência mais próximos com o mesmo combustível. Quem está a mais de 200 km sai. Sem nenhum dentro de 200 km, não há estimativa.</li>
+          <li><b>Preço.</b> A mediana dos preços dos vizinhos que sobraram.</li>
+          <li><b>Margem.</b> O erro médio medido para a faixa de distância do vizinho mais próximo.</li>
+          <li><b>Quando roda.</b> Na carga inicial e toda segunda-feira, e em seguida os preços exibidos são recalculados.</li>
+        </ul>
+      </div>
+      <div class="cartao">
+        <h3>O que a estimativa não considera</h3>
+        <ul>
+          <li>Bandeira do posto e tipo de local, como rodovia ou centro. Um posto de rodovia costuma cobrar mais que a mediana dos vizinhos.</li>
+          <li>Tendência de alta ou queda. A estimativa acompanha só o que a ANP pesquisou.</li>
+          <li>Preços da comunidade nos postos vizinhos. Só a pesquisa da ANP entra como referência.</li>
+          <li>Postos sem coordenada: são 15% dos postos ativos, 6.942 de 45.823. Eles não recebem estimativa e não servem de referência.</li>
+          <li>Se a pesquisa da ANP fica parada, a estimativa fica parada junto. A janela de 60 dias é contada a partir do dado mais novo, e não de hoje.</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Quanto a estimativa erra</h3>
+    <div class="tabela">
+      <table>
+        <thead><tr><th>Distância até o vizinho mais próximo</th><th>Casos testados</th><th>Erro médio, mostrado no app</th><th>9 em 10 casos erram menos que</th><th>Estimativas hoje</th></tr></thead>
+        <tbody>
+          <tr><td>Até 25 km</td><td class="valor">2.233</td><td class="valor">R$ 0,25</td><td class="valor">R$ 0,60</td><td class="valor">81.050</td></tr>
+          <tr><td>De 25 a 50 km</td><td class="valor">686</td><td class="valor">R$ 0,29</td><td class="valor">R$ 0,60</td><td class="valor">22.554</td></tr>
+          <tr><td>De 50 a 100 km</td><td class="valor">726</td><td class="valor">R$ 0,30</td><td class="valor">R$ 0,62</td><td class="valor">21.931</td></tr>
+          <tr><td>De 100 a 200 km</td><td class="valor">306</td><td class="valor">R$ 0,39</td><td class="valor">R$ 0,87</td><td class="valor">9.382</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color: var(--ink-2); font-size: .9rem">
+      <b>Como foi medido.</b> Em 29/09/2026, com os dados carregados no projeto: 3.951 postos pesquisados de gasolina comum, etanol e diesel S10, cada um estimado como se não tivesse preço e sem usar nenhum posto do mesmo município, que é o caso de um posto fora da pesquisa. Pesquisa de 01/05 a 30/06/2026.
+      A margem do app é o erro <em>médio</em>, e não um limite: em 1 de cada 10 casos o erro passa de R$ 0,60 a R$ 0,87.
+      Use a estimativa como referência aproximada, por exemplo para comparar cidades. Ela não serve para decidir entre dois postos vizinhos, porque a diferença entre eles costuma ser menor que o erro.
+    </p>
   </section>
 
   <section aria-labelledby="t-regras">

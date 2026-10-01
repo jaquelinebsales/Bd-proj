@@ -46,7 +46,7 @@ String origemPreco(PrecoAtual p) => switch (p.situacao) {
           : '${tempoRelativo(p.atualizadoEm)} · envios divergentes',
       SituacaoPreco.oficial => 'Pesquisa ANP · semana de ${dataCurta(p.atualizadoEm)}',
       SituacaoPreco.estimado =>
-        'Estimativa ± ${reais(p.margem ?? 0)} · referência a ${distancia(p.distanciaKm)}',
+        'Estimativa · erro médio ${reais(p.margem ?? 0)} · referência a ${distancia(p.distanciaKm)}',
     };
 
 Color corFrescor(Frescor f) => switch (f) {

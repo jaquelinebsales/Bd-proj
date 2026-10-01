@@ -162,7 +162,7 @@ A tabela de postos acima tem só os 21 mil postos que aparecem nos preços. Com 
 | `precos_estimados` | 103 mil | 10 MB |
 | Catálogo e extensões | | 16 MB |
 
-**Total estimado: cerca de 260 MB dos 500 MB do plano gratuito**, sem contar as tabelas internas do Supabase para login e Storage, que não medi. Sobra algo perto de 200 MB para usuários, envios, avaliações e as semanas novas da ANP, que somam cerca de 35 MB por semestre. Acompanhe o uso em Project Settings, Database, Database size. Se passar de 400 MB, a saída é mover mais um semestre de preços para o Storage.
+**No projeto real, depois da carga completa, o banco mede 315 MB dos 500 MB do plano gratuito**, contando as tabelas internas do Supabase. Sobram cerca de 185 MB para usuários, envios, avaliações e as semanas novas da ANP, que somam cerca de 35 MB por semestre. Acompanhe o uso em Project Settings, Database, Database size. Se passar de 400 MB, a saída é mover mais um semestre de preços para o Storage.
 
 ### 6.2 Tempo das rotinas pesadas
 

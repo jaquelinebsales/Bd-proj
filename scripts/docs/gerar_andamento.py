@@ -31,7 +31,8 @@ ETAPAS = [
         ("Importador dos dados da ANP para o plano gratuito", OK),
         ("Testes das regras num Postgres 17 com PostGIS", OK),
         ("Rotinas pesadas medidas com 45 mil postos e 954 mil preços: de 2 s a 18 s; banco em cerca de 260 MB dos 500 MB", OK),
-        ("Aplicar no seu projeto Supabase e carregar os dados", ESPERA),
+        ("Aplicado no seu projeto Supabase, com 45.823 postos, 1,65 milhão de preços e 135 mil estimativas", OK),
+        ("Consulta pública e bloqueios conferidos no projeto real: 16 de 16 verificações", OK),
     ]),
     ("Fase 3 · App Flutter", [
         ("21 telas com layout para celular e tablet", OK),
@@ -52,6 +53,8 @@ ETAPAS = [
         ("Enviar o código ao seu GitHub e cadastrar os segredos", ESPERA),
     ]),
     ("Fase 5 · Evolução", [
+        ("Carga automática das semanas novas da pesquisa da ANP", PROX),
+        ("Geocodificar os 6.942 postos ativos sem coordenada", PROX),
         ("Avisos com o app fechado, via Firebase", PROX),
         ("Previsão de preço no app, quando o modelo superar a regra simples", PROX),
         ("SMTP próprio para os e-mails de cadastro", PROX),

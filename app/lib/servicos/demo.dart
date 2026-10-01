@@ -69,7 +69,7 @@ class Demo {
       precos: [
         PrecoAtual(
           produtoId: 1, preco: 6.14, fonte: FontePreco.estimativa, situacao: SituacaoPreco.estimado,
-          atualizadoEm: _ha(const Duration(days: 2)), margem: 0.22, distanciaKm: 26.1,
+          atualizadoEm: _ha(const Duration(days: 2)), margem: 0.29, distanciaKm: 26.1,
         ),
       ],
     ),

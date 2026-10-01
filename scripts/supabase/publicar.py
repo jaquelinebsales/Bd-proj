@@ -164,10 +164,17 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--simular", action="store_true", help="mostra os passos sem executar nada")
     ap.add_argument("--com-dados", action="store_true", help="depois de publicar, carrega os dados da ANP")
+    ap.add_argument("--so-banco", action="store_true", help="aplica só as migrações novas (não publica funções nem segredos)")
     args = ap.parse_args()
 
     try:
         env = eu.carregar_env()
+        if args.so_banco:
+            url_banco, origem = eu.resolver_database_url(env)
+            print(f"Aplicando só as migrações (conexão: {origem})\n")
+            passo_banco(achar_cli(), url_banco, {**env, "DATABASE_URL": url_banco})
+            print("\nMigrações aplicadas.")
+            return 0
         obrigatorias(env)
         ref = eu.ref_do_projeto(env)
         cli = achar_cli()

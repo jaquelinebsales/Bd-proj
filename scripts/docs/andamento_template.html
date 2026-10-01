@@ -104,10 +104,10 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
   <header class="cab">
     <span class="eyebrow">gasprice · acompanhamento</span>
     <h1>Andamento do gasprice</h1>
-    <p class="lead">Situação da construção em {{DATA}}. O app, o backend e os testes estão prontos. Falta ligar tudo ao seu Supabase e ao seu GitHub.</p>
+    <p class="lead">Situação da construção em {{DATA}}. O backend já está publicado no seu Supabase, com os dados da ANP carregados. Faltam o seu GitHub e a chave do Google Maps para o mapa aparecer no app.</p>
     <ol class="fases" aria-label="Fases do projeto">
       <li class="fase" style="--c: var(--ok)"><span class="num">FASE 1</span><b>Dados da ANP</b><span class="estado ok">Concluída</span><span class="d">Limpeza, cobertura e experimento do modelo.</span></li>
-      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 2</span><b>Backend Supabase</b><span class="estado ok">Pronto e testado</span><span class="d">Testado num Postgres 17 com PostGIS. Falta aplicar no seu projeto.</span></li>
+      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 2</span><b>Backend Supabase</b><span class="estado ok">Publicado</span><span class="d">No seu projeto, com 45.823 postos e 1,65 milhão de preços. 16 verificações públicas ok.</span></li>
       <li class="fase" style="--c: var(--ok)"><span class="num">FASE 3</span><b>App Flutter</b><span class="estado ok">Pronto para teste</span><span class="d">Todas as telas, para celular e tablet. Falta rodar num aparelho real.</span></li>
       <li class="fase" style="--c: var(--espera)"><span class="num">FASE 4</span><b>Publicação</b><span class="estado espera">Aguardando você</span><span class="d">Supabase, GitHub e chave do Google Maps.</span></li>
       <li class="fase" style="--c: var(--prox)"><span class="num">FASE 5</span><b>Evolução</b><span class="estado prox">Próxima</span><span class="d">Avisos com o app fechado, previsão de preço e lojas.</span></li>
@@ -118,8 +118,8 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     <h2 id="t-numeros" class="eyebrow" style="font: 600 .74rem/1 var(--body)">Em números</h2>
     <div class="numeros">
       <div class="numero"><b>21</b><span>telas, mais 2 painéis de filtros e contribuições</span></div>
-      <div class="numero"><b>120</b><span>testes automáticos, todos passando</span></div>
-      <div class="numero"><b>51</b><span>regras de negócio implementadas</span></div>
+      <div class="numero"><b>122</b><span>testes automáticos, todos passando</span></div>
+      <div class="numero"><b>53</b><span>regras de negócio implementadas</span></div>
       <div class="numero"><b>19</b><span>tabelas no banco e 3 funções no servidor</span></div>
     </div>
   </section>
@@ -128,32 +128,31 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     <div class="cab">
       <span class="eyebrow">Próximo passo</span>
       <h2 id="t-pedidos">O que preciso de você</h2>
-      <p class="lead">Com estes três itens eu aplico o banco, publico as funções, carrego os dados da ANP e envio o código ao GitHub.</p>
+      <p class="lead">O Supabase está feito. Para enviar o código e ver o mapa, faltam estes dois itens.</p>
     </div>
     <div class="pedidos">
-      <div class="pedido">
-        <h3>1. Projeto no Supabase</h3>
+      <div class="pedido" style="border-left-color: var(--ok)">
+        <h3>1. Supabase · feito</h3>
         <ol>
-          <li>Crie um projeto no plano gratuito, na região São Paulo.</li>
-          <li>Preencha o arquivo <code>.env</code> da pasta do projeto: URL, chave publishable, chave secreta, senha do banco e token de acesso. O README mostra onde achar cada uma.</li>
-          <li>Deixe a <code>DATABASE_URL</code> vazia: o script descobre o endereço do banco sozinho.</li>
-          <li><b>Salve o arquivo</b> e rode <code>python scripts/supabase/verificar_env.py --gerar-cron-secret</code>. Ele cria a senha da sincronização e lista o que ainda falta, sem mostrar valores.</li>
+          <li>Quatro migrações e mais duas correções aplicadas.</li>
+          <li>Três funções no ar e segredo da sincronização gravado.</li>
+          <li>Depois da publicação, apague o token de acesso em supabase.com/dashboard/account/tokens. Ele expira em 7 dias de qualquer forma.</li>
         </ol>
       </div>
       <div class="pedido">
         <h3>2. Repositório no GitHub</h3>
         <ol>
           <li>Crie um repositório vazio, sem README, e me envie o endereço.</li>
-          <li>Crie um token de acesso fino só para esse repositório, com permissão de escrita em <em>Contents</em>, e coloque no <code>.env</code> como <code>GITHUB_TOKEN</code>.</li>
-          <li>Se preferir não criar o token, você mesmo roda <code>git push</code>: o commit já está pronto.</li>
+          <li>Crie um token fino só para esse repositório, com <em>Contents</em> e <em>Workflows</em> em leitura e escrita, e coloque no <code>.env</code> como <code>GITHUB_TOKEN</code>. Sem <em>Workflows</em>, o GitHub recusa os arquivos de <code>.github/workflows</code>.</li>
+          <li>Se preferir não criar o token, você mesmo roda <code>git push</code>: os commits já estão prontos.</li>
         </ol>
       </div>
       <div class="pedido">
         <h3>3. Chave do Google Maps</h3>
         <ol>
-          <li>No Google Cloud Console, ative o Maps SDK for Android e o Maps SDK for iOS.</li>
-          <li>Crie uma chave restrita ao pacote <code>br.com.gasprice.gasprice</code>.</li>
-          <li>Coloque no <code>.env</code> como <code>GOOGLE_MAPS_API_KEY</code>. O Google exige uma conta de faturamento, com cota gratuita mensal.</li>
+          <li>No Google Cloud Console, use uma conta pessoal do Gmail: contas institucionais costumam ter restrições e perdem o acesso quando o curso termina.</li>
+          <li>Ative o Maps SDK for Android e o Maps SDK for iOS e crie uma chave restrita ao pacote <code>br.com.gasprice.gasprice</code>.</li>
+          <li>O Google exige uma conta de faturamento, com cota gratuita. Crie um alerta de orçamento. Coloque a chave no <code>.env</code> como <code>GOOGLE_MAPS_API_KEY</code>.</li>
         </ol>
       </div>
     </div>
@@ -236,7 +235,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
       <table>
         <thead><tr><th>Conjunto</th><th>Testes</th><th>O que verifica</th><th>Resultado</th></tr></thead>
         <tbody>
-          <tr><td>Regras no banco</td><td class="n">73</td><td>Consenso, revisão, contestação, pontos com teto, bloqueio, avisos, recálculo semanal em bloco, permissões de acesso, consultas do app e importação do cadastro</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>Regras no banco</td><td class="n">75</td><td>Consenso, revisão, contestação, pontos com teto, bloqueio, avisos, recálculo semanal em bloco, permissões de acesso, consultas do app e importação do cadastro</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>App Flutter</td><td class="n">19</td><td>Leitor do painel, filtros e ordenação, idade do preço e componentes de preço</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Edge Functions</td><td class="n">10</td><td>Validação do envio e normalização da API da ANP com um registro real</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Scripts de publicação</td><td class="n">18</td><td>Leitura do <code>.env</code>, detecção de textos de exemplo, montagem da conexão com senha especial, máscara de segredos e simulação da publicação</td><td class="e"><span class="estado ok">Passou</span></td></tr>
@@ -253,6 +252,9 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     </div>
     <ul class="riscos">
       <li><b>O app ainda não rodou num celular de verdade</b><span>Este computador não tem Android SDK nem Xcode. O APK sai pelo GitHub Actions quando os segredos estiverem configurados.</span></li>
+      <li><b>15% dos postos ativos estão sem coordenada</b><span>São 6.942 de 45.823 no cadastro da ANP. Eles não aparecem no mapa nem recebem estimativa. A solução prevista é geocodificar o endereço pelo Google uma única vez, o que depende da chave do Google Cloud.</span></li>
+      <li><b>Os preços da ANP só são atualizados quando você recarrega uma planilha</b><span>Hoje o banco tem a pesquisa até 30/06/2026. Ainda não existe a carga automática das semanas novas. Sem ela, os preços oficiais envelhecem e ficam com o ponto vermelho.</span></li>
+      <li><b>A estimativa erra em média de R$ 0,25 a R$ 0,39</b><span>Medido nos dados reais. O app mostra o erro médio de cada estimativa e a marca com "≈". Ela serve como referência, não para escolher entre dois postos vizinhos.</span></li>
       <li><b>O leitor do painel precisa de fotos reais</b><span>Ele foi testado com textos simulados de painéis. Com as primeiras fotos reais, ajusto os padrões de leitura.</span></li>
       <li><b>O aviso com o app fechado depende do Firebase</b><span>Hoje o aviso chega com o app aberto ou em segundo plano e fica guardado na lista de notificações.</span></li>
       <li><b>E-mails de cadastro têm limite no plano gratuito</b><span>O servidor de e-mail padrão do Supabase envia poucas mensagens por hora. Antes de lançar, configure um SMTP próprio.</span></li>

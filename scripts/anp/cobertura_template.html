@@ -213,7 +213,7 @@ footer { font-size: .8rem; color: var(--muted); display: grid; gap: 6px; border-
           <span><i class="sw" style="background:var(--ink-2);height:3px"></i> 9 em cada 10 casos erram menos que isto</span>
         </div>
         <div id="chart-dist"></div>
-        <p class="note">Faixas com poucos municípios aparecem hachuradas e não permitem conclusão. Mediana de 12 meses por município, simulação com os 419 municípios pesquisados.</p>
+        <p class="note">Faixas com poucos municípios aparecem hachuradas e não permitem conclusão. Mediana de 12 meses por município, simulação com os 419 municípios pesquisados. Este estudo estima uma cidade pelo município pesquisado mais próximo. O app estima cada posto pela mediana dos 5 postos pesquisados mais próximos, que erra um pouco mais: de R$ 0,25 a R$ 0,39 em média, conforme a distância.</p>
         <div class="tip" id="tip2" hidden></div>
       </div>
       <div class="card">
@@ -238,7 +238,7 @@ footer { font-size: .8rem; color: var(--muted); display: grid; gap: 6px; border-
           </div>
           <p class="note" style="padding:0 4px">Envie uma foto do painel e ganhe pontos em dobro: este município não tem dado oficial.</p>
         </div>
-        <p class="note">Valores ilustrativos. A margem vem da tabela de erro por UF e da distância do município.</p>
+        <p class="note">Valores ilustrativos. O erro médio é o medido para a faixa de distância até o posto pesquisado mais próximo, como explica a página de regras.</p>
       </div>
     </div>
   </section>
@@ -406,8 +406,10 @@ svg.addEventListener("pointermove", ev => {
   if (m[3] === 0) corpo = "Sem posto autorizado.";
   else if (m[5]) corpo = `${fmt.format(m[3])} postos, ${fmt.format(m[4])} visitados pela ANP.<br>Preço oficial disponível.`;
   else {
-    const e = erroEsperado(m[6]);
-    corpo = `${fmt.format(m[3])} postos, nenhum visitado pela ANP.<br>Município pesquisado mais próximo a <b>${fmt.format(Math.round(m[6]))} km</b>.<br>Erro típico da estimativa: <b>± ${brl(e.mae)}</b>`;
+    // Erro médio medido do método do app, por faixa de distância. Acima de 200 km o app não estima.
+    const marg = m[6] < 25 ? 0.25 : m[6] < 50 ? 0.29 : m[6] < 100 ? 0.30 : m[6] < 200 ? 0.39 : null;
+    corpo = `${fmt.format(m[3])} postos, nenhum visitado pela ANP.<br>Município pesquisado mais próximo a cerca de <b>${fmt.format(Math.round(m[6]))} km</b>.<br>` +
+      (marg === null ? "Acima de 200 km o app não estima o preço." : `Erro médio da estimativa no app: <b>${brl(marg)}</b>`);
   }
   tip.innerHTML = `<b>${m[1]} · ${m[2]}</b><br>${corpo}`;
   tip.hidden = false;
@@ -572,6 +574,6 @@ render();
 // ---------- exemplo do celular: município real sem coleta ----------
 const ex = D.exemplo;
 document.getElementById("ph-mun").textContent = `${ex.nome}, ${ex.uf} · ${fmt.format(ex.postos)} postos, nenhum visitado pela ANP`;
-document.querySelectorAll(".ph-margem").forEach(el => el.textContent = `± ${brl(ex.margem)} · referência a ${fmt.format(Math.round(ex.dist))} km`);
+document.querySelectorAll(".ph-margem").forEach(el => el.textContent = `erro médio ${brl(ex.margem)} · referência a ${fmt.format(Math.round(ex.dist))} km`);
 document.getElementById("rodape").textContent = `Gerado em ${D.gerado_em}. Municípios sem correspondência entre ANP e IBGE: ${T.sem_correspondencia_cadastro.map(x => x.join("/")).join(", ") || "nenhum"}.`;
 </script>

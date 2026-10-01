@@ -74,6 +74,77 @@ def fluxo() -> str:
     return "".join(s)
 
 
+# ------------------------------------------------------------------ como a estimativa é calculada
+def estimativa() -> str:
+    """Esquema do cálculo: 5 vizinhos mais próximos dentro de 200 km, mediana, margem pela distância."""
+    import math
+    cx, cy, r = 300, 200, 180          # centro do posto sem preço e raio de 200 km em pixels
+    km_por_px = 200 / r
+    # (ângulo em graus, distância em pixels, preço, quem é), espalhados para os rótulos não se sobreporem
+    polares = [
+        (-120, 31, 6.09, "viz"), (170, 62, 6.19, "viz"), (30, 88, 6.05, "viz"),
+        (-140, 110, 6.29, "viz"), (-15, 132, 6.14, "viz"),
+        (100, 150, 5.89, "corte"), (150, 165, 6.49, "corte"), (-30, 215, 5.79, "fora"),
+    ]
+    pontos = [(round(cx + d * math.cos(math.radians(a)), 1), round(cy + d * math.sin(math.radians(a)), 1), pr, t)
+              for a, d, pr, t in polares]
+    dist = lambda p: math.hypot(p[0] - cx, p[1] - cy)
+    viz = sorted([p for p in pontos if p[3] == "viz"], key=dist)
+    precos = sorted(p[2] for p in viz)
+    mediana = precos[len(precos) // 2]
+    d_min = round(dist(viz[0]) * km_por_px)
+    margem = 0.25 if d_min < 25 else 0.29 if d_min < 50 else 0.30 if d_min < 100 else 0.39
+    br = lambda v: f"{v:.2f}".replace(".", ",")
+
+    s = ['<svg viewBox="0 0 1160 450" role="img" aria-label="Como a estimativa é calculada: os 5 postos pesquisados '
+         'mais próximos dentro de 200 km dão a mediana dos preços, e a distância do mais próximo define o erro médio.">',
+         '<defs><marker id="e-ponta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" '
+         'markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>',
+         f'<circle class="raio" cx="{cx}" cy="{cy}" r="{r}"/>',
+         f'<text class="rotulo-destaque" x="{cx}" y="{cy - r - 8}" text-anchor="middle">limite de 200 km</text>']
+    for p in viz:
+        s.append(f'<line class="liga" x1="{cx}" y1="{cy}" x2="{p[0]}" y2="{p[1]}"/>')
+    for x, y, preco, tipo in pontos:
+        if tipo == "viz":
+            s.append(f'<circle class="ponto" cx="{x}" cy="{y}" r="8"/>')
+            s.append(f'<text class="preco-viz" x="{x + 13}" y="{y + 4}">{br(preco)}</text>')
+        else:
+            s.append(f'<circle class="ponto-fora" cx="{x}" cy="{y}" r="7"/>')
+            motivo = "não usado" if tipo == "corte" else "a mais de 200 km"
+            s.append(f'<text class="preco-fora" x="{x + 12}" y="{y + 4}">{br(preco)} · {motivo}</text>')
+    s.append(f'<circle class="alvo" cx="{cx}" cy="{cy}" r="11"/>')
+    v0 = viz[0]
+    s.append(f'<text class="rotulo-destaque" x="{(cx + v0[0]) / 2 - 14}" y="{(cy + v0[1]) / 2 - 6}" text-anchor="end">{d_min} km</text>')
+    # legenda do mapa
+    s.append('<circle class="alvo" cx="30" cy="424" r="7"/><text class="rotulo" x="44" y="428">posto sem preço</text>')
+    s.append('<circle class="ponto" cx="190" cy="424" r="6"/><text class="rotulo" x="202" y="428">um dos 5 mais próximos</text>')
+    s.append('<circle class="ponto-fora" cx="380" cy="424" r="6"/><text class="rotulo" x="392" y="428">pesquisado, mas não usado</text>')
+
+    # coluna do cálculo
+    x0, w, h = 690, 440, 62
+    etapas = [
+        ("1. Vizinhos", "os 5 postos pesquisados mais próximos com o mesmo combustível"),
+        ("2. Corte", "quem está a mais de 200 km sai"),
+        ("3. Mediana", " · ".join(br(v) for v in precos) + f"  →  {br(mediana)}"),
+        ("4. Margem", f"vizinho mais próximo a {d_min} km  →  erro médio R$ {br(margem)}"),
+    ]
+    y = 34
+    for i, (t, txt) in enumerate(etapas):
+        cls = "mediana" if i == 2 else "no"
+        s.append(f'<rect class="{cls}" x="{x0}" y="{y}" width="{w}" height="{h}" rx="10"/>')
+        s.append(f'<text class="no-titulo" x="{x0 + 16}" y="{y + 26}">{e(t)}</text>')
+        s.append(f'<text class="no-texto" x="{x0 + 16}" y="{y + 46}">{e(txt)}</text>')
+        if i < len(etapas) - 1:
+            s.append(f'<line class="seta" x1="{x0 + w / 2}" y1="{y + h}" x2="{x0 + w / 2}" y2="{y + h + 18}" marker-end="url(#e-ponta)"/>')
+        y += h + 18
+    s.append(f'<rect class="no-chave" x="{x0}" y="{y + 4}" width="{w}" height="70" rx="10"/>')
+    s.append(f'<text class="no-titulo" x="{x0 + 16}" y="{y + 32}" style="font-size:20px">≈ R$ {br(mediana)}</text>')
+    s.append(f'<text class="no-texto" x="{x0 + 16}" y="{y + 54}">o que o app mostra: estimativa, erro médio R$ {br(margem)}, referência a {d_min} km</text>')
+    s.append(f'<line class="seta" x1="{x0 + w / 2}" y1="{y - 18}" x2="{x0 + w / 2}" y2="{y + 2}" marker-end="url(#e-ponta)"/>')
+    s.append("</svg>")
+    return "".join(s)
+
+
 # ------------------------------------------------------------------ entidades e relacionamentos
 LARG = 200
 X = {1: 20, 2: 250, 3: 480, 4: 710, 5: 940}
@@ -218,8 +289,10 @@ REGRAS = [
         ("Preços da ANP marcados como anomalia nunca aparecem como preço exibido.", [B], ""),
         ("A cor do preço indica a idade: verde até 24 h, amarelo de 2 a 7 dias, vermelho acima de 7 dias ou estimativa.", [C], "24 h · 7 dias"),
         ("Todo preço mostra a origem: comunidade com o número de confirmações, pesquisa ANP com a semana ou estimativa com a margem.", [C], ""),
-        ("A estimativa usa a mediana dos 5 postos mais próximos com preço da ANP dos últimos 60 dias, até 200 km.", [A], "toda segunda-feira"),
-        ("A margem da estimativa depende da distância até a referência, conforme o estudo de cobertura.", [A], "±R$ 0,13 a 0,36"),
+        ("A estimativa usa a mediana dos 5 postos pesquisados mais próximos, até 200 km, entre os que têm preço da ANP nos 60 dias anteriores à coleta mais recente.", [A], "5 vizinhos · 200 km · 60 dias"),
+        ("A margem exibida é o erro médio medido para a faixa de distância até o vizinho mais próximo. Não é um limite.", [A, C], "R$ 0,25 · 0,29 · 0,30 · 0,39"),
+        ("Postos sem coordenada não recebem estimativa e não servem de referência.", [A], "15% dos postos ativos"),
+        ("A estimativa é recalculada toda segunda-feira, na carga inicial e sempre que a pesquisa da ANP for recarregada.", [A], "toda segunda-feira"),
     ]),
     ("Pontos e confiabilidade", [
         ("Cada envio confirmado vale 10 pontos.", [B], "+10"),
@@ -285,7 +358,7 @@ def parametros() -> str:
 
 def main() -> None:
     tpl = (RAIZ / "scripts" / "docs" / "regras_template.html").read_text(encoding="utf-8")
-    saida = (tpl.replace("{{FLUXO}}", fluxo()).replace("{{ER}}", er()).replace("{{REGRAS}}", regras())
+    saida = (tpl.replace("{{FLUXO}}", fluxo()).replace("{{ESTIMATIVA}}", estimativa()).replace("{{ER}}", er()).replace("{{REGRAS}}", regras())
              .replace("{{PARAMETROS}}", parametros()).replace("{{DATA}}", date.today().strftime("%d/%m/%Y")))
     destino = RAIZ / "documentacao" / "regras_de_negocio.html"
     destino.write_text(saida, encoding="utf-8")

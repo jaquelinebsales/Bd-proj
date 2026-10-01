@@ -67,15 +67,15 @@ select pg_temp.checar((select municipio_pesquisado_anp from public.postos where 
                       'Fortaleza tem coleta da ANP e Itaitinga não');
 
 select pg_temp.checar(public.recalcular_estimativas() = 2, 'estimativa só para posto e combustível sem preço ANP');
-select pg_temp.checar((select preco = 6.140 and margem = 0.22 from public.precos_estimados where posto_id = 3 and produto_id = 1),
-                      'estimativa de Itaitinga = mediana dos vizinhos (6,14) com margem da faixa 25-50 km');
+select pg_temp.checar((select preco = 6.140 and margem = 0.29 from public.precos_estimados where posto_id = 3 and produto_id = 1),
+                      'estimativa de Itaitinga = mediana dos vizinhos (6,14) com o erro médio medido da faixa 25-50 km');
 
 select public.recalcular_precos_atuais();
 select pg_temp.checar((select preco = 6.190 and fonte = 'anp' and situacao = 'oficial' from public.precos_atuais where posto_id = 1 and produto_id = 1),
                       'sem envios, vale o preço oficial da ANP');
 select pg_temp.checar((select preco = 6.090 from public.precos_atuais where posto_id = 2 and produto_id = 1),
                       'preço ANP marcado como anomalia é ignorado');
-select pg_temp.checar((select fonte = 'estimativa' and margem = 0.22 from public.precos_atuais where posto_id = 3 and produto_id = 1),
+select pg_temp.checar((select fonte = 'estimativa' and margem = 0.29 from public.precos_atuais where posto_id = 3 and produto_id = 1),
                       'posto sem nenhuma fonte mostra estimativa com margem');
 
 -- ============================================================ envio e consenso
@@ -213,6 +213,15 @@ select public.recalcular_precos_atuais();
 select pg_temp.checar(not exists (select 1 from public.precos_atuais where posto_id = 9),
                       'posto que perdeu todas as fontes sai dos preços exibidos');
 delete from public.postos where id = 9;   -- limpa o posto de teste (favoritos e avisos saem em cascata)
+
+-- Estimativa com a pesquisa da ANP parada há mais de 60 dias: a janela é relativa ao dado mais novo
+update public.precos_anp set data_coleta = data_coleta - 200;
+select pg_temp.checar(public.recalcular_estimativas() >= 1,
+                      'estimativa continua funcionando quando o dado da ANP é antigo');
+select pg_temp.checar(exists (select 1 from public.precos_estimados where preco > 0),
+                      'estimativa gerada a partir de pesquisa com mais de 60 dias de idade');
+update public.precos_anp set data_coleta = data_coleta + 200;
+select public.recalcular_estimativas();
 
 -- ============================================================ regras de acesso (RLS)
 do $$

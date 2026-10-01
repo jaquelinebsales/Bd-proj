@@ -29,7 +29,8 @@ ufs = {u["uf"]: u for u in cob["ufs"]}
 cand = [m for m in geo["municipios"] if m["u"] == "AM" and not m["k"] and m["p"] > 0]
 ex = max(cand, key=lambda m: m["p"])
 exemplo = {"nome": ex["n"], "uf": ex["u"], "postos": ex["p"], "dist": ex["d"],
-           "margem": ufs["AM"]["erro_estimativa_vizinho"]}
+           # erro médio medido do método do app (mediana dos 5 postos mais próximos), por faixa de distância
+           "margem": 0.25 if ex["d"] < 25 else 0.29 if ex["d"] < 50 else 0.30 if ex["d"] < 100 else 0.39}
 
 dados = {
     "total": cob["total"],
