@@ -1,0 +1,4954 @@
+{
+ "gerado_em": "2026-10-01T16:41",
+ "amostra": 100,
+ "panorama_por_uf": [
+  {
+   "uf": "SP",
+   "postos": 1388,
+   "cep_da_cidade": 920,
+   "endereco_com_numero": 1263
+  },
+  {
+   "uf": "BA",
+   "postos": 934,
+   "cep_da_cidade": 882,
+   "endereco_com_numero": 659
+  },
+  {
+   "uf": "PR",
+   "postos": 745,
+   "cep_da_cidade": 599,
+   "endereco_com_numero": 681
+  },
+  {
+   "uf": "MA",
+   "postos": 664,
+   "cep_da_cidade": 637,
+   "endereco_com_numero": 618
+  },
+  {
+   "uf": "PA",
+   "postos": 433,
+   "cep_da_cidade": 372,
+   "endereco_com_numero": 239
+  },
+  {
+   "uf": "MG",
+   "postos": 426,
+   "cep_da_cidade": 379,
+   "endereco_com_numero": 406
+  },
+  {
+   "uf": "CE",
+   "postos": 387,
+   "cep_da_cidade": 348,
+   "endereco_com_numero": 315
+  },
+  {
+   "uf": "PI",
+   "postos": 384,
+   "cep_da_cidade": 359,
+   "endereco_com_numero": 280
+  },
+  {
+   "uf": "RS",
+   "postos": 368,
+   "cep_da_cidade": 319,
+   "endereco_com_numero": 326
+  },
+  {
+   "uf": "SC",
+   "postos": 245,
+   "cep_da_cidade": 220,
+   "endereco_com_numero": 217
+  },
+  {
+   "uf": "AM",
+   "postos": 234,
+   "cep_da_cidade": 205,
+   "endereco_com_numero": 155
+  },
+  {
+   "uf": "RO",
+   "postos": 130,
+   "cep_da_cidade": 96,
+   "endereco_com_numero": 113
+  },
+  {
+   "uf": "MT",
+   "postos": 114,
+   "cep_da_cidade": 88,
+   "endereco_com_numero": 93
+  },
+  {
+   "uf": "RN",
+   "postos": 71,
+   "cep_da_cidade": 71,
+   "endereco_com_numero": 56
+  },
+  {
+   "uf": "TO",
+   "postos": 60,
+   "cep_da_cidade": 44,
+   "endereco_com_numero": 44
+  },
+  {
+   "uf": "ES",
+   "postos": 56,
+   "cep_da_cidade": 44,
+   "endereco_com_numero": 45
+  },
+  {
+   "uf": "GO",
+   "postos": 50,
+   "cep_da_cidade": 34,
+   "endereco_com_numero": 34
+  },
+  {
+   "uf": "SE",
+   "postos": 46,
+   "cep_da_cidade": 43,
+   "endereco_com_numero": 33
+  },
+  {
+   "uf": "AC",
+   "postos": 46,
+   "cep_da_cidade": 42,
+   "endereco_com_numero": 31
+  },
+  {
+   "uf": "AP",
+   "postos": 40,
+   "cep_da_cidade": 16,
+   "endereco_com_numero": 33
+  },
+  {
+   "uf": "PB",
+   "postos": 32,
+   "cep_da_cidade": 32,
+   "endereco_com_numero": 22
+  },
+  {
+   "uf": "PE",
+   "postos": 30,
+   "cep_da_cidade": 27,
+   "endereco_com_numero": 23
+  },
+  {
+   "uf": "MS",
+   "postos": 27,
+   "cep_da_cidade": 23,
+   "endereco_com_numero": 24
+  },
+  {
+   "uf": "RJ",
+   "postos": 21,
+   "cep_da_cidade": 12,
+   "endereco_com_numero": 15
+  },
+  {
+   "uf": "RR",
+   "postos": 5,
+   "cep_da_cidade": 2,
+   "endereco_com_numero": 5
+  },
+  {
+   "uf": "AL",
+   "postos": 4,
+   "cep_da_cidade": 4,
+   "endereco_com_numero": 3
+  },
+  {
+   "uf": "DF",
+   "postos": 2,
+   "cep_da_cidade": 1,
+   "endereco_com_numero": 1
+  }
+ ],
+ "cobertura_sem_coordenada": {
+  "numero": 2,
+  "rua": 55,
+  "cep_rua": 4,
+  "cep_cidade": 37,
+  "municipio": 2,
+  "nada": 0
+ },
+ "erro_com_coordenada": {
+  "numero": {
+   "casos": 12,
+   "mediana_km": 0.02,
+   "p90_km": 12.68,
+   "ate_300m": 75,
+   "ate_1km": 83
+  },
+  "rua": {
+   "casos": 55,
+   "mediana_km": 0.5,
+   "p90_km": 6.13,
+   "ate_300m": 29,
+   "ate_1km": 64
+  },
+  "cep_rua": {
+   "casos": 45,
+   "mediana_km": 3.68,
+   "p90_km": 14.08,
+   "ate_300m": 0,
+   "ate_1km": 16
+  },
+  "cep_cidade": {
+   "casos": 42,
+   "mediana_km": 1.67,
+   "p90_km": 14.15,
+   "ate_300m": 14,
+   "ate_1km": 36
+  },
+  "municipio": {
+   "casos": 100,
+   "mediana_km": 8.82,
+   "p90_km": 32.72,
+   "ate_300m": 0,
+   "ate_1km": 2
+  }
+ },
+ "postos_sem_coordenada": [
+  {
+   "id": 11698,
+   "uf": "MA",
+   "municipio": "PORTO FRANCO",
+   "cod_ibge": "2109007",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -6.3483417,
+     "lon": -47.3894329
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -6.368128621481204,
+     "lon": -47.180002480242855
+    }
+   },
+   "nivel": "rua",
+   "lat": -6.3483417,
+   "lon": -47.3894329
+  },
+  {
+   "id": 18343,
+   "uf": "MT",
+   "municipio": "LUCIARA",
+   "cod_ibge": "5105309",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -11.22163,
+     "lon": -50.66722
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -11.01519014006231,
+     "lon": -50.94524911260797
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -11.22163,
+   "lon": -50.66722
+  },
+  {
+   "id": 10851,
+   "uf": "MA",
+   "municipio": "PASSAGEM FRANCA",
+   "cod_ibge": "2107902",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -6.17972,
+     "lon": -43.78361
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -6.1527894086559165,
+     "lon": -43.756872696981624
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -6.17972,
+   "lon": -43.78361
+  },
+  {
+   "id": 38401,
+   "uf": "SP",
+   "municipio": "AMERICO DE CAMPOS",
+   "cod_ibge": "3501806",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -20.298096,
+     "lon": -49.7363239
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.292256601260817,
+     "lon": -49.77212126465019
+    }
+   },
+   "nivel": "rua",
+   "lat": -20.298096,
+   "lon": -49.7363239
+  },
+  {
+   "id": 13980,
+   "uf": "MG",
+   "municipio": "ALEM PARAIBA",
+   "cod_ibge": "3101508",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -21.88778,
+     "lon": -42.70444
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.828331169399494,
+     "lon": -42.746223917734696
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -21.88778,
+   "lon": -42.70444
+  },
+  {
+   "id": 7138,
+   "uf": "CE",
+   "municipio": "ARACATI",
+   "cod_ibge": "2301109",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -4.56167,
+     "lon": -37.76972
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -4.680130678814013,
+     "lon": -37.68643721197325
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -4.56167,
+   "lon": -37.76972
+  },
+  {
+   "id": 41500,
+   "uf": "SP",
+   "municipio": "ESPIRITO SANTO DO PINHAL",
+   "cod_ibge": "3515186",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.1946641,
+     "lon": -46.7488207
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.192655876033214,
+     "lon": -46.79408682306949
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.1946641,
+   "lon": -46.7488207
+  },
+  {
+   "id": 43970,
+   "uf": "SP",
+   "municipio": "NOVO HORIZONTE",
+   "cod_ibge": "3533502",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -21.4753908,
+     "lon": -49.2280083
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.470081127630227,
+     "lon": -49.28295829406451
+    }
+   },
+   "nivel": "rua",
+   "lat": -21.4753908,
+   "lon": -49.2280083
+  },
+  {
+   "id": 32130,
+   "uf": "RS",
+   "municipio": "ARROIO DO TIGRE",
+   "cod_ibge": "4301206",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -29.3396498,
+     "lon": -53.0802484
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -29.25804122639511,
+     "lon": -53.05184457644601
+    }
+   },
+   "nivel": "rua",
+   "lat": -29.3396498,
+   "lon": -53.0802484
+  },
+  {
+   "id": 7054,
+   "uf": "CE",
+   "municipio": "RERIUTABA",
+   "cod_ibge": "2311702",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -4.1404709,
+     "lon": -40.6895613
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -4.119137087970683,
+     "lon": -40.61292447993928
+    }
+   },
+   "nivel": "rua",
+   "lat": -4.1404709,
+   "lon": -40.6895613
+  },
+  {
+   "id": 4314,
+   "uf": "BA",
+   "municipio": "CIPO",
+   "cod_ibge": "2907905",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -11.1026818,
+     "lon": -38.5225167
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -11.107083723902957,
+     "lon": -38.52422868089772
+    }
+   },
+   "nivel": "rua",
+   "lat": -11.1026818,
+   "lon": -38.5225167
+  },
+  {
+   "id": 19160,
+   "uf": "MT",
+   "municipio": "NOVA MUTUM",
+   "cod_ibge": "5106224",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -13.82889,
+     "lon": -56.08222
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -13.629140541482665,
+     "lon": -56.10631006302542
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -13.82889,
+   "lon": -56.08222
+  },
+  {
+   "id": 13683,
+   "uf": "MG",
+   "municipio": "SAO FRANCISCO DE SALES",
+   "cod_ibge": "3161304",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -19.86278,
+     "lon": -49.77417
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -19.796822555602617,
+     "lon": -49.86021624730134
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -19.86278,
+   "lon": -49.77417
+  },
+  {
+   "id": 11572,
+   "uf": "MA",
+   "municipio": "AXIXA",
+   "cod_ibge": "2101103",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -2.83694,
+     "lon": -44.05333
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.8389474511051627,
+     "lon": -44.09711149210333
+    }
+   },
+   "descartados": [
+    "nominatim fora do município"
+   ],
+   "nivel": "cep_cidade",
+   "lat": -2.83694,
+   "lon": -44.05333
+  },
+  {
+   "id": 8334,
+   "uf": "ES",
+   "municipio": "SAO MATEUS",
+   "cod_ibge": "3204906",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -18.7193162,
+     "lon": -39.8836191
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -18.748968566838496,
+     "lon": -40.020830035650015
+    }
+   },
+   "nivel": "rua",
+   "lat": -18.7193162,
+   "lon": -39.8836191
+  },
+  {
+   "id": 37504,
+   "uf": "SP",
+   "municipio": "MARILIA",
+   "cod_ibge": "3529005",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.1737275,
+     "lon": -49.9732943
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.177563094802505,
+     "lon": -49.981969650906
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.1737275,
+   "lon": -49.9732943
+  },
+  {
+   "id": 25544,
+   "uf": "PR",
+   "municipio": "SAO PEDRO DO IGUACU",
+   "cod_ibge": "4125753",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -24.9360473,
+     "lon": -53.8561197
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -24.907778288921538,
+     "lon": -53.8869089820673
+    }
+   },
+   "nivel": "rua",
+   "lat": -24.9360473,
+   "lon": -53.8561197
+  },
+  {
+   "id": 41953,
+   "uf": "SP",
+   "municipio": "ADAMANTINA",
+   "cod_ibge": "3500105",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -21.6886413,
+     "lon": -51.072519
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.573845193487625,
+     "lon": -51.05658722460508
+    }
+   },
+   "nivel": "rua",
+   "lat": -21.6886413,
+   "lon": -51.072519
+  },
+  {
+   "id": 26789,
+   "uf": "PR",
+   "municipio": "CIANORTE",
+   "cod_ibge": "4105508",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -23.658648,
+     "lon": -52.6089809
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.727685197338932,
+     "lon": -52.62734601100208
+    }
+   },
+   "nivel": "rua",
+   "lat": -23.658648,
+   "lon": -52.6089809
+  },
+  {
+   "id": 11553,
+   "uf": "MA",
+   "municipio": "CARUTAPERA",
+   "cod_ibge": "2102903",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -1.1961965,
+     "lon": -46.0137293
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -1.3524277162942056,
+     "lon": -46.02880525938407
+    }
+   },
+   "nivel": "rua",
+   "lat": -1.1961965,
+   "lon": -46.0137293
+  },
+  {
+   "id": 24459,
+   "uf": "PI",
+   "municipio": "BOM JESUS",
+   "cod_ibge": "2201903",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -9.07444,
+     "lon": -44.35861
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -9.245727515397157,
+     "lon": -44.54051859206882
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -9.07444,
+   "lon": -44.35861
+  },
+  {
+   "id": 32173,
+   "uf": "RS",
+   "municipio": "QUARAI",
+   "cod_ibge": "4315305",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -30.3875,
+     "lon": -56.45139
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -30.279096153487238,
+     "lon": -56.15252883915714
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -30.3875,
+   "lon": -56.45139
+  },
+  {
+   "id": 35293,
+   "uf": "SC",
+   "municipio": "JAGUARUNA",
+   "cod_ibge": "4208807",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -28.62145,
+     "lon": -49.02529
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -28.66269037559657,
+     "lon": -49.050308460035474
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -28.62145,
+   "lon": -49.02529
+  },
+  {
+   "id": 41989,
+   "uf": "SP",
+   "municipio": "COSMOPOLIS",
+   "cod_ibge": "3512803",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.6432919,
+     "lon": -47.195797
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.65198541257937,
+     "lon": -47.182920655136364
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.6432919,
+   "lon": -47.195797
+  },
+  {
+   "id": 32139,
+   "uf": "RS",
+   "municipio": "ERECHIM",
+   "cod_ibge": "4307005",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -27.6276596,
+     "lon": -52.2471558
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -27.643860356794868,
+     "lon": -52.25750748335011
+    }
+   },
+   "nivel": "rua",
+   "lat": -27.6276596,
+   "lon": -52.2471558
+  },
+  {
+   "id": 20092,
+   "uf": "PA",
+   "municipio": "ORIXIMINA",
+   "cod_ibge": "1505304",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -1.76556,
+     "lon": -55.86611
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": 0.254996137896275,
+     "lon": -57.150025910198764
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -1.76556,
+   "lon": -55.86611
+  },
+  {
+   "id": 5481,
+   "uf": "CE",
+   "municipio": "ITAPIPOCA",
+   "cod_ibge": "2306405",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -3.4909648,
+     "lon": -39.5744049
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -3.394598555329824,
+     "lon": -39.59758378136649
+    }
+   },
+   "nivel": "rua",
+   "lat": -3.4909648,
+   "lon": -39.5744049
+  },
+  {
+   "id": 41623,
+   "uf": "SP",
+   "municipio": "CUNHA",
+   "cod_ibge": "3513603",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -23.07444,
+     "lon": -44.95972
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.05255035782668,
+     "lon": -44.94238853458783
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -23.07444,
+   "lon": -44.95972
+  },
+  {
+   "id": 22962,
+   "uf": "PE",
+   "municipio": "AFRANIO",
+   "cod_ibge": "2600203",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -8.515,
+     "lon": -41.005
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -8.620465261397383,
+     "lon": -41.00662992606626
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -8.515,
+   "lon": -41.005
+  },
+  {
+   "id": 27187,
+   "uf": "PR",
+   "municipio": "SERRANOPOLIS DO IGUACU",
+   "cod_ibge": "4126355",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -25.3815492,
+     "lon": -54.0536432
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -25.471691523647884,
+     "lon": -54.024679676205736
+    }
+   },
+   "nivel": "rua",
+   "lat": -25.3815492,
+   "lon": -54.0536432
+  },
+  {
+   "id": 2561,
+   "uf": "BA",
+   "municipio": "ADUSTINA",
+   "cod_ibge": "2900355",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -10.5407843,
+     "lon": -38.1100205
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -10.56278544577403,
+     "lon": -38.03775938117825
+    }
+   },
+   "nivel": "rua",
+   "lat": -10.5407843,
+   "lon": -38.1100205
+  },
+  {
+   "id": 34590,
+   "uf": "SC",
+   "municipio": "IBIRAMA",
+   "cod_ibge": "4206900",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -27.077611,
+     "lon": -49.4941294
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -27.014780442901074,
+     "lon": -49.53086329289219
+    }
+   },
+   "nivel": "rua",
+   "lat": -27.077611,
+   "lon": -49.4941294
+  },
+  {
+   "id": 11873,
+   "uf": "MA",
+   "municipio": "SANTO AMARO DO MARANHAO",
+   "cod_ibge": "2110278",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -2.50375,
+     "lon": -43.25065
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.623231646913595,
+     "lon": -43.18400812376753
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -2.50375,
+   "lon": -43.25065
+  },
+  {
+   "id": 1123,
+   "uf": "AM",
+   "municipio": "COARI",
+   "cod_ibge": "1301209",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -4.085,
+     "lon": -63.14139
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -4.435365978325615,
+     "lon": -64.12491902235348
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -4.085,
+   "lon": -63.14139
+  },
+  {
+   "id": 10020,
+   "uf": "GO",
+   "municipio": "AMORINOPOLIS",
+   "cod_ibge": "5200902",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -16.61917,
+     "lon": -51.09361
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -16.62496139309472,
+     "lon": -51.10874722163958
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -16.61917,
+   "lon": -51.09361
+  },
+  {
+   "id": 1197,
+   "uf": "AM",
+   "municipio": "BERURI",
+   "cod_ibge": "1300631",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -3.9031234,
+     "lon": -61.3716471
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -4.605970699673461,
+     "lon": -61.80457539776591
+    }
+   },
+   "nivel": "rua",
+   "lat": -3.9031234,
+   "lon": -61.3716471
+  },
+  {
+   "id": 6676,
+   "uf": "CE",
+   "municipio": "BARRO",
+   "cod_ibge": "2302008",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -7.1813561,
+     "lon": -38.7793947
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.124620017304675,
+     "lon": -38.7949560740897
+    }
+   },
+   "nivel": "rua",
+   "lat": -7.1813561,
+   "lon": -38.7793947
+  },
+  {
+   "id": 30350,
+   "uf": "RN",
+   "municipio": "TENENTE ANANIAS",
+   "cod_ibge": "2414100",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -6.46765,
+     "lon": -38.1794
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -6.442280215440026,
+     "lon": -38.16528672177561
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -6.46765,
+   "lon": -38.1794
+  },
+  {
+   "id": 31003,
+   "uf": "RO",
+   "municipio": "COLORADO DO OESTE",
+   "cod_ibge": "1100064",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -13.134311,
+     "lon": -60.5429774
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -13.159229247745378,
+     "lon": -60.5488325400662
+    }
+   },
+   "nivel": "rua",
+   "lat": -13.134311,
+   "lon": -60.5429774
+  },
+  {
+   "id": 13129,
+   "uf": "MG",
+   "municipio": "JEQUITIBA",
+   "cod_ibge": "3135704",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -19.23556,
+     "lon": -44.02778
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -19.213764911525992,
+     "lon": -44.00129119034691
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -19.23556,
+   "lon": -44.02778
+  },
+  {
+   "id": 38658,
+   "uf": "SP",
+   "municipio": "INDAIATUBA",
+   "cod_ibge": "3520509",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -23.1202259,
+     "lon": -47.2244043
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.104493724670117,
+     "lon": -47.19962010872459
+    }
+   },
+   "nivel": "rua",
+   "lat": -23.1202259,
+   "lon": -47.2244043
+  },
+  {
+   "id": 25577,
+   "uf": "PR",
+   "municipio": "UMUARAMA",
+   "cod_ibge": "4128104",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -23.7568248,
+     "lon": -53.2969906
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.677773236079975,
+     "lon": -53.41631786716261
+    }
+   },
+   "nivel": "rua",
+   "lat": -23.7568248,
+   "lon": -53.2969906
+  },
+  {
+   "id": 44212,
+   "uf": "SP",
+   "municipio": "AURIFLAMA",
+   "cod_ibge": "3504206",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -20.6888032,
+     "lon": -50.5555661
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.64426821410528,
+     "lon": -50.58064414840902
+    }
+   },
+   "nivel": "rua",
+   "lat": -20.6888032,
+   "lon": -50.5555661
+  },
+  {
+   "id": 1755,
+   "uf": "AP",
+   "municipio": "LARANJAL DO JARI",
+   "cod_ibge": "1600279",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -0.826,
+     "lon": -52.506
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": 1.0994333867729937,
+     "lon": -53.30891375305323
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -0.826,
+   "lon": -52.506
+  },
+  {
+   "id": 1372,
+   "uf": "AM",
+   "municipio": "PARINTINS",
+   "cod_ibge": "1303403",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -2.62833,
+     "lon": -56.73583
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.687396480703923,
+     "lon": -56.85527178968236
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -2.62833,
+   "lon": -56.73583
+  },
+  {
+   "id": 8369,
+   "uf": "ES",
+   "municipio": "IUNA",
+   "cod_ibge": "3203007",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -20.34583,
+     "lon": -41.53583
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.350600490341517,
+     "lon": -41.65723207807628
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -20.34583,
+   "lon": -41.53583
+  },
+  {
+   "id": 36978,
+   "uf": "SP",
+   "municipio": "AGUAS DA PRATA",
+   "cod_ibge": "3500402",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -21.93667,
+     "lon": -46.71667
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.910313112526982,
+     "lon": -46.692992337307835
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -21.93667,
+   "lon": -46.71667
+  },
+  {
+   "id": 26112,
+   "uf": "PR",
+   "municipio": "MARILUZ",
+   "cod_ibge": "4115101",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -24.0079897,
+     "lon": -53.1522545
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -24.052417185093937,
+     "lon": -53.2114763829252
+    }
+   },
+   "nivel": "rua",
+   "lat": -24.0079897,
+   "lon": -53.1522545
+  },
+  {
+   "id": 20264,
+   "uf": "PA",
+   "municipio": "OBIDOS",
+   "cod_ibge": "1505106",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -1.8939803,
+     "lon": -55.5175683
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -0.1700833252398539,
+     "lon": -55.67484555595124
+    }
+   },
+   "nivel": "rua",
+   "lat": -1.8939803,
+   "lon": -55.5175683
+  },
+  {
+   "id": 19633,
+   "uf": "PA",
+   "municipio": "CURIONOPOLIS",
+   "cod_ibge": "1502772",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -6.096061,
+     "lon": -49.5954557
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -6.2280844120531205,
+     "lon": -49.625397833898155
+    }
+   },
+   "nivel": "rua",
+   "lat": -6.096061,
+   "lon": -49.5954557
+  },
+  {
+   "id": 11223,
+   "uf": "MA",
+   "municipio": "RIACHAO",
+   "cod_ibge": "2109502",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -7.3651032,
+     "lon": -46.6236539
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.596167002887918,
+     "lon": -46.65968579472886
+    }
+   },
+   "nivel": "rua",
+   "lat": -7.3651032,
+   "lon": -46.6236539
+  },
+  {
+   "id": 5741,
+   "uf": "CE",
+   "municipio": "SOBRAL",
+   "cod_ibge": "2312908",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -3.6989973,
+     "lon": -40.3708532
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -3.8116792701235407,
+     "lon": -40.227884511241754
+    }
+   },
+   "nivel": "rua",
+   "lat": -3.6989973,
+   "lon": -40.3708532
+  },
+  {
+   "id": 17019,
+   "uf": "MG",
+   "municipio": "FRUTAL",
+   "cod_ibge": "3127107",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -20.02472,
+     "lon": -48.94056
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.036588866905383,
+     "lon": -49.000579892674935
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -20.02472,
+   "lon": -48.94056
+  },
+  {
+   "id": 17952,
+   "uf": "MS",
+   "municipio": "DEODAPOLIS",
+   "cod_ibge": "5003454",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -22.2777681,
+     "lon": -54.1638545
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.15560952349896,
+     "lon": -54.15113474282403
+    }
+   },
+   "nivel": "numero",
+   "lat": -22.2777681,
+   "lon": -54.1638545
+  },
+  {
+   "id": 12002,
+   "uf": "MA",
+   "municipio": "DUQUE BACELAR",
+   "cod_ibge": "2103901",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -4.155461,
+     "lon": -42.9553961
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -4.100444419269531,
+     "lon": -43.00826681236342
+    }
+   },
+   "nivel": "rua",
+   "lat": -4.155461,
+   "lon": -42.9553961
+  },
+  {
+   "id": 24965,
+   "uf": "PR",
+   "municipio": "ARAPONGAS",
+   "cod_ibge": "4101507",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -23.41944,
+     "lon": -51.42444
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.438467420441206,
+     "lon": -51.42760048445582
+    }
+   },
+   "descartados": [
+    "nominatim fora do município"
+   ],
+   "nivel": "cep_rua",
+   "lat": -23.41944,
+   "lon": -51.42444
+  },
+  {
+   "id": 38380,
+   "uf": "SP",
+   "municipio": "AREALVA",
+   "cod_ibge": "3503406",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.0303806,
+     "lon": -48.9100755
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.075615845286986,
+     "lon": -48.98346468602927
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.0303806,
+   "lon": -48.9100755
+  },
+  {
+   "id": 35538,
+   "uf": "SC",
+   "municipio": "ARARANGUA",
+   "cod_ibge": "4201406",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -28.9530628,
+     "lon": -49.4873222
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -28.94104789159075,
+     "lon": -49.468619282190836
+    }
+   },
+   "nivel": "rua",
+   "lat": -28.9530628,
+   "lon": -49.4873222
+  },
+  {
+   "id": 16076,
+   "uf": "MG",
+   "municipio": "SALINAS",
+   "cod_ibge": "3157005",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -16.1433248,
+     "lon": -42.3011258
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -16.111350664249535,
+     "lon": -42.1520039762748
+    }
+   },
+   "nivel": "numero",
+   "lat": -16.1433248,
+   "lon": -42.3011258
+  },
+  {
+   "id": 3143,
+   "uf": "BA",
+   "municipio": "MORRO DO CHAPEU",
+   "cod_ibge": "2921708",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -11.5432781,
+     "lon": -41.1722461
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -11.46493090123357,
+     "lon": -41.16672925489668
+    }
+   },
+   "nivel": "rua",
+   "lat": -11.5432781,
+   "lon": -41.1722461
+  },
+  {
+   "id": 23746,
+   "uf": "PI",
+   "municipio": "MONTE ALEGRE DO PIAUI",
+   "cod_ibge": "2206605",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -9.75389,
+     "lon": -45.30389
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -9.603748567838922,
+     "lon": -45.030491704485854
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -9.75389,
+   "lon": -45.30389
+  },
+  {
+   "id": 1393,
+   "uf": "AM",
+   "municipio": "BARREIRINHA",
+   "cod_ibge": "1300508",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -2.79333,
+     "lon": -57.07
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -3.1323552850973875,
+     "lon": -57.1720547174252
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -2.79333,
+   "lon": -57.07
+  },
+  {
+   "id": 8250,
+   "uf": "ES",
+   "municipio": "PINHEIROS",
+   "cod_ibge": "3204104",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -18.3189159,
+     "lon": -40.4058653
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -18.37036607390987,
+     "lon": -40.197317635013384
+    }
+   },
+   "nivel": "rua",
+   "lat": -18.3189159,
+   "lon": -40.4058653
+  },
+  {
+   "id": 37353,
+   "uf": "SP",
+   "municipio": "MIRANTE DO PARANAPANEMA",
+   "cod_ibge": "3530201",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.2943644,
+     "lon": -51.9074515
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.350746922019365,
+     "lon": -52.00052437614072
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.2943644,
+   "lon": -51.9074515
+  },
+  {
+   "id": 6017,
+   "uf": "CE",
+   "municipio": "LAVRAS DA MANGABEIRA",
+   "cod_ibge": "2307502",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -6.753182,
+     "lon": -38.9626881
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -6.777534288985927,
+     "lon": -38.99468151015694
+    }
+   },
+   "nivel": "rua",
+   "lat": -6.753182,
+   "lon": -38.9626881
+  },
+  {
+   "id": 11742,
+   "uf": "MA",
+   "municipio": "PERI MIRIM",
+   "cod_ibge": "2108405",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -2.5775,
+     "lon": -44.85417
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.5696562914017544,
+     "lon": -44.89496767544022
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -2.5775,
+   "lon": -44.85417
+  },
+  {
+   "id": 19502,
+   "uf": "PA",
+   "municipio": "OBIDOS",
+   "cod_ibge": "1505106",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -1.9175,
+     "lon": -55.51806
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -0.1700833252398539,
+     "lon": -55.67484555595124
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -1.9175,
+   "lon": -55.51806
+  },
+  {
+   "id": 43491,
+   "uf": "SP",
+   "municipio": "ANDRADINA",
+   "cod_ibge": "3502101",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -20.9150359,
+     "lon": -51.3710801
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.835213212006973,
+     "lon": -51.328559352239616
+    }
+   },
+   "nivel": "rua",
+   "lat": -20.9150359,
+   "lon": -51.3710801
+  },
+  {
+   "id": 15011,
+   "uf": "MG",
+   "municipio": "CIPOTANEA",
+   "cod_ibge": "3116308",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -20.9054806,
+     "lon": -43.3662326
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.923362282297486,
+     "lon": -43.359372389825424
+    }
+   },
+   "nivel": "rua",
+   "lat": -20.9054806,
+   "lon": -43.3662326
+  },
+  {
+   "id": 33034,
+   "uf": "RS",
+   "municipio": "JAGUARAO",
+   "cod_ibge": "4311007",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -32.56611,
+     "lon": -53.37583
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -32.409919473166084,
+     "lon": -53.3363598155723
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -32.56611,
+   "lon": -53.37583
+  },
+  {
+   "id": 41311,
+   "uf": "SP",
+   "municipio": "HORTOLANDIA",
+   "cod_ibge": "3519071",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.8708251,
+     "lon": -47.2171652
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.87847086826424,
+     "lon": -47.210415145906865
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.8708251,
+   "lon": -47.2171652
+  },
+  {
+   "id": 41479,
+   "uf": "SP",
+   "municipio": "SAO JOSE DOS CAMPOS",
+   "cod_ibge": "3549904",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -23.1706605,
+     "lon": -45.8397429
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.090838078756974,
+     "lon": -45.92773556007735
+    }
+   },
+   "nivel": "rua",
+   "lat": -23.1706605,
+   "lon": -45.8397429
+  },
+  {
+   "id": 24177,
+   "uf": "PI",
+   "municipio": "FLORESTA DO PIAUI",
+   "cod_ibge": "2203859",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -7.4647699,
+     "lon": -41.8025043
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.474114935531646,
+     "lon": -41.80440622363049
+    }
+   },
+   "nivel": "rua",
+   "lat": -7.4647699,
+   "lon": -41.8025043
+  },
+  {
+   "id": 45711,
+   "uf": "TO",
+   "municipio": "CARIRI DO TOCANTINS",
+   "cod_ibge": "1703867",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -11.89083,
+     "lon": -49.16111
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -11.934489689723911,
+     "lon": -49.20390458430005
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -11.89083,
+   "lon": -49.16111
+  },
+  {
+   "id": 19741,
+   "uf": "PA",
+   "municipio": "CONCEICAO DO ARAGUAIA",
+   "cod_ibge": "1502707",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -8.2590906,
+     "lon": -49.4306247
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -8.181463388690196,
+     "lon": -49.5135868738726
+    }
+   },
+   "nivel": "rua",
+   "lat": -8.2590906,
+   "lon": -49.4306247
+  },
+  {
+   "id": 1385,
+   "uf": "AM",
+   "municipio": "SAO GABRIEL DA CACHOEIRA",
+   "cod_ibge": "1303809",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -0.1181,
+     "lon": -67.08527
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": 0.37477506655414955,
+     "lon": -67.9976397019713
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -0.1181,
+   "lon": -67.08527
+  },
+  {
+   "id": 19928,
+   "uf": "PA",
+   "municipio": "PRAINHA",
+   "cod_ibge": "1506005",
+   "camadas": {
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.1200221818149374,
+     "lon": -53.660930498008575
+    }
+   },
+   "nivel": "municipio",
+   "lat": -2.1200221818149374,
+   "lon": -53.660930498008575
+  },
+  {
+   "id": 2348,
+   "uf": "BA",
+   "municipio": "MANOEL VITORINO",
+   "cod_ibge": "2920403",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -14.176225,
+     "lon": -40.2596646
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -14.05029350843242,
+     "lon": -40.55008569094522
+    }
+   },
+   "nivel": "rua",
+   "lat": -14.176225,
+   "lon": -40.2596646
+  },
+  {
+   "id": 37578,
+   "uf": "SP",
+   "municipio": "PIRANGI",
+   "cod_ibge": "3539004",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -21.0974716,
+     "lon": -48.6690954
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.093561072938222,
+     "lon": -48.67025030240866
+    }
+   },
+   "nivel": "rua",
+   "lat": -21.0974716,
+   "lon": -48.6690954
+  },
+  {
+   "id": 44099,
+   "uf": "SP",
+   "municipio": "SAO JOAQUIM DA BARRA",
+   "cod_ibge": "3549409",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -20.583776,
+     "lon": -47.8668112
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.548918484418127,
+     "lon": -47.940591076647706
+    }
+   },
+   "nivel": "rua",
+   "lat": -20.583776,
+   "lon": -47.8668112
+  },
+  {
+   "id": 3693,
+   "uf": "BA",
+   "municipio": "SANTO AMARO",
+   "cod_ibge": "2928604",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -12.5886758,
+     "lon": -38.7259997
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -12.559084787865435,
+     "lon": -38.76588426095279
+    }
+   },
+   "nivel": "rua",
+   "lat": -12.5886758,
+   "lon": -38.7259997
+  },
+  {
+   "id": 7994,
+   "uf": "ES",
+   "municipio": "AGUA DOCE DO NORTE",
+   "cod_ibge": "3200169",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -18.54694,
+     "lon": -40.97861
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -18.51784767122145,
+     "lon": -40.99639071342669
+    }
+   },
+   "descartados": [
+    "nominatim fora do município",
+    "nominatim fora do município"
+   ],
+   "nivel": "cep_cidade",
+   "lat": -18.54694,
+   "lon": -40.97861
+  },
+  {
+   "id": 15719,
+   "uf": "MG",
+   "municipio": "GALILEIA",
+   "cod_ibge": "3127305",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -18.9962829,
+     "lon": -41.5377889
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -18.880947202445302,
+     "lon": -41.54581965448532
+    }
+   },
+   "nivel": "rua",
+   "lat": -18.9962829,
+   "lon": -41.5377889
+  },
+  {
+   "id": 15231,
+   "uf": "MG",
+   "municipio": "SAO JOAO DA LAGOA",
+   "cod_ibge": "3162252",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -16.85306,
+     "lon": -44.35194
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -16.859796566061334,
+     "lon": -44.337913083288946
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -16.85306,
+   "lon": -44.35194
+  },
+  {
+   "id": 4296,
+   "uf": "BA",
+   "municipio": "SANTA RITA DE CASSIA",
+   "cod_ibge": "2928406",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -11.00861,
+     "lon": -44.51944
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -11.007454340442163,
+     "lon": -44.556038617353295
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -11.00861,
+   "lon": -44.51944
+  },
+  {
+   "id": 19855,
+   "uf": "PA",
+   "municipio": "BRAGANCA",
+   "cod_ibge": "1501709",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -1.0652059,
+     "lon": -46.7781667
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -1.193488256640917,
+     "lon": -46.76290049735394
+    }
+   },
+   "nivel": "rua",
+   "lat": -1.0652059,
+   "lon": -46.7781667
+  },
+  {
+   "id": 770,
+   "uf": "AM",
+   "municipio": "COARI",
+   "cod_ibge": "1301209",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -4.085,
+     "lon": -63.14139
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -4.435365978325615,
+     "lon": -64.12491902235348
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -4.085,
+   "lon": -63.14139
+  },
+  {
+   "id": 3056,
+   "uf": "BA",
+   "municipio": "JACARACI",
+   "cod_ibge": "2917409",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -14.84972,
+     "lon": -42.43333
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -14.78485992488287,
+     "lon": -42.32292602610357
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -14.84972,
+   "lon": -42.43333
+  },
+  {
+   "id": 18980,
+   "uf": "MT",
+   "municipio": "SORRISO",
+   "cod_ibge": "5107925",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -12.5404668,
+     "lon": -55.7231696
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -12.736974685634896,
+     "lon": -55.680661132281635
+    }
+   },
+   "nivel": "rua",
+   "lat": -12.5404668,
+   "lon": -55.7231696
+  },
+  {
+   "id": 31060,
+   "uf": "RO",
+   "municipio": "PORTO VELHO",
+   "cod_ibge": "1100205",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -8.76194,
+     "lon": -63.90389
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -9.152822625990988,
+     "lon": -64.30322348128547
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -8.76194,
+   "lon": -63.90389
+  },
+  {
+   "id": 37011,
+   "uf": "SP",
+   "municipio": "COSMORAMA",
+   "cod_ibge": "3512902",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -20.47778,
+     "lon": -49.77778
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.4444795503812,
+     "lon": -49.775023274066136
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -20.47778,
+   "lon": -49.77778
+  },
+  {
+   "id": 37574,
+   "uf": "SP",
+   "municipio": "PAULINIA",
+   "cod_ibge": "3536505",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.7861252,
+     "lon": -47.1401929
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.746934462238592,
+     "lon": -47.14528159169045
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.7861252,
+   "lon": -47.1401929
+  },
+  {
+   "id": 10880,
+   "uf": "MA",
+   "municipio": "PINHEIRO",
+   "cod_ibge": "2108603",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -2.5268085,
+     "lon": -45.0706065
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.497739014766851,
+     "lon": -45.1260731677778
+    }
+   },
+   "nivel": "rua",
+   "lat": -2.5268085,
+   "lon": -45.0706065
+  },
+  {
+   "id": 23902,
+   "uf": "PI",
+   "municipio": "CONCEICAO DO CANINDE",
+   "cod_ibge": "2202802",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -7.8792262,
+     "lon": -41.5968757
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.915173906909522,
+     "lon": -41.580508623602
+    }
+   },
+   "nivel": "rua",
+   "lat": -7.8792262,
+   "lon": -41.5968757
+  },
+  {
+   "id": 32881,
+   "uf": "RS",
+   "municipio": "FORTALEZA DOS VALOS",
+   "cod_ibge": "4308458",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -28.79722,
+     "lon": -53.22278
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -28.895335969346228,
+     "lon": -53.27358110815661
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -28.79722,
+   "lon": -53.22278
+  },
+  {
+   "id": 31914,
+   "uf": "RS",
+   "municipio": "UBIRETAMA",
+   "cod_ibge": "4322343",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -28.0428995,
+     "lon": -54.6797872
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -28.038484508921286,
+     "lon": -54.64313502063659
+    }
+   },
+   "nivel": "rua",
+   "lat": -28.0428995,
+   "lon": -54.6797872
+  },
+  {
+   "id": 24497,
+   "uf": "PI",
+   "municipio": "SAO FRANCISCO DE ASSIS DO PIAUI",
+   "cod_ibge": "2209658",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -8.23778,
+     "lon": -41.68611
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -8.1941134735655,
+     "lon": -41.58432156668239
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -8.23778,
+   "lon": -41.68611
+  },
+  {
+   "id": 20409,
+   "uf": "PA",
+   "municipio": "PORTEL",
+   "cod_ibge": "1505809",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -1.9379013,
+     "lon": -50.8246317
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.565740490244895,
+     "lon": -50.9559155959458
+    }
+   },
+   "nivel": "rua",
+   "lat": -1.9379013,
+   "lon": -50.8246317
+  },
+  {
+   "id": 36614,
+   "uf": "SE",
+   "municipio": "POCO VERDE",
+   "cod_ibge": "2805505",
+   "camadas": {
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -10.800458337212582,
+     "lon": -38.12596754355277
+    }
+   },
+   "descartados": [
+    "cep fora do município"
+   ],
+   "nivel": "municipio",
+   "lat": -10.800458337212582,
+   "lon": -38.12596754355277
+  },
+  {
+   "id": 2236,
+   "uf": "BA",
+   "municipio": "TEODORO SAMPAIO",
+   "cod_ibge": "2931400",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -12.30353,
+     "lon": -38.64069
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -12.265818000877342,
+     "lon": -38.616199012252636
+    }
+   },
+   "descartados": [
+    "nominatim fora do município"
+   ],
+   "nivel": "cep_cidade",
+   "lat": -12.30353,
+   "lon": -38.64069
+  }
+ ],
+ "postos_com_coordenada": [
+  {
+   "id": 34818,
+   "uf": "SC",
+   "municipio": "CANOINHAS",
+   "cod_ibge": "4203808",
+   "camadas": {
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -26.254933387956616,
+     "lon": -50.53457871968727,
+     "erro_km": 17.196
+    }
+   },
+   "nivel": "municipio",
+   "lat": -26.254933387956616,
+   "lon": -50.53457871968727
+  },
+  {
+   "id": 36535,
+   "uf": "SC",
+   "municipio": "SAO JOSE",
+   "cod_ibge": "4216602",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -27.6107869,
+     "lon": -48.6534618,
+     "erro_km": 0.014
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -27.61528,
+     "lon": -48.6275,
+     "erro_km": 2.603
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -27.57922290345375,
+     "lon": -48.65745566635756,
+     "erro_km": 3.52
+    }
+   },
+   "nivel": "numero",
+   "lat": -27.6107869,
+   "lon": -48.6534618
+  },
+  {
+   "id": 25925,
+   "uf": "PR",
+   "municipio": "MARINGA",
+   "cod_ibge": "4115200",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -23.4135695,
+     "lon": -51.9292115,
+     "erro_km": 2.637
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -23.42528,
+     "lon": -51.93861,
+     "erro_km": 1.966
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.399231517949733,
+     "lon": -51.96872027519019,
+     "erro_km": 2.325
+    }
+   },
+   "nivel": "rua",
+   "lat": -23.4135695,
+   "lon": -51.9292115
+  },
+  {
+   "id": 35212,
+   "uf": "SC",
+   "municipio": "ITAJAI",
+   "cod_ibge": "4208203",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -26.889899,
+     "lon": -48.7103587,
+     "erro_km": 0.017
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -26.90778,
+     "lon": -48.66194,
+     "erro_km": 5.184
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -26.97340594459388,
+     "lon": -48.75552263522937,
+     "erro_km": 10.32
+    }
+   },
+   "nivel": "numero",
+   "lat": -26.889899,
+   "lon": -48.7103587
+  },
+  {
+   "id": 29926,
+   "uf": "RN",
+   "municipio": "NATAL",
+   "cod_ibge": "2408102",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -5.7992249,
+     "lon": -35.2138814,
+     "erro_km": 0.461
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -5.795,
+     "lon": -35.20944,
+     "erro_km": 1.141
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -5.80152377154465,
+     "lon": -35.228120523323575,
+     "erro_km": 1.225
+    }
+   },
+   "nivel": "rua",
+   "lat": -5.7992249,
+   "lon": -35.2138814
+  },
+  {
+   "id": 40324,
+   "uf": "SP",
+   "municipio": "BAURU",
+   "cod_ibge": "3506003",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -22.31472,
+     "lon": -49.06056,
+     "erro_km": 3.878
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.254660015889602,
+     "lon": -49.124817229466075,
+     "erro_km": 8.669
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -22.31472,
+   "lon": -49.06056
+  },
+  {
+   "id": 30122,
+   "uf": "RN",
+   "municipio": "SAO JOSE DE MIPIBU",
+   "cod_ibge": "2412203",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -5.992369,
+     "lon": -35.2632671,
+     "erro_km": 0.355
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -6.07472,
+     "lon": -35.23778,
+     "erro_km": 9.936
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -6.064356443717423,
+     "lon": -35.28903209975421,
+     "erro_km": 8.79
+    }
+   },
+   "nivel": "rua",
+   "lat": -5.992369,
+   "lon": -35.2632671
+  },
+  {
+   "id": 39561,
+   "uf": "SP",
+   "municipio": "SANTANA DE PARNAIBA",
+   "cod_ibge": "3547304",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -23.4087015,
+     "lon": -46.8911445,
+     "erro_km": 0.55
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.450439923748153,
+     "lon": -46.91553515374428,
+     "erro_km": 5.745
+    }
+   },
+   "nivel": "rua",
+   "lat": -23.4087015,
+   "lon": -46.8911445
+  },
+  {
+   "id": 43151,
+   "uf": "SP",
+   "municipio": "SAO PAULO",
+   "cod_ibge": "3550308",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -23.5963039,
+     "lon": -46.7455528,
+     "erro_km": 0.05
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.646927720988216,
+     "lon": -46.64996454199073,
+     "erro_km": 11.297
+    }
+   },
+   "nivel": "rua",
+   "lat": -23.5963039,
+   "lon": -46.7455528
+  },
+  {
+   "id": 19777,
+   "uf": "PA",
+   "municipio": "BELEM",
+   "cod_ibge": "1501402",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -1.3999211,
+     "lon": -48.4733862,
+     "erro_km": 0.445
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -1.45583,
+     "lon": -48.50444,
+     "erro_km": 6.995
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -1.244992846009178,
+     "lon": -48.459761403650575,
+     "erro_km": 17.588
+    }
+   },
+   "nivel": "rua",
+   "lat": -1.3999211,
+   "lon": -48.4733862
+  },
+  {
+   "id": 6112,
+   "uf": "CE",
+   "municipio": "MASSAPE",
+   "cod_ibge": "2308005",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -3.5485358,
+     "lon": -40.3442073,
+     "erro_km": 0.344
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -3.52278,
+     "lon": -40.34278,
+     "erro_km": 3.198
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -3.483018373030175,
+     "lon": -40.39004874074424,
+     "erro_km": 9.209
+    }
+   },
+   "nivel": "rua",
+   "lat": -3.5485358,
+   "lon": -40.3442073
+  },
+  {
+   "id": 5460,
+   "uf": "BA",
+   "municipio": "GANDU",
+   "cod_ibge": "2911204",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -13.74389,
+     "lon": -39.48667,
+     "erro_km": 0.108
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -13.788948718200583,
+     "lon": -39.48170297109585,
+     "erro_km": 4.95
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -13.74389,
+   "lon": -39.48667
+  },
+  {
+   "id": 10638,
+   "uf": "GO",
+   "municipio": "TURVELANDIA",
+   "cod_ibge": "5221551",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -17.8530266,
+     "lon": -50.3091002,
+     "erro_km": 0.73
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -17.85278,
+     "lon": -50.30222,
+     "erro_km": 0.114
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -17.75486731011456,
+     "lon": -50.31222149490397,
+     "erro_km": 10.825
+    }
+   },
+   "nivel": "rua",
+   "lat": -17.8530266,
+   "lon": -50.3091002
+  },
+  {
+   "id": 4603,
+   "uf": "BA",
+   "municipio": "BARROCAS",
+   "cod_ibge": "2903276",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -11.531306,
+     "lon": -39.0797721,
+     "erro_km": 0.462
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -11.52833,
+     "lon": -39.07639,
+     "erro_km": 0.851
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -11.538197631218283,
+     "lon": -39.0946095356995,
+     "erro_km": 1.696
+    }
+   },
+   "nivel": "rua",
+   "lat": -11.531306,
+   "lon": -39.0797721
+  },
+  {
+   "id": 38821,
+   "uf": "SP",
+   "municipio": "LINS",
+   "cod_ibge": "3527108",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -21.6896123,
+     "lon": -49.74928,
+     "erro_km": 0.207
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -21.67861,
+     "lon": -49.7425,
+     "erro_km": 1.617
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.65105434347071,
+     "lon": -49.68376219577127,
+     "erro_km": 8.2
+    }
+   },
+   "nivel": "rua",
+   "lat": -21.6896123,
+   "lon": -49.74928
+  },
+  {
+   "id": 1638,
+   "uf": "AP",
+   "municipio": "PORTO GRANDE",
+   "cod_ibge": "1600535",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": 0.71333,
+     "lon": -51.41333,
+     "erro_km": 1.804
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": 0.5858073476806572,
+     "lon": -51.67154450867429,
+     "erro_km": 32.507
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": 0.71333,
+   "lon": -51.41333
+  },
+  {
+   "id": 26551,
+   "uf": "PR",
+   "municipio": "GUARAPUAVA",
+   "cod_ibge": "4109401",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -25.39048,
+     "lon": -51.46541,
+     "erro_km": 0.397
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -25.37178455790261,
+     "lon": -51.48947617168966,
+     "erro_km": 3.436
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -25.39048,
+   "lon": -51.46541
+  },
+  {
+   "id": 24457,
+   "uf": "PI",
+   "municipio": "JOSE DE FREITAS",
+   "cod_ibge": "2205508",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -4.7498643,
+     "lon": -42.5815867,
+     "erro_km": 0.172
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -4.75639,
+     "lon": -42.57556,
+     "erro_km": 1.127
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -4.714026770352587,
+     "lon": -42.52534492428136,
+     "erro_km": 7.318
+    }
+   },
+   "nivel": "rua",
+   "lat": -4.7498643,
+   "lon": -42.5815867
+  },
+  {
+   "id": 37709,
+   "uf": "SP",
+   "municipio": "MONTE MOR",
+   "cod_ibge": "3531803",
+   "camadas": {
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.9531089535959,
+     "lon": -47.30521849389775,
+     "erro_km": 2.592
+    }
+   },
+   "nivel": "municipio",
+   "lat": -22.9531089535959,
+   "lon": -47.30521849389775
+  },
+  {
+   "id": 24870,
+   "uf": "PI",
+   "municipio": "FARTURA DO PIAUI",
+   "cod_ibge": "2203750",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -9.48194,
+     "lon": -42.78962,
+     "erro_km": 0.32
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -9.476512329370594,
+     "lon": -42.783782464487174,
+     "erro_km": 0.665
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -9.48194,
+   "lon": -42.78962
+  },
+  {
+   "id": 9837,
+   "uf": "GO",
+   "municipio": "SAO SIMAO",
+   "cod_ibge": "5220405",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -18.9686282,
+     "lon": -50.6094107,
+     "erro_km": 7.671
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -18.99111,
+     "lon": -50.54361,
+     "erro_km": 1.933
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -19.010233185389495,
+     "lon": -50.589595542475244,
+     "erro_km": 4.251
+    }
+   },
+   "nivel": "rua",
+   "lat": -18.9686282,
+   "lon": -50.6094107
+  },
+  {
+   "id": 27115,
+   "uf": "PR",
+   "municipio": "NOVA PRATA DO IGUACU",
+   "cod_ibge": "4117255",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -25.6359893,
+     "lon": -53.3452452,
+     "erro_km": 0.307
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -25.6325,
+     "lon": -53.34667,
+     "erro_km": 0.114
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -25.59012386044138,
+     "lon": -53.377478483516356,
+     "erro_km": 5.748
+    }
+   },
+   "nivel": "rua",
+   "lat": -25.6359893,
+   "lon": -53.3452452
+  },
+  {
+   "id": 41235,
+   "uf": "SP",
+   "municipio": "MIRASSOL",
+   "cod_ibge": "3530300",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -20.804047,
+     "lon": -49.5054399,
+     "erro_km": 0.172
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -20.81917,
+     "lon": -49.52111,
+     "erro_km": 2.488
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.828460704262287,
+     "lon": -49.50450315615844,
+     "erro_km": 2.884
+    }
+   },
+   "nivel": "rua",
+   "lat": -20.804047,
+   "lon": -49.5054399
+  },
+  {
+   "id": 385,
+   "uf": "AL",
+   "municipio": "SAO LUIS DO QUITUNDE",
+   "cod_ibge": "2708501",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -9.3156709,
+     "lon": -35.5689836,
+     "erro_km": 0.36
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -9.31833,
+     "lon": -35.56111,
+     "erro_km": 1.259
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -9.250488147173591,
+     "lon": -35.63368568513317,
+     "erro_km": 9.789
+    }
+   },
+   "nivel": "rua",
+   "lat": -9.3156709,
+   "lon": -35.5689836
+  },
+  {
+   "id": 9685,
+   "uf": "GO",
+   "municipio": "GOIANIA",
+   "cod_ibge": "5208707",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -16.6709698,
+     "lon": -49.2445789,
+     "erro_km": 0.315
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -16.67861,
+     "lon": -49.25389,
+     "erro_km": 1.504
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -16.643336459932474,
+     "lon": -49.27370096735775,
+     "erro_km": 4.124
+    }
+   },
+   "nivel": "rua",
+   "lat": -16.6709698,
+   "lon": -49.2445789
+  },
+  {
+   "id": 7534,
+   "uf": "DF",
+   "municipio": "BRASILIA",
+   "cod_ibge": "5300108",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -15.8297657,
+     "lon": -48.1427131,
+     "erro_km": 21.667
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -15.77972,
+     "lon": -47.92972,
+     "erro_km": 28.843
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -15.781428483660488,
+     "lon": -47.79695516398274,
+     "erro_km": 37.644
+    }
+   },
+   "nivel": "numero",
+   "lat": -15.8297657,
+   "lon": -48.1427131
+  },
+  {
+   "id": 27103,
+   "uf": "PR",
+   "municipio": "PARANAVAI",
+   "cod_ibge": "4118402",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -23.092614,
+     "lon": -52.4878039,
+     "erro_km": 0.264
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -23.07306,
+     "lon": -52.46528,
+     "erro_km": 3.276
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.921595400458504,
+     "lon": -52.51181428445671,
+     "erro_km": 19.035
+    }
+   },
+   "nivel": "rua",
+   "lat": -23.092614,
+   "lon": -52.4878039
+  },
+  {
+   "id": 20162,
+   "uf": "PA",
+   "municipio": "VIGIA",
+   "cod_ibge": "1508209",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -0.9884172,
+     "lon": -48.0991572,
+     "erro_km": 13.745
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -0.85833,
+     "lon": -48.14167,
+     "erro_km": 2.465
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -0.9339636971011469,
+     "lon": -48.10352138087209,
+     "erro_km": 7.724
+    }
+   },
+   "nivel": "rua",
+   "lat": -0.9884172,
+   "lon": -48.0991572
+  },
+  {
+   "id": 22812,
+   "uf": "PE",
+   "municipio": "FERNANDO DE NORONHA",
+   "cod_ibge": "2605459",
+   "camadas": {
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -3.859731096557522,
+     "lon": -32.42757378087593,
+     "erro_km": 3.991
+    }
+   },
+   "descartados": [
+    "cep fora do município"
+   ],
+   "nivel": "municipio",
+   "lat": -3.859731096557522,
+   "lon": -32.42757378087593
+  },
+  {
+   "id": 2803,
+   "uf": "BA",
+   "municipio": "PORTO SEGURO",
+   "cod_ibge": "2925303",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -16.414424,
+     "lon": -39.0998772,
+     "erro_km": 5.64
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -16.44972,
+     "lon": -39.06472,
+     "erro_km": 5.104
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -16.62546108487239,
+     "lon": -39.27937841682416,
+     "erro_km": 34.661
+    }
+   },
+   "nivel": "rua",
+   "lat": -16.414424,
+   "lon": -39.0998772
+  },
+  {
+   "id": 39798,
+   "uf": "SP",
+   "municipio": "SAO PAULO",
+   "cod_ibge": "3550308",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -23.4867549,
+     "lon": -46.6232969,
+     "erro_km": 0.015
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.646927720988216,
+     "lon": -46.64996454199073,
+     "erro_km": 18.022
+    }
+   },
+   "nivel": "numero",
+   "lat": -23.4867549,
+   "lon": -46.6232969
+  },
+  {
+   "id": 41831,
+   "uf": "SP",
+   "municipio": "SAO PAULO",
+   "cod_ibge": "3550308",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -23.5463891,
+     "lon": -46.6578447,
+     "erro_km": 0.009
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.646927720988216,
+     "lon": -46.64996454199073,
+     "erro_km": 11.215
+    }
+   },
+   "nivel": "numero",
+   "lat": -23.5463891,
+   "lon": -46.6578447
+  },
+  {
+   "id": 23364,
+   "uf": "PE",
+   "municipio": "SANTA CRUZ DO CAPIBARIBE",
+   "cod_ibge": "2612505",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -7.9503774,
+     "lon": -36.2017238,
+     "erro_km": 0.107
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -7.9575,
+     "lon": -36.20472,
+     "erro_km": 0.897
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.890692552364761,
+     "lon": -36.32487209832447,
+     "erro_km": 15.199
+    }
+   },
+   "nivel": "rua",
+   "lat": -7.9503774,
+   "lon": -36.2017238
+  },
+  {
+   "id": 24171,
+   "uf": "PI",
+   "municipio": "TERESINA",
+   "cod_ibge": "2211001",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -5.08917,
+     "lon": -42.80194,
+     "erro_km": 10.315
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -5.102683074969791,
+     "lon": -42.740367578176716,
+     "erro_km": 15.423
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -5.08917,
+   "lon": -42.80194
+  },
+  {
+   "id": 43911,
+   "uf": "SP",
+   "municipio": "LINS",
+   "cod_ibge": "3527108",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -21.6793772,
+     "lon": -49.7665702,
+     "erro_km": 0.323
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -21.67861,
+     "lon": -49.7425,
+     "erro_km": 2.301
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.65105434347071,
+     "lon": -49.68376219577127,
+     "erro_km": 8.85
+    }
+   },
+   "nivel": "rua",
+   "lat": -21.6793772,
+   "lon": -49.7665702
+  },
+  {
+   "id": 24771,
+   "uf": "PI",
+   "municipio": "URUCUI",
+   "cod_ibge": "2211209",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -7.30298,
+     "lon": -44.3861203,
+     "erro_km": 6.452
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -7.22944,
+     "lon": -44.55611,
+     "erro_km": 20.512
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.791445160687118,
+     "lon": -44.56975332145994,
+     "erro_km": 51.662
+    }
+   },
+   "nivel": "rua",
+   "lat": -7.30298,
+   "lon": -44.3861203
+  },
+  {
+   "id": 22001,
+   "uf": "PB",
+   "municipio": "CASSERENGUE",
+   "cod_ibge": "2504157",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -6.7816,
+     "lon": -35.81826,
+     "erro_km": 0.539
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -6.755889658161659,
+     "lon": -35.84214110009426,
+     "erro_km": 4.396
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -6.7816,
+   "lon": -35.81826
+  },
+  {
+   "id": 10219,
+   "uf": "GO",
+   "municipio": "NIQUELANDIA",
+   "cod_ibge": "5214606",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -14.47389,
+     "lon": -48.45972,
+     "erro_km": 3.725
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -14.498250466257149,
+     "lon": -48.402494928395875,
+     "erro_km": 5.307
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -14.47389,
+   "lon": -48.45972
+  },
+  {
+   "id": 8347,
+   "uf": "ES",
+   "municipio": "DOMINGOS MARTINS",
+   "cod_ibge": "3201902",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -20.36333,
+     "lon": -40.65917,
+     "erro_km": 18.33
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.306798677553527,
+     "lon": -40.84654217360073,
+     "erro_km": 3.423
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -20.36333,
+   "lon": -40.65917
+  },
+  {
+   "id": 42956,
+   "uf": "SP",
+   "municipio": "SAO PAULO",
+   "cod_ibge": "3550308",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -23.4983026,
+     "lon": -46.595227,
+     "erro_km": 0.015
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.646927720988216,
+     "lon": -46.64996454199073,
+     "erro_km": 17.433
+    }
+   },
+   "nivel": "numero",
+   "lat": -23.4983026,
+   "lon": -46.595227
+  },
+  {
+   "id": 30025,
+   "uf": "RN",
+   "municipio": "BREJINHO",
+   "cod_ibge": "2401800",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -6.1866463,
+     "lon": -35.3557172,
+     "erro_km": 1.669
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -6.19083,
+     "lon": -35.35667,
+     "erro_km": 1.223
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -6.21676447939968,
+     "lon": -35.38258575698784,
+     "erro_km": 2.857
+    }
+   },
+   "nivel": "rua",
+   "lat": -6.1866463,
+   "lon": -35.3557172
+  },
+  {
+   "id": 19263,
+   "uf": "MT",
+   "municipio": "CANARANA",
+   "cod_ibge": "5102702",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -13.55222,
+     "lon": -52.26833,
+     "erro_km": 2.549
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -13.330411812862854,
+     "lon": -52.39830759043357,
+     "erro_km": 29.69
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -13.55222,
+   "lon": -52.26833
+  },
+  {
+   "id": 25103,
+   "uf": "PR",
+   "municipio": "CATANDUVAS",
+   "cod_ibge": "4105003",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -25.20306,
+     "lon": -53.15667,
+     "erro_km": 11.706
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -25.242060708369635,
+     "lon": -53.155236989293655,
+     "erro_km": 7.75
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -25.20306,
+   "lon": -53.15667
+  },
+  {
+   "id": 21483,
+   "uf": "PB",
+   "municipio": "TEIXEIRA",
+   "cod_ibge": "2516706",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -7.2241729,
+     "lon": -37.2542868,
+     "erro_km": 0.058
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -7.22278,
+     "lon": -37.25417,
+     "erro_km": 0.206
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.245156057189707,
+     "lon": -37.24157520452397,
+     "erro_km": 2.664
+    }
+   },
+   "nivel": "rua",
+   "lat": -7.2241729,
+   "lon": -37.2542868
+  },
+  {
+   "id": 17363,
+   "uf": "MG",
+   "municipio": "LEOPOLDINA",
+   "cod_ibge": "3138401",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -21.53194,
+     "lon": -42.64306,
+     "erro_km": 0.645
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.548700349036057,
+     "lon": -42.64246142451745,
+     "erro_km": 2.491
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -21.53194,
+   "lon": -42.64306
+  },
+  {
+   "id": 10589,
+   "uf": "GO",
+   "municipio": "GOIANIA",
+   "cod_ibge": "5208707",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -16.6425999,
+     "lon": -49.2800378,
+     "erro_km": 0.096
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -16.67861,
+     "lon": -49.25389,
+     "erro_km": 4.821
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -16.643336459932474,
+     "lon": -49.27370096735775,
+     "erro_km": 0.584
+    }
+   },
+   "nivel": "rua",
+   "lat": -16.6425999,
+   "lon": -49.2800378
+  },
+  {
+   "id": 44606,
+   "uf": "SP",
+   "municipio": "PRESIDENTE PRUDENTE",
+   "cod_ibge": "3541406",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.098438,
+     "lon": -51.4208018,
+     "erro_km": 2.537
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -22.12556,
+     "lon": -51.38889,
+     "erro_km": 3.31
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.992376980761534,
+     "lon": -51.34221544585122,
+     "erro_km": 12.857
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.098438,
+   "lon": -51.4208018
+  },
+  {
+   "id": 11038,
+   "uf": "MA",
+   "municipio": "CAXIAS",
+   "cod_ibge": "2103000",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -4.85889,
+     "lon": -43.35611,
+     "erro_km": 26.97
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -4.866563323817037,
+     "lon": -43.29976012641248,
+     "erro_km": 20.967
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -4.85889,
+   "lon": -43.35611
+  },
+  {
+   "id": 38115,
+   "uf": "SP",
+   "municipio": "SAO PAULO",
+   "cod_ibge": "3550308",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -23.6364681,
+     "lon": -46.6933781,
+     "erro_km": 0.974
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.646927720988216,
+     "lon": -46.64996454199073,
+     "erro_km": 4.241
+    }
+   },
+   "nivel": "rua",
+   "lat": -23.6364681,
+   "lon": -46.6933781
+  },
+  {
+   "id": 15759,
+   "uf": "MG",
+   "municipio": "CONCEICAO DAS ALAGOAS",
+   "cod_ibge": "3117306",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -19.918272,
+     "lon": -48.3763271,
+     "erro_km": 0.404
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -19.91472,
+     "lon": -48.38833,
+     "erro_km": 1.581
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -19.960152128702504,
+     "lon": -48.36084752161606,
+     "erro_km": 4.526
+    }
+   },
+   "nivel": "rua",
+   "lat": -19.918272,
+   "lon": -48.3763271
+  },
+  {
+   "id": 18110,
+   "uf": "MS",
+   "municipio": "CAMPO GRANDE",
+   "cod_ibge": "5002704",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -20.4517144,
+     "lon": -54.6142798,
+     "erro_km": 0.213
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -20.44278,
+     "lon": -54.64639,
+     "erro_km": 3.68
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.91363022412363,
+     "lon": -54.248617597837644,
+     "erro_km": 63.824
+    }
+   },
+   "nivel": "rua",
+   "lat": -20.4517144,
+   "lon": -54.6142798
+  },
+  {
+   "id": 17576,
+   "uf": "MG",
+   "municipio": "PATROCINIO",
+   "cod_ibge": "3148103",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -18.9489301,
+     "lon": -46.9949997,
+     "erro_km": 0.845
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -18.94389,
+     "lon": -46.9925,
+     "erro_km": 1.4
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -18.96901354978928,
+     "lon": -47.049276027720275,
+     "erro_km": 6.01
+    }
+   },
+   "nivel": "rua",
+   "lat": -18.9489301,
+   "lon": -46.9949997
+  },
+  {
+   "id": 45374,
+   "uf": "TO",
+   "municipio": "COMBINADO",
+   "cod_ibge": "1705557",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -12.81436,
+     "lon": -46.54805,
+     "erro_km": 0.902
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -12.8477972168774,
+     "lon": -46.50220988254146,
+     "erro_km": 6.52
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -12.81436,
+   "lon": -46.54805
+  },
+  {
+   "id": 22396,
+   "uf": "PE",
+   "municipio": "TAQUARITINGA DO NORTE",
+   "cod_ibge": "2615003",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -7.90306,
+     "lon": -36.04417,
+     "erro_km": 0.568
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.868327519566762,
+     "lon": -36.13163512469664,
+     "erro_km": 9.851
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -7.90306,
+   "lon": -36.04417
+  },
+  {
+   "id": 12745,
+   "uf": "MG",
+   "municipio": "CARMO DO PARANAIBA",
+   "cod_ibge": "3114303",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -19.00083,
+     "lon": -46.31611,
+     "erro_km": 0.364
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -18.90864935373652,
+     "lon": -46.18531460096076,
+     "erro_km": 16.811
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -19.00083,
+   "lon": -46.31611
+  },
+  {
+   "id": 166,
+   "uf": "AC",
+   "municipio": "MANCIO LIMA",
+   "cod_ibge": "1200336",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -7.61417,
+     "lon": -72.89583,
+     "erro_km": 1.887
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.504402386595518,
+     "lon": -73.43861623924452,
+     "erro_km": 59.259
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -7.61417,
+   "lon": -72.89583
+  },
+  {
+   "id": 19532,
+   "uf": "PA",
+   "municipio": "BELEM",
+   "cod_ibge": "1501402",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -1.4114824,
+     "lon": -48.4705961,
+     "erro_km": 0.064
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -1.45583,
+     "lon": -48.50444,
+     "erro_km": 6.263
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -1.244992846009178,
+     "lon": -48.459761403650575,
+     "erro_km": 18.514
+    }
+   },
+   "nivel": "numero",
+   "lat": -1.4114824,
+   "lon": -48.4705961
+  },
+  {
+   "id": 42880,
+   "uf": "SP",
+   "municipio": "SAO PAULO",
+   "cod_ibge": "3550308",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -23.5180572,
+     "lon": -46.6284843,
+     "erro_km": 0.015
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.646927720988216,
+     "lon": -46.64996454199073,
+     "erro_km": 14.507
+    }
+   },
+   "nivel": "numero",
+   "lat": -23.5180572,
+   "lon": -46.6284843
+  },
+  {
+   "id": 21750,
+   "uf": "PB",
+   "municipio": "CAMPINA GRANDE",
+   "cod_ibge": "2504009",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -7.2173638,
+     "lon": -35.9087729,
+     "erro_km": 0.309
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -7.23056,
+     "lon": -35.88111,
+     "erro_km": 3.172
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -7.262669024734738,
+     "lon": -35.96625315827262,
+     "erro_km": 8.389
+    }
+   },
+   "nivel": "numero",
+   "lat": -7.2173638,
+   "lon": -35.9087729
+  },
+  {
+   "id": 2335,
+   "uf": "BA",
+   "municipio": "CRUZ DAS ALMAS",
+   "cod_ibge": "2909802",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -12.6677167,
+     "lon": -39.1096032,
+     "erro_km": 0.64
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -12.67,
+     "lon": -39.10194,
+     "erro_km": 1.486
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -12.682980501734471,
+     "lon": -39.119245231327824,
+     "erro_km": 2.151
+    }
+   },
+   "nivel": "rua",
+   "lat": -12.6677167,
+   "lon": -39.1096032
+  },
+  {
+   "id": 2432,
+   "uf": "BA",
+   "municipio": "FEIRA DE SANTANA",
+   "cod_ibge": "2910800",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -12.2686683,
+     "lon": -38.9405616,
+     "erro_km": 1.662
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -12.26667,
+     "lon": -38.96667,
+     "erro_km": 1.601
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -12.194066846974353,
+     "lon": -39.0363652984633,
+     "erro_km": 11.658
+    }
+   },
+   "nivel": "rua",
+   "lat": -12.2686683,
+   "lon": -38.9405616
+  },
+  {
+   "id": 31907,
+   "uf": "RS",
+   "municipio": "SAO LEOPOLDO",
+   "cod_ibge": "4318705",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -29.7292899,
+     "lon": -51.1514267,
+     "erro_km": 0.47
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -29.76028,
+     "lon": -51.14722,
+     "erro_km": 3.728
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -29.755360301034532,
+     "lon": -51.14658195800706,
+     "erro_km": 3.214
+    }
+   },
+   "nivel": "rua",
+   "lat": -29.7292899,
+   "lon": -51.1514267
+  },
+  {
+   "id": 23732,
+   "uf": "PI",
+   "municipio": "TERESINA",
+   "cod_ibge": "2211001",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -5.1156072,
+     "lon": -42.7991878,
+     "erro_km": 2.55
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -5.08917,
+     "lon": -42.80194,
+     "erro_km": 0.409
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -5.102683074969791,
+     "lon": -42.740367578176716,
+     "erro_km": 6.821
+    }
+   },
+   "nivel": "rua",
+   "lat": -5.1156072,
+   "lon": -42.7991878
+  },
+  {
+   "id": 17878,
+   "uf": "MS",
+   "municipio": "COXIM",
+   "cod_ibge": "5003306",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -18.5040672,
+     "lon": -54.7434047,
+     "erro_km": 0.029
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -18.50667,
+     "lon": -54.76,
+     "erro_km": 1.759
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -18.281531668402938,
+     "lon": -54.67314654576105,
+     "erro_km": 25.815
+    }
+   },
+   "nivel": "rua",
+   "lat": -18.5040672,
+   "lon": -54.7434047
+  },
+  {
+   "id": 16772,
+   "uf": "MG",
+   "municipio": "MURIAE",
+   "cod_ibge": "3143906",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -21.1284825,
+     "lon": -42.3705088,
+     "erro_km": 0.055
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -21.13056,
+     "lon": -42.36639,
+     "erro_km": 0.454
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.093439859946486,
+     "lon": -42.419772965421444,
+     "erro_km": 6.466
+    }
+   },
+   "nivel": "rua",
+   "lat": -21.1284825,
+   "lon": -42.3705088
+  },
+  {
+   "id": 44684,
+   "uf": "SP",
+   "municipio": "SAO PAULO",
+   "cod_ibge": "3550308",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -23.5212892,
+     "lon": -46.5160963,
+     "erro_km": 0.025
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.646927720988216,
+     "lon": -46.64996454199073,
+     "erro_km": 19.523
+    }
+   },
+   "nivel": "numero",
+   "lat": -23.5212892,
+   "lon": -46.5160963
+  },
+  {
+   "id": 5628,
+   "uf": "CE",
+   "municipio": "MARCO",
+   "cod_ibge": "2307809",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -3.1236191,
+     "lon": -40.1381459,
+     "erro_km": 248.535
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -3.12389,
+     "lon": -40.14667,
+     "erro_km": 248.867
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -3.190779677378846,
+     "lon": -40.26389752251408,
+     "erro_km": 247.396
+    }
+   },
+   "nivel": "rua",
+   "lat": -3.1236191,
+   "lon": -40.1381459
+  },
+  {
+   "id": 29541,
+   "uf": "RJ",
+   "municipio": "PETROPOLIS",
+   "cod_ibge": "3303906",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.4230253,
+     "lon": -43.1330727,
+     "erro_km": 3.768
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -22.505,
+     "lon": -43.17861,
+     "erro_km": 13.75
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.399377065325567,
+     "lon": -43.157248069221936,
+     "erro_km": 2.853
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.4230253,
+   "lon": -43.1330727
+  },
+  {
+   "id": 27083,
+   "uf": "PR",
+   "municipio": "SAO JOSE DOS PINHAIS",
+   "cod_ibge": "4125506",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -25.5344198,
+     "lon": -49.1990727,
+     "erro_km": 3.636
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -25.5302,
+     "lon": -49.20836,
+     "erro_km": 3.774
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -25.664859284119448,
+     "lon": -49.097774254934194,
+     "erro_km": 16.329
+    }
+   },
+   "nivel": "rua",
+   "lat": -25.5344198,
+   "lon": -49.1990727
+  },
+  {
+   "id": 28555,
+   "uf": "RJ",
+   "municipio": "RIO DE JANEIRO",
+   "cod_ibge": "3304557",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -22.90642,
+     "lon": -43.18223,
+     "erro_km": 27.991
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.92582498124652,
+     "lon": -43.4581111388688,
+     "erro_km": 5.698
+    }
+   },
+   "descartados": [
+    "nominatim fora do município",
+    "nominatim fora do município"
+   ],
+   "nivel": "cep_rua",
+   "lat": -22.90642,
+   "lon": -43.18223
+  },
+  {
+   "id": 28711,
+   "uf": "RJ",
+   "municipio": "RIO DE JANEIRO",
+   "cod_ibge": "3304557",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.8560959,
+     "lon": -43.3262208,
+     "erro_km": 2.119
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -22.90642,
+     "lon": -43.18223,
+     "erro_km": 14.306
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.92582498124652,
+     "lon": -43.4581111388688,
+     "erro_km": 17.68
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.8560959,
+   "lon": -43.3262208
+  },
+  {
+   "id": 7105,
+   "uf": "CE",
+   "municipio": "TABULEIRO DO NORTE",
+   "cod_ibge": "2313104",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -5.2430308,
+     "lon": -38.1338317,
+     "erro_km": 0.03
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -5.24667,
+     "lon": -38.13056,
+     "erro_km": 0.565
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -5.362243474400034,
+     "lon": -38.02640309754557,
+     "erro_km": 17.832
+    }
+   },
+   "nivel": "rua",
+   "lat": -5.2430308,
+   "lon": -38.1338317
+  },
+  {
+   "id": 7424,
+   "uf": "CE",
+   "municipio": "ARARENDA",
+   "cod_ibge": "2301257",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -4.75278,
+     "lon": -40.83278,
+     "erro_km": 0.046
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -4.773622534756629,
+     "lon": -40.74707125091944,
+     "erro_km": 9.748
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -4.75278,
+   "lon": -40.83278
+  },
+  {
+   "id": 7881,
+   "uf": "DF",
+   "municipio": "BRASILIA",
+   "cod_ibge": "5300108",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -15.7513884,
+     "lon": -47.7703402,
+     "erro_km": 21.645
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -15.77972,
+     "lon": -47.92972,
+     "erro_km": 4.593
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -15.781428483660488,
+     "lon": -47.79695516398274,
+     "erro_km": 18.188
+    }
+   },
+   "nivel": "rua",
+   "lat": -15.7513884,
+   "lon": -47.7703402
+  },
+  {
+   "id": 39397,
+   "uf": "SP",
+   "municipio": "FERRAZ DE VASCONCELOS",
+   "cod_ibge": "3515707",
+   "camadas": {
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -23.561795188201714,
+     "lon": -46.37230457474432,
+     "erro_km": 2.03
+    }
+   },
+   "nivel": "municipio",
+   "lat": -23.561795188201714,
+   "lon": -46.37230457474432
+  },
+  {
+   "id": 12503,
+   "uf": "MA",
+   "municipio": "PINHEIRO",
+   "cod_ibge": "2108603",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -2.519457,
+     "lon": -45.07686,
+     "erro_km": 0.5
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -2.52139,
+     "lon": -45.0825,
+     "erro_km": 0.547
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.497739014766851,
+     "lon": -45.1260731677778,
+     "erro_km": 5.487
+    }
+   },
+   "nivel": "rua",
+   "lat": -2.519457,
+   "lon": -45.07686
+  },
+  {
+   "id": 2643,
+   "uf": "BA",
+   "municipio": "SENHOR DO BONFIM",
+   "cod_ibge": "2930105",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -10.4704059,
+     "lon": -40.1850513,
+     "erro_km": 0.007
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -10.46139,
+     "lon": -40.18944,
+     "erro_km": 1.105
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -10.486386078682733,
+     "lon": -40.11495168959559,
+     "erro_km": 7.874
+    }
+   },
+   "nivel": "numero",
+   "lat": -10.4704059,
+   "lon": -40.1850513
+  },
+  {
+   "id": 44914,
+   "uf": "SP",
+   "municipio": "CAMPINAS",
+   "cod_ibge": "3509502",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.9045849,
+     "lon": -47.0353524,
+     "erro_km": 2.081
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -22.90556,
+     "lon": -47.06083,
+     "erro_km": 0.54
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.882282994935153,
+     "lon": -47.04530649461887,
+     "erro_km": 2.855
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.9045849,
+   "lon": -47.0353524
+  },
+  {
+   "id": 29808,
+   "uf": "RJ",
+   "municipio": "RIO DE JANEIRO",
+   "cod_ibge": "3304557",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.8406855,
+     "lon": -43.2672568,
+     "erro_km": 0.039
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -22.90642,
+     "lon": -43.18223,
+     "erro_km": 11.347
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.92582498124652,
+     "lon": -43.4581111388688,
+     "erro_km": 21.761
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.8406855,
+   "lon": -43.2672568
+  },
+  {
+   "id": 12540,
+   "uf": "MA",
+   "municipio": "MIRANDA DO NORTE",
+   "cod_ibge": "2106755",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -3.6029057,
+     "lon": -44.5660976,
+     "erro_km": 6.57
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -3.56516,
+     "lon": -44.58018,
+     "erro_km": 2.392
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -3.5324133006409366,
+     "lon": -44.52846291711479,
+     "erro_km": 5.279
+    }
+   },
+   "nivel": "rua",
+   "lat": -3.6029057,
+   "lon": -44.5660976
+  },
+  {
+   "id": 10402,
+   "uf": "GO",
+   "municipio": "FORMOSA",
+   "cod_ibge": "5208004",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -15.53722,
+     "lon": -47.33444,
+     "erro_km": 0.723
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -15.307877338521601,
+     "lon": -47.24677894730699,
+     "erro_km": 27.47
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -15.53722,
+   "lon": -47.33444
+  },
+  {
+   "id": 41665,
+   "uf": "SP",
+   "municipio": "FRANCA",
+   "cod_ibge": "3516200",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -20.5620248,
+     "lon": -47.369122,
+     "erro_km": 1.176
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -20.53861,
+     "lon": -47.40083,
+     "erro_km": 5.282
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.55608214448926,
+     "lon": -47.381191112569525,
+     "erro_km": 2.57
+    }
+   },
+   "nivel": "rua",
+   "lat": -20.5620248,
+   "lon": -47.369122
+  },
+  {
+   "id": 26392,
+   "uf": "PR",
+   "municipio": "BOA ESPERANCA DO IGUACU",
+   "cod_ibge": "4103024",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -25.63583,
+     "lon": -53.21222,
+     "erro_km": 0.277
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -25.64101101883101,
+     "lon": -53.22419540982424,
+     "erro_km": 1.193
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -25.63583,
+   "lon": -53.21222
+  },
+  {
+   "id": 148,
+   "uf": "AC",
+   "municipio": "RIO BRANCO",
+   "cod_ibge": "1200401",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -9.9298364,
+     "lon": -67.8363835,
+     "erro_km": 0.145
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -9.97472,
+     "lon": -67.81,
+     "erro_km": 5.858
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -10.065133590827578,
+     "lon": -68.37199190811889,
+     "erro_km": 60.417
+    }
+   },
+   "nivel": "rua",
+   "lat": -9.9298364,
+   "lon": -67.8363835
+  },
+  {
+   "id": 38818,
+   "uf": "SP",
+   "municipio": "PIRASSUNUNGA",
+   "cod_ibge": "3539301",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -21.99611,
+     "lon": -47.42583,
+     "erro_km": 2.922
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.99701191972105,
+     "lon": -47.38884209250896,
+     "erro_km": 4.532
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -21.99611,
+   "lon": -47.42583
+  },
+  {
+   "id": 28438,
+   "uf": "RJ",
+   "municipio": "RIO DE JANEIRO",
+   "cod_ibge": "3304557",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.8686741,
+     "lon": -43.5970997,
+     "erro_km": 2.788
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -22.90642,
+     "lon": -43.18223,
+     "erro_km": 40.144
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.92582498124652,
+     "lon": -43.4581111388688,
+     "erro_km": 12.812
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.8686741,
+   "lon": -43.5970997
+  },
+  {
+   "id": 30187,
+   "uf": "RN",
+   "municipio": "NATAL",
+   "cod_ibge": "2408102",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -5.7497506,
+     "lon": -35.2309441,
+     "erro_km": 2.12
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -5.795,
+     "lon": -35.20944,
+     "erro_km": 5.78
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -5.80152377154465,
+     "lon": -35.228120523323575,
+     "erro_km": 5.153
+    }
+   },
+   "nivel": "rua",
+   "lat": -5.7497506,
+   "lon": -35.2309441
+  },
+  {
+   "id": 1313,
+   "uf": "AM",
+   "municipio": "MANAUS",
+   "cod_ibge": "1302603",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -3.1399009,
+     "lon": -60.0144453,
+     "erro_km": 0.837
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -3.10194,
+     "lon": -60.025,
+     "erro_km": 5.156
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.626790310915585,
+     "lon": -60.25924785051647,
+     "erro_km": 63.896
+    }
+   },
+   "nivel": "rua",
+   "lat": -3.1399009,
+   "lon": -60.0144453
+  },
+  {
+   "id": 17632,
+   "uf": "MS",
+   "municipio": "CAMPO GRANDE",
+   "cod_ibge": "5002704",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -20.44278,
+     "lon": -54.64639,
+     "erro_km": 8.9
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -20.91363022412363,
+     "lon": -54.248617597837644,
+     "erro_km": 59.812
+    }
+   },
+   "nivel": "cep_rua",
+   "lat": -20.44278,
+   "lon": -54.64639
+  },
+  {
+   "id": 34209,
+   "uf": "RS",
+   "municipio": "VACARIA",
+   "cod_ibge": "4322509",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -28.5102303,
+     "lon": -50.9360144,
+     "erro_km": 1.81
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -28.51222,
+     "lon": -50.93389,
+     "erro_km": 2.11
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -28.37147226422346,
+     "lon": -50.923103639037265,
+     "erro_km": 14.563
+    }
+   },
+   "nivel": "rua",
+   "lat": -28.5102303,
+   "lon": -50.9360144
+  },
+  {
+   "id": 20300,
+   "uf": "PA",
+   "municipio": "CONCEICAO DO ARAGUAIA",
+   "cod_ibge": "1502707",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -8.26441,
+     "lon": -49.26982,
+     "erro_km": 46.148
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -8.181463388690196,
+     "lon": -49.5135868738726,
+     "erro_km": 44.256
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -8.26441,
+   "lon": -49.26982
+  },
+  {
+   "id": 28923,
+   "uf": "RJ",
+   "municipio": "NOVA FRIBURGO",
+   "cod_ibge": "3303401",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -22.2639195,
+     "lon": -42.531269,
+     "erro_km": 0.037
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -22.28194,
+     "lon": -42.53111,
+     "erro_km": 1.968
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -22.318883900411745,
+     "lon": -42.49713939649596,
+     "erro_km": 7.013
+    }
+   },
+   "nivel": "rua",
+   "lat": -22.2639195,
+   "lon": -42.531269
+  },
+  {
+   "id": 33385,
+   "uf": "RS",
+   "municipio": "SOBRADINHO",
+   "cod_ibge": "4320701",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -29.415636,
+     "lon": -53.0252428,
+     "erro_km": 0.117
+    },
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -29.42139,
+     "lon": -53.02861,
+     "erro_km": 0.803
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -29.402927423082748,
+     "lon": -53.02408161249338,
+     "erro_km": 1.381
+    }
+   },
+   "nivel": "rua",
+   "lat": -29.415636,
+   "lon": -53.0252428
+  },
+  {
+   "id": 32904,
+   "uf": "RS",
+   "municipio": "CANGUCU",
+   "cod_ibge": "4304507",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -31.395,
+     "lon": -52.67556,
+     "erro_km": 9.067
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -31.216980544949546,
+     "lon": -52.66908219181743,
+     "erro_km": 11.802
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -31.395,
+   "lon": -52.67556
+  },
+  {
+   "id": 8687,
+   "uf": "GO",
+   "municipio": "SANTA HELENA DE GOIAS",
+   "cod_ibge": "5219308",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -17.81361,
+     "lon": -50.59694,
+     "erro_km": 14.423
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -17.80295343702747,
+     "lon": -50.5798058611958,
+     "erro_km": 14.959
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -17.81361,
+   "lon": -50.59694
+  },
+  {
+   "id": 6207,
+   "uf": "CE",
+   "municipio": "VARZEA ALEGRE",
+   "cod_ibge": "2314003",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -6.78889,
+     "lon": -39.29583,
+     "erro_km": 2.654
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -6.772693850307582,
+     "lon": -39.297820957063365,
+     "erro_km": 3.142
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -6.78889,
+   "lon": -39.29583
+  },
+  {
+   "id": 11689,
+   "uf": "MA",
+   "municipio": "SAO LUIS",
+   "cod_ibge": "2111300",
+   "camadas": {
+    "nominatim": {
+     "nivel": "rua",
+     "lat": -2.4946526,
+     "lon": -44.2290835,
+     "erro_km": 0.817
+    },
+    "cep": {
+     "nivel": "cep_rua",
+     "lat": -2.52972,
+     "lon": -44.30278,
+     "erro_km": 8.813
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -2.6312499603542325,
+     "lon": -44.28077382283597,
+     "erro_km": 15.505
+    }
+   },
+   "nivel": "rua",
+   "lat": -2.4946526,
+   "lon": -44.2290835
+  },
+  {
+   "id": 7568,
+   "uf": "DF",
+   "municipio": "BRASILIA",
+   "cod_ibge": "5300108",
+   "camadas": {
+    "nominatim": {
+     "nivel": "numero",
+     "lat": -15.810915,
+     "lon": -47.8781499,
+     "erro_km": 14.051
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -15.781428483660488,
+     "lon": -47.79695516398274,
+     "erro_km": 13.028
+    }
+   },
+   "nivel": "numero",
+   "lat": -15.810915,
+   "lon": -47.8781499
+  },
+  {
+   "id": 4263,
+   "uf": "BA",
+   "municipio": "LUIS EDUARDO MAGALHAES",
+   "cod_ibge": "2919553",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -12.09086,
+     "lon": -45.78501,
+     "erro_km": 2.461
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -12.197888586589977,
+     "lon": -46.019190029256514,
+     "erro_km": 30.469
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -12.09086,
+   "lon": -45.78501
+  },
+  {
+   "id": 28648,
+   "uf": "RJ",
+   "municipio": "SAO FIDELIS",
+   "cod_ibge": "3304805",
+   "camadas": {
+    "cep": {
+     "nivel": "cep_cidade",
+     "lat": -21.64611,
+     "lon": -41.74694,
+     "erro_km": 10.959
+    },
+    "municipio": {
+     "nivel": "municipio",
+     "lat": -21.66056404724619,
+     "lon": -41.7865468825025,
+     "erro_km": 8.913
+    }
+   },
+   "nivel": "cep_cidade",
+   "lat": -21.64611,
+   "lon": -41.74694
+  }
+ ]
+}

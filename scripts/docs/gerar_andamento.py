@@ -55,7 +55,8 @@ ETAPAS = [
     ]),
     ("Fase 5 · Evolução", [
         ("Carga automática das semanas novas da pesquisa da ANP", PROX),
-        ("Geocodificar os 6.942 postos ativos sem coordenada", PROX),
+        ("Teste de localização dos postos sem coordenada com 200 postos de amostra", OK),
+        ("Localizar os 6.942 postos sem coordenada e mudar a regra de envio para posições aproximadas", PROX),
         ("Avisos com o app fechado, via Firebase", PROX),
         ("Previsão de preço no app, quando o modelo superar a regra simples", PROX),
         ("SMTP próprio para os e-mails de cadastro", PROX),
@@ -75,6 +76,90 @@ def etapas() -> str:
     return '<div style="display: grid; gap: 14px">' + "".join(partes) + "</div>"
 
 
+NOME_NIVEL = {
+    "numero": "Número da casa",
+    "rua": "Rua",
+    "cep_rua": "CEP de rua",
+    "cep_cidade": "CEP da cidade inteira",
+    "municipio": "Centro do município",
+    "nada": "Não localizado",
+}
+
+
+def br(n: float, casas: int = 0) -> str:
+    return f"{n:,.{casas}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+def geocodificacao() -> tuple[str, str]:
+    """Seção do teste de localização, montada a partir de dados/geocodificacao/amostra_resultados.json."""
+    import json
+    arq = RAIZ / "dados" / "geocodificacao" / "amostra_resultados.json"
+    if not arq.exists():
+        return "O teste ainda não foi rodado.", ""
+    d = json.loads(arq.read_text(encoding="utf-8"))
+    n = d["amostra"]
+    total = sum(x["postos"] for x in d["panorama_por_uf"])
+    cep_cidade = sum(x["cep_da_cidade"] for x in d["panorama_por_uf"])
+    com_numero = sum(x["endereco_com_numero"] for x in d["panorama_por_uf"])
+    cob = d["cobertura_sem_coordenada"]
+    erro = d["erro_com_coordenada"]
+    top = ", ".join(f"{x['uf']} {br(x['postos'])}" for x in d["panorama_por_uf"][:5])
+
+    lead = (f"São {br(total)} postos ativos sem coordenada no cadastro da ANP. Testei o método em duas amostras de {n} postos: "
+            f"uma de postos sem coordenada, para ver até onde cada camada chega, e outra de postos que já têm a coordenada da ANP, "
+            f"para medir a distância entre o ponto encontrado e o ponto da ANP.")
+
+    numeros = (
+        '<div class="numeros">'
+        f'<div class="numero"><b>{br(total)}</b><span>postos ativos sem coordenada. Maiores: {e(top)}</span></div>'
+        f'<div class="numero"><b>{round(100 * cep_cidade / total)}%</b><span>têm CEP da cidade inteira, terminado em 000: '
+        f'são postos de cidades pequenas</span></div>'
+        f'<div class="numero"><b>{round(100 * com_numero / total)}%</b><span>têm número no endereço</span></div>'
+        f'<div class="numero"><b>{cob.get("numero", 0) + cob.get("rua", 0)}%</b><span>da amostra foram achados pelo menos na rua</span></div>'
+        '</div>'
+    )
+
+    linhas_cob = "".join(
+        f'<tr><td>{e(NOME_NIVEL[k])}</td><td class="n">{cob.get(k, 0)}</td><td class="n">{br(total * cob.get(k, 0) / n)}</td></tr>'
+        for k in ("numero", "rua", "cep_rua", "cep_cidade", "municipio", "nada") if cob.get(k, 0))
+    tab_cob = ('<h3>Até onde cada camada chega</h3><div class="tabela"><table><thead><tr><th>Melhor nível alcançado</th>'
+               f'<th>Postos na amostra de {n}</th><th>Projeção para os {br(total)}</th></tr></thead><tbody>{linhas_cob}</tbody></table></div>')
+
+    def pct(v):
+        return "–" if v is None else f"{v}%"
+
+    linhas_erro = "".join(
+        f'<tr><td>{e(NOME_NIVEL[k])}</td><td class="n">{v["casos"]}</td><td class="n">{br(v["mediana_km"], 2)} km</td>'
+        f'<td class="n">{pct(v["ate_300m"])}</td><td class="n">{pct(v["ate_1km"])}</td><td class="n">{br(v["p90_km"], 1)} km</td></tr>'
+        for k, v in erro.items())
+    tab_erro = ('<h3>Quão perto da posição real</h3><div class="tabela"><table><thead><tr><th>Nível</th><th>Casos</th>'
+                '<th>Distância mediana</th><th>Até 300 m</th><th>Até 1 km</th><th>9 em 10 ficam a menos de</th></tr></thead>'
+                f'<tbody>{linhas_erro}</tbody></table></div>')
+
+    conclusoes = (
+        '<div class="duas">'
+        '<div class="cartao"><h3>O que o teste mostrou</h3><ul>'
+        '<li>A rua resolve a maior parte, mas metade dos pontos cai a mais de meio quilômetro do posto. Para ruas e rodovias longas, o erro passa de 5 km.</li>'
+        '<li>Número da casa quase não existe no OpenStreetMap para essas cidades. Quando existe, acerta: 3 em 4 casos ficam a menos de 300 m.</li>'
+        '<li>O CEP da cidade inteira aponta para o centro urbano e erra menos que o centro geométrico do município, que pode cair na zona rural.</li>'
+        '<li>Em Brasília, endereços por quadra e setor se repetem entre regiões e levam a resultados errados. O DF precisa de tratamento à parte.</li>'
+        '<li>As coordenadas da ANP também não são validadas. Parte da distância medida pode ser erro da própria ANP.</li>'
+        '</ul></div>'
+        '<div class="cartao"><h3>Proposta para o app</h3><ul>'
+        '<li><b>Número da casa:</b> pino normal no mapa e envio de preço no raio de 300 m, como hoje.</li>'
+        '<li><b>Rua ou CEP de rua:</b> pino com aviso de localização aproximada. Envio aceito num raio de 2 km.</li>'
+        '<li><b>Só cidade:</b> o posto aparece na busca e na lista da cidade, mas não no mapa.</li>'
+        '<li><b>Correção pela comunidade:</b> o primeiro envio em posto aproximado registra a posição de quem está lá. Quando duas pessoas concordam, a posição vira a oficial e o posto passa a ter pino normal.</li>'
+        '<li><b>Próximo teste:</b> procurar os postos de combustível já mapeados no OpenStreetMap perto da rua encontrada. Pode dar posição exata para parte dos casos de rua.</li>'
+        '</ul></div></div>'
+    )
+    nota = (f'<p style="color: var(--ink-2); font-size: .9rem">Teste rodado em {e(d["gerado_em"][:10].split("-")[2])}/'
+            f'{e(d["gerado_em"][5:7])}/{e(d["gerado_em"][:4])}, só lendo o banco: nenhuma posição foi gravada. '
+            'Serviços: Nominatim, do OpenStreetMap, com uma consulta por segundo, e BrasilAPI para o CEP. Todo ponto encontrado '
+            'precisou cair dentro do município do posto, conferido pela malha do IBGE. A projeção supõe que a amostra represente o total.</p>')
+    return lead, numeros + tab_cob + tab_erro + conclusoes + nota
+
+
 def imagem(m: re.Match) -> str:
     arq = RAIZ / "documentacao" / "telas" / f"{m.group(1)}.webp"
     return "data:image/webp;base64," + base64.b64encode(arq.read_bytes()).decode()
@@ -88,6 +173,8 @@ def main() -> None:
     except (OSError, subprocess.SubprocessError):
         commit = "sem commit"
     saida = re.sub(r"\{\{IMG:([\w-]+)\}\}", imagem, tpl)
+    geo_lead, geo = geocodificacao()
+    saida = saida.replace("{{GEO_LEAD}}", e(geo_lead)).replace("{{GEOCODIFICACAO}}", geo)
     saida = (saida.replace("{{ETAPAS}}", etapas()).replace("{{DATA}}", date.today().strftime("%d/%m/%Y"))
              .replace("{{COMMIT}}", commit))
     destino = RAIZ / "documentacao" / "andamento.html"

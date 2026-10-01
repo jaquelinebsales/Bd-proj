@@ -91,6 +91,11 @@ th { font: 600 .72rem/1.3 var(--body); letter-spacing: .08em; text-transform: up
 tr:last-child td { border-bottom: 0; }
 td.n { font-variant-numeric: tabular-nums; text-align: right; width: 1%; white-space: nowrap; }
 td.e { width: 1%; white-space: nowrap; }
+.tabela th { white-space: nowrap; }
+.duas { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.cartao { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+.cartao ul { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; color: var(--ink-2); }
+.cartao b { color: var(--ink); }
 .riscos { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .riscos li { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 12px 16px; }
 .riscos b { display: block; }
@@ -220,6 +225,15 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     </div>
   </section>
 
+  <section aria-labelledby="t-geo">
+    <div class="cab">
+      <span class="eyebrow">Teste em andamento</span>
+      <h2 id="t-geo">Postos sem coordenada: como localizar</h2>
+      <p class="lead">{{GEO_LEAD}}</p>
+    </div>
+    {{GEOCODIFICACAO}}
+  </section>
+
   <section aria-labelledby="t-etapas">
     <div class="cab">
       <span class="eyebrow">Etapas</span>
@@ -255,7 +269,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     </div>
     <ul class="riscos">
       <li><b>O app ainda não rodou num celular de verdade</b><span>Este computador não tem Android SDK nem Xcode. O APK sai pelo GitHub Actions quando os segredos estiverem configurados.</span></li>
-      <li><b>15% dos postos ativos estão sem coordenada</b><span>São 6.942 de 45.823 no cadastro da ANP. Eles não aparecem no mapa nem recebem estimativa. A solução prevista é localizar o endereço uma única vez pelo Nominatim, o serviço gratuito do OpenStreetMap, respeitando o limite de uma consulta por segundo.</span></li>
+      <li><b>15% dos postos ativos estão sem coordenada</b><span>São 6.942 de 45.823 no cadastro da ANP. Eles não aparecem no mapa nem recebem estimativa. O teste com uma amostra achou a rua de 57% deles, mas com erro mediano de meio quilômetro. A seção "Postos sem coordenada" traz os números e a proposta.</span></li>
       <li><b>Os preços da ANP só são atualizados quando você recarrega uma planilha</b><span>Hoje o banco tem a pesquisa até 30/06/2026. Ainda não existe a carga automática das semanas novas. Sem ela, os preços oficiais envelhecem e ficam com o ponto vermelho.</span></li>
       <li><b>A estimativa erra em média de R$ 0,25 a R$ 0,39</b><span>Medido nos dados reais. O app mostra o erro médio de cada estimativa e a marca com "≈". Ela serve como referência, não para escolher entre dois postos vizinhos.</span></li>
       <li><b>O leitor do painel precisa de fotos reais</b><span>Ele foi testado com textos simulados de painéis. Com as primeiras fotos reais, ajusto os padrões de leitura.</span></li>
