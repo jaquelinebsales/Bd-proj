@@ -1,0 +1,278 @@
+<title>Regras do gasprice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: documento de referência em coluna larga; diagramas em painéis roláveis; catálogo de regras em tabelas filtráveis por onde a regra roda. */
+:root {
+  --bg: #f4f7f6;
+  --surface: #ffffff;
+  --surface-2: #eaf1ee;
+  --ink: #12201a;
+  --ink-2: #435049;
+  --muted: #6b7a73;
+  --rule: #d6e0db;
+  --accent: #0f7a5c;
+  --accent-tint: #d9eee6;
+  --anp: #2e5aac;
+  --warn: #9a6a00;
+  --bad: #b8372e;
+  --good: #1a8a4b;
+  --c-celular: #0f7a5c;
+  --c-servidor: #6a4bb0;
+  --c-banco: #2e5aac;
+  --c-agendado: #8a6526;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --r: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0d1311; --surface: #151d1a; --surface-2: #1b2622; --ink: #e8f1ec; --ink-2: #b3c2bb; --muted: #86958e; --rule: #28342f;
+    --accent: #43c29a; --accent-tint: #173a2f; --anp: #83a8f2; --warn: #f0b429; --bad: #f07a70; --good: #45d17c;
+    --c-celular: #43c29a; --c-servidor: #b39ef5; --c-banco: #83a8f2; --c-agendado: #e0b36a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0d1311; --surface: #151d1a; --surface-2: #1b2622; --ink: #e8f1ec; --ink-2: #b3c2bb; --muted: #86958e; --rule: #28342f;
+  --accent: #43c29a; --accent-tint: #173a2f; --anp: #83a8f2; --warn: #f0b429; --bad: #f07a70; --good: #45d17c;
+  --c-celular: #43c29a; --c-servidor: #b39ef5; --c-banco: #83a8f2; --c-agendado: #e0b36a;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 var(--body); padding-inline: clamp(16px, 4vw, 48px); padding-block: 32px 72px; }
+main { max-width: 1180px; margin: 0 auto; display: grid; gap: 64px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: .01em; line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 700; }
+h2 { font-size: 2.1rem; }
+h3 { font-size: 1.35rem; }
+p { margin: 0; max-width: 70ch; }
+.eyebrow { font: 600 .74rem/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 1.1rem; color: var(--ink-2); }
+section { display: grid; gap: 20px; }
+.cab { display: grid; gap: 8px; }
+code { font: .86em ui-monospace, "Cascadia Code", Consolas, monospace; background: var(--surface-2); padding: .1em .35em; border-radius: 5px; }
+
+.principios { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 8px; }
+.principio { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 16px 18px; display: grid; gap: 6px; align-content: start; }
+.principio b { font: 600 1.25rem/1.1 var(--display); }
+.principio span { color: var(--ink-2); font-size: .9rem; }
+
+figure { margin: 0; display: grid; gap: 10px; }
+.painel { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 16px; overflow-x: auto; }
+.painel svg { display: block; width: 100%; min-width: 860px; height: auto; color: var(--ink-2); }
+figcaption { color: var(--muted); font-size: .88rem; max-width: 90ch; }
+
+/* Diagramas (classes usadas pelo SVG gerado) */
+.lane { fill: var(--surface-2); }
+.lane-nome { font: 700 11px var(--body); letter-spacing: .1em; fill: var(--muted); }
+.no { fill: var(--surface); stroke: var(--rule); stroke-width: 1.25; }
+.no-chave { fill: var(--accent-tint); stroke: var(--accent); stroke-width: 1.5; }
+.no-titulo { font: 700 13px var(--body); fill: var(--ink); }
+.no-texto { font: 11.5px var(--body); fill: var(--ink-2); }
+.seta { stroke: currentColor; stroke-width: 1.4; fill: none; }
+.seta-destaque { stroke: var(--accent); stroke-width: 2; fill: none; }
+.rotulo { font: 11.5px var(--body); fill: var(--ink-2); }
+.rotulo-destaque { font: 700 11.5px var(--body); fill: var(--accent); }
+.fronteira { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.ent-caixa { fill: var(--surface); stroke: var(--rule); stroke-width: 1.25; }
+.ent-destaque .ent-caixa { stroke: var(--accent); stroke-width: 2; }
+.ent-topo { fill: var(--surface-2); }
+.ent-destaque .ent-topo { fill: var(--accent-tint); }
+.ent-nome { font: 700 12.5px ui-monospace, "Cascadia Code", Consolas, monospace; fill: var(--ink); }
+.ent-campo { font: 11px ui-monospace, "Cascadia Code", Consolas, monospace; fill: var(--ink-2); }
+.ent-chave { font: 700 10px var(--body); fill: var(--accent); letter-spacing: .04em; }
+.ent-tag { font: 700 10px var(--body); fill: var(--bad); letter-spacing: .04em; }
+.rel { stroke: currentColor; stroke-width: 1.2; fill: none; }
+
+.ordem { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; counter-reset: o; }
+.ordem li { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 12px 16px; }
+.ordem li::before { counter-increment: o; content: counter(o); font: 700 1.6rem/1 var(--display); color: var(--accent); text-align: center; }
+.ordem b { display: block; }
+.ordem span { color: var(--ink-2); font-size: .9rem; }
+.selo { font: 700 .72rem/1 var(--body); letter-spacing: .05em; padding: 5px 8px; border-radius: 99px; white-space: nowrap; border: 1px solid currentColor; }
+.cores { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: .9rem; color: var(--ink-2); }
+.cores span { display: inline-flex; gap: 8px; align-items: center; }
+.bola { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.filtros button { font: 600 .85rem var(--body); color: var(--ink-2); background: var(--surface); border: 1px solid var(--rule); border-radius: 99px; padding: 7px 14px; cursor: pointer; }
+.filtros button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.filtros button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.grupo { display: grid; gap: 10px; }
+.tabela { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 .72rem/1.3 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--surface); }
+tr:last-child td { border-bottom: 0; }
+td.id { font: 600 .8rem ui-monospace, Consolas, monospace; color: var(--muted); white-space: nowrap; width: 64px; }
+td.onde { white-space: nowrap; width: 1%; }
+.onde span { display: inline-block; font: 700 .68rem/1 var(--body); letter-spacing: .05em; padding: 4px 7px; border-radius: 6px; margin: 1px 2px 1px 0; border: 1px solid currentColor; }
+.o-celular { color: var(--c-celular); } .o-servidor { color: var(--c-servidor); } .o-banco { color: var(--c-banco); } .o-agendado { color: var(--c-agendado); }
+td.valor { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+
+.duas { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.cartao { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+.cartao ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; color: var(--ink-2); }
+.cartao.sim h3 { color: var(--good); }
+.cartao.nao h3 { color: var(--bad); }
+.legenda { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: .85rem; color: var(--ink-2); align-items: center; }
+.legenda svg { width: 64px; height: 14px; color: var(--ink-2); }
+footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+@media (max-width: 640px) { .ordem li { grid-template-columns: 34px 1fr; } .ordem li .selo { grid-column: 2; justify-self: start; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<main>
+  <header class="cab">
+    <span class="eyebrow">gasprice · regras de negócio</span>
+    <h1>Regras do gasprice</h1>
+    <p class="lead">Como o app decide qual preço mostrar, quem pode alterar o quê e o que é guardado. Tudo aqui está implementado no banco e nas funções do servidor e coberto por testes automáticos.</p>
+    <div class="principios">
+      <div class="principio"><b>Consultar é livre</b><span>Mapa, busca, preços, histórico e avaliações funcionam sem conta.</span></div>
+      <div class="principio"><b>Enviar é propor</b><span>Ninguém altera um preço direto. O envio vira preço quando outra pessoa confirma.</span></div>
+      <div class="principio"><b>A foto fica no celular</b><span>O painel é lido no aparelho e a foto é apagada. Só os valores vão para o servidor.</span></div>
+      <div class="principio"><b>A ANP desempata</b><span>Quando os envios da comunidade discordam, vale a pesquisa oficial.</span></div>
+      <div class="principio"><b>Todo preço diz de onde veio</b><span>Comunidade, pesquisa ANP ou estimativa, sempre com a idade do dado.</span></div>
+    </div>
+  </header>
+
+  <section aria-labelledby="t-fluxo">
+    <div class="cab">
+      <span class="eyebrow">Mecanismo</span>
+      <h2 id="t-fluxo">O caminho de um preço</h2>
+    </div>
+    <figure>
+      <div class="painel"><svg viewBox="0 0 1160 312" role="img" aria-label="Caminho de um preço: a foto é lida e apagada no celular; só valores e posição vão ao servidor, que valida; o banco confirma com duas pessoas em 24 horas."><defs><marker id="f-ponta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="f-ponta-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="rotulo-destaque" d="M0,0 L10,5 L0,10 z"/></marker></defs><rect class="lane" x="10" y="36" width="530" height="250" rx="12"/><text class="lane-nome" x="24" y="58">NO CELULAR</text><rect class="lane" x="552" y="36" width="250" height="250" rx="12"/><text class="lane-nome" x="566" y="58">NO SERVIDOR · EDGE FUNCTION</text><rect class="lane" x="812" y="36" width="342" height="250" rx="12"/><text class="lane-nome" x="826" y="58">NO BANCO · REGRAS SQL</text><line class="fronteira" x1="546" y1="86" x2="546" y2="292"/><text class="rotulo-destaque" x="546" y="306" text-anchor="middle">a foto nunca passa desta linha</text><rect class="no" x="24" y="86" width="128" height="64" rx="10"/><text class="no-titulo" x="88.0" y="114.0" text-anchor="middle">Foto do painel</text><text class="no-texto" x="88.0" y="131.0" text-anchor="middle">câmera do celular</text><rect class="no" x="192" y="86" width="154" height="64" rx="10"/><text class="no-titulo" x="269.0" y="114.0" text-anchor="middle">Leitura no aparelho</text><text class="no-texto" x="269.0" y="131.0" text-anchor="middle">ML Kit, sem internet</text><rect class="no" x="388" y="86" width="134" height="64" rx="10"/><text class="no-titulo" x="455.0" y="114.0" text-anchor="middle">Revisão</text><text class="no-texto" x="455.0" y="131.0" text-anchor="middle">corrige e escolhe</text><rect class="no" x="578" y="86" width="200" height="64" rx="10"/><text class="no-titulo" x="678.0" y="114.0" text-anchor="middle">Validação</text><text class="no-texto" x="678.0" y="131.0" text-anchor="middle">login, 300 m, faixa, limites</text><rect class="no" x="836" y="86" width="140" height="64" rx="10"/><text class="no-titulo" x="906.0" y="114.0" text-anchor="middle">Consenso</text><text class="no-texto" x="906.0" y="131.0" text-anchor="middle">2 pessoas, 24 h</text><rect class="no-chave" x="1012" y="86" width="136" height="64" rx="10"/><text class="no-titulo" x="1080.0" y="114.0" text-anchor="middle">Preço confirmado</text><text class="no-texto" x="1080.0" y="131.0" text-anchor="middle">exibido + pontos</text><polyline class="seta" points="152,118.0 190,118.0" marker-end="url(#f-ponta)"/><text class="rotulo" x="171" y="78" text-anchor="middle">foto local</text><polyline class="seta" points="346,118.0 386,118.0" marker-end="url(#f-ponta)"/><text class="rotulo" x="366" y="78" text-anchor="middle">valores lidos</text><polyline class="seta-destaque" points="522,118.0 576,118.0" marker-end="url(#f-ponta-d)"/><text class="rotulo-destaque" x="550" y="78" text-anchor="middle">só valores + posição</text><polyline class="seta" points="778,118.0 834,118.0" marker-end="url(#f-ponta)"/><text class="rotulo" x="807" y="78" text-anchor="middle">proposta</text><polyline class="seta" points="976,118.0 1010,118.0" marker-end="url(#f-ponta)"/><text class="rotulo" x="993" y="78" text-anchor="middle">confirma</text><rect class="no" x="192" y="204" width="154" height="56" rx="10"/><text class="no-titulo" x="269.0" y="228.0" text-anchor="middle">Foto apagada</text><text class="no-texto" x="269.0" y="245.0" text-anchor="middle">logo após a leitura</text><rect class="no" x="578" y="204" width="200" height="56" rx="10"/><text class="no-titulo" x="678.0" y="228.0" text-anchor="middle">Recusado com motivo</text><text class="no-texto" x="678.0" y="245.0" text-anchor="middle">mensagem explica o porquê</text><rect class="no" x="836" y="204" width="140" height="56" rx="10"/><text class="no-titulo" x="906.0" y="228.0" text-anchor="middle">Não confirmado</text><text class="no-texto" x="906.0" y="245.0" text-anchor="middle">histórico após 24 h</text><rect class="no" x="1012" y="204" width="136" height="56" rx="10"/><text class="no-titulo" x="1080.0" y="228.0" text-anchor="middle">Vale a ANP</text><text class="no-texto" x="1080.0" y="245.0" text-anchor="middle">envios divergem</text><polyline class="seta" points="269,150 269,202" marker-end="url(#f-ponta)"/><text class="rotulo" x="277" y="182" text-anchor="start">apaga</text><polyline class="seta" points="678,150 678,202" marker-end="url(#f-ponta)"/><text class="rotulo" x="686" y="182" text-anchor="start">não passa</text><polyline class="seta" points="872,150 872,202" marker-end="url(#f-ponta)"/><text class="rotulo" x="880" y="182" text-anchor="start">24 h</text><polyline class="seta" points="950,150 950,190 1080,190 1080,202" marker-end="url(#f-ponta)"/><text class="rotulo" x="1015" y="184" text-anchor="middle">divergem</text></svg></div>
+      <figcaption>Da foto ao preço exibido. A leitura acontece no celular; o servidor recebe só os valores revisados e a posição do aparelho, valida e registra uma proposta. O banco confirma quando duas pessoas diferentes informam o mesmo valor, com diferença de até R$ 0,02, em 24 horas. Envios que destoam mais de 20% da referência precisam de três pessoas.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="t-exibido">
+    <div class="cab">
+      <span class="eyebrow">Preço exibido</span>
+      <h2 id="t-exibido">Qual preço aparece, em ordem de prioridade</h2>
+      <p class="lead">Para cada posto e combustível, o banco percorre esta lista e usa a primeira fonte disponível.</p>
+    </div>
+    <ol class="ordem">
+      <li><div><b>Comunidade confirmada</b><span>Consenso de 2 ou mais pessoas nos últimos 7 dias. Só é substituído por outro consenso, nunca por um envio isolado.</span></div><span class="selo" style="color: var(--good)">CONFIRMADO</span></li>
+      <li><div><b>Envio recente sem divergência</b><span>Um ou mais envios das últimas 24 horas com o mesmo valor. Envios em revisão não entram aqui.</span></div><span class="selo" style="color: var(--warn)">AGUARDANDO CONFIRMAÇÃO</span></li>
+      <li><div><b>Envios divergentes: vale a ANP</b><span>Se os envios recentes discordam, aparece a última pesquisa da ANP. Sem ANP, a mediana dos envios, marcada como divergente.</span></div><span class="selo" style="color: var(--anp)">ANP</span></li>
+      <li><div><b>O mais recente entre comunidade não confirmada e ANP</b><span>Envios sem confirmação dos últimos 7 dias contra a pesquisa oficial. Em caso de empate de data, a ANP vence.</span></div><span class="selo" style="color: var(--anp)">ANP OU COMUNIDADE</span></li>
+      <li><div><b>Estimativa regional</b><span>Só quando o posto não tem nenhuma das fontes acima. Sempre exibida com "≈" e margem de erro.</span></div><span class="selo" style="color: var(--c-agendado)">ESTIMATIVA</span></li>
+    </ol>
+    <div class="cores" aria-label="Cores da idade do preço">
+      <span><i class="bola" style="background: var(--good)"></i>Atualizado há até 24 h</span>
+      <span><i class="bola" style="background: var(--warn)"></i>De 2 a 7 dias</span>
+      <span><i class="bola" style="background: var(--bad)"></i>Mais de 7 dias ou estimativa</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-regras">
+    <div class="cab">
+      <span class="eyebrow">Catálogo</span>
+      <h2 id="t-regras">Todas as regras</h2>
+      <p class="lead">Cada regra indica onde é aplicada. O celular faz o que não precisa do servidor; o servidor e o banco fazem o que exige segurança, consistência ou processamento central.</p>
+    </div>
+    <div class="filtros" role="group" aria-label="Filtrar por onde a regra roda">
+      <button type="button" id="f-todas" data-f="todas" aria-pressed="true">Todas</button>
+      <button type="button" id="f-celular" data-f="celular" aria-pressed="false">Celular</button>
+      <button type="button" id="f-servidor" data-f="servidor" aria-pressed="false">Servidor</button>
+      <button type="button" id="f-banco" data-f="banco" aria-pressed="false">Banco</button>
+      <button type="button" id="f-agendado" data-f="agendado" aria-pressed="false">Agendado</button>
+    </div>
+    <div class="grupo"><h3>Conta e acesso</h3><div class="tabela"><table><thead><tr><th>ID</th><th>Regra</th><th>Onde</th><th>Valor</th></tr></thead><tbody><tr data-onde="celular banco"><td class="id">RN-01</td><td>Consultar mapa, busca, filtros, preços, histórico, avaliações e ranking não exige conta.</td><td class="onde"><span class="o-celular">CELULAR</span><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="servidor banco"><td class="id">RN-02</td><td>Enviar preços, avaliar, votar em avaliações e guardar favoritos na conta exigem login.</td><td class="onde"><span class="o-servidor">SERVIDOR</span><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="celular"><td class="id">RN-03</td><td>O cadastro pede só nome, e-mail e senha. Não pede CPF, data de nascimento nem endereço.</td><td class="onde"><span class="o-celular">CELULAR</span></td><td class="valor"></td></tr><tr data-onde="celular servidor"><td class="id">RN-04</td><td>A senha precisa ter pelo menos 8 caracteres, com letras e números.</td><td class="onde"><span class="o-celular">CELULAR</span><span class="o-servidor">SERVIDOR</span></td><td class="valor">8+</td></tr><tr data-onde="servidor"><td class="id">RN-05</td><td>O e-mail precisa ser confirmado pelo link antes do primeiro envio de preço.</td><td class="onde"><span class="o-servidor">SERVIDOR</span></td><td class="valor"></td></tr><tr data-onde="celular"><td class="id">RN-06</td><td>Sem login, os favoritos ficam no aparelho. Ao entrar, eles vão para a conta.</td><td class="onde"><span class="o-celular">CELULAR</span></td><td class="valor"></td></tr></tbody></table></div></div><div class="grupo"><h3>Envio por foto</h3><div class="tabela"><table><thead><tr><th>ID</th><th>Regra</th><th>Onde</th><th>Valor</th></tr></thead><tbody><tr data-onde="celular"><td class="id">RN-07</td><td>O envio começa pela foto do painel. O texto é lido no aparelho, sem internet.</td><td class="onde"><span class="o-celular">CELULAR</span></td><td class="valor"></td></tr><tr data-onde="celular"><td class="id">RN-08</td><td>A foto é apagada logo após a leitura e nunca é enviada nem guardada.</td><td class="onde"><span class="o-celular">CELULAR</span></td><td class="valor"></td></tr><tr data-onde="celular"><td class="id">RN-09</td><td>O usuário revisa os valores lidos, corrige o que estiver errado e escolhe o que enviar.</td><td class="onde"><span class="o-celular">CELULAR</span></td><td class="valor"></td></tr><tr data-onde="celular servidor"><td class="id">RN-10</td><td>O envio só é aceito com o aparelho a até 300 metros do posto.</td><td class="onde"><span class="o-celular">CELULAR</span><span class="o-servidor">SERVIDOR</span></td><td class="valor">300 m</td></tr><tr data-onde="celular servidor"><td class="id">RN-11</td><td>Cada preço precisa estar na faixa do combustível.</td><td class="onde"><span class="o-celular">CELULAR</span><span class="o-servidor">SERVIDOR</span></td><td class="valor">R$ 2,00 a 15,00 · etanol e GNV R$ 1,50 a 12,00</td></tr><tr data-onde="servidor"><td class="id">RN-12</td><td>Cada usuário faz no máximo 20 envios em 24 horas.</td><td class="onde"><span class="o-servidor">SERVIDOR</span></td><td class="valor">20 por 24 h</td></tr><tr data-onde="servidor"><td class="id">RN-13</td><td>O mesmo usuário só reenvia o mesmo combustível do mesmo posto depois de 6 horas.</td><td class="onde"><span class="o-servidor">SERVIDOR</span></td><td class="valor">6 h</td></tr><tr data-onde="servidor banco"><td class="id">RN-14</td><td>O envio é uma proposta: ele nunca altera o preço exibido diretamente.</td><td class="onde"><span class="o-servidor">SERVIDOR</span><span class="o-banco">BANCO</span></td><td class="valor"></td></tr></tbody></table></div></div><div class="grupo"><h3>Consenso e revisão</h3><div class="tabela"><table><thead><tr><th>ID</th><th>Regra</th><th>Onde</th><th>Valor</th></tr></thead><tbody><tr data-onde="banco"><td class="id">RN-15</td><td>O preço é confirmado quando 2 usuários diferentes informam valores com diferença de até R$ 0,02 em 24 horas.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor">2 pessoas · R$ 0,02 · 24 h</td></tr><tr data-onde="servidor banco"><td class="id">RN-16</td><td>Um envio que difere mais de 20% do preço de referência entra em revisão e precisa de 3 usuários.</td><td class="onde"><span class="o-servidor">SERVIDOR</span><span class="o-banco">BANCO</span></td><td class="valor">20% · 3 pessoas</td></tr><tr data-onde="banco"><td class="id">RN-17</td><td>Envio em revisão não aparece como preço antes de ser confirmado.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="servidor banco"><td class="id">RN-18</td><td>Usuário com confiabilidade abaixo de 0,20 tem os envios sempre em revisão e não conta para o consenso.</td><td class="onde"><span class="o-servidor">SERVIDOR</span><span class="o-banco">BANCO</span></td><td class="valor">0,20</td></tr><tr data-onde="banco"><td class="id">RN-19</td><td>Quando um consenso se forma, os envios pendentes que discordam dele viram contestados.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="agendado"><td class="id">RN-20</td><td>Sem confirmação em 24 horas, o envio entra no histórico como não confirmado.</td><td class="onde"><span class="o-agendado">AGENDADO</span></td><td class="valor">de hora em hora</td></tr></tbody></table></div></div><div class="grupo"><h3>Preço exibido</h3><div class="tabela"><table><thead><tr><th>ID</th><th>Regra</th><th>Onde</th><th>Valor</th></tr></thead><tbody><tr data-onde="banco"><td class="id">RN-21</td><td>A escolha da fonte segue a ordem de prioridade da seção acima.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="banco"><td class="id">RN-22</td><td>Um preço confirmado só é trocado por outro consenso, nunca por um envio isolado.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="banco"><td class="id">RN-23</td><td>Preços da ANP marcados como anomalia nunca aparecem como preço exibido.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="celular"><td class="id">RN-24</td><td>A cor do preço indica a idade: verde até 24 h, amarelo de 2 a 7 dias, vermelho acima de 7 dias ou estimativa.</td><td class="onde"><span class="o-celular">CELULAR</span></td><td class="valor">24 h · 7 dias</td></tr><tr data-onde="celular"><td class="id">RN-25</td><td>Todo preço mostra a origem: comunidade com o número de confirmações, pesquisa ANP com a semana ou estimativa com a margem.</td><td class="onde"><span class="o-celular">CELULAR</span></td><td class="valor"></td></tr><tr data-onde="agendado"><td class="id">RN-26</td><td>A estimativa usa a mediana dos 5 postos mais próximos com preço da ANP dos últimos 60 dias, até 200 km.</td><td class="onde"><span class="o-agendado">AGENDADO</span></td><td class="valor">toda segunda-feira</td></tr><tr data-onde="agendado"><td class="id">RN-27</td><td>A margem da estimativa depende da distância até a referência, conforme o estudo de cobertura.</td><td class="onde"><span class="o-agendado">AGENDADO</span></td><td class="valor">±R$ 0,13 a 0,36</td></tr></tbody></table></div></div><div class="grupo"><h3>Pontos e confiabilidade</h3><div class="tabela"><table><thead><tr><th>ID</th><th>Regra</th><th>Onde</th><th>Valor</th></tr></thead><tbody><tr data-onde="banco"><td class="id">RN-28</td><td>Cada envio confirmado vale 10 pontos.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor">+10</td></tr><tr data-onde="banco"><td class="id">RN-29</td><td>O primeiro envio de um consenso, em posto sem confirmação nas últimas 24 horas, ganha 5 pontos de bônus.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor">+5</td></tr><tr data-onde="banco"><td class="id">RN-30</td><td>Em cidades sem coleta da ANP nos últimos 12 meses, pontos e bônus valem o dobro.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor">×2</td></tr><tr data-onde="banco"><td class="id">RN-31</td><td>Envio contestado perde 5 pontos. O saldo nunca fica negativo.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor">−5</td></tr><tr data-onde="banco"><td class="id">RN-32</td><td>Cada usuário ganha no máximo 200 pontos por dia.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor">200 por dia</td></tr><tr data-onde="banco"><td class="id">RN-33</td><td>A confiabilidade começa em 0,50, sobe 0,05 por envio confirmado e cai 0,10 por contestado.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor">0,50 · +0,05 · −0,10</td></tr><tr data-onde="servidor banco"><td class="id">RN-34</td><td>Três envios contestados em 7 dias pausam novos envios por 7 dias.</td><td class="onde"><span class="o-servidor">SERVIDOR</span><span class="o-banco">BANCO</span></td><td class="valor">3 em 7 dias</td></tr><tr data-onde="celular"><td class="id">RN-35</td><td>O nível no perfil vem da confiabilidade: Em observação, Iniciante, Confiável e Referência.</td><td class="onde"><span class="o-celular">CELULAR</span></td><td class="valor">0,30 · 0,60 · 0,80</td></tr></tbody></table></div></div><div class="grupo"><h3>Avaliações, favoritos e avisos</h3><div class="tabela"><table><thead><tr><th>ID</th><th>Regra</th><th>Onde</th><th>Valor</th></tr></thead><tbody><tr data-onde="banco"><td class="id">RN-36</td><td>A nota vai de 0 a 5 estrelas, uma por pessoa e posto, e pode ser editada ou apagada.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor">0 a 5</td></tr><tr data-onde="celular banco"><td class="id">RN-37</td><td>O comentário é opcional e tem de 3 a 500 caracteres.</td><td class="onde"><span class="o-celular">CELULAR</span><span class="o-banco">BANCO</span></td><td class="valor">3 a 500</td></tr><tr data-onde="banco"><td class="id">RN-38</td><td>A nota média e o total de avaliações são calculados no servidor.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="celular banco"><td class="id">RN-39</td><td>A ordem por mais úteis usa os votos de outras pessoas. O app não deixa votar na própria avaliação.</td><td class="onde"><span class="o-celular">CELULAR</span><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="banco"><td class="id">RN-40</td><td>Quem favoritou o posto é avisado quando um preço confirmado ou oficial muda R$ 0,05 ou mais em relação ao último preço confiável.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor">R$ 0,05</td></tr><tr data-onde="celular banco"><td class="id">RN-41</td><td>O aviso pode ser desligado por posto ou para a conta inteira.</td><td class="onde"><span class="o-celular">CELULAR</span><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="banco"><td class="id">RN-42</td><td>Para outras pessoas, o nome aparece sempre abreviado, como Carla M.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr></tbody></table></div></div><div class="grupo"><h3>Dados da ANP</h3><div class="tabela"><table><thead><tr><th>ID</th><th>Regra</th><th>Onde</th><th>Valor</th></tr></thead><tbody><tr data-onde="agendado servidor"><td class="id">RN-43</td><td>O cadastro de postos vem da API de Revendedores da ANP, uma UF de cada vez. O CNPJ identifica o posto.</td><td class="onde"><span class="o-agendado">AGENDADO</span><span class="o-servidor">SERVIDOR</span></td><td class="valor">domingo de madrugada</td></tr><tr data-onde="banco"><td class="id">RN-44</td><td>Uma posição corrigida manualmente não é sobrescrita pela sincronização.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="banco"><td class="id">RN-45</td><td>Posto que sai do cadastro da ANP fica inativo, e o histórico dele é mantido.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="servidor"><td class="id">RN-46</td><td>O banco guarda os preços da ANP desde julho de 2024. A série completa fica num arquivo privado do Storage.</td><td class="onde"><span class="o-servidor">SERVIDOR</span></td><td class="valor">plano gratuito</td></tr><tr data-onde="banco"><td class="id">RN-47</td><td>Preços da ANP que destoam ficam marcados como anomalia e nunca são apagados.</td><td class="onde"><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="agendado"><td class="id">RN-48</td><td>As cidades com coleta da ANP são recalculadas toda semana, para definir onde os pontos dobram.</td><td class="onde"><span class="o-agendado">AGENDADO</span></td><td class="valor">toda segunda-feira</td></tr></tbody></table></div></div><div class="grupo"><h3>Conta e privacidade</h3><div class="tabela"><table><thead><tr><th>ID</th><th>Regra</th><th>Onde</th><th>Valor</th></tr></thead><tbody><tr data-onde="servidor banco"><td class="id">RN-49</td><td>Excluir a conta apaga perfil, avaliações, favoritos, pontos e avisos. Os preços enviados ficam no histórico, sem vínculo com a pessoa.</td><td class="onde"><span class="o-servidor">SERVIDOR</span><span class="o-banco">BANCO</span></td><td class="valor"></td></tr><tr data-onde="celular banco"><td class="id">RN-50</td><td>A foto de perfil é opcional, tem até 200 KB e é pública.</td><td class="onde"><span class="o-celular">CELULAR</span><span class="o-banco">BANCO</span></td><td class="valor">200 KB</td></tr><tr data-onde="celular servidor"><td class="id">RN-51</td><td>O app usa só a chave publicável do Supabase. As chaves secretas ficam no servidor e no GitHub Actions.</td><td class="onde"><span class="o-celular">CELULAR</span><span class="o-servidor">SERVIDOR</span></td><td class="valor"></td></tr></tbody></table></div></div>
+  </section>
+
+  <section aria-labelledby="t-fotos">
+    <div class="cab">
+      <span class="eyebrow">Privacidade</span>
+      <h2 id="t-fotos">Fotos: o que é guardado</h2>
+      <p class="lead">A foto do painel existe só no celular, pelo tempo da leitura. O Storage do Supabase não recebe nenhuma imagem de painel.</p>
+    </div>
+    <div class="duas">
+      <div class="cartao sim">
+        <h3>Guardado no servidor</h3>
+        <ul>
+          <li>O preço que o usuário confirmou para cada combustível</li>
+          <li>O preço que o aparelho leu na foto e a confiança da leitura</li>
+          <li>Se o usuário corrigiu o valor lido</li>
+          <li>O texto reconhecido no painel, até 2.000 caracteres</li>
+          <li>A posição e a distância até o posto no momento do envio</li>
+          <li>O tempo que a leitura levou e a versão do app</li>
+        </ul>
+      </div>
+      <div class="cartao nao">
+        <h3>Nunca sai do celular</h3>
+        <ul>
+          <li>A foto do painel, em qualquer tamanho</li>
+          <li>Miniaturas ou recortes da imagem</li>
+          <li>Os metadados da foto, como data, câmera e localização gravadas no arquivo</li>
+        </ul>
+        <p style="color: var(--ink-2); font-size: .9rem">A foto é apagada do armazenamento temporário do app logo após a leitura, mesmo se a leitura falhar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-er">
+    <div class="cab">
+      <span class="eyebrow">Banco de dados</span>
+      <h2 id="t-er">Entidades e relacionamentos</h2>
+      <p class="lead">Dezenove tabelas no Postgres do Supabase. O posto e o perfil do usuário são os dois centros: tudo o que a comunidade produz liga um ao outro.</p>
+    </div>
+    <div class="legenda">
+      <span><svg viewBox="0 0 64 14" aria-hidden="true"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="2" x2="8" y2="12" stroke="currentColor" stroke-width="1.2"/><path d="M52,7 L62,2 M52,7 L62,7 M52,7 L62,12" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>um para muitos</span>
+      <span><svg viewBox="0 0 64 14" aria-hidden="true"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="2" x2="8" y2="12" stroke="currentColor" stroke-width="1.2"/><line x1="56" y1="2" x2="56" y2="12" stroke="currentColor" stroke-width="1.2"/></svg>um para um</span>
+      <span><b style="color: var(--accent); font-size: .75rem">PK · FK</b> chave primária · chave estrangeira</span>
+    </div>
+    <figure>
+      <div class="painel"><svg viewBox="0 0 1160 910" role="img" aria-label="Diagrama de entidades e relacionamentos: postos se liga às tabelas de preço, envios, avaliações, favoritos e avisos; perfis se liga a envios, avaliações, favoritos, avisos, votos e pontos; envios têm itens por combustível."><defs><marker id="er-muitos" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,5 L10,0 M0,5 L10,5 M0,5 L10,10" stroke="currentColor" stroke-width="1.2" fill="none"/></marker><marker id="er-um" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M6,0 L6,10" stroke="currentColor" stroke-width="1.2" fill="none"/></marker><marker id="er-um-fim" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M4,0 L4,10" stroke="currentColor" stroke-width="1.2" fill="none"/></marker></defs><line class="rel" x1="520.0" y1="200" x2="120.0" y2="102" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="550.0" y1="200" x2="350.0" y2="134" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="580.0" y1="200" x2="580.0" y2="134" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="610.0" y1="200" x2="810.0" y2="134" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="640.0" y1="200" x2="1040.0" y2="134" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="530.0" y1="314" x2="120.0" y2="400" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="555.0" y1="314" x2="350.0" y2="400" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="580.0" y1="314" x2="580.0" y2="400" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="605.0" y1="314" x2="810.0" y2="400" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="530.0" y1="600" x2="170.0" y2="514" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="555.0" y1="600" x2="380.0" y2="498" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="580.0" y1="600" x2="580.0" y2="482" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="605.0" y1="600" x2="810.0" y2="514" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="100.0" y1="514" x2="100.0" y2="600" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="320.0" y1="498" x2="320.0" y2="600" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="480" y1="633" x2="450" y2="633" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="680" y1="641" x2="710" y2="641" marker-start="url(#er-um)" marker-end="url(#er-um-fim)"/><line class="rel" x1="120.0" y1="714" x2="300.0" y2="790" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="580.0" y1="714" x2="400.0" y2="790" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><line class="rel" x1="220" y1="249" x2="250" y2="249" marker-start="url(#er-um)" marker-end="url(#er-muitos)"/><g class=""><rect class="ent-caixa" x="20" y="20" width="200" height="82" rx="8"/><path class="ent-topo" d="M21,46 V28 a7,7 0 0 1 7,-7 H212 a7,7 0 0 1 7,7 V46 Z"/><text class="ent-nome" x="30" y="38">posto_produtos</text><text class="ent-campo" x="30" y="59">posto_id</text><text class="ent-chave" x="210" y="59" text-anchor="end">FK</text><text class="ent-campo" x="30" y="75">produto_id</text><text class="ent-chave" x="210" y="75" text-anchor="end">FK</text><text class="ent-campo" x="30" y="91">bicos</text></g><g class=""><rect class="ent-caixa" x="250" y="20" width="200" height="114" rx="8"/><path class="ent-topo" d="M251,46 V28 a7,7 0 0 1 7,-7 H442 a7,7 0 0 1 7,7 V46 Z"/><text class="ent-nome" x="260" y="38">precos_anp</text><text class="ent-campo" x="260" y="59">posto_id</text><text class="ent-chave" x="440" y="59" text-anchor="end">FK</text><text class="ent-campo" x="260" y="75">produto_id</text><text class="ent-chave" x="440" y="75" text-anchor="end">FK</text><text class="ent-campo" x="260" y="91">data_coleta</text><text class="ent-chave" x="440" y="91" text-anchor="end">PK</text><text class="ent-campo" x="260" y="107">preco</text><text class="ent-campo" x="260" y="123">anomalia</text></g><g class=""><rect class="ent-caixa" x="480" y="20" width="200" height="114" rx="8"/><path class="ent-topo" d="M481,46 V28 a7,7 0 0 1 7,-7 H672 a7,7 0 0 1 7,7 V46 Z"/><text class="ent-nome" x="490" y="38">precos_estimados</text><text class="ent-campo" x="490" y="59">posto_id</text><text class="ent-chave" x="670" y="59" text-anchor="end">FK</text><text class="ent-campo" x="490" y="75">produto_id</text><text class="ent-chave" x="670" y="75" text-anchor="end">FK</text><text class="ent-campo" x="490" y="91">preco</text><text class="ent-campo" x="490" y="107">margem</text><text class="ent-campo" x="490" y="123">distancia_km</text></g><g class=""><rect class="ent-caixa" x="710" y="20" width="200" height="114" rx="8"/><path class="ent-topo" d="M711,46 V28 a7,7 0 0 1 7,-7 H902 a7,7 0 0 1 7,7 V46 Z"/><text class="ent-nome" x="720" y="38">precos_atuais</text><text class="ent-campo" x="720" y="59">posto_id</text><text class="ent-chave" x="900" y="59" text-anchor="end">FK</text><text class="ent-campo" x="720" y="75">produto_id</text><text class="ent-chave" x="900" y="75" text-anchor="end">FK</text><text class="ent-campo" x="720" y="91">preco · fonte · situacao</text><text class="ent-campo" x="720" y="107">confirmacoes</text><text class="ent-campo" x="720" y="123">ultimo_confiavel</text></g><g class=""><rect class="ent-caixa" x="940" y="20" width="200" height="114" rx="8"/><path class="ent-topo" d="M941,46 V28 a7,7 0 0 1 7,-7 H1132 a7,7 0 0 1 7,7 V46 Z"/><text class="ent-nome" x="950" y="38">precos_comunidade</text><text class="ent-campo" x="950" y="59">posto_id</text><text class="ent-chave" x="1130" y="59" text-anchor="end">FK</text><text class="ent-campo" x="950" y="75">produto_id</text><text class="ent-chave" x="1130" y="75" text-anchor="end">FK</text><text class="ent-campo" x="950" y="91">dia</text><text class="ent-chave" x="1130" y="91" text-anchor="end">PK</text><text class="ent-campo" x="950" y="107">preco</text><text class="ent-campo" x="950" y="123">confirmado</text></g><g class=""><rect class="ent-caixa" x="20" y="200" width="200" height="98" rx="8"/><path class="ent-topo" d="M21,226 V208 a7,7 0 0 1 7,-7 H212 a7,7 0 0 1 7,7 V226 Z"/><text class="ent-nome" x="30" y="218">produtos</text><text class="ent-campo" x="30" y="239">id</text><text class="ent-chave" x="210" y="239" text-anchor="end">PK</text><text class="ent-campo" x="30" y="255">codigo</text><text class="ent-campo" x="30" y="271">nome</text><text class="ent-campo" x="30" y="287">preco_min · preco_max</text></g><g class=""><rect class="ent-caixa" x="250" y="200" width="200" height="98" rx="8"/><path class="ent-topo" d="M251,226 V208 a7,7 0 0 1 7,-7 H442 a7,7 0 0 1 7,7 V226 Z"/><text class="ent-nome" x="260" y="218">previsoes</text><text class="ent-campo" x="260" y="239">uf · municipio</text><text class="ent-chave" x="440" y="239" text-anchor="end">PK</text><text class="ent-campo" x="260" y="255">produto_id</text><text class="ent-chave" x="440" y="255" text-anchor="end">FK</text><text class="ent-campo" x="260" y="271">semana</text><text class="ent-chave" x="440" y="271" text-anchor="end">PK</text><text class="ent-campo" x="260" y="287">preco_previsto</text></g><g class="ent-destaque"><rect class="ent-caixa" x="480" y="200" width="200" height="114" rx="8"/><path class="ent-topo" d="M481,226 V208 a7,7 0 0 1 7,-7 H672 a7,7 0 0 1 7,7 V226 Z"/><text class="ent-nome" x="490" y="218">postos</text><text class="ent-campo" x="490" y="239">id</text><text class="ent-chave" x="670" y="239" text-anchor="end">PK</text><text class="ent-campo" x="490" y="255">cnpj</text><text class="ent-chave" x="670" y="255" text-anchor="end">ÚNICO</text><text class="ent-campo" x="490" y="271">razao_social · bandeira</text><text class="ent-campo" x="490" y="287">localizacao (PostGIS)</text><text class="ent-campo" x="490" y="303">municipio_pesquisado_anp</text></g><g class=""><rect class="ent-caixa" x="710" y="200" width="200" height="82" rx="8"/><path class="ent-topo" d="M711,226 V208 a7,7 0 0 1 7,-7 H902 a7,7 0 0 1 7,7 V226 Z"/><text class="ent-nome" x="720" y="218">sincronizacoes_anp</text><text class="ent-campo" x="720" y="239">uf</text><text class="ent-chave" x="900" y="239" text-anchor="end">PK</text><text class="ent-campo" x="720" y="255">executado_em</text><text class="ent-campo" x="720" y="271">registros</text></g><g class=""><rect class="ent-caixa" x="940" y="200" width="200" height="82" rx="8"/><path class="ent-topo" d="M941,226 V208 a7,7 0 0 1 7,-7 H1132 a7,7 0 0 1 7,7 V226 Z"/><text class="ent-nome" x="950" y="218">parametros</text><text class="ent-campo" x="950" y="239">chave</text><text class="ent-chave" x="1130" y="239" text-anchor="end">PK</text><text class="ent-campo" x="950" y="255">valor</text><text class="ent-campo" x="950" y="271">descricao</text></g><g class=""><rect class="ent-caixa" x="20" y="400" width="200" height="114" rx="8"/><path class="ent-topo" d="M21,426 V408 a7,7 0 0 1 7,-7 H212 a7,7 0 0 1 7,7 V426 Z"/><text class="ent-nome" x="30" y="418">envios</text><text class="ent-tag" x="210" y="418" text-anchor="end">SEM FOTO</text><text class="ent-campo" x="30" y="439">id</text><text class="ent-chave" x="210" y="439" text-anchor="end">PK</text><text class="ent-campo" x="30" y="455">usuario_id</text><text class="ent-chave" x="210" y="455" text-anchor="end">FK</text><text class="ent-campo" x="30" y="471">posto_id</text><text class="ent-chave" x="210" y="471" text-anchor="end">FK</text><text class="ent-campo" x="30" y="487">posicao · distancia_m</text><text class="ent-campo" x="30" y="503">ocr_texto</text></g><g class=""><rect class="ent-caixa" x="250" y="400" width="200" height="98" rx="8"/><path class="ent-topo" d="M251,426 V408 a7,7 0 0 1 7,-7 H442 a7,7 0 0 1 7,7 V426 Z"/><text class="ent-nome" x="260" y="418">avaliacoes</text><text class="ent-campo" x="260" y="439">id</text><text class="ent-chave" x="440" y="439" text-anchor="end">PK</text><text class="ent-campo" x="260" y="455">posto_id</text><text class="ent-chave" x="440" y="455" text-anchor="end">FK</text><text class="ent-campo" x="260" y="471">usuario_id</text><text class="ent-chave" x="440" y="471" text-anchor="end">FK</text><text class="ent-campo" x="260" y="487">nota 0–5 · comentario</text></g><g class=""><rect class="ent-caixa" x="480" y="400" width="200" height="82" rx="8"/><path class="ent-topo" d="M481,426 V408 a7,7 0 0 1 7,-7 H672 a7,7 0 0 1 7,7 V426 Z"/><text class="ent-nome" x="490" y="418">favoritos</text><text class="ent-campo" x="490" y="439">usuario_id</text><text class="ent-chave" x="670" y="439" text-anchor="end">FK</text><text class="ent-campo" x="490" y="455">posto_id</text><text class="ent-chave" x="670" y="455" text-anchor="end">FK</text><text class="ent-campo" x="490" y="471">notificar</text></g><g class=""><rect class="ent-caixa" x="710" y="400" width="200" height="114" rx="8"/><path class="ent-topo" d="M711,426 V408 a7,7 0 0 1 7,-7 H902 a7,7 0 0 1 7,7 V426 Z"/><text class="ent-nome" x="720" y="418">notificacoes</text><text class="ent-campo" x="720" y="439">usuario_id</text><text class="ent-chave" x="900" y="439" text-anchor="end">FK</text><text class="ent-campo" x="720" y="455">posto_id</text><text class="ent-chave" x="900" y="455" text-anchor="end">FK</text><text class="ent-campo" x="720" y="471">produto_id</text><text class="ent-chave" x="900" y="471" text-anchor="end">FK</text><text class="ent-campo" x="720" y="487">preco_anterior → novo</text><text class="ent-campo" x="720" y="503">lida</text></g><g class=""><rect class="ent-caixa" x="20" y="600" width="200" height="114" rx="8"/><path class="ent-topo" d="M21,626 V608 a7,7 0 0 1 7,-7 H212 a7,7 0 0 1 7,7 V626 Z"/><text class="ent-nome" x="30" y="618">envio_itens</text><text class="ent-campo" x="30" y="639">id</text><text class="ent-chave" x="210" y="639" text-anchor="end">PK</text><text class="ent-campo" x="30" y="655">envio_id</text><text class="ent-chave" x="210" y="655" text-anchor="end">FK</text><text class="ent-campo" x="30" y="671">produto_id</text><text class="ent-chave" x="210" y="671" text-anchor="end">FK</text><text class="ent-campo" x="30" y="687">preco · preco_lido</text><text class="ent-campo" x="30" y="703">status · em_revisao</text></g><g class=""><rect class="ent-caixa" x="250" y="600" width="200" height="66" rx="8"/><path class="ent-topo" d="M251,626 V608 a7,7 0 0 1 7,-7 H442 a7,7 0 0 1 7,7 V626 Z"/><text class="ent-nome" x="260" y="618">avaliacao_votos</text><text class="ent-campo" x="260" y="639">avaliacao_id</text><text class="ent-chave" x="440" y="639" text-anchor="end">FK</text><text class="ent-campo" x="260" y="655">usuario_id</text><text class="ent-chave" x="440" y="655" text-anchor="end">FK</text></g><g class="ent-destaque"><rect class="ent-caixa" x="480" y="600" width="200" height="114" rx="8"/><path class="ent-topo" d="M481,626 V608 a7,7 0 0 1 7,-7 H672 a7,7 0 0 1 7,7 V626 Z"/><text class="ent-nome" x="490" y="618">perfis</text><text class="ent-campo" x="490" y="639">id</text><text class="ent-chave" x="670" y="639" text-anchor="end">PK · FK</text><text class="ent-campo" x="490" y="655">nome</text><text class="ent-campo" x="490" y="671">pontos</text><text class="ent-campo" x="490" y="687">confiabilidade</text><text class="ent-campo" x="490" y="703">bloqueado_ate · banido</text></g><g class=""><rect class="ent-caixa" x="710" y="600" width="200" height="82" rx="8"/><path class="ent-topo" d="M711,626 V608 a7,7 0 0 1 7,-7 H902 a7,7 0 0 1 7,7 V626 Z"/><text class="ent-nome" x="720" y="618">auth.users</text><text class="ent-campo" x="720" y="639">id</text><text class="ent-chave" x="900" y="639" text-anchor="end">PK</text><text class="ent-campo" x="720" y="655">email</text><text class="ent-campo" x="720" y="671">senha: hash no Auth</text></g><g class=""><rect class="ent-caixa" x="250" y="790" width="200" height="98" rx="8"/><path class="ent-topo" d="M251,816 V798 a7,7 0 0 1 7,-7 H442 a7,7 0 0 1 7,7 V816 Z"/><text class="ent-nome" x="260" y="808">pontos_movimentos</text><text class="ent-campo" x="260" y="829">usuario_id</text><text class="ent-chave" x="440" y="829" text-anchor="end">FK</text><text class="ent-campo" x="260" y="845">envio_item_id</text><text class="ent-chave" x="440" y="845" text-anchor="end">FK</text><text class="ent-campo" x="260" y="861">pontos</text><text class="ent-campo" x="260" y="877">tipo</text></g></svg></div>
+      <figcaption>O posto concentra os preços de todas as fontes; o perfil concentra envios, avaliações, favoritos, pontos e avisos. A coluna produto_id aparece em oito tabelas e suas linhas até produtos foram omitidas para o desenho continuar legível. parametros e sincronizacoes_anp não se relacionam com outras tabelas.</figcaption>
+    </figure>
+    <h3>Do seu diagrama para o banco</h3>
+    <div class="tabela">
+      <table>
+        <thead><tr><th>No seu diagrama</th><th>No banco</th><th>O que mudou e por quê</th></tr></thead>
+        <tbody>
+          <tr><td><code>user</code></td><td><code>auth.users</code> + <code>perfis</code></td><td>A senha fica no Supabase Auth, com hash, e não numa coluna. CPF, data de nascimento e CEP saíram porque nenhuma regra os usa, e a LGPD pede guardar só o necessário. <code>isTruthfull</code> virou <code>confiabilidade</code>, <code>isBaned</code> virou <code>banido</code> e <code>hasAdvice</code> virou <code>notificacoes_ativas</code>.</td></tr>
+          <tr><td><code>GasStation</code></td><td><code>postos</code></td><td>Chave numérica interna com o CNPJ único do cadastro da ANP. <code>reputation</code> virou <code>nota_media</code>, calculada no servidor. Latitude e longitude viraram um ponto geográfico, que permite buscar por área e distância com índice.</td></tr>
+          <tr><td><code>location</code>, <code>Streat</code></td><td>colunas de <code>postos</code></td><td>O endereço já vem pronto do cadastro da ANP. Tabelas separadas duplicariam dados sem ganho de consulta.</td></tr>
+          <tr><td><code>my_indications</code></td><td><code>envios</code></td><td>Um registro por foto enviada, com a posição e a distância até o posto no momento do envio.</td></tr>
+          <tr><td><code>my_indications_datais</code></td><td><code>envio_itens</code></td><td>Um preço por combustível. <code>photo_uni</code> saiu, porque a foto não é guardada. Entraram o preço lido, a confiança da leitura e o status do consenso.</td></tr>
+          <tr><td><code>Price</code></td><td><code>precos_atuais</code>, <code>precos_comunidade</code>, <code>precos_anp</code></td><td>O prazo de 60 dias saiu, porque o histórico precisa permanecer. <code>isConfirm</code> e <code>twoAngles</code> viraram o consenso entre usuários diferentes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-param">
+    <div class="cab">
+      <span class="eyebrow">Ajustes sem mudar código</span>
+      <h2 id="t-param">Parâmetros das regras</h2>
+      <p class="lead">Ficam na tabela <code>parametros</code>. Alterar um valor ali muda a regra na hora, sem publicar o app.</p>
+    </div>
+    <div class="tabela"><table><thead><tr><th>Chave</th><th>Valor</th><th>O que controla</th></tr></thead><tbody><tr><td><code>raio_envio_m</code></td><td class="valor">300</td><td>Distância máxima entre o usuário e o posto para enviar preço</td></tr><tr><td><code>tolerancia_consenso</code></td><td class="valor">0,02</td><td>Diferença máxima em R$ para dois envios contarem como o mesmo preço</td></tr><tr><td><code>janela_consenso_h</code></td><td class="valor">24</td><td>Janela de tempo em horas para formar consenso</td></tr><tr><td><code>usuarios_consenso</code></td><td class="valor">2</td><td>Usuários distintos necessários para confirmar um preço</td></tr><tr><td><code>usuarios_consenso_revisao</code></td><td class="valor">3</td><td>Usuários distintos necessários quando o envio está em revisão</td></tr><tr><td><code>desvio_revisao</code></td><td class="valor">0,20</td><td>Desvio relativo ao preço de referência que coloca o envio em revisão</td></tr><tr><td><code>validade_confirmado_d</code></td><td class="valor">7</td><td>Dias em que um preço confirmado continua sendo exibido</td></tr><tr><td><code>intervalo_mesmo_item_h</code></td><td class="valor">6</td><td>Intervalo mínimo em horas entre envios do mesmo usuário, posto e combustível</td></tr><tr><td><code>envios_por_dia</code></td><td class="valor">20</td><td>Envios por usuário por dia</td></tr><tr><td><code>pontos_confirmado</code></td><td class="valor">10</td><td>Pontos por envio confirmado</td></tr><tr><td><code>pontos_primeiro</code></td><td class="valor">5</td><td>Bônus para o primeiro envio em posto sem atualização há mais de 24 h</td></tr><tr><td><code>pontos_contestado</code></td><td class="valor">-5</td><td>Pontos quando o envio é contrariado pelo consenso</td></tr><tr><td><code>multiplicador_sem_anp</code></td><td class="valor">2</td><td>Multiplicador de pontos em município sem coleta da ANP</td></tr><tr><td><code>teto_pontos_dia</code></td><td class="valor">200</td><td>Máximo de pontos ganhos por dia</td></tr><tr><td><code>confiabilidade_min</code></td><td class="valor">0,20</td><td>Abaixo disso o envio sempre entra em revisão</td></tr><tr><td><code>variacao_notificacao</code></td><td class="valor">0,05</td><td>Variação mínima em R$ para notificar quem favoritou o posto</td></tr></tbody></table></div>
+  </section>
+
+  <footer>
+    <span>Fonte: <code>supabase/migrations</code>, <code>supabase/functions</code> e <code>app/lib</code> do repositório gasprice. Testes: <code>supabase/tests/regras_test.sql</code>, <code>app/test</code> e <code>supabase/functions/**/*_test.ts</code>.</span>
+    <span>Gerado em 29/09/2026.</span>
+  </footer>
+</main>
+
+<script>
+(function () {
+  const botoes = document.querySelectorAll('.filtros button');
+  const linhas = document.querySelectorAll('tr[data-onde]');
+  const grupos = document.querySelectorAll('.grupo');
+  botoes.forEach(function (b) {
+    b.addEventListener('click', function () {
+      const f = b.dataset.f;
+      botoes.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      linhas.forEach(function (l) { l.hidden = f !== 'todas' && !l.dataset.onde.split(' ').includes(f); });
+      grupos.forEach(function (g) { g.hidden = !g.querySelector('tr[data-onde]:not([hidden])'); });
+    });
+  });
+})();
+</script>

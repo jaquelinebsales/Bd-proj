@@ -1,0 +1,41 @@
+# Segredos
+.env
+.env.*
+!.env.example
+app/android/key.properties
+app/android/local.properties
+*.jks
+*.keystore
+
+# Dados grandes (regenerados pelos scripts a partir das planilhas da ANP)
+precos_ANP/
+dados/anp_limpo/precos_anp.csv
+dados/anp_limpo/*.csv.gz
+dados/externos/
+dados/cobertura/cobertura.json
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Supabase local
+supabase/.branches
+supabase/.temp
+
+# Flutter
+app/.dart_tool/
+app/build/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/ios/Pods/
+app/ios/.symlinks/
+app/android/.gradle/
+app/android/app/debug
+app/android/app/release
+*.iml
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db

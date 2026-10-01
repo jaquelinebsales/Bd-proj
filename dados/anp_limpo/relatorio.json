@@ -1,0 +1,444 @@
+{
+  "por_semestre": {
+    "2020-1": {
+      "arquivo": "ca-2020-01.csv",
+      "linhas_lidas": 496663,
+      "precos_mantidos": 496663,
+      "precos_anomalos": 2,
+      "postos_no_semestre": 12731,
+      "removidos": {}
+    },
+    "2020-2": {
+      "arquivo": "ca-2020-02.csv",
+      "linhas_lidas": 222637,
+      "precos_mantidos": 222637,
+      "precos_anomalos": 5,
+      "postos_no_semestre": 12668,
+      "removidos": {}
+    },
+    "2021-1": {
+      "arquivo": "ca-2021-01.csv",
+      "linhas_lidas": 334681,
+      "precos_mantidos": 334681,
+      "precos_anomalos": 14,
+      "postos_no_semestre": 11581,
+      "removidos": {}
+    },
+    "2021-2": {
+      "arquivo": "ca-2021-02.csv",
+      "linhas_lidas": 472856,
+      "precos_mantidos": 472856,
+      "precos_anomalos": 6,
+      "postos_no_semestre": 11748,
+      "removidos": {}
+    },
+    "2022-1": {
+      "arquivo": "precos-semestrais-ca.zip",
+      "linhas_lidas": 529424,
+      "precos_mantidos": 529424,
+      "precos_anomalos": 8,
+      "postos_no_semestre": 12105,
+      "removidos": {}
+    },
+    "2022-2": {
+      "arquivo": "ca-2022-02.zip",
+      "linhas_lidas": 378078,
+      "precos_mantidos": 378078,
+      "precos_anomalos": 28,
+      "postos_no_semestre": 13467,
+      "removidos": {}
+    },
+    "2023-1": {
+      "arquivo": "ca-2023-01.zip",
+      "linhas_lidas": 431576,
+      "precos_mantidos": 431576,
+      "precos_anomalos": 25,
+      "postos_no_semestre": 8875,
+      "removidos": {}
+    },
+    "2023-2": {
+      "arquivo": "ca-2023-02.zip",
+      "linhas_lidas": 472424,
+      "precos_mantidos": 472424,
+      "precos_anomalos": 41,
+      "postos_no_semestre": 9183,
+      "removidos": {}
+    },
+    "2024-1": {
+      "arquivo": "ca-2024-01.zip",
+      "linhas_lidas": 477154,
+      "precos_mantidos": 477140,
+      "precos_anomalos": 72,
+      "postos_no_semestre": 9495,
+      "removidos": {
+        "duplicado_identico": 10,
+        "duplicado_preco_divergente": 4
+      }
+    },
+    "2024-2": {
+      "arquivo": "ca-2024-02.zip",
+      "linhas_lidas": 421382,
+      "precos_mantidos": 421382,
+      "precos_anomalos": 41,
+      "postos_no_semestre": 8520,
+      "removidos": {}
+    },
+    "2025-1": {
+      "arquivo": "ca-2025-01.zip",
+      "linhas_lidas": 429523,
+      "precos_mantidos": 420409,
+      "precos_anomalos": 67,
+      "postos_no_semestre": 7735,
+      "removidos": {
+        "linha_vazia": 9114
+      }
+    },
+    "2025-2": {
+      "arquivo": "ca-2025-02.zip",
+      "linhas_lidas": 384208,
+      "precos_mantidos": 384208,
+      "precos_anomalos": 64,
+      "postos_no_semestre": 7842,
+      "removidos": {}
+    },
+    "2026-1": {
+      "arquivo": "Preços semestrais - AUTOMOTIVOS_2026.01.csv",
+      "linhas_lidas": 422418,
+      "precos_mantidos": 422412,
+      "precos_anomalos": 15,
+      "postos_no_semestre": 7963,
+      "removidos": {
+        "duplicado_identico": 6
+      }
+    }
+  },
+  "removidos": {
+    "duplicado_identico": 16,
+    "duplicado_preco_divergente": 4,
+    "linha_vazia": 9114
+  },
+  "anomalias_por_motivo": {
+    "destoa_da_uf_e_do_proprio_posto": 384,
+    "duplicado_com_preco_divergente": 4
+  },
+  "totais": {
+    "linhas_lidas": 5473024,
+    "precos_mantidos": 5463890,
+    "precos_anomalos": 388,
+    "postos_unicos": 21103,
+    "precos_csv_bytes": 165685567,
+    "precos_csv_gzip_bytes": 20126675,
+    "bandeiras": [
+      [
+        "BRANCA",
+        8041
+      ],
+      [
+        "IPIRANGA",
+        3776
+      ],
+      [
+        "RAIZEN",
+        3018
+      ],
+      [
+        "VIBRA",
+        2849
+      ],
+      [
+        "VIBRA ENERGIA",
+        891
+      ],
+      [
+        "PETROBRAS DISTRIBUIDORA S.A.",
+        392
+      ],
+      [
+        "ALE",
+        335
+      ],
+      [
+        "SABBÁ",
+        270
+      ],
+      [
+        "ALESAT",
+        197
+      ],
+      [
+        "RODOIL",
+        158
+      ],
+      [
+        "ATEM' S",
+        150
+      ],
+      [
+        "RAIZEN MIME",
+        106
+      ],
+      [
+        "EQUADOR",
+        94
+      ],
+      [
+        "SP",
+        84
+      ],
+      [
+        "CHARRUA",
+        59
+      ],
+      [
+        "TAURUS",
+        57
+      ],
+      [
+        "DISLUB",
+        50
+      ],
+      [
+        "IDAZA",
+        40
+      ],
+      [
+        "STANG",
+        39
+      ],
+      [
+        "ATLÂNTICA",
+        35
+      ],
+      [
+        "RIO BRANCO",
+        32
+      ],
+      [
+        "CIAPETRO",
+        32
+      ],
+      [
+        "PETROX DISTRIBUIDORA",
+        30
+      ],
+      [
+        "MAXSUL",
+        29
+      ],
+      [
+        "NEXTA",
+        27
+      ],
+      [
+        "FAN",
+        24
+      ],
+      [
+        "TEMAPE",
+        23
+      ],
+      [
+        "POTENCIAL",
+        22
+      ],
+      [
+        "TOTALENERGIES",
+        20
+      ],
+      [
+        "LARCO",
+        20
+      ],
+      [
+        "PETROBAHIA",
+        17
+      ],
+      [
+        "DIBRAPE",
+        17
+      ],
+      [
+        "SETTA DISTRIBUIDORA",
+        17
+      ],
+      [
+        "TDC DISTRIBUIDORA",
+        13
+      ],
+      [
+        "SMALL",
+        10
+      ],
+      [
+        "SIMARELLI",
+        10
+      ],
+      [
+        "PETROSERRA",
+        8
+      ],
+      [
+        "SANTA LUCIA",
+        8
+      ],
+      [
+        "FEDERAL ENERGIA",
+        8
+      ],
+      [
+        "TOTAL BRASIL",
+        7
+      ],
+      [
+        "MASUT DISTRIBUIDORA",
+        7
+      ],
+      [
+        "AMERICANOIL",
+        7
+      ],
+      [
+        "RZD DISTRIBUIDORA",
+        7
+      ],
+      [
+        "SIM DISTRIBUIDOR",
+        6
+      ],
+      [
+        "PELIKANO",
+        6
+      ],
+      [
+        "REJAILE",
+        5
+      ],
+      [
+        "SUL COMBUSTÍVEIS",
+        5
+      ],
+      [
+        "WATT",
+        5
+      ],
+      [
+        "D`MAIS",
+        4
+      ],
+      [
+        "TORRAO",
+        4
+      ],
+      [
+        "WALENDOWSKY",
+        3
+      ],
+      [
+        "ON PETRO",
+        3
+      ],
+      [
+        "RDP ENERGIA",
+        2
+      ],
+      [
+        "PODIUM",
+        2
+      ],
+      [
+        "ROYAL FIC",
+        2
+      ],
+      [
+        "MONTEPETRO",
+        2
+      ],
+      [
+        "FEDERAL",
+        2
+      ],
+      [
+        "ESTRADA",
+        2
+      ],
+      [
+        "PETROBRASIL",
+        2
+      ],
+      [
+        "LIQUIGÁS",
+        2
+      ],
+      [
+        "HORA",
+        1
+      ],
+      [
+        "NACIONAL GÁS BUTANO",
+        1
+      ],
+      [
+        "UNI",
+        1
+      ],
+      [
+        "GRAN PETRO",
+        1
+      ],
+      [
+        "DINAMO",
+        1
+      ],
+      [
+        "RM PETROLEO",
+        1
+      ],
+      [
+        "ACOL",
+        1
+      ],
+      [
+        "PETROLUZ",
+        1
+      ],
+      [
+        "SUPERGASBRAS ENERGIA",
+        1
+      ],
+      [
+        "GP",
+        1
+      ]
+    ],
+    "postos_por_uf": {
+      "AC": 82,
+      "AL": 233,
+      "AM": 382,
+      "AP": 87,
+      "BA": 983,
+      "CE": 728,
+      "DF": 317,
+      "ES": 389,
+      "GO": 809,
+      "MA": 522,
+      "MG": 2050,
+      "MS": 297,
+      "MT": 389,
+      "PA": 486,
+      "PB": 246,
+      "PE": 746,
+      "PI": 316,
+      "PR": 1394,
+      "RJ": 1634,
+      "RN": 257,
+      "RO": 214,
+      "RR": 71,
+      "RS": 1457,
+      "SC": 880,
+      "SE": 136,
+      "SP": 5841,
+      "TO": 157
+    },
+    "postos_com_coleta_desde_2025_07": 9189
+  }
+}

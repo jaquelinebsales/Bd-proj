@@ -1,0 +1,577 @@
+<title>Onde a ANP não mede</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: relatório de uma coluna larga; mapa de municípios como peça central, com painéis de números ao lado e seções de impacto abaixo. */
+:root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --ink: #141920;
+  --ink-2: #4c5563;
+  --muted: #7b8492;
+  --rule: #dde2e8;
+  --coberto: #2a78d6;
+  --coberto-2: #86b6ef;
+  --d1: #fbe0cc; --d2: #f6b98f; --d3: #ec8a55; --d4: #d4602a; --d5: #9e3f14;
+  --sem-posto: #e6e9ed;
+  --borda-mun: rgba(255,255,255,.55);
+  --borda-uf: #3a4350;
+  --crit: #d03b3b; --warn: #b77900; --good: #0b8a3a;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0e1115; --surface: #161a20; --ink: #eef1f5; --ink-2: #b7bfca; --muted: #8a93a0; --rule: #2a3039;
+    --coberto: #3987e5; --coberto-2: #1c5cab;
+    --d1: #4a2615; --d2: #7a3a1c; --d3: #b35428; --d4: #e0743c; --d5: #f6a877;
+    --sem-posto: #242a32; --borda-mun: rgba(14,17,21,.6); --borda-uf: #c3cad4;
+    --crit: #ef6b6b; --warn: #f0b429; --good: #3ccf6e;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e1115; --surface: #161a20; --ink: #eef1f5; --ink-2: #b7bfca; --muted: #8a93a0; --rule: #2a3039;
+  --coberto: #3987e5; --coberto-2: #1c5cab;
+  --d1: #4a2615; --d2: #7a3a1c; --d3: #b35428; --d4: #e0743c; --d5: #f6a877;
+  --sem-posto: #242a32; --borda-mun: rgba(14,17,21,.6); --borda-uf: #c3cad4;
+  --crit: #ef6b6b; --warn: #f0b429; --good: #3ccf6e;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--body); padding-inline: clamp(16px, 4vw, 48px); padding-block: 32px 64px; }
+main { max-width: 1180px; margin: 0 auto; display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: .01em; text-wrap: balance; margin: 0; line-height: 1.05; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); font-weight: 700; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.3rem; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font: 600 .74rem/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 1.1rem; color: var(--ink-2); }
+.num { font-variant-numeric: tabular-nums; }
+header { display: grid; gap: 14px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; margin-top: 12px; }
+.stat { background: var(--surface); padding: 18px 20px; display: grid; gap: 4px; align-content: start; }
+.stat b { font: 600 2.4rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.stat span { color: var(--ink-2); font-size: .9rem; }
+.stat small { color: var(--muted); font-size: .8rem; }
+
+section { display: grid; gap: 18px; }
+.sec-head { display: grid; gap: 8px; }
+.map-wrap { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(280px, 1fr); gap: 28px; align-items: start; }
+@media (max-width: 860px) { .map-wrap { grid-template-columns: 1fr; } }
+figure { margin: 0; }
+.map-card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 12px; position: relative; }
+#mapa { width: 100%; height: auto; display: block; }
+#mapa .m { stroke: var(--borda-mun); stroke-width: .25; }
+#mapa .m:hover, #mapa .m.on { stroke: var(--ink); stroke-width: 1.2; }
+#mapa .uf { fill: none; stroke: var(--borda-uf); stroke-width: .9; pointer-events: none; }
+#mapa .uf-lbl { font: 600 13px var(--display); fill: var(--ink); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; pointer-events: none; }
+.legend { display: grid; gap: 10px; font-size: .86rem; color: var(--ink-2); }
+.legend .row { display: flex; gap: 10px; align-items: center; }
+.sw { width: 18px; height: 12px; border-radius: 3px; flex: none; }
+.ramp { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+.ramp div { display: grid; gap: 4px; }
+.ramp i { height: 12px; border-radius: 2px; display: block; }
+.ramp span { font-size: .74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.side { display: grid; gap: 22px; }
+.panel { display: grid; gap: 12px; }
+.panel h3 { font-size: 1.15rem; }
+
+.bars { display: grid; gap: 12px; }
+.bar-row { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: center; font-size: .85rem; }
+.bar-row .lbl { color: var(--ink-2); }
+.bar-track { display: grid; gap: 3px; }
+.bar { height: 11px; border-radius: 0 4px 4px 0; position: relative; min-width: 2px; }
+.bar-val { font-size: .78rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.bar-line { display: flex; align-items: center; gap: 8px; }
+.key { display: flex; flex-wrap: wrap; gap: 14px; font-size: .8rem; color: var(--ink-2); }
+.key span { display: inline-flex; gap: 6px; align-items: center; }
+
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); padding: 10px 12px; border-radius: 8px; font-size: .8rem; line-height: 1.45; max-width: 260px; box-shadow: 0 6px 20px rgba(0,0,0,.18); z-index: 5; }
+.tip b { font-weight: 600; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 20px; display: grid; gap: 14px; position: relative; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { font: 12px var(--body); fill: var(--muted); font-variant-numeric: tabular-nums; }
+.chart .val { fill: var(--ink); font-weight: 600; }
+.chart .grid { stroke: var(--rule); stroke-width: 1; }
+.chart .base { stroke: var(--muted); stroke-width: 1; }
+.note { font-size: .82rem; color: var(--muted); }
+
+.compare { display: grid; gap: 10px; }
+.cmp { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: baseline; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.cmp:last-child { border-bottom: 0; padding-bottom: 0; }
+.cmp b { font: 600 1.7rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.cmp span { color: var(--ink-2); font-size: .88rem; }
+.cmp small { grid-column: 1 / -1; color: var(--muted); font-size: .8rem; }
+
+.phone { width: min(340px, 100%); justify-self: center; background: var(--bg); border: 1px solid var(--rule); border-radius: 28px; padding: 18px 14px 20px; display: grid; gap: 10px; box-shadow: 0 10px 30px rgba(20,25,32,.08); }
+.phone .ph-head { display: grid; gap: 2px; padding: 0 4px; }
+.phone .ph-head b { font: 600 1.25rem/1.1 var(--display); }
+.phone .ph-head span { color: var(--muted); font-size: .8rem; }
+.price { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 12px 14px; display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; }
+.price .p-name { font-weight: 600; font-size: .92rem; }
+.price .p-val { font: 600 1.5rem/1 var(--display); font-variant-numeric: tabular-nums; grid-row: span 2; }
+.price .p-meta { color: var(--muted); font-size: .76rem; display: flex; gap: 6px; align-items: center; }
+.dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex: none; }
+.chip { font: 600 .68rem/1 var(--body); letter-spacing: .04em; padding: 4px 7px; border-radius: 99px; border: 1px solid currentColor; }
+.price.est { border-style: dashed; }
+.price.est .p-val { color: var(--ink-2); }
+
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); }
+table { border-collapse: collapse; width: 100%; font-size: .85rem; min-width: 900px; }
+th, td { padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; white-space: nowrap; }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+th { white-space: normal; vertical-align: bottom; max-width: 120px; }
+th { font: 600 .72rem/1.2 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); position: sticky; top: 0; background: var(--surface); cursor: pointer; }
+th:focus-visible, button:focus-visible { outline: 2px solid var(--coberto); outline-offset: 2px; }
+tbody tr:hover { background: color-mix(in srgb, var(--coberto) 7%, transparent); }
+tr:last-child td { border-bottom: 0; }
+.lvl { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .78rem; }
+.lvl.baixa { color: var(--crit); } .lvl.media { color: var(--warn); } .lvl.alta { color: var(--good); }
+.small-n { color: var(--muted); font-size: .72rem; display: block; line-height: 1.1; }
+.steps { display: grid; gap: 14px; counter-reset: s; padding: 0; margin: 0; list-style: none; }
+.steps li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+.steps li::before { counter-increment: s; content: counter(s); font: 600 1.4rem/1 var(--display); color: var(--coberto); }
+.steps b { display: block; font-weight: 600; margin-bottom: 2px; }
+.steps p { color: var(--ink-2); font-size: .92rem; }
+footer { font-size: .8rem; color: var(--muted); display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 18px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<main>
+  <header>
+    <span class="eyebrow">gasprice · cobertura dos dados oficiais</span>
+    <h1>Onde a ANP não mede</h1>
+    <p class="lead">A pesquisa de preços da ANP visita uma amostra de postos em poucos municípios. Este mapa mostra onde o app terá dado oficial, onde dependerá de estimativa e quanto a estimativa erra conforme a distância.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section aria-labelledby="t-mapa">
+    <div class="sec-head">
+      <span class="eyebrow">Mapa por município</span>
+      <h2 id="t-mapa">Cobertura da pesquisa de preços, jul/2025 a jun/2026</h2>
+      <p class="lead">Azul é município com coleta da ANP. Os tons de laranja são municípios com posto e sem coleta, e o tom muda conforme a distância até o município pesquisado mais próximo, como mostra a legenda.</p>
+    </div>
+    <div class="map-wrap">
+      <figure class="map-card" id="map-card">
+        <svg id="mapa" viewBox="0 0 1010 1050" role="img" aria-label="Mapa do Brasil por município mostrando a cobertura da pesquisa de preços da ANP"></svg>
+        <div class="tip" id="tip" hidden></div>
+      </figure>
+      <div class="side">
+        <div class="legend panel" aria-label="Legenda do mapa">
+          <h3>Legenda</h3>
+          <div class="row"><i class="sw" style="background:var(--coberto)"></i> Município com coleta da ANP</div>
+          <div>
+            <div style="margin-bottom:6px">Sem coleta: distância até o município pesquisado mais próximo</div>
+            <div class="ramp" id="ramp"></div>
+          </div>
+          <div class="row"><i class="sw" style="background:var(--sem-posto)"></i> Município sem posto autorizado</div>
+        </div>
+        <div class="panel">
+          <h3>Postos por região</h3>
+          <div class="key">
+            <span><i class="sw" style="background:var(--coberto)"></i> pesquisados diretamente</span>
+            <span><i class="sw" style="background:var(--coberto-2)"></i> em município pesquisado</span>
+          </div>
+          <div class="bars" id="bars-regiao"></div>
+          <p class="note">Percentual do total de postos autorizados em cada região. Mesmo sem visitar um posto, a ANP dá uma referência de preço se o município dele é pesquisado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-serie">
+    <div class="sec-head">
+      <span class="eyebrow">Tendência da pesquisa</span>
+      <h2 id="t-serie">Postos pesquisados por mês, jan/2024 a jun/2026</h2>
+      <p class="lead">A ANP cortou a pesquisa duas vezes por falta de orçamento. Em julho de 2024, a pesquisa caiu de 459 para 358 municípios. Em julho de 2025, um novo corte limitou a coleta a no máximo 390 municípios.</p>
+    </div>
+    <div class="card chart">
+      <h3>Postos distintos com ao menos uma coleta no mês</h3>
+      <div id="chart-serie"></div>
+      <p class="note">Contagem de CNPJs diferentes com preço publicado pela ANP em cada mês. Passe o mouse sobre uma barra para ver também os municípios e o total de coletas.</p>
+      <div class="tip" id="tip3" hidden></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-precos">
+    <div class="sec-head">
+      <span class="eyebrow">Impacto na assertividade dos preços</span>
+      <h2 id="t-precos">Quanto erra estimar o preço pelo vizinho</h2>
+      <p class="lead">Para medir, fingimos que cada município pesquisado não tinha dado e estimamos sua gasolina comum pelo município pesquisado mais próximo. O erro cresce com a distância.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card chart">
+        <h3>Erro médio da estimativa, gasolina comum</h3>
+        <div class="key">
+          <span><i class="sw" style="background:var(--d4)"></i> erro médio</span>
+          <span><i class="sw" style="background:var(--ink-2);height:3px"></i> 9 em cada 10 casos erram menos que isto</span>
+        </div>
+        <div id="chart-dist"></div>
+        <p class="note">Faixas com poucos municípios aparecem hachuradas e não permitem conclusão. Mediana de 12 meses por município, simulação com os 419 municípios pesquisados.</p>
+        <div class="tip" id="tip2" hidden></div>
+      </div>
+      <div class="card">
+        <h3>Como o preço aparece no app</h3>
+        <p class="note">Mockup da tela de preços. O posto sem coleta mostra uma estimativa com margem de erro, nunca um valor apresentado como oficial.</p>
+        <div class="phone" aria-label="Exemplo de tela do aplicativo">
+          <div class="ph-head"><b>Posto de exemplo</b><span id="ph-mun"></span></div>
+          <div class="price">
+            <span class="p-name">Gasolina comum</span>
+            <span class="p-val">R$ 7,89</span>
+            <span class="p-meta"><i class="dot" style="background:var(--good)"></i> comunidade · 3 confirmações há 5 h</span>
+          </div>
+          <div class="price est">
+            <span class="p-name">Etanol</span>
+            <span class="p-val">≈ R$ 5,60</span>
+            <span class="p-meta"><span class="chip" style="color:var(--warn)">ESTIMATIVA</span> <span class="ph-margem"></span></span>
+          </div>
+          <div class="price est">
+            <span class="p-name">Diesel S10</span>
+            <span class="p-val">≈ R$ 7,35</span>
+            <span class="p-meta"><span class="chip" style="color:var(--warn)">ESTIMATIVA</span> <span class="ph-margem"></span></span>
+          </div>
+          <p class="note" style="padding:0 4px">Envie uma foto do painel e ganhe pontos em dobro: este município não tem dado oficial.</p>
+        </div>
+        <p class="note">Valores ilustrativos. A margem vem da tabela de erro por UF e da distância do município.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-ml">
+    <div class="sec-head">
+      <span class="eyebrow">Impacto no machine learning</span>
+      <h2 id="t-ml">O erro de localização é maior que o erro de previsão</h2>
+      <p class="lead">O modelo aprende só com os municípios pesquisados. Onde não há coleta, a previsão soma dois erros: o de prever a próxima semana e o de transferir o preço de outro lugar.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Erro médio em R$ por litro, por tipo de estimativa</h3>
+        <div class="compare" id="compare"></div>
+      </div>
+      <div class="card chart">
+        <h3>Quem o modelo vê no treino</h3>
+        <div class="key">
+          <span><i class="sw" style="background:var(--muted)"></i> parcela dos postos do Brasil</span>
+          <span><i class="sw" style="background:var(--coberto)"></i> parcela dos municípios de treino</span>
+        </div>
+        <div class="bars" id="bars-vies"></div>
+        <p class="note">O Sudeste pesa mais no treino do que na frota de postos, e Norte e Nordeste pesam menos. O modelo tende a errar mais nas regiões sub-representadas, principalmente em cidades pequenas do interior, que quase não aparecem na pesquisa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-uf">
+    <div class="sec-head">
+      <span class="eyebrow">Tabela por UF</span>
+      <h2 id="t-uf">Cobertura e erro por estado</h2>
+      <p class="lead">Clique no título de uma coluna para ordenar. Nível de cobertura: baixa abaixo de 35% dos postos em município pesquisado, alta acima de 60%.</p>
+    </div>
+    <div class="table-wrap">
+      <table id="tabela">
+        <thead><tr>
+          <th scope="col" data-k="uf" tabindex="0">UF</th>
+          <th scope="col" data-k="nivel" tabindex="0">Cobertura</th>
+          <th scope="col" data-k="postos" tabindex="0">Postos</th>
+          <th scope="col" data-k="pct_pesq" tabindex="0">Pesquisados</th>
+          <th scope="col" data-k="pct_mun" tabindex="0">Em município pesquisado</th>
+          <th scope="col" data-k="municipios_cobertos" tabindex="0">Municípios pesquisados</th>
+          <th scope="col" data-k="dist_mediana_km_nao_cobertos" tabindex="0">Distância mediana sem coleta</th>
+          <th scope="col" data-k="erro_estimativa_vizinho" tabindex="0">Erro pelo vizinho</th>
+          <th scope="col" data-k="modelo_mae_1sem" tabindex="0">Erro do modelo, 1 semana</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">Erro pelo vizinho: gasolina comum, R$ por litro. Erro do modelo: todos os combustíveis, municípios pesquisados, teste de jan a jun/2026, janela de 2 anos. Estados com menos de 5 municípios pesquisados têm amostra pequena.</p>
+  </section>
+
+  <section aria-labelledby="t-acao">
+    <div class="sec-head">
+      <span class="eyebrow">O que fazer no produto</span>
+      <h2 id="t-acao">Como reduzir o impacto</h2>
+    </div>
+    <ol class="steps">
+      <li><div><b>Cadastro completo como base do mapa.</b><p>Todos os 45 mil postos autorizados aparecem no mapa, com coordenadas da API de Revendedores da ANP. A pesquisa de preços entra só como fonte de preço.</p></div></li>
+      <li><div><b>Estimativa sempre rotulada, com margem.</b><p>Onde não há coleta nem envio da comunidade, o app mostra "Estimativa" e a margem de erro da faixa de distância. Acima de 200 km, o app mostra apenas a faixa de preço da UF.</p></div></li>
+      <li><div><b>Pontos em dobro onde a ANP não mede.</b><p>O sistema de pontos direciona a comunidade para os municípios laranja. Cada envio confirmado ali reduz o erro de todo o entorno.</p></div></li>
+      <li><div><b>Treino ponderado por região.</b><p>O modelo dá mais peso aos municípios do Norte, Nordeste e Centro-Oeste e passa a usar os envios da comunidade como dado de treino, depois de confirmados.</p></div></li>
+    </ol>
+  </section>
+
+  <footer>
+    <span>Fontes: cadastro de revendedores varejistas da ANP (45.823 postos autorizados), série histórica de preços da ANP de jul/2025 a jun/2026 e malha municipal do IBGE.</span>
+    <span id="rodape"></span>
+  </footer>
+</main>
+
+<script>
+const D = /*DATA*/null;
+const fmt = new Intl.NumberFormat("pt-BR");
+const brl = v => v == null ? "–" : "R$ " + v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const pct = (a, b) => b ? a / b * 100 : 0;
+const pctf = v => v.toLocaleString("pt-BR", { maximumFractionDigits: 0 }) + "%";
+const NS = "http://www.w3.org/2000/svg";
+const T = D.total;
+
+// ---------- faixas de distância ----------
+const FAIXAS = [
+  { max: 25, rot: "até 25 km", c: "var(--d1)" },
+  { max: 50, rot: "25–50", c: "var(--d2)" },
+  { max: 100, rot: "50–100", c: "var(--d3)" },
+  { max: 200, rot: "100–200", c: "var(--d4)" },
+  { max: Infinity, rot: "200+ km", c: "var(--d5)" },
+];
+const faixa = d => FAIXAS.findIndex(f => d < f.max);
+const erroFaixa = D.erro_por_distancia;
+function erroEsperado(d) {
+  const lim = [25, 50, 100, 200, 400, Infinity];
+  const i = lim.findIndex(l => d < l);
+  const r = erroFaixa[Math.min(i, erroFaixa.length - 1)];
+  return r;
+}
+
+// ---------- números de topo ----------
+const mun = D.m;  // [cod, nome, uf, postos, pesq, coberto, dist, path]
+const semColeta = mun.filter(m => m[3] > 0 && !m[5]).map(m => m[6]).sort((a, b) => a - b);
+const medDist = semColeta[Math.floor(semColeta.length / 2)];
+const postosSemColeta = mun.filter(m => m[3] > 0 && !m[5]).reduce((s, m) => s + m[3], 0);
+document.getElementById("stats").innerHTML = [
+  [pctf(pct(T.postos_pesquisados_12m, T.postos_cadastro_com_municipio)), "dos postos são visitados pela ANP", `${fmt.format(T.postos_pesquisados_12m)} de ${fmt.format(T.postos_cadastro_com_municipio)} postos autorizados`],
+  [pctf(pct(T.municipios_cobertos, T.municipios_com_posto)), "dos municípios com posto têm coleta", `${fmt.format(T.municipios_cobertos)} de ${fmt.format(T.municipios_com_posto)} municípios`],
+  [fmt.format(postosSemColeta), "postos ficam em municípios sem coleta", `${pctf(pct(postosSemColeta, T.postos_cadastro_com_municipio))} de todos os postos`],
+  [fmt.format(Math.round(medDist)) + " km", "até o município pesquisado mais próximo", "distância mediana dos municípios sem coleta"],
+].map(([b, s, sm]) => `<div class="stat"><b>${b}</b><span>${s}</span><small>${sm}</small></div>`).join("");
+
+// ---------- legenda ----------
+document.getElementById("ramp").innerHTML = FAIXAS.map((f, i) => {
+  const e = erroFaixa[i];
+  return `<div><i style="background:${f.c}"></i><span>${f.rot}</span></div>`;
+}).join("");
+
+// ---------- mapa ----------
+const svg = document.getElementById("mapa");
+const gM = document.createElementNS(NS, "g");
+const frag = document.createDocumentFragment();
+mun.forEach((m, i) => {
+  const p = document.createElementNS(NS, "path");
+  p.setAttribute("d", m[7]);
+  p.setAttribute("class", "m");
+  p.dataset.i = i;
+  p.setAttribute("fill", m[3] === 0 ? "var(--sem-posto)" : m[5] ? "var(--coberto)" : FAIXAS[faixa(m[6])].c);
+  frag.appendChild(p);
+});
+gM.appendChild(frag);
+svg.appendChild(gM);
+const gU = document.createElementNS(NS, "g");
+D.u.forEach(u => {
+  const p = document.createElementNS(NS, "path");
+  p.setAttribute("d", u.g); p.setAttribute("class", "uf");
+  gU.appendChild(p);
+});
+svg.appendChild(gU);
+// rótulos de UF no centro aproximado (média dos centros dos municípios)
+const centros = {};
+for (const el of gM.children) {
+  const m = mun[el.dataset.i];
+  const b = el.getBBox();
+  (centros[m[2]] ||= []).push([b.x + b.width / 2, b.y + b.height / 2]);
+}
+const gL = document.createElementNS(NS, "g");
+const AJUSTE = { DF: [8, -4], RN: [10, -4], PB: [18, 2], PE: [14, 2], AL: [12, 6], SE: [10, 6], ES: [10, 0], RJ: [8, 8], SC: [8, 0] };
+Object.entries(centros).forEach(([uf, pts]) => {
+  const x = pts.reduce((s, p) => s + p[0], 0) / pts.length + (AJUSTE[uf]?.[0] || 0);
+  const y = pts.reduce((s, p) => s + p[1], 0) / pts.length + (AJUSTE[uf]?.[1] || 0);
+  const t = document.createElementNS(NS, "text");
+  t.setAttribute("x", x.toFixed(1)); t.setAttribute("y", y.toFixed(1));
+  t.setAttribute("text-anchor", "middle"); t.setAttribute("class", "uf-lbl");
+  t.textContent = uf; gL.appendChild(t);
+});
+svg.appendChild(gL);
+
+const tip = document.getElementById("tip");
+const card = document.getElementById("map-card");
+let atual = null;
+svg.addEventListener("pointermove", ev => {
+  const el = ev.target.closest(".m");
+  if (!el) { tip.hidden = true; atual?.classList.remove("on"); atual = null; return; }
+  if (atual !== el) { atual?.classList.remove("on"); el.classList.add("on"); gM.appendChild(el); atual = el; }
+  const m = mun[el.dataset.i];
+  let corpo;
+  if (m[3] === 0) corpo = "Sem posto autorizado.";
+  else if (m[5]) corpo = `${fmt.format(m[3])} postos, ${fmt.format(m[4])} visitados pela ANP.<br>Preço oficial disponível.`;
+  else {
+    const e = erroEsperado(m[6]);
+    corpo = `${fmt.format(m[3])} postos, nenhum visitado pela ANP.<br>Município pesquisado mais próximo a <b>${fmt.format(Math.round(m[6]))} km</b>.<br>Erro típico da estimativa: <b>± ${brl(e.mae)}</b>`;
+  }
+  tip.innerHTML = `<b>${m[1]} · ${m[2]}</b><br>${corpo}`;
+  tip.hidden = false;
+  const r = card.getBoundingClientRect();
+  let x = ev.clientX - r.left + 14, y = ev.clientY - r.top + 14;
+  if (x + 270 > r.width) x = ev.clientX - r.left - 270;
+  if (y + 110 > r.height) y = ev.clientY - r.top - 110;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+});
+svg.addEventListener("pointerleave", () => { tip.hidden = true; atual?.classList.remove("on"); atual = null; });
+
+// ---------- barras por região ----------
+const ordemReg = ["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"];
+const reg = ordemReg.map(n => D.regioes.find(r => r.regiao === n));
+document.getElementById("bars-regiao").innerHTML = reg.map(r => {
+  const a = pct(r.postos_pesquisados, r.postos), b = pct(r.postos_em_municipio_coberto, r.postos);
+  return `<div class="bar-row"><span class="lbl">${r.regiao}</span><div class="bar-track">
+    <div class="bar-line"><div class="bar" style="width:${a * 0.8}%;background:var(--coberto)"></div><span class="bar-val">${pctf(a)}</span></div>
+    <div class="bar-line"><div class="bar" style="width:${b * 0.8}%;background:var(--coberto-2)"></div><span class="bar-val">${pctf(b)}</span></div>
+  </div></div>`;
+}).join("");
+
+// ---------- viés de representação ----------
+const totPostos = reg.reduce((s, r) => s + r.postos, 0), totMun = reg.reduce((s, r) => s + r.municipios_cobertos, 0);
+document.getElementById("bars-vies").innerHTML = reg.map(r => {
+  const a = pct(r.postos, totPostos), b = pct(r.municipios_cobertos, totMun);
+  return `<div class="bar-row"><span class="lbl">${r.regiao}</span><div class="bar-track">
+    <div class="bar-line"><div class="bar" style="width:${a * 1.6}%;background:var(--muted)"></div><span class="bar-val">${pctf(a)}</span></div>
+    <div class="bar-line"><div class="bar" style="width:${b * 1.6}%;background:var(--coberto)"></div><span class="bar-val">${pctf(b)}</span></div>
+  </div></div>`;
+}).join("");
+
+// ---------- gráfico de erro por distância ----------
+(function () {
+  const W = 560, H = 300, L = 48, R = 12, TOP = 24, B = 44;
+  const rows = erroFaixa;
+  const maxV = 0.9;
+  const x0 = L, pw = W - L - R, ph = H - TOP - B;
+  const bw = pw / rows.length;
+  const y = v => TOP + ph - v / maxV * ph;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Erro médio da estimativa por faixa de distância">`;
+  s += `<defs><pattern id="hach" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--d4)" stroke-width="2.5"/></pattern></defs>`;
+  for (let v = 0; v <= maxV + 1e-9; v += 0.3) {
+    s += `<line class="grid" x1="${x0}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/>`;
+    s += `<text x="${x0 - 8}" y="${y(v) + 4}" text-anchor="end">${v.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</text>`;
+  }
+  rows.forEach((r, i) => {
+    const cx = x0 + bw * i + bw / 2, w = Math.min(46, bw * 0.55);
+    const poucos = r.casos < 20;
+    const top = y(r.mae);
+    s += `<g class="hit" data-i="${i}"><rect x="${cx - bw / 2}" y="${TOP}" width="${bw}" height="${ph}" fill="transparent"/>`;
+    s += `<path d="M${cx - w / 2},${y(0)} V${top + 4} q0,-4 4,-4 H${cx + w / 2 - 4} q4,0 4,4 V${y(0)} Z" fill="${poucos ? "url(#hach)" : "var(--d4)"}" stroke="${poucos ? "var(--d4)" : "none"}" stroke-width="1"/>`;
+    s += `<line x1="${cx - w / 2 - 4}" x2="${cx + w / 2 + 4}" y1="${y(r.p90)}" y2="${y(r.p90)}" stroke="var(--ink-2)" stroke-width="2.5" stroke-linecap="round"/>`;
+    s += `<text class="val" x="${cx}" y="${top - 8}" text-anchor="middle">${r.mae.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</text>`;
+    s += `<text x="${cx}" y="${H - B + 18}" text-anchor="middle">${r.faixa.replace(" km", "")}</text>`;
+    s += `<text x="${cx}" y="${H - B + 33}" text-anchor="middle">${r.casos} mun.</text></g>`;
+  });
+  s += `<line class="base" x1="${x0}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}"/>`;
+  s += `<text x="${x0 - 8}" y="${TOP - 10}" text-anchor="end">R$/L</text>`;
+  s += `</svg>`;
+  const box = document.getElementById("chart-dist");
+  box.innerHTML = s;
+  const tip2 = document.getElementById("tip2");
+  const cardEl = box.closest(".card");
+  box.querySelectorAll(".hit").forEach(g => {
+    g.addEventListener("pointermove", ev => {
+      const r = rows[g.dataset.i];
+      tip2.innerHTML = `<b>${r.faixa}</b><br>${r.casos} municípios simulados<br>Erro médio ${brl(r.mae)}<br>9 em 10 erram menos de ${brl(r.p90)}`;
+      tip2.hidden = false;
+      const rc = cardEl.getBoundingClientRect();
+      let x = ev.clientX - rc.left + 14; if (x + 220 > rc.width) x -= 240;
+      tip2.style.left = x + "px"; tip2.style.top = (ev.clientY - rc.top + 14) + "px";
+    });
+    g.addEventListener("pointerleave", () => tip2.hidden = true);
+  });
+})();
+
+// ---------- série mensal de postos pesquisados ----------
+(function () {
+  const rows = D.serie_mensal;
+  const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+  const rot = m => { const [a, mm] = m.split("-"); return MESES[+mm - 1] + "/" + a.slice(2); };
+  const W = 1080, H = 320, L = 56, R = 12, TOP = 44, B = 40;
+  const pw = W - L - R, ph = H - TOP - B, bw = pw / rows.length;
+  const maxV = 8000;
+  const y = v => TOP + ph - v / maxV * ph;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Postos pesquisados por mês pela ANP de janeiro de 2024 a junho de 2026">`;
+  for (let v = 0; v <= maxV; v += 2000) {
+    s += `<line class="grid" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/>`;
+    s += `<text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${fmt.format(v)}</text>`;
+  }
+  const cortes = { "2024-07": "Corte: 459 → 358 municípios", "2025-07": "Corte: máximo de 390 municípios" };
+  rows.forEach((r, i) => {
+    const x = L + bw * i, w = Math.max(6, bw * 0.62), cx = x + bw / 2, top = y(r.postos);
+    if (cortes[r.mes]) {
+      s += `<line x1="${x}" x2="${x}" y1="${TOP - 26}" y2="${y(0)}" stroke="var(--ink-2)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+      s += `<text x="${x + 6}" y="${TOP - 16}" style="fill:var(--ink-2);font-weight:600">${cortes[r.mes]}</text>`;
+    }
+    s += `<g class="hit3" data-i="${i}"><rect x="${x}" y="${TOP}" width="${bw}" height="${ph}" fill="transparent"/>`;
+    s += `<path d="M${cx - w / 2},${y(0)} V${top + 3} q0,-3 3,-3 H${cx + w / 2 - 3} q3,0 3,3 V${y(0)} Z" fill="var(--coberto)"/></g>`;
+    if (i % 3 === 0) s += `<text x="${cx}" y="${H - B + 18}" text-anchor="middle">${rot(r.mes)}</text>`;
+  });
+  const first = rows[0], last = rows[rows.length - 1];
+  s += `<text class="val" x="${L + bw / 2}" y="${y(first.postos) - 8}" text-anchor="middle">${fmt.format(first.postos)}</text>`;
+  s += `<text class="val" x="${L + bw * (rows.length - 0.5)}" y="${y(last.postos) - 8}" text-anchor="middle">${fmt.format(last.postos)}</text>`;
+  s += `<line class="base" x1="${L}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}"/></svg>`;
+  const box = document.getElementById("chart-serie");
+  box.style.overflowX = "auto";
+  box.innerHTML = s;
+  box.firstElementChild.style.minWidth = "640px";
+  const tip3 = document.getElementById("tip3"), cardEl = box.closest(".card");
+  box.querySelectorAll(".hit3").forEach(g => {
+    g.addEventListener("pointermove", ev => {
+      const r = rows[g.dataset.i];
+      tip3.innerHTML = `<b>${rot(r.mes)}</b><br>${fmt.format(r.postos)} postos pesquisados<br>${fmt.format(r.municipios)} municípios<br>${fmt.format(r.coletas)} preços coletados`;
+      tip3.hidden = false;
+      const rc = cardEl.getBoundingClientRect();
+      let x = ev.clientX - rc.left + 14; if (x + 200 > rc.width) x -= 220;
+      tip3.style.left = x + "px"; tip3.style.top = (ev.clientY - rc.top + 14) + "px";
+    });
+    g.addEventListener("pointerleave", () => tip3.hidden = true);
+  });
+})();
+
+// ---------- comparação de erros ----------
+const X = D.exp;
+document.getElementById("compare").innerHTML = [
+  [brl(X.h1_2anos), "Prever a próxima semana num município pesquisado", "Modelo com 2 anos de dados, todos os combustíveis. Erro da regra ingênua: " + brl(X.h1_ingenuo) + "."],
+  [brl(X.h4_2anos), "Prever 4 semanas à frente num município pesquisado", "Aqui o modelo ainda perde para repetir o preço atual (" + brl(X.h4_ingenuo) + ")."],
+  [brl(erroFaixa[0].mae), "Transferir o preço de um vizinho a até 25 km", "Gasolina comum, município sem coleta."],
+  [brl(erroFaixa[3].mae), "Transferir o preço de um vizinho a 100–200 km", "Típico de municípios do Norte e do Centro-Oeste."],
+].map(([b, s, sm]) => `<div class="cmp"><span>${s}</span><b>${b}</b><small>${sm}</small></div>`).join("");
+
+// ---------- tabela ----------
+const nivel = v => v < 35 ? ["baixa", "Baixa", 0] : v <= 60 ? ["media", "Média", 1] : ["alta", "Alta", 2];
+const linhas = D.ufs.map(u => ({ ...u, pct_pesq: pct(u.postos_pesquisados, u.postos), pct_mun: pct(u.postos_em_municipio_coberto, u.postos) }))
+  .map(u => ({ ...u, nivel: nivel(u.pct_mun)[2] }));
+let chave = "pct_mun", asc = true;
+function render() {
+  const rows = [...linhas].sort((a, b) => {
+    const va = a[chave] ?? -1, vb = b[chave] ?? -1;
+    return (typeof va === "string" ? va.localeCompare(vb) : va - vb) * (asc ? 1 : -1);
+  });
+  document.querySelector("#tabela tbody").innerHTML = rows.map(u => {
+    const [cls, txt] = nivel(u.pct_mun);
+    const pouco = u.municipios_cobertos < 5 ? ` <span class="small-n">amostra pequena</span>` : "";
+    return `<tr><td><b>${u.uf}</b></td>
+      <td><span class="lvl ${cls}"><i class="dot" style="background:currentColor"></i>${txt}</span></td>
+      <td>${fmt.format(u.postos)}</td><td>${pctf(u.pct_pesq)}</td><td>${pctf(u.pct_mun)}</td>
+      <td>${u.municipios_cobertos} de ${u.municipios_com_posto}</td>
+      <td>${u.dist_mediana_km_nao_cobertos ? fmt.format(Math.round(u.dist_mediana_km_nao_cobertos)) + " km" : "–"}</td>
+      <td>${brl(u.erro_estimativa_vizinho)}${pouco}</td><td>${brl(u.modelo_mae_1sem)}</td></tr>`;
+  }).join("");
+  document.querySelectorAll("#tabela th").forEach(th => th.setAttribute("aria-sort", th.dataset.k === chave ? (asc ? "ascending" : "descending") : "none"));
+}
+document.querySelectorAll("#tabela th").forEach(th => {
+  const go = () => { if (chave === th.dataset.k) asc = !asc; else { chave = th.dataset.k; asc = true; } render(); };
+  th.addEventListener("click", go);
+  th.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+});
+render();
+// ---------- exemplo do celular: município real sem coleta ----------
+const ex = D.exemplo;
+document.getElementById("ph-mun").textContent = `${ex.nome}, ${ex.uf} · ${fmt.format(ex.postos)} postos, nenhum visitado pela ANP`;
+document.querySelectorAll(".ph-margem").forEach(el => el.textContent = `± ${brl(ex.margem)} · referência a ${fmt.format(Math.round(ex.dist))} km`);
+document.getElementById("rodape").textContent = `Gerado em ${D.gerado_em}. Municípios sem correspondência entre ANP e IBGE: ${T.sem_correspondencia_cadastro.map(x => x.join("/")).join(", ") || "nenhum"}.`;
+</script>

@@ -1,0 +1,37 @@
+name: Gerar APK
+
+# Gera o APK de teste sob demanda (aba Actions → Gerar APK → Run workflow).
+# Segredos necessários: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, GOOGLE_MAPS_API_KEY.
+on:
+  workflow_dispatch:
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Configuração do app
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+          MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        run: |
+          printf '{"SUPABASE_URL":"%s","SUPABASE_PUBLISHABLE_KEY":"%s"}' "$SUPABASE_URL" "$SUPABASE_PUBLISHABLE_KEY" > config/app.json
+          echo "MAPS_API_KEY=$MAPS_API_KEY" >> android/local.properties
+      - run: flutter pub get
+      - run: flutter build apk --release --dart-define-from-file=config/app.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gasprice-apk
+          path: app/build/app/outputs/flutter-apk/app-release.apk

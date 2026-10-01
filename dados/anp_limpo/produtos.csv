@@ -1,0 +1,7 @@
+id,codigo,nome,unidade,nome_anp
+1,GC,Gasolina comum,L,GASOLINA
+2,GA,Gasolina aditivada,L,GASOLINA ADITIVADA
+3,ET,Etanol,L,ETANOL
+4,DS,Diesel S500,L,DIESEL
+5,S10,Diesel S10,L,DIESEL S10
+6,GNV,GNV,m3,GNV

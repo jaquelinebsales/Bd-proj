@@ -1,0 +1,278 @@
+<title>Regras do gasprice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: documento de referência em coluna larga; diagramas em painéis roláveis; catálogo de regras em tabelas filtráveis por onde a regra roda. */
+:root {
+  --bg: #f4f7f6;
+  --surface: #ffffff;
+  --surface-2: #eaf1ee;
+  --ink: #12201a;
+  --ink-2: #435049;
+  --muted: #6b7a73;
+  --rule: #d6e0db;
+  --accent: #0f7a5c;
+  --accent-tint: #d9eee6;
+  --anp: #2e5aac;
+  --warn: #9a6a00;
+  --bad: #b8372e;
+  --good: #1a8a4b;
+  --c-celular: #0f7a5c;
+  --c-servidor: #6a4bb0;
+  --c-banco: #2e5aac;
+  --c-agendado: #8a6526;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --r: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0d1311; --surface: #151d1a; --surface-2: #1b2622; --ink: #e8f1ec; --ink-2: #b3c2bb; --muted: #86958e; --rule: #28342f;
+    --accent: #43c29a; --accent-tint: #173a2f; --anp: #83a8f2; --warn: #f0b429; --bad: #f07a70; --good: #45d17c;
+    --c-celular: #43c29a; --c-servidor: #b39ef5; --c-banco: #83a8f2; --c-agendado: #e0b36a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0d1311; --surface: #151d1a; --surface-2: #1b2622; --ink: #e8f1ec; --ink-2: #b3c2bb; --muted: #86958e; --rule: #28342f;
+  --accent: #43c29a; --accent-tint: #173a2f; --anp: #83a8f2; --warn: #f0b429; --bad: #f07a70; --good: #45d17c;
+  --c-celular: #43c29a; --c-servidor: #b39ef5; --c-banco: #83a8f2; --c-agendado: #e0b36a;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 var(--body); padding-inline: clamp(16px, 4vw, 48px); padding-block: 32px 72px; }
+main { max-width: 1180px; margin: 0 auto; display: grid; gap: 64px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: .01em; line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 700; }
+h2 { font-size: 2.1rem; }
+h3 { font-size: 1.35rem; }
+p { margin: 0; max-width: 70ch; }
+.eyebrow { font: 600 .74rem/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 1.1rem; color: var(--ink-2); }
+section { display: grid; gap: 20px; }
+.cab { display: grid; gap: 8px; }
+code { font: .86em ui-monospace, "Cascadia Code", Consolas, monospace; background: var(--surface-2); padding: .1em .35em; border-radius: 5px; }
+
+.principios { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 8px; }
+.principio { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 16px 18px; display: grid; gap: 6px; align-content: start; }
+.principio b { font: 600 1.25rem/1.1 var(--display); }
+.principio span { color: var(--ink-2); font-size: .9rem; }
+
+figure { margin: 0; display: grid; gap: 10px; }
+.painel { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 16px; overflow-x: auto; }
+.painel svg { display: block; width: 100%; min-width: 860px; height: auto; color: var(--ink-2); }
+figcaption { color: var(--muted); font-size: .88rem; max-width: 90ch; }
+
+/* Diagramas (classes usadas pelo SVG gerado) */
+.lane { fill: var(--surface-2); }
+.lane-nome { font: 700 11px var(--body); letter-spacing: .1em; fill: var(--muted); }
+.no { fill: var(--surface); stroke: var(--rule); stroke-width: 1.25; }
+.no-chave { fill: var(--accent-tint); stroke: var(--accent); stroke-width: 1.5; }
+.no-titulo { font: 700 13px var(--body); fill: var(--ink); }
+.no-texto { font: 11.5px var(--body); fill: var(--ink-2); }
+.seta { stroke: currentColor; stroke-width: 1.4; fill: none; }
+.seta-destaque { stroke: var(--accent); stroke-width: 2; fill: none; }
+.rotulo { font: 11.5px var(--body); fill: var(--ink-2); }
+.rotulo-destaque { font: 700 11.5px var(--body); fill: var(--accent); }
+.fronteira { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.ent-caixa { fill: var(--surface); stroke: var(--rule); stroke-width: 1.25; }
+.ent-destaque .ent-caixa { stroke: var(--accent); stroke-width: 2; }
+.ent-topo { fill: var(--surface-2); }
+.ent-destaque .ent-topo { fill: var(--accent-tint); }
+.ent-nome { font: 700 12.5px ui-monospace, "Cascadia Code", Consolas, monospace; fill: var(--ink); }
+.ent-campo { font: 11px ui-monospace, "Cascadia Code", Consolas, monospace; fill: var(--ink-2); }
+.ent-chave { font: 700 10px var(--body); fill: var(--accent); letter-spacing: .04em; }
+.ent-tag { font: 700 10px var(--body); fill: var(--bad); letter-spacing: .04em; }
+.rel { stroke: currentColor; stroke-width: 1.2; fill: none; }
+
+.ordem { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; counter-reset: o; }
+.ordem li { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 12px 16px; }
+.ordem li::before { counter-increment: o; content: counter(o); font: 700 1.6rem/1 var(--display); color: var(--accent); text-align: center; }
+.ordem b { display: block; }
+.ordem span { color: var(--ink-2); font-size: .9rem; }
+.selo { font: 700 .72rem/1 var(--body); letter-spacing: .05em; padding: 5px 8px; border-radius: 99px; white-space: nowrap; border: 1px solid currentColor; }
+.cores { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: .9rem; color: var(--ink-2); }
+.cores span { display: inline-flex; gap: 8px; align-items: center; }
+.bola { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.filtros button { font: 600 .85rem var(--body); color: var(--ink-2); background: var(--surface); border: 1px solid var(--rule); border-radius: 99px; padding: 7px 14px; cursor: pointer; }
+.filtros button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.filtros button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.grupo { display: grid; gap: 10px; }
+.tabela { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 .72rem/1.3 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--surface); }
+tr:last-child td { border-bottom: 0; }
+td.id { font: 600 .8rem ui-monospace, Consolas, monospace; color: var(--muted); white-space: nowrap; width: 64px; }
+td.onde { white-space: nowrap; width: 1%; }
+.onde span { display: inline-block; font: 700 .68rem/1 var(--body); letter-spacing: .05em; padding: 4px 7px; border-radius: 6px; margin: 1px 2px 1px 0; border: 1px solid currentColor; }
+.o-celular { color: var(--c-celular); } .o-servidor { color: var(--c-servidor); } .o-banco { color: var(--c-banco); } .o-agendado { color: var(--c-agendado); }
+td.valor { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+
+.duas { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.cartao { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+.cartao ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; color: var(--ink-2); }
+.cartao.sim h3 { color: var(--good); }
+.cartao.nao h3 { color: var(--bad); }
+.legenda { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: .85rem; color: var(--ink-2); align-items: center; }
+.legenda svg { width: 64px; height: 14px; color: var(--ink-2); }
+footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+@media (max-width: 640px) { .ordem li { grid-template-columns: 34px 1fr; } .ordem li .selo { grid-column: 2; justify-self: start; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<main>
+  <header class="cab">
+    <span class="eyebrow">gasprice · regras de negócio</span>
+    <h1>Regras do gasprice</h1>
+    <p class="lead">Como o app decide qual preço mostrar, quem pode alterar o quê e o que é guardado. Tudo aqui está implementado no banco e nas funções do servidor e coberto por testes automáticos.</p>
+    <div class="principios">
+      <div class="principio"><b>Consultar é livre</b><span>Mapa, busca, preços, histórico e avaliações funcionam sem conta.</span></div>
+      <div class="principio"><b>Enviar é propor</b><span>Ninguém altera um preço direto. O envio vira preço quando outra pessoa confirma.</span></div>
+      <div class="principio"><b>A foto fica no celular</b><span>O painel é lido no aparelho e a foto é apagada. Só os valores vão para o servidor.</span></div>
+      <div class="principio"><b>A ANP desempata</b><span>Quando os envios da comunidade discordam, vale a pesquisa oficial.</span></div>
+      <div class="principio"><b>Todo preço diz de onde veio</b><span>Comunidade, pesquisa ANP ou estimativa, sempre com a idade do dado.</span></div>
+    </div>
+  </header>
+
+  <section aria-labelledby="t-fluxo">
+    <div class="cab">
+      <span class="eyebrow">Mecanismo</span>
+      <h2 id="t-fluxo">O caminho de um preço</h2>
+    </div>
+    <figure>
+      <div class="painel">{{FLUXO}}</div>
+      <figcaption>Da foto ao preço exibido. A leitura acontece no celular; o servidor recebe só os valores revisados e a posição do aparelho, valida e registra uma proposta. O banco confirma quando duas pessoas diferentes informam o mesmo valor, com diferença de até R$ 0,02, em 24 horas. Envios que destoam mais de 20% da referência precisam de três pessoas.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="t-exibido">
+    <div class="cab">
+      <span class="eyebrow">Preço exibido</span>
+      <h2 id="t-exibido">Qual preço aparece, em ordem de prioridade</h2>
+      <p class="lead">Para cada posto e combustível, o banco percorre esta lista e usa a primeira fonte disponível.</p>
+    </div>
+    <ol class="ordem">
+      <li><div><b>Comunidade confirmada</b><span>Consenso de 2 ou mais pessoas nos últimos 7 dias. Só é substituído por outro consenso, nunca por um envio isolado.</span></div><span class="selo" style="color: var(--good)">CONFIRMADO</span></li>
+      <li><div><b>Envio recente sem divergência</b><span>Um ou mais envios das últimas 24 horas com o mesmo valor. Envios em revisão não entram aqui.</span></div><span class="selo" style="color: var(--warn)">AGUARDANDO CONFIRMAÇÃO</span></li>
+      <li><div><b>Envios divergentes: vale a ANP</b><span>Se os envios recentes discordam, aparece a última pesquisa da ANP. Sem ANP, a mediana dos envios, marcada como divergente.</span></div><span class="selo" style="color: var(--anp)">ANP</span></li>
+      <li><div><b>O mais recente entre comunidade não confirmada e ANP</b><span>Envios sem confirmação dos últimos 7 dias contra a pesquisa oficial. Em caso de empate de data, a ANP vence.</span></div><span class="selo" style="color: var(--anp)">ANP OU COMUNIDADE</span></li>
+      <li><div><b>Estimativa regional</b><span>Só quando o posto não tem nenhuma das fontes acima. Sempre exibida com "≈" e margem de erro.</span></div><span class="selo" style="color: var(--c-agendado)">ESTIMATIVA</span></li>
+    </ol>
+    <div class="cores" aria-label="Cores da idade do preço">
+      <span><i class="bola" style="background: var(--good)"></i>Atualizado há até 24 h</span>
+      <span><i class="bola" style="background: var(--warn)"></i>De 2 a 7 dias</span>
+      <span><i class="bola" style="background: var(--bad)"></i>Mais de 7 dias ou estimativa</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-regras">
+    <div class="cab">
+      <span class="eyebrow">Catálogo</span>
+      <h2 id="t-regras">Todas as regras</h2>
+      <p class="lead">Cada regra indica onde é aplicada. O celular faz o que não precisa do servidor; o servidor e o banco fazem o que exige segurança, consistência ou processamento central.</p>
+    </div>
+    <div class="filtros" role="group" aria-label="Filtrar por onde a regra roda">
+      <button type="button" id="f-todas" data-f="todas" aria-pressed="true">Todas</button>
+      <button type="button" id="f-celular" data-f="celular" aria-pressed="false">Celular</button>
+      <button type="button" id="f-servidor" data-f="servidor" aria-pressed="false">Servidor</button>
+      <button type="button" id="f-banco" data-f="banco" aria-pressed="false">Banco</button>
+      <button type="button" id="f-agendado" data-f="agendado" aria-pressed="false">Agendado</button>
+    </div>
+    {{REGRAS}}
+  </section>
+
+  <section aria-labelledby="t-fotos">
+    <div class="cab">
+      <span class="eyebrow">Privacidade</span>
+      <h2 id="t-fotos">Fotos: o que é guardado</h2>
+      <p class="lead">A foto do painel existe só no celular, pelo tempo da leitura. O Storage do Supabase não recebe nenhuma imagem de painel.</p>
+    </div>
+    <div class="duas">
+      <div class="cartao sim">
+        <h3>Guardado no servidor</h3>
+        <ul>
+          <li>O preço que o usuário confirmou para cada combustível</li>
+          <li>O preço que o aparelho leu na foto e a confiança da leitura</li>
+          <li>Se o usuário corrigiu o valor lido</li>
+          <li>O texto reconhecido no painel, até 2.000 caracteres</li>
+          <li>A posição e a distância até o posto no momento do envio</li>
+          <li>O tempo que a leitura levou e a versão do app</li>
+        </ul>
+      </div>
+      <div class="cartao nao">
+        <h3>Nunca sai do celular</h3>
+        <ul>
+          <li>A foto do painel, em qualquer tamanho</li>
+          <li>Miniaturas ou recortes da imagem</li>
+          <li>Os metadados da foto, como data, câmera e localização gravadas no arquivo</li>
+        </ul>
+        <p style="color: var(--ink-2); font-size: .9rem">A foto é apagada do armazenamento temporário do app logo após a leitura, mesmo se a leitura falhar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-er">
+    <div class="cab">
+      <span class="eyebrow">Banco de dados</span>
+      <h2 id="t-er">Entidades e relacionamentos</h2>
+      <p class="lead">Dezenove tabelas no Postgres do Supabase. O posto e o perfil do usuário são os dois centros: tudo o que a comunidade produz liga um ao outro.</p>
+    </div>
+    <div class="legenda">
+      <span><svg viewBox="0 0 64 14" aria-hidden="true"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="2" x2="8" y2="12" stroke="currentColor" stroke-width="1.2"/><path d="M52,7 L62,2 M52,7 L62,7 M52,7 L62,12" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>um para muitos</span>
+      <span><svg viewBox="0 0 64 14" aria-hidden="true"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="2" x2="8" y2="12" stroke="currentColor" stroke-width="1.2"/><line x1="56" y1="2" x2="56" y2="12" stroke="currentColor" stroke-width="1.2"/></svg>um para um</span>
+      <span><b style="color: var(--accent); font-size: .75rem">PK · FK</b> chave primária · chave estrangeira</span>
+    </div>
+    <figure>
+      <div class="painel">{{ER}}</div>
+      <figcaption>O posto concentra os preços de todas as fontes; o perfil concentra envios, avaliações, favoritos, pontos e avisos. A coluna produto_id aparece em oito tabelas e suas linhas até produtos foram omitidas para o desenho continuar legível. parametros e sincronizacoes_anp não se relacionam com outras tabelas.</figcaption>
+    </figure>
+    <h3>Do seu diagrama para o banco</h3>
+    <div class="tabela">
+      <table>
+        <thead><tr><th>No seu diagrama</th><th>No banco</th><th>O que mudou e por quê</th></tr></thead>
+        <tbody>
+          <tr><td><code>user</code></td><td><code>auth.users</code> + <code>perfis</code></td><td>A senha fica no Supabase Auth, com hash, e não numa coluna. CPF, data de nascimento e CEP saíram porque nenhuma regra os usa, e a LGPD pede guardar só o necessário. <code>isTruthfull</code> virou <code>confiabilidade</code>, <code>isBaned</code> virou <code>banido</code> e <code>hasAdvice</code> virou <code>notificacoes_ativas</code>.</td></tr>
+          <tr><td><code>GasStation</code></td><td><code>postos</code></td><td>Chave numérica interna com o CNPJ único do cadastro da ANP. <code>reputation</code> virou <code>nota_media</code>, calculada no servidor. Latitude e longitude viraram um ponto geográfico, que permite buscar por área e distância com índice.</td></tr>
+          <tr><td><code>location</code>, <code>Streat</code></td><td>colunas de <code>postos</code></td><td>O endereço já vem pronto do cadastro da ANP. Tabelas separadas duplicariam dados sem ganho de consulta.</td></tr>
+          <tr><td><code>my_indications</code></td><td><code>envios</code></td><td>Um registro por foto enviada, com a posição e a distância até o posto no momento do envio.</td></tr>
+          <tr><td><code>my_indications_datais</code></td><td><code>envio_itens</code></td><td>Um preço por combustível. <code>photo_uni</code> saiu, porque a foto não é guardada. Entraram o preço lido, a confiança da leitura e o status do consenso.</td></tr>
+          <tr><td><code>Price</code></td><td><code>precos_atuais</code>, <code>precos_comunidade</code>, <code>precos_anp</code></td><td>O prazo de 60 dias saiu, porque o histórico precisa permanecer. <code>isConfirm</code> e <code>twoAngles</code> viraram o consenso entre usuários diferentes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-param">
+    <div class="cab">
+      <span class="eyebrow">Ajustes sem mudar código</span>
+      <h2 id="t-param">Parâmetros das regras</h2>
+      <p class="lead">Ficam na tabela <code>parametros</code>. Alterar um valor ali muda a regra na hora, sem publicar o app.</p>
+    </div>
+    {{PARAMETROS}}
+  </section>
+
+  <footer>
+    <span>Fonte: <code>supabase/migrations</code>, <code>supabase/functions</code> e <code>app/lib</code> do repositório gasprice. Testes: <code>supabase/tests/regras_test.sql</code>, <code>app/test</code> e <code>supabase/functions/**/*_test.ts</code>.</span>
+    <span>Gerado em {{DATA}}.</span>
+  </footer>
+</main>
+
+<script>
+(function () {
+  const botoes = document.querySelectorAll('.filtros button');
+  const linhas = document.querySelectorAll('tr[data-onde]');
+  const grupos = document.querySelectorAll('.grupo');
+  botoes.forEach(function (b) {
+    b.addEventListener('click', function () {
+      const f = b.dataset.f;
+      botoes.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      linhas.forEach(function (l) { l.hidden = f !== 'todas' && !l.dataset.onde.split(' ').includes(f); });
+      grupos.forEach(function (g) { g.hidden = !g.querySelector('tr[data-onde]:not([hidden])'); });
+    });
+  });
+})();
+</script>

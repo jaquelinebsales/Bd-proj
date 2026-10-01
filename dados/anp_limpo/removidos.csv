@@ -1,0 +1,21 @@
+arquivo_origem,linha_origem,motivo,cnpj,produto,data,preco,detalhe
+ca-2024-01.zip,423271,duplicado_identico,03796423000158,1,2024-06-10,6.180,mantido 6.180
+ca-2024-01.zip,423272,duplicado_identico,03796423000158,2,2024-06-10,6.330,mantido 6.330
+ca-2024-01.zip,424005,duplicado_preco_divergente,00008226000139,1,2024-06-10,5.650,mantido 5.480
+ca-2024-01.zip,424006,duplicado_preco_divergente,00008226000139,2,2024-06-10,5.770,mantido 5.590
+ca-2024-01.zip,424428,duplicado_identico,03328588000103,6,2024-06-10,5.290,mantido 5.290
+ca-2024-01.zip,424429,duplicado_identico,03328588000103,1,2024-06-10,5.590,mantido 5.590
+ca-2024-01.zip,424430,duplicado_identico,03328588000103,2,2024-06-10,5.990,mantido 5.990
+ca-2024-01.zip,433791,duplicado_identico,03796423000158,1,2024-06-12,6.180,mantido 6.180
+ca-2024-01.zip,433792,duplicado_identico,03796423000158,2,2024-06-12,6.330,mantido 6.330
+ca-2024-01.zip,434628,duplicado_preco_divergente,00008226000139,1,2024-06-12,5.650,mantido 5.480
+ca-2024-01.zip,434629,duplicado_preco_divergente,00008226000139,2,2024-06-12,5.770,mantido 5.590
+ca-2024-01.zip,435228,duplicado_identico,03328588000103,6,2024-06-12,5.290,mantido 5.290
+ca-2024-01.zip,435229,duplicado_identico,03328588000103,1,2024-06-12,5.590,mantido 5.590
+ca-2024-01.zip,435230,duplicado_identico,03328588000103,2,2024-06-12,5.990,mantido 5.990
+Preços semestrais - AUTOMOTIVOS_2026.01.csv,101461,duplicado_identico,07663077000190,1,2026-02-16,6.990,mantido 6.990
+Preços semestrais - AUTOMOTIVOS_2026.01.csv,101462,duplicado_identico,07663077000190,5,2026-02-16,5.990,mantido 5.990
+Preços semestrais - AUTOMOTIVOS_2026.01.csv,101463,duplicado_identico,07663077000190,3,2026-02-16,5.190,mantido 5.190
+Preços semestrais - AUTOMOTIVOS_2026.01.csv,101467,duplicado_identico,07663077000190,1,2026-02-18,6.990,mantido 6.990
+Preços semestrais - AUTOMOTIVOS_2026.01.csv,101468,duplicado_identico,07663077000190,5,2026-02-18,5.990,mantido 5.990
+Preços semestrais - AUTOMOTIVOS_2026.01.csv,101469,duplicado_identico,07663077000190,3,2026-02-18,5.190,mantido 5.190

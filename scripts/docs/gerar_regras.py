@@ -1,0 +1,297 @@
+"""
+Gera documentacao/regras_de_negocio.html a partir de scripts/docs/regras_template.html.
+
+Monta o diagrama do caminho de um preço, o diagrama de entidades e relacionamentos,
+o catálogo de regras e a tabela de parâmetros (lida da migração, para nunca divergir do banco).
+
+Uso: python scripts/docs/gerar_regras.py
+"""
+from __future__ import annotations
+
+import html
+import re
+from datetime import date
+from pathlib import Path
+
+RAIZ = Path(__file__).resolve().parents[2]
+e = html.escape
+
+# ------------------------------------------------------------------ caminho de um preço
+def fluxo() -> str:
+    s = ['<svg viewBox="0 0 1160 312" role="img" aria-label="Caminho de um preço: a foto é lida e apagada no celular; '
+         'só valores e posição vão ao servidor, que valida; o banco confirma com duas pessoas em 24 horas.">',
+         '<defs>'
+         '<marker id="f-ponta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" '
+         'markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>'
+         '<marker id="f-ponta-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" '
+         'markerUnits="userSpaceOnUse" orient="auto"><path class="rotulo-destaque" d="M0,0 L10,5 L0,10 z"/></marker>'
+         '</defs>']
+    for x, w, nome in [(10, 530, "NO CELULAR"), (552, 250, "NO SERVIDOR · EDGE FUNCTION"), (812, 342, "NO BANCO · REGRAS SQL")]:
+        s.append(f'<rect class="lane" x="{x}" y="36" width="{w}" height="250" rx="12"/>')
+        s.append(f'<text class="lane-nome" x="{x + 14}" y="58">{e(nome)}</text>')
+    s.append('<line class="fronteira" x1="546" y1="86" x2="546" y2="292"/>')
+    s.append('<text class="rotulo-destaque" x="546" y="306" text-anchor="middle">a foto nunca passa desta linha</text>')
+
+    def no(x, y, w, h, titulo, texto, chave=False):
+        cls = "no-chave" if chave else "no"
+        cx = x + w / 2
+        s.append(f'<rect class="{cls}" x="{x}" y="{y}" width="{w}" height="{h}" rx="10"/>')
+        s.append(f'<text class="no-titulo" x="{cx}" y="{y + h / 2 - 4}" text-anchor="middle">{e(titulo)}</text>')
+        s.append(f'<text class="no-texto" x="{cx}" y="{y + h / 2 + 13}" text-anchor="middle">{e(texto)}</text>')
+
+    def seta(pontos, rotulo=None, rx=None, ry=None, ancora="middle", destaque=False):
+        d = " ".join(f"{x},{y}" for x, y in pontos)
+        cls, marca = ("seta-destaque", "f-ponta-d") if destaque else ("seta", "f-ponta")
+        s.append(f'<polyline class="{cls}" points="{d}" marker-end="url(#{marca})"/>')
+        if rotulo:
+            rc = "rotulo-destaque" if destaque else "rotulo"
+            s.append(f'<text class="{rc}" x="{rx}" y="{ry}" text-anchor="{ancora}">{e(rotulo)}</text>')
+
+    y, h = 86, 64
+    no(24, y, 128, h, "Foto do painel", "câmera do celular")
+    no(192, y, 154, h, "Leitura no aparelho", "ML Kit, sem internet")
+    no(388, y, 134, h, "Revisão", "corrige e escolhe")
+    no(578, y, 200, h, "Validação", "login, 300 m, faixa, limites")
+    no(836, y, 140, h, "Consenso", "2 pessoas, 24 h")
+    no(1012, y, 136, h, "Preço confirmado", "exibido + pontos", chave=True)
+    m = y + h / 2
+    seta([(152, m), (190, m)], "foto local", 171, 78)
+    seta([(346, m), (386, m)], "valores lidos", 366, 78)
+    seta([(522, m), (576, m)], "só valores + posição", 550, 78, destaque=True)
+    seta([(778, m), (834, m)], "proposta", 807, 78)
+    seta([(976, m), (1010, m)], "confirma", 993, 78)
+
+    yb, hb = 204, 56
+    no(192, yb, 154, hb, "Foto apagada", "logo após a leitura")
+    no(578, yb, 200, hb, "Recusado com motivo", "mensagem explica o porquê")
+    no(836, yb, 140, hb, "Não confirmado", "histórico após 24 h")
+    no(1012, yb, 136, hb, "Vale a ANP", "envios divergem")
+    seta([(269, y + h), (269, yb - 2)], "apaga", 277, 182, "start")
+    seta([(678, y + h), (678, yb - 2)], "não passa", 686, 182, "start")
+    seta([(872, y + h), (872, yb - 2)], "24 h", 880, 182, "start")
+    seta([(950, y + h), (950, 190), (1080, 190), (1080, yb - 2)], "divergem", 1015, 184)
+    s.append("</svg>")
+    return "".join(s)
+
+
+# ------------------------------------------------------------------ entidades e relacionamentos
+LARG = 200
+X = {1: 20, 2: 250, 3: 480, 4: 710, 5: 940}
+
+ENTIDADES = {
+    # nome: (coluna, y, campos [(texto, chave)], destaque, etiqueta)
+    "posto_produtos":    (1, 20, [("posto_id", "FK"), ("produto_id", "FK"), ("bicos", "")], False, None),
+    "precos_anp":        (2, 20, [("posto_id", "FK"), ("produto_id", "FK"), ("data_coleta", "PK"), ("preco", ""), ("anomalia", "")], False, None),
+    "precos_estimados":  (3, 20, [("posto_id", "FK"), ("produto_id", "FK"), ("preco", ""), ("margem", ""), ("distancia_km", "")], False, None),
+    "precos_atuais":     (4, 20, [("posto_id", "FK"), ("produto_id", "FK"), ("preco · fonte · situacao", ""), ("confirmacoes", ""), ("ultimo_confiavel", "")], False, None),
+    "precos_comunidade": (5, 20, [("posto_id", "FK"), ("produto_id", "FK"), ("dia", "PK"), ("preco", ""), ("confirmado", "")], False, None),
+    "produtos":          (1, 200, [("id", "PK"), ("codigo", ""), ("nome", ""), ("preco_min · preco_max", "")], False, None),
+    "previsoes":         (2, 200, [("uf · municipio", "PK"), ("produto_id", "FK"), ("semana", "PK"), ("preco_previsto", "")], False, None),
+    "postos":            (3, 200, [("id", "PK"), ("cnpj", "ÚNICO"), ("razao_social · bandeira", ""), ("localizacao (PostGIS)", ""), ("municipio_pesquisado_anp", "")], True, None),
+    "sincronizacoes_anp": (4, 200, [("uf", "PK"), ("executado_em", ""), ("registros", "")], False, None),
+    "parametros":        (5, 200, [("chave", "PK"), ("valor", ""), ("descricao", "")], False, None),
+    "envios":            (1, 400, [("id", "PK"), ("usuario_id", "FK"), ("posto_id", "FK"), ("posicao · distancia_m", ""), ("ocr_texto", "")], False, "SEM FOTO"),
+    "avaliacoes":        (2, 400, [("id", "PK"), ("posto_id", "FK"), ("usuario_id", "FK"), ("nota 0–5 · comentario", "")], False, None),
+    "favoritos":         (3, 400, [("usuario_id", "FK"), ("posto_id", "FK"), ("notificar", "")], False, None),
+    "notificacoes":      (4, 400, [("usuario_id", "FK"), ("posto_id", "FK"), ("produto_id", "FK"), ("preco_anterior → novo", ""), ("lida", "")], False, None),
+    "envio_itens":       (1, 600, [("id", "PK"), ("envio_id", "FK"), ("produto_id", "FK"), ("preco · preco_lido", ""), ("status · em_revisao", "")], False, None),
+    "avaliacao_votos":   (2, 600, [("avaliacao_id", "FK"), ("usuario_id", "FK")], False, None),
+    "perfis":            (3, 600, [("id", "PK · FK"), ("nome", ""), ("pontos", ""), ("confiabilidade", ""), ("bloqueado_ate · banido", "")], True, None),
+    "auth.users":        (4, 600, [("id", "PK"), ("email", ""), ("senha: hash no Auth", "")], False, None),
+    "pontos_movimentos": (2, 790, [("usuario_id", "FK"), ("envio_item_id", "FK"), ("pontos", ""), ("tipo", "")], False, None),
+}
+
+
+def altura(n: int) -> int:
+    return 26 + 16 * n + 8
+
+
+def caixa_de(nome: str):
+    col, y, campos, _, _ = ENTIDADES[nome]
+    x = X[col]
+    return x, y, LARG, altura(len(campos))
+
+
+def topo(nome, dx=0):
+    x, y, w, _ = caixa_de(nome)
+    return x + w / 2 + dx, y
+
+
+def base(nome, dx=0):
+    x, y, w, h = caixa_de(nome)
+    return x + w / 2 + dx, y + h
+
+
+def esq(nome, y):
+    x, _, _, _ = caixa_de(nome)
+    return x, y
+
+
+def dir_(nome, y):
+    x, _, w, _ = caixa_de(nome)
+    return x + w, y
+
+
+def er() -> str:
+    s = ['<svg viewBox="0 0 1160 910" role="img" aria-label="Diagrama de entidades e relacionamentos: postos se liga às '
+         'tabelas de preço, envios, avaliações, favoritos e avisos; perfis se liga a envios, avaliações, favoritos, '
+         'avisos, votos e pontos; envios têm itens por combustível.">',
+         '<defs>'
+         '<marker id="er-muitos" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="12" markerHeight="12" '
+         'markerUnits="userSpaceOnUse" orient="auto"><path d="M0,5 L10,0 M0,5 L10,5 M0,5 L10,10" '
+         'stroke="currentColor" stroke-width="1.2" fill="none"/></marker>'
+         '<marker id="er-um" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="12" markerHeight="12" '
+         'markerUnits="userSpaceOnUse" orient="auto"><path d="M6,0 L6,10" stroke="currentColor" stroke-width="1.2" fill="none"/></marker>'
+         '<marker id="er-um-fim" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="12" markerHeight="12" '
+         'markerUnits="userSpaceOnUse" orient="auto"><path d="M4,0 L4,10" stroke="currentColor" stroke-width="1.2" fill="none"/></marker>'
+         '</defs>']
+
+    def rel(a, b, fim="er-muitos"):
+        s.append(f'<line class="rel" x1="{a[0]}" y1="{a[1]}" x2="{b[0]}" y2="{b[1]}" marker-start="url(#er-um)" marker-end="url(#{fim})"/>')
+
+    # Relacionamentos (desenhados antes das caixas, que ficam por cima)
+    for dx, filho in zip((-60, -30, 0, 30, 60), ("posto_produtos", "precos_anp", "precos_estimados", "precos_atuais", "precos_comunidade")):
+        rel(topo("postos", dx), base(filho))
+    for dx, filho, fdx in zip((-50, -25, 0, 25), ("envios", "avaliacoes", "favoritos", "notificacoes"), (0, 0, 0, 0)):
+        rel(base("postos", dx), topo(filho, fdx))
+    for dx, filho, fdx in zip((-50, -25, 0, 25), ("envios", "avaliacoes", "favoritos", "notificacoes"), (50, 30, 0, 0)):
+        rel(topo("perfis", dx), base(filho, fdx))
+    rel(base("envios", -20), topo("envio_itens", -20))
+    rel(base("avaliacoes", -30), topo("avaliacao_votos", -30))
+    rel(esq("perfis", 633), dir_("avaliacao_votos", 633))
+    rel(dir_("perfis", 641), esq("auth.users", 641), fim="er-um-fim")
+    rel(base("envio_itens"), topo("pontos_movimentos", -50))
+    rel(base("perfis"), topo("pontos_movimentos", 50))
+    rel(dir_("produtos", 249), esq("previsoes", 249))
+
+    for nome, (col, y, campos, destaque, etiqueta) in ENTIDADES.items():
+        x = X[col]
+        h = altura(len(campos))
+        s.append(f'<g class="{"ent-destaque" if destaque else ""}">')
+        s.append(f'<rect class="ent-caixa" x="{x}" y="{y}" width="{LARG}" height="{h}" rx="8"/>')
+        s.append(f'<path class="ent-topo" d="M{x + 1},{y + 26} V{y + 8} a7,7 0 0 1 7,-7 H{x + LARG - 8} a7,7 0 0 1 7,7 V{y + 26} Z"/>')
+        s.append(f'<text class="ent-nome" x="{x + 10}" y="{y + 18}">{e(nome)}</text>')
+        if etiqueta:
+            s.append(f'<text class="ent-tag" x="{x + LARG - 10}" y="{y + 18}" text-anchor="end">{e(etiqueta)}</text>')
+        for i, (campo, chave) in enumerate(campos):
+            ty = y + 26 + 16 * i + 13
+            s.append(f'<text class="ent-campo" x="{x + 10}" y="{ty}">{e(campo)}</text>')
+            if chave:
+                s.append(f'<text class="ent-chave" x="{x + LARG - 10}" y="{ty}" text-anchor="end">{e(chave)}</text>')
+        s.append("</g>")
+    s.append("</svg>")
+    return "".join(s)
+
+
+# ------------------------------------------------------------------ catálogo de regras
+C, S, B, A = "celular", "servidor", "banco", "agendado"
+REGRAS = [
+    ("Conta e acesso", [
+        ("Consultar mapa, busca, filtros, preços, histórico, avaliações e ranking não exige conta.", [C, B], ""),
+        ("Enviar preços, avaliar, votar em avaliações e guardar favoritos na conta exigem login.", [S, B], ""),
+        ("O cadastro pede só nome, e-mail e senha. Não pede CPF, data de nascimento nem endereço.", [C], ""),
+        ("A senha precisa ter pelo menos 8 caracteres, com letras e números.", [C, S], "8+"),
+        ("O e-mail precisa ser confirmado pelo link antes do primeiro envio de preço.", [S], ""),
+        ("Sem login, os favoritos ficam no aparelho. Ao entrar, eles vão para a conta.", [C], ""),
+    ]),
+    ("Envio por foto", [
+        ("O envio começa pela foto do painel. O texto é lido no aparelho, sem internet.", [C], ""),
+        ("A foto é apagada logo após a leitura e nunca é enviada nem guardada.", [C], ""),
+        ("O usuário revisa os valores lidos, corrige o que estiver errado e escolhe o que enviar.", [C], ""),
+        ("O envio só é aceito com o aparelho a até 300 metros do posto.", [C, S], "300 m"),
+        ("Cada preço precisa estar na faixa do combustível.", [C, S], "R$ 2,00 a 15,00 · etanol e GNV R$ 1,50 a 12,00"),
+        ("Cada usuário faz no máximo 20 envios em 24 horas.", [S], "20 por 24 h"),
+        ("O mesmo usuário só reenvia o mesmo combustível do mesmo posto depois de 6 horas.", [S], "6 h"),
+        ("O envio é uma proposta: ele nunca altera o preço exibido diretamente.", [S, B], ""),
+    ]),
+    ("Consenso e revisão", [
+        ("O preço é confirmado quando 2 usuários diferentes informam valores com diferença de até R$ 0,02 em 24 horas.", [B], "2 pessoas · R$ 0,02 · 24 h"),
+        ("Um envio que difere mais de 20% do preço de referência entra em revisão e precisa de 3 usuários.", [S, B], "20% · 3 pessoas"),
+        ("Envio em revisão não aparece como preço antes de ser confirmado.", [B], ""),
+        ("Usuário com confiabilidade abaixo de 0,20 tem os envios sempre em revisão e não conta para o consenso.", [S, B], "0,20"),
+        ("Quando um consenso se forma, os envios pendentes que discordam dele viram contestados.", [B], ""),
+        ("Sem confirmação em 24 horas, o envio entra no histórico como não confirmado.", [A], "de hora em hora"),
+    ]),
+    ("Preço exibido", [
+        ("A escolha da fonte segue a ordem de prioridade da seção acima.", [B], ""),
+        ("Um preço confirmado só é trocado por outro consenso, nunca por um envio isolado.", [B], ""),
+        ("Preços da ANP marcados como anomalia nunca aparecem como preço exibido.", [B], ""),
+        ("A cor do preço indica a idade: verde até 24 h, amarelo de 2 a 7 dias, vermelho acima de 7 dias ou estimativa.", [C], "24 h · 7 dias"),
+        ("Todo preço mostra a origem: comunidade com o número de confirmações, pesquisa ANP com a semana ou estimativa com a margem.", [C], ""),
+        ("A estimativa usa a mediana dos 5 postos mais próximos com preço da ANP dos últimos 60 dias, até 200 km.", [A], "toda segunda-feira"),
+        ("A margem da estimativa depende da distância até a referência, conforme o estudo de cobertura.", [A], "±R$ 0,13 a 0,36"),
+    ]),
+    ("Pontos e confiabilidade", [
+        ("Cada envio confirmado vale 10 pontos.", [B], "+10"),
+        ("O primeiro envio de um consenso, em posto sem confirmação nas últimas 24 horas, ganha 5 pontos de bônus.", [B], "+5"),
+        ("Em cidades sem coleta da ANP nos últimos 12 meses, pontos e bônus valem o dobro.", [B], "×2"),
+        ("Envio contestado perde 5 pontos. O saldo nunca fica negativo.", [B], "−5"),
+        ("Cada usuário ganha no máximo 200 pontos por dia.", [B], "200 por dia"),
+        ("A confiabilidade começa em 0,50, sobe 0,05 por envio confirmado e cai 0,10 por contestado.", [B], "0,50 · +0,05 · −0,10"),
+        ("Três envios contestados em 7 dias pausam novos envios por 7 dias.", [S, B], "3 em 7 dias"),
+        ("O nível no perfil vem da confiabilidade: Em observação, Iniciante, Confiável e Referência.", [C], "0,30 · 0,60 · 0,80"),
+    ]),
+    ("Avaliações, favoritos e avisos", [
+        ("A nota vai de 0 a 5 estrelas, uma por pessoa e posto, e pode ser editada ou apagada.", [B], "0 a 5"),
+        ("O comentário é opcional e tem de 3 a 500 caracteres.", [C, B], "3 a 500"),
+        ("A nota média e o total de avaliações são calculados no servidor.", [B], ""),
+        ("A ordem por mais úteis usa os votos de outras pessoas. O app não deixa votar na própria avaliação.", [C, B], ""),
+        ("Quem favoritou o posto é avisado quando um preço confirmado ou oficial muda R$ 0,05 ou mais em relação ao último preço confiável.", [B], "R$ 0,05"),
+        ("O aviso pode ser desligado por posto ou para a conta inteira.", [C, B], ""),
+        ("Para outras pessoas, o nome aparece sempre abreviado, como Carla M.", [B], ""),
+    ]),
+    ("Dados da ANP", [
+        ("O cadastro de postos vem da API de Revendedores da ANP, uma UF de cada vez. O CNPJ identifica o posto.", [A, S], "domingo de madrugada"),
+        ("Uma posição corrigida manualmente não é sobrescrita pela sincronização.", [B], ""),
+        ("Posto que sai do cadastro da ANP fica inativo, e o histórico dele é mantido.", [B], ""),
+        ("O banco guarda os preços da ANP desde julho de 2024. A série completa fica num arquivo privado do Storage.", [S], "plano gratuito"),
+        ("Preços da ANP que destoam ficam marcados como anomalia e nunca são apagados.", [B], ""),
+        ("As cidades com coleta da ANP são recalculadas toda semana, para definir onde os pontos dobram.", [A], "toda segunda-feira"),
+    ]),
+    ("Conta e privacidade", [
+        ("Excluir a conta apaga perfil, avaliações, favoritos, pontos e avisos. Os preços enviados ficam no histórico, sem vínculo com a pessoa.", [S, B], ""),
+        ("A foto de perfil é opcional, tem até 200 KB e é pública.", [C, B], "200 KB"),
+        ("O app usa só a chave publicável do Supabase. As chaves secretas ficam no servidor e no GitHub Actions.", [C, S], ""),
+    ]),
+]
+NOMES_ONDE = {C: "CELULAR", S: "SERVIDOR", B: "BANCO", A: "AGENDADO"}
+
+
+def regras() -> str:
+    partes, n = [], 0
+    for grupo, lista in REGRAS:
+        linhas = []
+        for texto, onde, valor in lista:
+            n += 1
+            chips = "".join(f'<span class="o-{o}">{NOMES_ONDE[o]}</span>' for o in onde)
+            linhas.append(f'<tr data-onde="{" ".join(onde)}"><td class="id">RN-{n:02d}</td><td>{e(texto)}</td>'
+                          f'<td class="onde">{chips}</td><td class="valor">{e(valor)}</td></tr>')
+        partes.append(f'<div class="grupo"><h3>{e(grupo)}</h3><div class="tabela"><table>'
+                      f'<thead><tr><th>ID</th><th>Regra</th><th>Onde</th><th>Valor</th></tr></thead>'
+                      f'<tbody>{"".join(linhas)}</tbody></table></div></div>')
+    return "".join(partes)
+
+
+def parametros() -> str:
+    sql = (RAIZ / "supabase" / "migrations" / "20260929000003_regras.sql").read_text(encoding="utf-8")
+    trecho = sql[sql.index("insert into public.parametros"):]
+    trecho = trecho[:trecho.index(";")]
+    itens = re.findall(r"\('(\w+)',\s*([-\d.]+),\s*'([^']*)'\)", trecho)
+    linhas = "".join(f"<tr><td><code>{e(k)}</code></td><td class=\"valor\">{e(v.replace('.', ','))}</td><td>{e(d)}</td></tr>"
+                     for k, v, d in itens)
+    return ('<div class="tabela"><table><thead><tr><th>Chave</th><th>Valor</th><th>O que controla</th></tr></thead>'
+            f"<tbody>{linhas}</tbody></table></div>")
+
+
+def main() -> None:
+    tpl = (RAIZ / "scripts" / "docs" / "regras_template.html").read_text(encoding="utf-8")
+    saida = (tpl.replace("{{FLUXO}}", fluxo()).replace("{{ER}}", er()).replace("{{REGRAS}}", regras())
+             .replace("{{PARAMETROS}}", parametros()).replace("{{DATA}}", date.today().strftime("%d/%m/%Y")))
+    destino = RAIZ / "documentacao" / "regras_de_negocio.html"
+    destino.write_text(saida, encoding="utf-8")
+    total = sum(len(l) for _, l in REGRAS)
+    print(f"{destino} gerado: {total} regras, {destino.stat().st_size / 1024:.0f} KB")
+
+
+if __name__ == "__main__":
+    main()
