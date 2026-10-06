@@ -292,10 +292,13 @@ class _PinoPreco extends StatelessWidget {
             ? '${posto.nome}, sem preço'
             : '${posto.nome}, ${preco_(p.preco)}${p.fonte == FontePreco.estimativa ? ', estimativa' : ''}') +
         (posto.precisao.aproximada ? ', localização aproximada' : '');
-    return Semantics(
-      button: true,
-      label: rotulo,
-      child: GestureDetector(
+    // O marcador do mapa tem tamanho fixo: a fonte do pino cresce no máximo 15%
+    return MediaQuery.withClampedTextScaling(
+      maxScaleFactor: 1.15,
+      child: Semantics(
+        button: true,
+        label: rotulo,
+        child: GestureDetector(
         onTap: aoTocar,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Container(
@@ -317,6 +320,7 @@ class _PinoPreco extends StatelessWidget {
           ),
           CustomPaint(size: const Size(12, 7), painter: _Ponta(cor)),
         ]),
+        ),
       ),
     );
   }

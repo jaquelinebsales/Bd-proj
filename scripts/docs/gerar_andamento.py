@@ -24,7 +24,7 @@ ETAPAS = [
         ("Experimento do modelo de previsão com janelas de 2, 4 e 6 anos", OK),
     ]),
     ("Fase 2 · Backend Supabase", [
-        ("Esquema com 20 tabelas, PostGIS e busca sem acento", OK),
+        ("Esquema com 22 tabelas, PostGIS e busca sem acento", OK),
         ("Regras de acesso: consulta pública, alteração só com login", OK),
         ("Consenso, revisão, pontos, bloqueio, avisos e estimativas", OK),
         ("Edge Functions: envio de preços, correção de posição, sincronização com a ANP e exclusão de conta", OK),
@@ -58,7 +58,9 @@ ETAPAS = [
         ("Código no GitHub, segredos cadastrados e testes e publicação do Supabase passando", OK),
     ]),
     ("Fase 5 · Evolução", [
-        ("Carga automática das semanas novas da pesquisa da ANP", PROX),
+        ("Auditoria completa: 873 testes, 10 bugs encontrados", OK),
+        ("Correções da auditoria: 8 feitas, 1 depende do painel do Supabase, 1 é decisão de região", OK),
+        ("Carga automática das semanas novas da pesquisa da ANP", OK),
         ("Teste de localização dos postos sem coordenada com 200 postos de amostra", OK),
         ("Nova regra de envio para posições aproximadas, no app e no servidor", OK),
         ("Localizar os 6.942 postos sem coordenada e carregar o resultado no banco", PROX),
@@ -165,6 +167,51 @@ def geocodificacao() -> tuple[str, str]:
     return lead, numeros + tab_cob + tab_erro + conclusoes + nota
 
 
+# ------------------------------------------------------------------ auditoria
+# Situação: ("ok", texto) corrigido e verificado; ("espera", texto) depende de você; ("prox", texto) decisão ou etapa futura.
+CORRIGIDO, NO_PUSH, VOCE, DECISAO = ("ok", "Corrigido"), ("espera", "Publica no push"), ("espera", "Aguardando você"), ("prox", "Decisão sua")
+BUGS = [
+    ("BUG-01", "Alta", "Envios simultâneos furavam a regra de 6 horas: uma única ação rendeu +70 pontos e +0,15 de confiabilidade.",
+     "Limite diário, regra de 6 h e gravação passaram para uma única função do banco, com trava por usuário. Pontos e confiabilidade "
+     "agora contam uma vez por pessoa em cada consenso.", NO_PUSH, "Testado no Postgres local; a Edge Function e a migração sobem no push."),
+    ("BUG-02", "Alta", "Cerca de 180 postos com coordenada errada da ANP: 148 de 21 estados no mesmo ponto do Rio e outros a centenas de km do estado.",
+     "A coordenada da ANP só vale dentro do contorno do estado do posto (malha do IBGE, 15 km de tolerância) e fora dos pontos padrão. "
+     "Os postos atingidos voltam a 'localização desconhecida' até a comunidade confirmar.", NO_PUSH,
+     "Regra testada no banco real: Noronha e as cidades de divisa continuam válidas."),
+    ("BUG-03", "Alta", "Preços da ANP parados em 30/06/2026, sem carga automática.",
+     "Carga semanal pela planilha 'revendas_lpc' da ANP, com marcação de anomalias. As 14 semanas que faltavam já foram carregadas "
+     "(224 mil preços, coleta mais recente 02/10/2026). Agendamento no GitHub Actions às segundas e quintas.", CORRIGIDO,
+     "Dados no ar; o agendamento passa a rodar depois do push."),
+    ("BUG-04", "Média", "O servidor aceitava senhas 'abc123' e 'abcdefgh', que o app recusa.",
+     "No painel do Supabase: Authentication, política de senha com mínimo de 8 caracteres e letras e números.", VOCE,
+     "A configuração local já tem a regra; o projeto real precisa da mudança no painel."),
+    ("BUG-05", "Média", "Qualquer pessoa lia o identificador de quem escreveu cada avaliação e de quem votou.",
+     "A coluna de autor deixou de ser pública e cada pessoa vê só os próprios votos. O app continua usando o nome abreviado.",
+     NO_PUSH, "Testado no Postgres local."),
+    ("BUG-06", "Média", "Telas estouravam em celular pequeno (Favoritos e Avaliar em 320 px) e na Busca com fonte de 130%.",
+     "Estado vazio com rolagem, estrelas que encolhem, lista de cartões com altura do conteúdo.", CORRIGIDO,
+     "304 testes de telas em 7 tamanhos e fontes, todos passando."),
+    ("BUG-07", "Baixa", "Sete telas estouravam com a fonte do sistema em 200%.",
+     "Quebra de linha no rodapé de Entrar e Criar conta, legenda e períodos do histórico, preço e selo do posto; pinos do mapa com teto de fonte.",
+     CORRIGIDO, "Mesmos 304 testes de telas."),
+    ("BUG-08", "Baixa", "A autora conseguia votar na própria avaliação chamando a API.",
+     "A política de voto do banco passou a recusar o voto na própria avaliação.", NO_PUSH, "Testado no Postgres local."),
+    ("BUG-09", "Baixa", "A página de regras dizia que um envio nunca altera o preço exibido, mas ele aparece como 'aguardando confirmação'.",
+     "Regra reescrita e catálogo atualizado com as regras novas das correções (65 regras).", CORRIGIDO, "PDF conferido contra a página."),
+    ("BUG-10", "Baixa", "Latência alta: o projeto está nos EUA (us-west-2) e os usuários no Brasil, com picos de até 5 s.",
+     "Criar o projeto em São Paulo (sa-east-1) antes do lançamento e migrar os dados.", DECISAO, "Exige um projeto novo no Supabase."),
+]
+
+
+def auditoria() -> str:
+    linhas = "".join(
+        f'<tr><td><b>{e(i)}</b><br><span class="sev">{e(s)}</span></td><td>{e(antes)}</td><td>{e(corr)}</td>'
+        f'<td class="e"><span class="estado {c}">{e(r)}</span><br><span class="nota-sit">{e(nota)}</span></td></tr>'
+        for i, s, antes, corr, (c, r), nota in BUGS)
+    return ('<div class="tabela"><table class="auditoria"><thead><tr><th>Bug</th><th>O que acontecia</th><th>Correção</th>'
+            f'<th>Situação</th></tr></thead><tbody>{linhas}</tbody></table></div>')
+
+
 def imagem(m: re.Match) -> str:
     arq = RAIZ / "documentacao" / "telas" / f"{m.group(1)}.webp"
     return "data:image/webp;base64," + base64.b64encode(arq.read_bytes()).decode()
@@ -180,7 +227,8 @@ def main() -> None:
     saida = re.sub(r"\{\{IMG:([\w-]+)\}\}", imagem, tpl)
     geo_lead, geo = geocodificacao()
     saida = saida.replace("{{GEO_LEAD}}", e(geo_lead)).replace("{{GEOCODIFICACAO}}", geo)
-    saida = (saida.replace("{{ETAPAS}}", etapas()).replace("{{DATA}}", date.today().strftime("%d/%m/%Y"))
+    saida = (saida.replace("{{ETAPAS}}", etapas()).replace("{{AUDITORIA}}", auditoria())
+             .replace("{{DATA}}", date.today().strftime("%d/%m/%Y"))
              .replace("{{COMMIT}}", commit))
     destino = RAIZ / "documentacao" / "andamento.html"
     destino.write_text(saida, encoding="utf-8")

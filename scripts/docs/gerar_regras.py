@@ -285,7 +285,8 @@ REGRAS = [
         ("Cada preço precisa estar na faixa do combustível.", [C, S], "R$ 2,00 a 15,00 · etanol e GNV R$ 1,50 a 12,00"),
         ("Cada usuário faz no máximo 20 envios em 24 horas.", [S], "20 por 24 h"),
         ("O mesmo usuário só reenvia o mesmo combustível do mesmo posto depois de 6 horas.", [S], "6 h"),
-        ("O envio é uma proposta: ele nunca altera o preço exibido diretamente.", [S, B], ""),
+        ("O envio é uma proposta: aparece como aguardando confirmação e só vira preço confirmado com o consenso.", [S, B], ""),
+        ("Limite diário, intervalo de 6 horas e gravação acontecem juntos, um envio por vez para cada usuário.", [S, B], ""),
     ]),
     ("Localização dos postos", [
         ("Cada posto tem uma precisão de localização: exata, rua, CEP de rua, CEP da cidade, município ou nenhuma.", [B], ""),
@@ -318,7 +319,7 @@ REGRAS = [
         ("A estimativa é recalculada toda segunda-feira, na carga inicial e sempre que a pesquisa da ANP for recarregada.", [A], "toda segunda-feira"),
     ]),
     ("Pontos e confiabilidade", [
-        ("Cada envio confirmado vale 10 pontos.", [B], "+10"),
+        ("Cada envio confirmado vale 10 pontos, uma vez por pessoa em cada consenso.", [B], "+10"),
         ("O primeiro envio de um consenso, em posto sem confirmação nas últimas 24 horas, ganha 5 pontos de bônus.", [B], "+5"),
         ("Em cidades sem coleta da ANP nos últimos 12 meses, pontos e bônus valem o dobro.", [B], "×2"),
         ("Envio contestado perde 5 pontos. O saldo nunca fica negativo.", [B], "−5"),
@@ -331,7 +332,8 @@ REGRAS = [
         ("A nota vai de 0 a 5 estrelas, uma por pessoa e posto, e pode ser editada ou apagada.", [B], "0 a 5"),
         ("O comentário é opcional e tem de 3 a 500 caracteres.", [C, B], "3 a 500"),
         ("A nota média e o total de avaliações são calculados no servidor.", [B], ""),
-        ("A ordem por mais úteis usa os votos de outras pessoas. O app não deixa votar na própria avaliação.", [C, B], ""),
+        ("A ordem por mais úteis usa os votos de outras pessoas. Ninguém vota na própria avaliação, nem pela API.", [C, B], ""),
+        ("Quem escreveu cada avaliação e quem votou não são públicos: o app mostra só o nome abreviado.", [B], ""),
         ("Quem favoritou o posto é avisado quando um preço confirmado ou oficial muda R$ 0,05 ou mais em relação ao último preço confiável.", [B], "R$ 0,05"),
         ("O aviso pode ser desligado por posto ou para a conta inteira.", [C, B], ""),
         ("Para outras pessoas, o nome aparece sempre abreviado, como Carla M.", [B], ""),
@@ -339,6 +341,7 @@ REGRAS = [
     ("Dados da ANP", [
         ("O cadastro de postos vem da API de Revendedores da ANP, uma UF de cada vez. O CNPJ identifica o posto.", [A, S], "domingo de madrugada"),
         ("Uma posição corrigida manualmente não é sobrescrita pela sincronização.", [B], ""),
+        ("A coordenada da ANP só vale se cair no estado do posto (contorno do IBGE) e não for um ponto padrão repetido em vários estados. Senão, o posto fica com localização desconhecida.", [B], "15 km"),
         ("Posto que sai do cadastro da ANP fica inativo, e o histórico dele é mantido.", [B], ""),
         ("O banco guarda os preços da ANP desde julho de 2024. A série completa fica num arquivo privado do Storage.", [S], "plano gratuito"),
         ("Preços da ANP que destoam ficam marcados como anomalia e nunca são apagados.", [B], ""),

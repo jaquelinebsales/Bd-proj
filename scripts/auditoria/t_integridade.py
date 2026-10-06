@@ -118,8 +118,8 @@ def rodar(s, ctx) -> None:
              lambda l: l[0][0] is not None and (hoje - l[0][0]).days <= 14, "Coleta mais recente há no máximo 14 dias", ALTA,
              tela="Tabela precos_anp", tipo="Dados · atualização",
              obs="A ANP publica a pesquisa toda semana; o app pinta de vermelho preço oficial com mais de 7 dias.")
-    consulta("Parâmetros obrigatórios presentes (24)", "select count(*) from public.parametros where chave not like 'auditoria%%'",
-             lambda l: l[0][0] == 24, "24 parâmetros", ALTA, tela="Tabela parametros")
+    consulta("Parâmetros obrigatórios presentes (25)", "select count(*) from public.parametros where chave not like 'auditoria%%'",
+             lambda l: l[0][0] == 25, "25 parâmetros", ALTA, tela="Tabela parametros")
     consulta("Agendamentos ativos (4)", "select count(*) from cron.job where active", lambda l: l[0][0] == 4, "4 jobs ativos", ALTA,
              tela="pg_cron", tipo="Agendamento")
     consulta("Última execução de cada agendamento terminou sem erro",

@@ -119,7 +119,7 @@ class LegendaHistorico extends StatelessWidget {
                 : ColoredBox(color: c),
           ),
           const SizedBox(width: 6),
-          Text(t, style: Theme.of(context).textTheme.bodySmall),
+          Flexible(child: Text(t, style: Theme.of(context).textTheme.bodySmall)),
         ]);
     return Wrap(spacing: 16, runSpacing: 4, children: [
       item(Tema.anp, 'Pesquisa ANP (semanal)', tracejado: true),

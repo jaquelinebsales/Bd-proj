@@ -54,74 +54,44 @@ Deno.serve(async (req) => {
       } m.${raio > 300 ? " A localização deste posto é aproximada." : ""}`);
     }
 
-    // Limite diário de envios
-    const desde24h = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
-    const { count: enviosDia } = await admin.from("envios")
-      .select("id", { count: "exact", head: true }).eq("usuario_id", usuario.id).gte("criado_em", desde24h);
-    if ((enviosDia ?? 0) >= par.envios_por_dia) {
-      return erro(429, `Você atingiu o limite de ${par.envios_por_dia} envios em 24 horas. Tente mais tarde.`);
-    }
-
-    // Mesmo posto e combustível: um envio a cada 6 h por usuário
-    const desdeIntervalo = new Date(Date.now() - par.intervalo_mesmo_item_h * 3600 * 1000).toISOString();
-    const { data: recentes } = await admin.from("envio_itens").select("produto_id")
-      .eq("usuario_id", usuario.id).eq("posto_id", envio.posto_id).gte("criado_em", desdeIntervalo);
-    const repetidos = new Set((recentes ?? []).map((r) => r.produto_id));
-    const aceitos = itens.filter((i) => !repetidos.has(i.produto_id));
-    if (aceitos.length === 0) {
-      return erro(429, `Você já enviou esses preços para este posto nas últimas ${par.intervalo_mesmo_item_h} horas.`);
-    }
-
     // Referência para detectar envio suspeito
     const { data: atuais } = await admin.from("precos_atuais").select("produto_id, preco, fonte")
       .eq("posto_id", envio.posto_id);
     const referencia = new Map((atuais ?? []).map((a) => [a.produto_id, Number(a.preco)]));
-
-    const { data: novoEnvio, error: eEnvio } = await admin.from("envios").insert({
-      usuario_id: usuario.id,
-      posto_id: envio.posto_id,
-      posicao: `SRID=4326;POINT(${envio.longitude} ${envio.latitude})`,
-      distancia_m: Math.round(alvo.distancia_m),
-      ocr_texto: envio.ocr_texto,
-      ocr_duracao_ms: envio.ocr_duracao_ms,
-      app_versao: envio.app_versao,
-    }).select("id").single();
-    if (eEnvio) throw eEnvio;
-
-    const linhas = aceitos.map((i) => {
+    const linhas = itens.map((i) => {
       const motivo = motivoRevisao(
         i.preco, referencia.get(i.produto_id) ?? null, par.desvio_revisao,
         Number(perfil.confiabilidade), par.confiabilidade_min,
       );
-      return {
-        envio_id: novoEnvio.id,
-        posto_id: envio.posto_id,
-        produto_id: i.produto_id,
-        usuario_id: usuario.id,
-        preco: i.preco,
-        preco_lido: i.preco_lido,
-        confianca_ocr: i.confianca_ocr,
-        em_revisao: motivo !== null,
-        motivo_revisao: motivo,
-      };
+      return { ...i, em_revisao: motivo !== null, motivo_revisao: motivo };
     });
-    const { data: inseridos, error: eItens } = await admin.from("envio_itens").insert(linhas).select("id, produto_id");
-    if (eItens) throw eItens;
 
-    for (const i of aceitos) {
-      const { error: eCons } = await admin.rpc("consolidar_preco", { p_posto: envio.posto_id, p_produto: i.produto_id });
-      if (eCons) throw eCons;
+    // Limites, gravação e consenso numa só transação no banco, um envio por vez para cada usuário:
+    // requisições simultâneas não furam o limite diário nem a regra de 6 h.
+    const { data: r, error: eReg } = await admin.rpc("registrar_envio", {
+      p_usuario: usuario.id,
+      p_posto: envio.posto_id,
+      p_lat: envio.latitude,
+      p_lon: envio.longitude,
+      p_distancia_m: Math.round(alvo.distancia_m),
+      p_itens: linhas,
+      p_ocr_texto: envio.ocr_texto,
+      p_ocr_duracao_ms: envio.ocr_duracao_ms,
+      p_app_versao: envio.app_versao,
+    });
+    if (eReg) throw eReg;
+    if (!r?.ok) {
+      return r?.motivo === "limite_diario"
+        ? erro(429, `Você atingiu o limite de ${par.envios_por_dia} envios em 24 horas. Tente mais tarde.`)
+        : erro(429, `Você já enviou esses preços para este posto nas últimas ${par.intervalo_mesmo_item_h} horas.`);
     }
 
-    const ids = (inseridos ?? []).map((i) => i.id);
-    const { data: finais } = await admin.from("envio_itens")
-      .select("id, produto_id, preco, status, em_revisao, motivo_revisao").in("id", ids);
-
-    const confirmados = (finais ?? []).filter((f) => f.status === "confirmado").length;
+    const finais = (r.itens ?? []) as { status: string }[];
+    const confirmados = finais.filter((f) => f.status === "confirmado").length;
     return resposta(200, {
-      envio_id: novoEnvio.id,
+      envio_id: r.envio_id,
       itens: finais,
-      ignorados: itens.filter((i) => repetidos.has(i.produto_id)).map((i) => i.produto_id),
+      ignorados: r.ignorados ?? [],
       mensagem: confirmados > 0
         ? `${confirmados} preço(s) confirmado(s) com outros usuários. Seus pontos já foram creditados.`
         : "Preços recebidos. Você ganha pontos quando outra pessoa confirmar o mesmo valor em até 24 horas.",

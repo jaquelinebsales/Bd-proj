@@ -201,16 +201,12 @@ class _TelaBuscaState extends State<TelaBusca> {
     final colunas = tamanhoDe(context) == Tamanho.compacto ? 1 : 2;
     return RefreshIndicator(
       onRefresh: _carregar,
-      child: GridView.builder(
+      child: GradeDeCartoes(
+        colunas: colunas,
+        alturaBase: 142,
         padding: const EdgeInsets.fromLTRB(12, 4, 12, 24),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: colunas,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
-          mainAxisExtent: 142,
-        ),
-        itemCount: visiveis.length,
-        itemBuilder: (context, i) => CartaoPosto(
+        quantidade: visiveis.length,
+        cartao: (context, i) => CartaoPosto(
           posto: visiveis[i],
           produtoId: _filtros.produtoId,
           aoTocar: () => context.push('/posto/${visiveis[i].id}'),

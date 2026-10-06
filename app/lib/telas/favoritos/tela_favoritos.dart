@@ -113,16 +113,12 @@ class _TelaFavoritosState extends State<TelaFavoritos> {
                     setState(() => _lista = _carregar());
                     await _lista;
                   },
-                  child: GridView.builder(
+                  child: GradeDeCartoes(
+                    colunas: colunas,
+                    alturaBase: logado ? 172 : 142,
                     padding: const EdgeInsets.all(12),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: colunas,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      mainAxisExtent: logado ? 172 : 142,
-                    ),
-                    itemCount: postos.length,
-                    itemBuilder: (context, i) {
+                    quantidade: postos.length,
+                    cartao: (context, i) {
                       final p = postos[i];
                       return CartaoPosto(
                         posto: p,

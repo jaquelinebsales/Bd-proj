@@ -68,13 +68,17 @@ class SeloFonte extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    Widget chip(String texto, Color cor, {IconData? icone}) => Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: BoxDecoration(color: cor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(99)),
-          child: Row(mainAxisSize: MainAxisSize.min, children: [
-            if (icone != null) ...[Icon(icone, size: 14, color: cor), const SizedBox(width: 4)],
-            Text(texto, style: TextStyle(color: cor, fontWeight: FontWeight.w700, fontSize: 12)),
-          ]),
+    // Encolhe quando falta espaço (fonte do sistema ampliada) em vez de estourar a linha
+    Widget chip(String texto, Color cor, {IconData? icone}) => FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(color: cor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(99)),
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              if (icone != null) ...[Icon(icone, size: 14, color: cor), const SizedBox(width: 4)],
+              Text(texto, style: TextStyle(color: cor, fontWeight: FontWeight.w700, fontSize: 12)),
+            ]),
+          ),
         );
     return switch (preco.fonte) {
       FontePreco.anp => chip('ANP', Tema.anp, icone: Icons.account_balance_outlined),
@@ -128,15 +132,25 @@ class LinhaPreco extends StatelessWidget {
           ),
           if (p != null) ...[
             const SizedBox(width: 8),
-            Text(
-              p.fonte == FontePreco.estimativa ? '≈ ${preco_(p.preco)}' : preco_(p.preco),
-              style: tt.titleLarge?.copyWith(
-                fontWeight: FontWeight.w800,
-                color: p.fonte == FontePreco.estimativa ? cs.onSurfaceVariant : null,
+            // Com fonte grande, o selo desce para baixo do preço em vez de empurrar a linha para fora da tela
+            Flexible(
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 4,
+                children: [
+                  Text(
+                    p.fonte == FontePreco.estimativa ? '≈ ${preco_(p.preco)}' : preco_(p.preco),
+                    style: tt.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: p.fonte == FontePreco.estimativa ? cs.onSurfaceVariant : null,
+                    ),
+                  ),
+                  SeloFonte(p),
+                ],
               ),
             ),
-            const SizedBox(width: 8),
-            SeloFonte(p),
           ],
           if (aoTocar != null) Icon(Icons.chevron_right, color: cs.outline),
         ]),
@@ -234,17 +248,25 @@ class EstadoVazio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Icon(icone, size: 56, color: Theme.of(context).colorScheme.primary),
-          const SizedBox(height: 16),
-          Text(titulo, style: tt.titleLarge, textAlign: TextAlign.center),
-          const SizedBox(height: 8),
-          Text(texto, style: tt.bodyMedium, textAlign: TextAlign.center),
-          if (acao != null) ...[const SizedBox(height: 20), acao!],
-        ]),
+    // Rola quando não cabe (tela baixa ou fonte ampliada) e fica centralizado quando sobra espaço
+    return LayoutBuilder(
+      builder: (context, limites) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: limites.maxHeight.isFinite ? limites.maxHeight : 0),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Icon(icone, size: 56, color: Theme.of(context).colorScheme.primary),
+                const SizedBox(height: 16),
+                Text(titulo, style: tt.titleLarge, textAlign: TextAlign.center),
+                const SizedBox(height: 8),
+                Text(texto, style: tt.bodyMedium, textAlign: TextAlign.center),
+                if (acao != null) ...[const SizedBox(height: 20), acao!],
+              ]),
+            ),
+          ),
+        ),
       ),
     );
   }

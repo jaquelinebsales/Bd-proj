@@ -49,11 +49,15 @@ class _TelaHistoricoState extends State<TelaHistorico> {
             ]),
           ),
           const SizedBox(height: 12),
-          SegmentedButton<int>(
-            segments: [for (final (d, t) in _periodos) ButtonSegment(value: d, label: Text(t))],
-            selected: {_dias},
-            showSelectedIcon: false,
-            onSelectionChanged: (s) => _mudar(() => _dias = s.first),
+          // Rola de lado quando os 5 períodos não cabem (tela estreita ou fonte ampliada)
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SegmentedButton<int>(
+              segments: [for (final (d, t) in _periodos) ButtonSegment(value: d, label: Text(t, maxLines: 1, softWrap: false))],
+              selected: {_dias},
+              showSelectedIcon: false,
+              onSelectionChanged: (s) => _mudar(() => _dias = s.first),
+            ),
           ),
           const SizedBox(height: 16),
           FutureBuilder<List<PontoHistorico>>(

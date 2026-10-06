@@ -112,7 +112,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                 const SizedBox(height: 12),
                 BotaoCarregando(carregando: _carregando, aoTocar: _cadastrar, texto: 'Criar conta'),
                 const SizedBox(height: 24),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Wrap(alignment: WrapAlignment.center, crossAxisAlignment: WrapCrossAlignment.center, children: [
                   const Text('Já tem conta?'),
                   TextButton(onPressed: () => context.pushReplacement('/entrar'), child: const Text('Entrar')),
                 ]),

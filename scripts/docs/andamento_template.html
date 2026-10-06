@@ -96,6 +96,13 @@ td.e { width: 1%; white-space: nowrap; }
 .cartao { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
 .cartao ul { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; color: var(--ink-2); }
 .cartao b { color: var(--ink); }
+code { overflow-wrap: anywhere; }
+.auditoria { min-width: 760px; }
+.auditoria td { font-size: .88rem; }
+.auditoria td:first-child { white-space: nowrap; width: 1%; }
+.auditoria td.e { white-space: normal; width: 22%; }
+.sev { font: 600 .7rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.nota-sit { display: block; margin-top: 8px; font-size: .8rem; color: var(--ink-2); }
 .riscos { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .riscos li { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 12px 16px; }
 .riscos b { display: block; }
@@ -109,10 +116,10 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
   <header class="cab">
     <span class="eyebrow">gasprice · acompanhamento</span>
     <h1>Andamento do gasprice</h1>
-    <p class="lead">Situação da construção em {{DATA}}. O backend já está publicado no seu Supabase, com os dados da ANP carregados. O mapa agora usa o OpenStreetMap, sem chave. O código está no seu GitHub, com os testes e a publicação do Supabase passando e o APK de teste gerado. Falta instalar o APK num celular.</p>
+    <p class="lead">Situação da construção em {{DATA}}. Backend publicado no seu Supabase, código no GitHub e APK de teste gerado. A auditoria de 873 testes achou 10 bugs: 8 já estão corrigidos, 1 depende de um ajuste seu no painel do Supabase e 1 é uma decisão sobre a região do servidor. Falta testar o app num celular.</p>
     <ol class="fases" aria-label="Fases do projeto">
       <li class="fase" style="--c: var(--ok)"><span class="num">FASE 1</span><b>Dados da ANP</b><span class="estado ok">Concluída</span><span class="d">Limpeza, cobertura e experimento do modelo.</span></li>
-      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 2</span><b>Backend Supabase</b><span class="estado ok">Publicado</span><span class="d">No seu projeto, com 45.823 postos e 1,65 milhão de preços. 23 verificações públicas ok.</span></li>
+      <li class="fase" style="--c: var(--ok)"><span class="num">FASE 2</span><b>Backend Supabase</b><span class="estado ok">Publicado</span><span class="d">No seu projeto, com 45.823 postos e 1,87 milhão de preços, atualizados toda semana.</span></li>
       <li class="fase" style="--c: var(--ok)"><span class="num">FASE 3</span><b>App Flutter</b><span class="estado ok">Pronto para teste</span><span class="d">Todas as telas, para celular e tablet. APK gerado; falta rodar num aparelho real.</span></li>
       <li class="fase" style="--c: var(--ok)"><span class="num">FASE 4</span><b>Publicação</b><span class="estado ok">Concluída</span><span class="d">Supabase publicado, código no GitHub e testes automáticos passando.</span></li>
       <li class="fase" style="--c: var(--prox)"><span class="num">FASE 5</span><b>Evolução</b><span class="estado prox">Próxima</span><span class="d">Avisos com o app fechado, previsão de preço e lojas.</span></li>
@@ -123,9 +130,10 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     <h2 id="t-numeros" class="eyebrow" style="font: 600 .74rem/1 var(--body)">Em números</h2>
     <div class="numeros">
       <div class="numero"><b>22</b><span>telas, mais 2 painéis de filtros e contribuições</span></div>
-      <div class="numero"><b>162</b><span>testes automáticos, todos passando</span></div>
-      <div class="numero"><b>62</b><span>regras de negócio implementadas</span></div>
-      <div class="numero"><b>20</b><span>tabelas no banco e 4 funções no servidor</span></div>
+      <div class="numero"><b>183</b><span>testes automáticos, todos passando</span></div>
+      <div class="numero"><b>873</b><span>testes na auditoria de 06/10/2026</span></div>
+      <div class="numero"><b>65</b><span>regras de negócio implementadas</span></div>
+      <div class="numero"><b>22</b><span>tabelas no banco e 4 funções no servidor</span></div>
     </div>
   </section>
 
@@ -133,39 +141,38 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     <div class="cab">
       <span class="eyebrow">Próximo passo</span>
       <h2 id="t-pedidos">O que preciso de você</h2>
-      <p class="lead">O Supabase e o GitHub estão prontos. O que falta é testar o app num celular.</p>
+      <p class="lead">As correções estão prontas no seu computador. Para chegarem ao Supabase e ao app, faltam estes passos.</p>
     </div>
     <div class="pedidos">
-      <div class="pedido" style="border-left-color: var(--ok)">
-        <h3>1. Supabase · feito</h3>
+      <div class="pedido">
+        <h3>1. Publicar as correções</h3>
         <ol>
-          <li>Sete migrações aplicadas, a última com a precisão da localização dos postos.</li>
-          <li>Quatro funções no ar e segredo da sincronização gravado.</li>
-          <li>Depois da publicação, apague o token de acesso em supabase.com/dashboard/account/tokens. Ele expira em 7 dias de qualquer forma.</li>
+          <li>Na pasta do projeto, rode <code>git push</code>.</li>
+          <li>O GitHub roda os testes e publica as duas migrações novas e a função de envio de preços.</li>
+          <li>Em Actions, confira que Testes e Publicar Supabase ficaram verdes. Depois, rode Gerar APK para ter o app com as telas corrigidas.</li>
         </ol>
       </div>
       <div class="pedido">
-        <h3>2. Testar no celular</h3>
+        <h3>2. Política de senha no Supabase</h3>
         <ol>
-          <li>Em Actions, Gerar APK, baixe o arquivo <code>gasprice-apk</code> e instale no Android.</li>
-          <li>Crie uma conta, confirme o e-mail e envie o preço de um posto com a foto de um painel real.</li>
+          <li>No painel do projeto, abra Authentication e a configuração de senhas.</li>
+          <li>Tamanho mínimo: 8. Caracteres exigidos: letras e números.</li>
+          <li>Salve. A partir daí o servidor recusa as mesmas senhas que o app recusa.</li>
+        </ol>
+      </div>
+      <div class="pedido">
+        <h3>3. Testar no celular</h3>
+        <ol>
+          <li>Siga o guia <code>documentacao/auditoria/testes_android_studio.md</code> para preparar o Android Studio.</li>
+          <li>Execute os 30 casos da aba Android (manual) da planilha da auditoria, começando pelos críticos.</li>
           <li>Me mande as fotos em que o leitor errar e qualquer tela que quebrar.</li>
         </ol>
       </div>
-      <div class="pedido" style="border-left-color: var(--ok)">
-        <h3>3. GitHub · feito</h3>
+      <div class="pedido" style="border-left-color: var(--prox)">
+        <h3>4. Região do servidor · decisão</h3>
         <ol>
-          <li>Código enviado para o repositório, com os segredos cadastrados.</li>
-          <li>Os testes e a publicação do Supabase passam a cada envio.</li>
-          <li>O token antigo do Supabase deve ser apagado, e o novo fica só no GitHub.</li>
-        </ol>
-      </div>
-      <div class="pedido" style="border-left-color: var(--ok)">
-        <h3>4. Mapa · resolvido sem chave</h3>
-        <ol>
-          <li>O Google pedia R$ 150 antecipados para liberar a chave do mapa.</li>
-          <li>O app passou a usar o mapa do OpenStreetMap, que não pede chave, cartão nem cadastro.</li>
-          <li>Se o app crescer, basta trocar o endereço dos mapas por um serviço com plano gratuito, como MapTiler ou Stadia Maps.</li>
+          <li>O projeto está nos EUA, o que soma de 0,4 a 0,8 s em cada consulta feita do Brasil.</li>
+          <li>Antes de lançar, vale criar o projeto em São Paulo (sa-east-1). Eu migro o banco e as funções.</li>
         </ol>
       </div>
     </div>
@@ -244,6 +251,15 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     {{GEOCODIFICACAO}}
   </section>
 
+  <section aria-labelledby="t-auditoria">
+    <div class="cab">
+      <span class="eyebrow">Auditoria de 06/10/2026</span>
+      <h2 id="t-auditoria">Bugs encontrados e correções</h2>
+      <p class="lead">873 testes contra o Supabase real, o banco local, as telas em 7 tamanhos e o app no navegador: 810 passaram, 30 falharam e 33 ficam para o celular. As 30 falhas vieram de 10 bugs, listados por prioridade. A planilha completa está em <code>documentacao/auditoria/auditoria_gasprice.xlsx</code>.</p>
+    </div>
+    {{AUDITORIA}}
+  </section>
+
   <section aria-labelledby="t-etapas">
     <div class="cab">
       <span class="eyebrow">Etapas</span>
@@ -262,7 +278,8 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
       <table>
         <thead><tr><th>Conjunto</th><th>Testes</th><th>O que verifica</th><th>Resultado</th></tr></thead>
         <tbody>
-          <tr><td>Regras no banco</td><td class="n">103</td><td>Consenso, revisão, contestação, pontos com teto, bloqueio, avisos, recálculo semanal em bloco, permissões de acesso, consultas do app, importação do cadastro e precisão da localização dos postos</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>Regras no banco</td><td class="n">124</td><td>Consenso, revisão, contestação, pontos com teto, bloqueio, avisos, recálculo semanal em bloco, permissões de acesso, consultas do app, importação do cadastro, precisão da localização dos postos e as correções da auditoria</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>Telas em 7 tamanhos e fontes</td><td class="n">304</td><td>Cada rota do app, como visitante e logado, do celular de 320 px ao tablet deitado e com fonte de 100%, 130% e 200%, sem estouro de layout</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>App Flutter</td><td class="n">24</td><td>Leitor do painel, filtros e ordenação, idade do preço, componentes de preço e precisão da localização</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Edge Functions</td><td class="n">17</td><td>Validação do envio e da posição do posto e normalização da API da ANP com um registro real</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Scripts de publicação</td><td class="n">18</td><td>Leitura do <code>.env</code>, detecção de textos de exemplo, montagem da conexão com senha especial, máscara de segredos e simulação da publicação</td><td class="e"><span class="estado ok">Passou</span></td></tr>
@@ -280,7 +297,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     <ul class="riscos">
       <li><b>O app ainda não rodou num celular de verdade</b><span>Este computador não tem Android SDK nem Xcode. O APK já sai pelo GitHub Actions; falta instalá-lo e testar num celular.</span></li>
       <li><b>15% dos postos ativos estão sem coordenada</b><span>São 6.942 de 45.823 no cadastro da ANP. Eles não aparecem no mapa nem recebem estimativa. O teste com uma amostra achou a rua de 57% deles, mas com erro mediano de meio quilômetro. A seção "Postos sem coordenada" traz os números e a regra adotada.</span></li>
-      <li><b>Os preços da ANP só são atualizados quando você recarrega uma planilha</b><span>Hoje o banco tem a pesquisa até 30/06/2026. Ainda não existe a carga automática das semanas novas. Sem ela, os preços oficiais envelhecem e ficam com o ponto vermelho.</span></li>
+      <li><b>O banco cresce com a carga semanal da ANP</b><span>São cerca de 1,7 MB por semana. Hoje o banco ocupa 389 dos 500 MB do plano gratuito, o que dá folga de pouco mais de um ano. Antes disso, apagar preços da ANP com mais de 2 anos (a série completa fica no Storage) ou mudar de plano.</span></li>
       <li><b>A estimativa erra em média de R$ 0,25 a R$ 0,39</b><span>Medido nos dados reais. O app mostra o erro médio de cada estimativa e a marca com "≈". Ela serve como referência, não para escolher entre dois postos vizinhos.</span></li>
       <li><b>O leitor do painel precisa de fotos reais</b><span>Ele foi testado com textos simulados de painéis. Com as primeiras fotos reais, ajusto os padrões de leitura.</span></li>
       <li><b>O aviso com o app fechado depende do Firebase</b><span>Hoje o aviso chega com o app aberto ou em segundo plano e fica guardado na lista de notificações.</span></li>
@@ -291,6 +308,6 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
 
   <footer>
     <span>Atualizado em {{DATA}} · commit {{COMMIT}} · código em <code>C:\Users\michael\Desktop\gasprice</code>.</span>
-    <span>Documentos relacionados: <a href="https://claude.ai/artifact/KhFg4sdUGt7ErUntPA8ZWz" target="_blank" rel="noopener">Regras do gasprice</a> · <a href="https://claude.ai/artifact/LZN5fGhHNtjK5TY6H6CPsS" target="_blank" rel="noopener">Onde a ANP não mede</a> · limpeza dos dados da ANP e experimento do modelo, na pasta <code>documentacao</code> do projeto.</span>
+    <span>Documentos relacionados: <a href="https://claude.ai/artifact/6eLCwLQKrxjPApmEahQ3SV" target="_blank" rel="noopener">Regras do gasprice</a> · <a href="https://claude.ai/artifact/Meqn8sGfb4Urc4q3aLzM7i" target="_blank" rel="noopener">Onde a ANP não mede</a> · <a href="https://claude.ai/artifact/WeWTWajbmshnbQTCNH1ZSh" target="_blank" rel="noopener">Telas do gasprice</a> · limpeza dos dados da ANP e experimento do modelo, na pasta <code>documentacao</code> do projeto.</span>
   </footer>
 </main>

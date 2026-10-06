@@ -54,17 +54,25 @@ class _TelaBoasVindasState extends State<TelaBoasVindas> {
                   onPageChanged: (i) => setState(() => _pagina = i),
                   children: [
                     for (final (icone, titulo, texto) in _conteudo)
-                      Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                        CircleAvatar(
-                          radius: 56,
-                          backgroundColor: cs.primaryContainer,
-                          child: Icon(icone, size: 56, color: cs.onPrimaryContainer),
+                      // Rola quando o texto não cabe (tela baixa ou fonte ampliada)
+                      LayoutBuilder(
+                        builder: (context, limites) => SingleChildScrollView(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(minHeight: limites.maxHeight),
+                            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              CircleAvatar(
+                                radius: 56,
+                                backgroundColor: cs.primaryContainer,
+                                child: Icon(icone, size: 56, color: cs.onPrimaryContainer),
+                              ),
+                              const SizedBox(height: 32),
+                              Text(titulo, style: tt.headlineSmall?.copyWith(fontWeight: FontWeight.w700), textAlign: TextAlign.center),
+                              const SizedBox(height: 12),
+                              Text(texto, style: tt.bodyLarge, textAlign: TextAlign.center),
+                            ]),
+                          ),
                         ),
-                        const SizedBox(height: 32),
-                        Text(titulo, style: tt.headlineSmall?.copyWith(fontWeight: FontWeight.w700), textAlign: TextAlign.center),
-                        const SizedBox(height: 12),
-                        Text(texto, style: tt.bodyLarge, textAlign: TextAlign.center),
-                      ]),
+                      ),
                   ],
                 ),
               ),

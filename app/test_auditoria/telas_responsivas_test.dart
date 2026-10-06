@@ -77,6 +77,12 @@ Future<void> carregarFontes() async {
   await familia('MaterialIcons', ['materialicons-regular.otf']);
 }
 
+/// Mensagem curta do erro e, quando houver, o arquivo e a linha do widget que o causou.
+String descrever(FlutterErrorDetails d) {
+  final local = RegExp(r'lib/[\w/]+\.dart:\d+').firstMatch(d.toString())?.group(0);
+  return d.exceptionAsString().split('\n').take(2).join(' ') + (local == null ? '' : ' (em $local)');
+}
+
 String tipoDoErro(String m) {
   final t = m.toLowerCase();
   if (t.contains('overflowed')) return 'estouro';
@@ -112,7 +118,7 @@ void main() {
 
         final erros = <String>[];
         final anterior = FlutterError.onError;
-        FlutterError.onError = (d) => erros.add(d.exceptionAsString().split('\n').take(2).join(' '));
+        FlutterError.onError = (d) => erros.add(descrever(d));
 
         // Abre direto na rota testada: os erros registrados são só desta tela
         final rotas0 = criarRotas(false)..go(r.$1);
@@ -158,7 +164,7 @@ void main() {
           } catch (_) {
             imagem = null;
           }
-          FlutterError.onError = (d) => erros.add(d.exceptionAsString().split('\n').take(2).join(' '));
+          FlutterError.onError = (d) => erros.add(descrever(d));
         }
 
         await tester.pumpWidget(const SizedBox());

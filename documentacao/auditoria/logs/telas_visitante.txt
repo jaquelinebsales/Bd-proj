@@ -13,7 +13,7 @@ AUDITORIA|{"rota":"/","tela":"Mapa","tamanho":"Celular pequeno 320×568","largur
 00:01 +1: Busca · Celular pequeno 320×568
 AUDITORIA|{"rota":"/buscar","tela":"Busca","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/buscar","textos":["Nome, endereço, bairro, cidade ou UF","Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500"],"erros":[],"imagem":null}
 00:02 +2: Favoritos · Celular pequeno 320×568
-AUDITORIA|{"rota":"/favoritos","tela":"Favoritos","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/favoritos","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 96 pixels on the bottom."}],"imagem":"evidencias/telas/visitante-favoritos-celular-pequeno-320-568.png"}
+AUDITORIA|{"rota":"/favoritos","tela":"Favoritos","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/favoritos","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
 00:02 +3: Perfil · Celular pequeno 320×568
 AUDITORIA|{"rota":"/perfil","tela":"Perfil","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/perfil","textos":["Contribua com a sua cidade","Com uma conta você atualiza preços por foto, avalia postos, ganha pontos e recebe avisos quando o preço do seu posto favorito mudar.","Criar conta","Entrar","Perfil","Mapa"],"erros":[],"imagem":null}
 00:02 +4: Boas-vindas · Celular pequeno 320×568
@@ -22,19 +22,19 @@ AUDITORIA|{"rota":"/boas-vindas","tela":"Boas-vindas","tamanho":"Celular pequeno
 AUDITORIA|{"rota":"/posto/1","tela":"Posto","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1","textos":["Posto Vale Verde","Ipiranga","4,6","(128)","· 40 m","Av. João Pessoa, 6094 — Montese — Fortaleza, CE"],"erros":[],"imagem":null}
 00:02 +6: Posto com localização aproximada · Celular pequeno 320×568
 AUDITORIA|{"rota":"/posto/4","tela":"Posto com localização aproximada","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/posto/4","textos":["Posto Messejana","Bandeira branca","4,4","(33)","· 9,3 km","Rua Coronel Guilherme Alencar, 120 — Messejana — Fortaleza, CE"],"erros":[],"imagem":null}
-00:03 +7: Posto sem local e com estimativa · Celular pequeno 320×568
+00:02 +7: Posto sem local e com estimativa · Celular pequeno 320×568
 AUDITORIA|{"rota":"/posto/6","tela":"Posto sem local e com estimativa","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/posto/6","textos":["Posto Itaitinga","Bandeira branca","Sem avaliações","· 23,0 km","Rua Principal, 10 — Centro — Itaitinga, CE","Como chegar"],"erros":[],"imagem":null}
 00:03 +8: Histórico · Celular pequeno 320×568
 AUDITORIA|{"rota":"/posto/1/historico?produto=1","tela":"Histórico","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/historico?produto=1","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
 00:03 +9: Avaliações · Celular pequeno 320×568
 AUDITORIA|{"rota":"/posto/1/avaliacoes","tela":"Avaliações","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliacoes","textos":["4,6","128 avaliações","Mais recentes","Mais úteis","Mariana C.","há 2 dias"],"erros":[],"imagem":null}
 00:03 +10: Avaliar · Celular pequeno 320×568
-AUDITORIA|{"rota":"/posto/1/avaliar","tela":"Avaliar","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliar","textos":["Posto Vale Verde","Sua nota","Dar nota 0","Toque nas estrelas","Comentário (opcional)","Atendimento, qualidade do combustível, estrutura, conveniência…"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 20 pixels on the right."}],"imagem":"evidencias/telas/visitante-avaliar-celular-pequeno-320-568.png"}
+AUDITORIA|{"rota":"/posto/1/avaliar","tela":"Avaliar","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliar","textos":["Posto Vale Verde","Sua nota","Dar nota 0","Toque nas estrelas","Comentário (opcional)","Atendimento, qualidade do combustível, estrutura, conveniência…"],"erros":[],"imagem":null}
 00:03 +11: Enviar preços · Celular pequeno 320×568
 AUDITORIA|{"rota":"/posto/1/enviar","tela":"Enviar preços","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/enviar","textos":["Fotografe o painel de preços","O app lê os valores e você confere antes de enviar.","Enquadre o painel inteiro, de frente","Evite reflexo e contraluz","Esteja no posto: a localização confirma o envio (até 300 m)","A foto é lida no seu celular e apagada. Ela nunca é enviada nem guardada."],"erros":[],"imagem":null}
-00:04 +12: Estou neste posto · Celular pequeno 320×568
+00:03 +12: Estou neste posto · Celular pequeno 320×568
 AUDITORIA|{"rota":"/posto/4/posicao","tela":"Estou neste posto","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/posto/4/posicao","textos":["Posto Messejana","Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE","Esteja dentro do posto, de preferência ao ar livre","A posição vale quando duas pessoas diferentes informam pontos a até 150 m um do outro","Quando a posição é confirmada, você ganha 5 pontos","Sua posição é usada só para localizar o posto. Nenhum preço é enviado"],"erros":[],"imagem":null}
-00:04 +13: Entrar · Celular pequeno 320×568
+00:03 +13: Entrar · Celular pequeno 320×568
 AUDITORIA|{"rota":"/entrar","tela":"Entrar","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
 00:04 +14: Criar conta · Celular pequeno 320×568
 AUDITORIA|{"rota":"/cadastro","tela":"Criar conta","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/cadastro","textos":["gasprice","Criar conta","Só pedimos nome, e-mail e senha. Seu nome aparece abreviado para outras pessoas.","Nome","E-mail","Senha"],"erros":[],"imagem":null}
@@ -56,7 +56,7 @@ AUDITORIA|{"rota":"/ranking","tela":"Ranking","tamanho":"Celular pequeno 320×56
 AUDITORIA|{"rota":"/notificacoes","tela":"Avisos de preço","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
 00:04 +23: Sobre · Celular pequeno 320×568
 AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Celular pequeno 320×568","largura":320.0,"altura":568.0,"fonte":1.0,"logado":false,"rota_final":"/sobre","textos":["De onde vêm os preços","Comunidade","Fotos de painéis enviadas por usuários. Um preço é confirmado quando duas pessoas diferentes informam o mesmo valor em até 24 horas.","Pesquisa da ANP","Levantamento semanal oficial da Agência Nacional do Petróleo. É uma amostra: cobre cerca de 20% dos postos e pouco mais de 400 cidades. Vale quando os envios da comunidade divergem.","Estimativa"],"erros":[],"imagem":null}
-00:05 +24: Mapa · Celular 360×800
+00:04 +24: Mapa · Celular 360×800
   [1m[flutter_map][0m
     We want to help keep OpenStreetMap available for everyone. Our examples
     and demo app use the public tile servers, but they are NOT free to use by
@@ -66,9 +66,9 @@ AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Celular pequeno 320×568","
       * https://operations.osmfoundation.org/policies/tiles (OSM Tile Usage Policy)
       * https://docs.fleaflet.dev/osm-warn for more information about this warning
 AUDITORIA|{"rota":"/","tela":"Mapa","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/","textos":["5,99","6,09","6,05","© Colaboradores do OpenStreetMap","Buscar posto, endereço ou cidade","Gasolina comum"],"erros":[],"imagem":null}
-00:05 +25: Busca · Celular 360×800
+00:04 +25: Busca · Celular 360×800
 AUDITORIA|{"rota":"/buscar","tela":"Busca","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/buscar","textos":["Nome, endereço, bairro, cidade ou UF","Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500"],"erros":[],"imagem":null}
-00:05 +26: Favoritos · Celular 360×800
+00:04 +26: Favoritos · Celular 360×800
 AUDITORIA|{"rota":"/favoritos","tela":"Favoritos","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/favoritos","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
 00:05 +27: Perfil · Celular 360×800
 AUDITORIA|{"rota":"/perfil","tela":"Perfil","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/perfil","textos":["Contribua com a sua cidade","Com uma conta você atualiza preços por foto, avalia postos, ganha pontos e recebe avisos quando o preço do seu posto favorito mudar.","Criar conta","Entrar","Ranking da comunidade","Sobre os dados e privacidade"],"erros":[],"imagem":null}
@@ -82,15 +82,15 @@ AUDITORIA|{"rota":"/posto/4","tela":"Posto com localização aproximada","tamanh
 AUDITORIA|{"rota":"/posto/6","tela":"Posto sem local e com estimativa","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/6","textos":["Posto Itaitinga","Bandeira branca","Sem avaliações","· 23,0 km","Rua Principal, 10 — Centro — Itaitinga, CE","Como chegar"],"erros":[],"imagem":null}
 00:05 +32: Histórico · Celular 360×800
 AUDITORIA|{"rota":"/posto/1/historico?produto=1","tela":"Histórico","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/historico?produto=1","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
-00:06 +33: Avaliações · Celular 360×800
+00:05 +33: Avaliações · Celular 360×800
 AUDITORIA|{"rota":"/posto/1/avaliacoes","tela":"Avaliações","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliacoes","textos":["4,6","128 avaliações","Mais recentes","Mais úteis","Mariana C.","há 2 dias"],"erros":[],"imagem":null}
-00:06 +34: Avaliar · Celular 360×800
+00:05 +34: Avaliar · Celular 360×800
 AUDITORIA|{"rota":"/posto/1/avaliar","tela":"Avaliar","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliar","textos":["Posto Vale Verde","Sua nota","Dar nota 0","Toque nas estrelas","Comentário (opcional)","Atendimento, qualidade do combustível, estrutura, conveniência…"],"erros":[],"imagem":null}
-00:06 +35: Enviar preços · Celular 360×800
+00:05 +35: Enviar preços · Celular 360×800
 AUDITORIA|{"rota":"/posto/1/enviar","tela":"Enviar preços","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/enviar","textos":["Fotografe o painel de preços","O app lê os valores e você confere antes de enviar.","Enquadre o painel inteiro, de frente","Evite reflexo e contraluz","Esteja no posto: a localização confirma o envio (até 300 m)","A foto é lida no seu celular e apagada. Ela nunca é enviada nem guardada."],"erros":[],"imagem":null}
-00:06 +36: Estou neste posto · Celular 360×800
+00:05 +36: Estou neste posto · Celular 360×800
 AUDITORIA|{"rota":"/posto/4/posicao","tela":"Estou neste posto","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/4/posicao","textos":["Posto Messejana","Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE","Esteja dentro do posto, de preferência ao ar livre","A posição vale quando duas pessoas diferentes informam pontos a até 150 m um do outro","Quando a posição é confirmada, você ganha 5 pontos","Sua posição é usada só para localizar o posto. Nenhum preço é enviado"],"erros":[],"imagem":null}
-00:06 +37: Entrar · Celular 360×800
+00:05 +37: Entrar · Celular 360×800
 AUDITORIA|{"rota":"/entrar","tela":"Entrar","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
 00:06 +38: Criar conta · Celular 360×800
 AUDITORIA|{"rota":"/cadastro","tela":"Criar conta","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/cadastro","textos":["gasprice","Criar conta","Só pedimos nome, e-mail e senha. Seu nome aparece abreviado para outras pessoas.","Nome","E-mail","Senha"],"erros":[],"imagem":null}
@@ -112,7 +112,7 @@ AUDITORIA|{"rota":"/ranking","tela":"Ranking","tamanho":"Celular 360×800","larg
 AUDITORIA|{"rota":"/notificacoes","tela":"Avisos de preço","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
 00:06 +47: Sobre · Celular 360×800
 AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Celular 360×800","largura":360.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/sobre","textos":["De onde vêm os preços","Comunidade","Fotos de painéis enviadas por usuários. Um preço é confirmado quando duas pessoas diferentes informam o mesmo valor em até 24 horas.","Pesquisa da ANP","Levantamento semanal oficial da Agência Nacional do Petróleo. É uma amostra: cobre cerca de 20% dos postos e pouco mais de 400 cidades. Vale quando os envios da comunidade divergem.","Estimativa"],"erros":[],"imagem":null}
-00:07 +48: Mapa · Celular grande 412×915
+00:06 +48: Mapa · Celular grande 412×915
   [1m[flutter_map][0m
     We want to help keep OpenStreetMap available for everyone. Our examples
     and demo app use the public tile servers, but they are NOT free to use by
@@ -122,15 +122,15 @@ AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Celular 360×800","largura"
       * https://operations.osmfoundation.org/policies/tiles (OSM Tile Usage Policy)
       * https://docs.fleaflet.dev/osm-warn for more information about this warning
 AUDITORIA|{"rota":"/","tela":"Mapa","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/","textos":["5,99","6,09","6,05","© Colaboradores do OpenStreetMap","Buscar posto, endereço ou cidade","Gasolina comum"],"erros":[],"imagem":null}
-00:07 +49: Busca · Celular grande 412×915
+00:06 +49: Busca · Celular grande 412×915
 AUDITORIA|{"rota":"/buscar","tela":"Busca","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/buscar","textos":["Nome, endereço, bairro, cidade ou UF","Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500"],"erros":[],"imagem":null}
-00:07 +50: Favoritos · Celular grande 412×915
+00:06 +50: Favoritos · Celular grande 412×915
 AUDITORIA|{"rota":"/favoritos","tela":"Favoritos","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/favoritos","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
-00:07 +51: Perfil · Celular grande 412×915
+00:06 +51: Perfil · Celular grande 412×915
 AUDITORIA|{"rota":"/perfil","tela":"Perfil","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/perfil","textos":["Contribua com a sua cidade","Com uma conta você atualiza preços por foto, avalia postos, ganha pontos e recebe avisos quando o preço do seu posto favorito mudar.","Criar conta","Entrar","Ranking da comunidade","Sobre os dados e privacidade"],"erros":[],"imagem":null}
-00:07 +52: Boas-vindas · Celular grande 412×915
+00:06 +52: Boas-vindas · Celular grande 412×915
 AUDITORIA|{"rota":"/boas-vindas","tela":"Boas-vindas","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/boas-vindas","textos":["Pular","Preço de combustível perto de você","Veja o preço da gasolina, do etanol, do diesel e do GNV nos postos do mapa, sem precisar criar conta.","Continuar"],"erros":[],"imagem":null}
-00:07 +53: Posto · Celular grande 412×915
+00:06 +53: Posto · Celular grande 412×915
 AUDITORIA|{"rota":"/posto/1","tela":"Posto","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1","textos":["Posto Vale Verde","Ipiranga","4,6","(128)","· 40 m","Av. João Pessoa, 6094 — Montese — Fortaleza, CE"],"erros":[],"imagem":null}
 00:07 +54: Posto com localização aproximada · Celular grande 412×915
 AUDITORIA|{"rota":"/posto/4","tela":"Posto com localização aproximada","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/posto/4","textos":["Posto Messejana","Bandeira branca","4,4","(33)","· 9,3 km","Rua Coronel Guilherme Alencar, 120 — Messejana — Fortaleza, CE"],"erros":[],"imagem":null}
@@ -144,25 +144,25 @@ AUDITORIA|{"rota":"/posto/1/avaliacoes","tela":"Avaliações","tamanho":"Celular
 AUDITORIA|{"rota":"/posto/1/avaliar","tela":"Avaliar","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliar","textos":["Posto Vale Verde","Sua nota","Dar nota 0","Toque nas estrelas","Comentário (opcional)","Atendimento, qualidade do combustível, estrutura, conveniência…"],"erros":[],"imagem":null}
 00:07 +59: Enviar preços · Celular grande 412×915
 AUDITORIA|{"rota":"/posto/1/enviar","tela":"Enviar preços","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/enviar","textos":["Fotografe o painel de preços","O app lê os valores e você confere antes de enviar.","Enquadre o painel inteiro, de frente","Evite reflexo e contraluz","Esteja no posto: a localização confirma o envio (até 300 m)","A foto é lida no seu celular e apagada. Ela nunca é enviada nem guardada."],"erros":[],"imagem":null}
-00:08 +60: Estou neste posto · Celular grande 412×915
+00:07 +60: Estou neste posto · Celular grande 412×915
 AUDITORIA|{"rota":"/posto/4/posicao","tela":"Estou neste posto","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/posto/4/posicao","textos":["Posto Messejana","Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE","Esteja dentro do posto, de preferência ao ar livre","A posição vale quando duas pessoas diferentes informam pontos a até 150 m um do outro","Quando a posição é confirmada, você ganha 5 pontos","Sua posição é usada só para localizar o posto. Nenhum preço é enviado"],"erros":[],"imagem":null}
-00:08 +61: Entrar · Celular grande 412×915
+00:07 +61: Entrar · Celular grande 412×915
 AUDITORIA|{"rota":"/entrar","tela":"Entrar","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:08 +62: Criar conta · Celular grande 412×915
+00:07 +62: Criar conta · Celular grande 412×915
 AUDITORIA|{"rota":"/cadastro","tela":"Criar conta","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/cadastro","textos":["gasprice","Criar conta","Só pedimos nome, e-mail e senha. Seu nome aparece abreviado para outras pessoas.","Nome","E-mail","Senha"],"erros":[],"imagem":null}
-00:08 +63: Recuperar senha · Celular grande 412×915
+00:07 +63: Recuperar senha · Celular grande 412×915
 AUDITORIA|{"rota":"/recuperar-senha","tela":"Recuperar senha","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/recuperar-senha","textos":["gasprice","Recuperar senha","Informe o e-mail da sua conta. Enviamos um link para você criar uma nova senha.","E-mail","Enviar link"],"erros":[],"imagem":null}
-00:08 +64: Nova senha · Celular grande 412×915
+00:07 +64: Nova senha · Celular grande 412×915
 AUDITORIA|{"rota":"/nova-senha","tela":"Nova senha","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/nova-senha","textos":["gasprice","Crie uma nova senha","Use pelo menos 8 caracteres, com letras e números.","Nova senha","Confirme a nova senha","Salvar nova senha"],"erros":[],"imagem":null}
-00:08 +65: Confirme seu e-mail · Celular grande 412×915
+00:07 +65: Confirme seu e-mail · Celular grande 412×915
 AUDITORIA|{"rota":"/verificar-email?email=carla.m%40exemplo.com","tela":"Confirme seu e-mail","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/verificar-email?email=carla.m%40exemplo.com","textos":["gasprice","Confirme seu e-mail","Enviamos um link para carla.m@exemplo.com. Abra a mensagem neste celular e toque no link para ativar a conta.","Não chegou? Veja a caixa de spam ou peça outro link.","Reenviar link","Já confirmei, quero entrar"],"erros":[],"imagem":null}
-00:08 +66: Alterar dados · Celular grande 412×915
+00:07 +66: Alterar dados · Celular grande 412×915
 AUDITORIA|{"rota":"/perfil/editar","tela":"Alterar dados","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:08 +67: Alterar senha · Celular grande 412×915
+00:07 +67: Alterar senha · Celular grande 412×915
 AUDITORIA|{"rota":"/perfil/senha","tela":"Alterar senha","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:08 +68: Meus pontos · Celular grande 412×915
+00:07 +68: Meus pontos · Celular grande 412×915
 AUDITORIA|{"rota":"/pontos","tela":"Meus pontos","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:08 +69: Ranking · Celular grande 412×915
+00:07 +69: Ranking · Celular grande 412×915
 AUDITORIA|{"rota":"/ranking","tela":"Ranking","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/ranking","textos":["Carla M.","1840 pts","Bruno L.","1575 pts","Ana S.","1210 pts"],"erros":[],"imagem":null}
 00:08 +70: Avisos de preço · Celular grande 412×915
 AUDITORIA|{"rota":"/notificacoes","tela":"Avisos de preço","tamanho":"Celular grande 412×915","largura":412.0,"altura":915.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
@@ -179,26 +179,26 @@ AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Celular grande 412×915","l
       * https://docs.fleaflet.dev/osm-warn for more information about this warning
 AUDITORIA|{"rota":"/","tela":"Mapa","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/","textos":["5,99","6,09","6,05","© Colaboradores do OpenStreetMap","Buscar posto, endereço ou cidade","Gasolina comum"],"erros":[],"imagem":null}
 00:08 +73: Busca · Celular 360×800 com fonte 130%
-AUDITORIA|{"rota":"/buscar","tela":"Busca","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/buscar","textos":["Nome, endereço, bairro, cidade ou UF","Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 18 pixels on the bottom."},{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 18 pixels on the bottom."}],"imagem":"evidencias/telas/visitante-busca-celular-360-800-com-fonte-130-.png"}
-00:09 +74: Favoritos · Celular 360×800 com fonte 130%
+AUDITORIA|{"rota":"/buscar","tela":"Busca","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/buscar","textos":["Nome, endereço, bairro, cidade ou UF","Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500"],"erros":[],"imagem":null}
+00:08 +74: Favoritos · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/favoritos","tela":"Favoritos","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/favoritos","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
-00:09 +75: Perfil · Celular 360×800 com fonte 130%
+00:08 +75: Perfil · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/perfil","tela":"Perfil","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/perfil","textos":["Contribua com a sua cidade","Com uma conta você atualiza preços por foto, avalia postos, ganha pontos e recebe avisos quando o preço do seu posto favorito mudar.","Criar conta","Entrar","Ranking da comunidade","Sobre os dados e privacidade"],"erros":[],"imagem":null}
-00:09 +76: Boas-vindas · Celular 360×800 com fonte 130%
+00:08 +76: Boas-vindas · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/boas-vindas","tela":"Boas-vindas","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/boas-vindas","textos":["Pular","Preço de combustível perto de você","Veja o preço da gasolina, do etanol, do diesel e do GNV nos postos do mapa, sem precisar criar conta.","Continuar"],"erros":[],"imagem":null}
-00:09 +77: Posto · Celular 360×800 com fonte 130%
+00:08 +77: Posto · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/posto/1","tela":"Posto","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/posto/1","textos":["Posto Vale Verde","Ipiranga","4,6","(128)","· 40 m","Av. João Pessoa, 6094 — Montese — Fortaleza, CE"],"erros":[],"imagem":null}
-00:09 +78: Posto com localização aproximada · Celular 360×800 com fonte 130%
+00:08 +78: Posto com localização aproximada · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/posto/4","tela":"Posto com localização aproximada","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/posto/4","textos":["Posto Messejana","Bandeira branca","4,4","(33)","· 9,3 km","Rua Coronel Guilherme Alencar, 120 — Messejana — Fortaleza, CE"],"erros":[],"imagem":null}
-00:09 +79: Posto sem local e com estimativa · Celular 360×800 com fonte 130%
+00:08 +79: Posto sem local e com estimativa · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/posto/6","tela":"Posto sem local e com estimativa","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/posto/6","textos":["Posto Itaitinga","Bandeira branca","Sem avaliações","· 23,0 km","Rua Principal, 10 — Centro — Itaitinga, CE","Como chegar"],"erros":[],"imagem":null}
-00:09 +80: Histórico · Celular 360×800 com fonte 130%
+00:08 +80: Histórico · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/posto/1/historico?produto=1","tela":"Histórico","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/posto/1/historico?produto=1","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
-00:09 +81: Avaliações · Celular 360×800 com fonte 130%
+00:08 +81: Avaliações · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/posto/1/avaliacoes","tela":"Avaliações","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/posto/1/avaliacoes","textos":["4,6","128 avaliações","Mais recentes","Mais úteis","Mariana C.","há 2 dias"],"erros":[],"imagem":null}
-00:09 +82: Avaliar · Celular 360×800 com fonte 130%
+00:08 +82: Avaliar · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/posto/1/avaliar","tela":"Avaliar","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/posto/1/avaliar","textos":["Posto Vale Verde","Sua nota","Dar nota 0","Toque nas estrelas","Comentário (opcional)","Atendimento, qualidade do combustível, estrutura, conveniência…"],"erros":[],"imagem":null}
-00:09 +83: Enviar preços · Celular 360×800 com fonte 130%
+00:08 +83: Enviar preços · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/posto/1/enviar","tela":"Enviar preços","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/posto/1/enviar","textos":["Fotografe o painel de preços","O app lê os valores e você confere antes de enviar.","Enquadre o painel inteiro, de frente","Evite reflexo e contraluz","Esteja no posto: a localização confirma o envio (até 300 m)","A foto é lida no seu celular e apagada. Ela nunca é enviada nem guardada."],"erros":[],"imagem":null}
 00:09 +84: Estou neste posto · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/posto/4/posicao","tela":"Estou neste posto","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/posto/4/posicao","textos":["Posto Messejana","Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE","Esteja dentro do posto, de preferência ao ar livre","A posição vale quando duas pessoas diferentes informam pontos a até 150 m um do outro","Quando a posição é confirmada, você ganha 5 pontos","Sua posição é usada só para localizar o posto. Nenhum preço é enviado"],"erros":[],"imagem":null}
@@ -206,25 +206,25 @@ AUDITORIA|{"rota":"/posto/4/posicao","tela":"Estou neste posto","tamanho":"Celul
 AUDITORIA|{"rota":"/entrar","tela":"Entrar","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
 00:09 +86: Criar conta · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/cadastro","tela":"Criar conta","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/cadastro","textos":["gasprice","Criar conta","Só pedimos nome, e-mail e senha. Seu nome aparece abreviado para outras pessoas.","Nome","E-mail","Senha"],"erros":[],"imagem":null}
-00:10 +87: Recuperar senha · Celular 360×800 com fonte 130%
+00:09 +87: Recuperar senha · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/recuperar-senha","tela":"Recuperar senha","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/recuperar-senha","textos":["gasprice","Recuperar senha","Informe o e-mail da sua conta. Enviamos um link para você criar uma nova senha.","E-mail","Enviar link"],"erros":[],"imagem":null}
-00:10 +88: Nova senha · Celular 360×800 com fonte 130%
+00:09 +88: Nova senha · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/nova-senha","tela":"Nova senha","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/nova-senha","textos":["gasprice","Crie uma nova senha","Use pelo menos 8 caracteres, com letras e números.","Nova senha","Confirme a nova senha","Salvar nova senha"],"erros":[],"imagem":null}
-00:10 +89: Confirme seu e-mail · Celular 360×800 com fonte 130%
+00:09 +89: Confirme seu e-mail · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/verificar-email?email=carla.m%40exemplo.com","tela":"Confirme seu e-mail","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/verificar-email?email=carla.m%40exemplo.com","textos":["gasprice","Confirme seu e-mail","Enviamos um link para carla.m@exemplo.com. Abra a mensagem neste celular e toque no link para ativar a conta.","Não chegou? Veja a caixa de spam ou peça outro link.","Reenviar link","Já confirmei, quero entrar"],"erros":[],"imagem":null}
-00:10 +90: Alterar dados · Celular 360×800 com fonte 130%
+00:09 +90: Alterar dados · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/perfil/editar","tela":"Alterar dados","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:10 +91: Alterar senha · Celular 360×800 com fonte 130%
+00:09 +91: Alterar senha · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/perfil/senha","tela":"Alterar senha","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:10 +92: Meus pontos · Celular 360×800 com fonte 130%
+00:09 +92: Meus pontos · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/pontos","tela":"Meus pontos","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:10 +93: Ranking · Celular 360×800 com fonte 130%
+00:09 +93: Ranking · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/ranking","tela":"Ranking","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/ranking","textos":["Carla M.","1840 pts","Bruno L.","1575 pts","Ana S.","1210 pts"],"erros":[],"imagem":null}
-00:10 +94: Avisos de preço · Celular 360×800 com fonte 130%
+00:09 +94: Avisos de preço · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/notificacoes","tela":"Avisos de preço","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:10 +95: Sobre · Celular 360×800 com fonte 130%
+00:09 +95: Sobre · Celular 360×800 com fonte 130%
 AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Celular 360×800 com fonte 130%","largura":360.0,"altura":800.0,"fonte":1.3,"logado":false,"rota_final":"/sobre","textos":["De onde vêm os preços","Comunidade","Fotos de painéis enviadas por usuários. Um preço é confirmado quando duas pessoas diferentes informam o mesmo valor em até 24 horas.","Pesquisa da ANP","Levantamento semanal oficial da Agência Nacional do Petróleo. É uma amostra: cobre cerca de 20% dos postos e pouco mais de 400 cidades. Vale quando os envios da comunidade divergem.","Estimativa"],"erros":[],"imagem":null}
-00:10 +96: Mapa · Celular 360×800 com fonte 200%
+00:09 +96: Mapa · Celular 360×800 com fonte 200%
   [1m[flutter_map][0m
     We want to help keep OpenStreetMap available for everyone. Our examples
     and demo app use the public tile servers, but they are NOT free to use by
@@ -233,54 +233,54 @@ AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Celular 360×800 com fonte 
     See:
       * https://operations.osmfoundation.org/policies/tiles (OSM Tile Usage Policy)
       * https://docs.fleaflet.dev/osm-warn for more information about this warning
-AUDITORIA|{"rota":"/","tela":"Mapa","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/","textos":["5,99","6,09","6,05","© Colaboradores do OpenStreetMap","Buscar posto, endereço ou cidade","Gasolina comum"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 3.0 pixels on the bottom."},{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 3.0 pixels on the bottom."},{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 3.0 pixels on the bottom."}],"imagem":"evidencias/telas/visitante-mapa-celular-360-800-com-fonte-200-.png"}
-00:10 +97: Busca · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/buscar","tela":"Busca","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/buscar","textos":["Nome, endereço, bairro, cidade ou UF","Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 174 pixels on the bottom."},{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 138 pixels on the bottom."},{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 174 pixels on the bottom."}],"imagem":"evidencias/telas/visitante-busca-celular-360-800-com-fonte-200-.png"}
-00:10 +98: Favoritos · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/favoritos","tela":"Favoritos","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/favoritos","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 378 pixels on the bottom."}],"imagem":"evidencias/telas/visitante-favoritos-celular-360-800-com-fonte-200-.png"}
-00:10 +99: Perfil · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/","tela":"Mapa","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/","textos":["5,99","6,09","6,05","© Colaboradores do OpenStreetMap","Buscar posto, endereço ou cidade","Gasolina comum"],"erros":[],"imagem":null}
+00:09 +97: Busca · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/buscar","tela":"Busca","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/buscar","textos":["Nome, endereço, bairro, cidade ou UF","Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500"],"erros":[],"imagem":null}
+00:09 +98: Favoritos · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/favoritos","tela":"Favoritos","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/favoritos","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
+00:09 +99: Perfil · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/perfil","tela":"Perfil","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/perfil","textos":["Contribua com a sua cidade","Com uma conta você atualiza preços por foto, avalia postos, ganha pontos e recebe avisos quando o preço do seu posto favorito mudar.","Perfil","Mapa","Buscar","Favoritos"],"erros":[],"imagem":null}
-00:10 +100: Boas-vindas · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/boas-vindas","tela":"Boas-vindas","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/boas-vindas","textos":["Pular","Preço de combustível perto de você","Veja o preço da gasolina, do etanol, do diesel e do GNV nos postos do mapa, sem precisar criar conta.","Continuar"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 24 pixels on the bottom."}],"imagem":"evidencias/telas/visitante-boas-vindas-celular-360-800-com-fonte-200-.png"}
-00:10 +101: Posto · Celular 360×800 com fonte 200%
+00:09 +100: Boas-vindas · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/boas-vindas","tela":"Boas-vindas","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/boas-vindas","textos":["Pular","Preço de combustível perto de você","Veja o preço da gasolina, do etanol, do diesel e do GNV nos postos do mapa, sem precisar criar conta.","Continuar"],"erros":[],"imagem":null}
+00:09 +101: Posto · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/posto/1","tela":"Posto","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/1","textos":["Posto Vale Verde","Ipiranga","4,6","(128)","· 40 m","Av. João Pessoa, 6094 — Montese — Fortaleza, CE"],"erros":[],"imagem":null}
-00:11 +102: Posto com localização aproximada · Celular 360×800 com fonte 200%
+00:10 +102: Posto com localização aproximada · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/posto/4","tela":"Posto com localização aproximada","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/4","textos":["Posto Messejana","Bandeira branca","4,4","(33)","· 9,3 km","Rua Coronel Guilherme Alencar, 120 — Messejana — Fortaleza, CE"],"erros":[],"imagem":null}
-00:11 +103: Posto sem local e com estimativa · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/posto/6","tela":"Posto sem local e com estimativa","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/6","textos":["Posto Itaitinga","Bandeira branca","Sem avaliações","· 23,0 km","Rua Principal, 10 — Centro — Itaitinga, CE","Como chegar"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 95 pixels on the right."}],"imagem":"evidencias/telas/visitante-posto-sem-local-e-com-estimativa-celular-360-800-com-fonte-200-.png"}
-00:11 +104: Histórico · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/posto/1/historico?produto=1","tela":"Histórico","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/1/historico?produto=1","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 2.6 pixels on the right."},{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 97 pixels on the right."}],"imagem":"evidencias/telas/visitante-hist-rico-celular-360-800-com-fonte-200-.png"}
-00:11 +105: Avaliações · Celular 360×800 com fonte 200%
+00:10 +103: Posto sem local e com estimativa · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/posto/6","tela":"Posto sem local e com estimativa","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/6","textos":["Posto Itaitinga","Bandeira branca","Sem avaliações","· 23,0 km","Rua Principal, 10 — Centro — Itaitinga, CE","Como chegar"],"erros":[],"imagem":null}
+00:10 +104: Histórico · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/posto/1/historico?produto=1","tela":"Histórico","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/1/historico?produto=1","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
+00:10 +105: Avaliações · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/posto/1/avaliacoes","tela":"Avaliações","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/1/avaliacoes","textos":["4,6","128 avaliações","Mais recentes","Mais úteis","Mariana C.","há 2 dias"],"erros":[],"imagem":null}
-00:11 +106: Avaliar · Celular 360×800 com fonte 200%
+00:10 +106: Avaliar · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/posto/1/avaliar","tela":"Avaliar","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/1/avaliar","textos":["Posto Vale Verde","Sua nota","Dar nota 0","Toque nas estrelas","Comentário (opcional)","Atendimento, qualidade do combustível, estrutura, conveniência…"],"erros":[],"imagem":null}
-00:11 +107: Enviar preços · Celular 360×800 com fonte 200%
+00:10 +107: Enviar preços · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/posto/1/enviar","tela":"Enviar preços","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/1/enviar","textos":["Fotografe o painel de preços","O app lê os valores e você confere antes de enviar.","Enquadre o painel inteiro, de frente","Evite reflexo e contraluz","Esteja no posto: a localização confirma o envio (até 300 m)","A foto é lida no seu celular e apagada. Ela nunca é enviada nem guardada."],"erros":[],"imagem":null}
-00:11 +108: Estou neste posto · Celular 360×800 com fonte 200%
+00:10 +108: Estou neste posto · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/posto/4/posicao","tela":"Estou neste posto","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/posto/4/posicao","textos":["Posto Messejana","Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE","Esteja dentro do posto, de preferência ao ar livre","A posição vale quando duas pessoas diferentes informam pontos a até 150 m um do outro","Quando a posição é confirmada, você ganha 5 pontos","Sua posição é usada só para localizar o posto. Nenhum preço é enviado"],"erros":[],"imagem":null}
-00:11 +109: Entrar · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/entrar","tela":"Entrar","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 119 pixels on the right."}],"imagem":"evidencias/telas/visitante-entrar-celular-360-800-com-fonte-200-.png"}
-00:11 +110: Criar conta · Celular 360×800 com fonte 200%
+00:10 +109: Entrar · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/entrar","tela":"Entrar","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
+00:10 +110: Criar conta · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/cadastro","tela":"Criar conta","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/cadastro","textos":["gasprice","Criar conta","Só pedimos nome, e-mail e senha. Seu nome aparece abreviado para outras pessoas.","Nome","E-mail","Senha"],"erros":[],"imagem":null}
-00:11 +111: Recuperar senha · Celular 360×800 com fonte 200%
+00:10 +111: Recuperar senha · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/recuperar-senha","tela":"Recuperar senha","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/recuperar-senha","textos":["gasprice","Recuperar senha","Informe o e-mail da sua conta. Enviamos um link para você criar uma nova senha.","E-mail","Enviar link"],"erros":[],"imagem":null}
-00:11 +112: Nova senha · Celular 360×800 com fonte 200%
+00:10 +112: Nova senha · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/nova-senha","tela":"Nova senha","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/nova-senha","textos":["gasprice","Crie uma nova senha","Use pelo menos 8 caracteres, com letras e números.","Nova senha","Confirme a nova senha","Salvar nova senha"],"erros":[],"imagem":null}
-00:11 +113: Confirme seu e-mail · Celular 360×800 com fonte 200%
+00:10 +113: Confirme seu e-mail · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/verificar-email?email=carla.m%40exemplo.com","tela":"Confirme seu e-mail","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/verificar-email?email=carla.m%40exemplo.com","textos":["gasprice","Confirme seu e-mail","Enviamos um link para carla.m@exemplo.com. Abra a mensagem neste celular e toque no link para ativar a conta.","Não chegou? Veja a caixa de spam ou peça outro link.","Reenviar link","Já confirmei, quero entrar"],"erros":[],"imagem":null}
-00:11 +114: Alterar dados · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/perfil/editar","tela":"Alterar dados","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 119 pixels on the right."}],"imagem":"evidencias/telas/visitante-alterar-dados-celular-360-800-com-fonte-200-.png"}
-00:12 +115: Alterar senha · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/perfil/senha","tela":"Alterar senha","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 119 pixels on the right."}],"imagem":"evidencias/telas/visitante-alterar-senha-celular-360-800-com-fonte-200-.png"}
-00:12 +116: Meus pontos · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/pontos","tela":"Meus pontos","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 119 pixels on the right."}],"imagem":"evidencias/telas/visitante-meus-pontos-celular-360-800-com-fonte-200-.png"}
-00:12 +117: Ranking · Celular 360×800 com fonte 200%
+00:10 +114: Alterar dados · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/perfil/editar","tela":"Alterar dados","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
+00:10 +115: Alterar senha · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/perfil/senha","tela":"Alterar senha","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
+00:10 +116: Meus pontos · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/pontos","tela":"Meus pontos","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
+00:10 +117: Ranking · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/ranking","tela":"Ranking","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/ranking","textos":["Carla M.","1840 pts","Bruno L.","1575 pts","Ana S.","1210 pts"],"erros":[],"imagem":null}
-00:12 +118: Avisos de preço · Celular 360×800 com fonte 200%
-AUDITORIA|{"rota":"/notificacoes","tela":"Avisos de preço","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[{"tipo":"estouro","mensagem":"A RenderFlex overflowed by 119 pixels on the right."}],"imagem":"evidencias/telas/visitante-avisos-de-pre-o-celular-360-800-com-fonte-200-.png"}
-00:12 +119: Sobre · Celular 360×800 com fonte 200%
+00:10 +118: Avisos de preço · Celular 360×800 com fonte 200%
+AUDITORIA|{"rota":"/notificacoes","tela":"Avisos de preço","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
+00:10 +119: Sobre · Celular 360×800 com fonte 200%
 AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Celular 360×800 com fonte 200%","largura":360.0,"altura":800.0,"fonte":2.0,"logado":false,"rota_final":"/sobre","textos":["De onde vêm os preços","Comunidade","Fotos de painéis enviadas por usuários. Um preço é confirmado quando duas pessoas diferentes informam o mesmo valor em até 24 horas.","Pesquisa da ANP","Levantamento semanal oficial da Agência Nacional do Petróleo. É uma amostra: cobre cerca de 20% dos postos e pouco mais de 400 cidades. Vale quando os envios da comunidade divergem.","Estimativa"],"erros":[],"imagem":null}
-00:12 +120: Mapa · Tablet em pé 800×1280
+00:11 +120: Mapa · Tablet em pé 800×1280
   [1m[flutter_map][0m
     We want to help keep OpenStreetMap available for everyone. Our examples
     and demo app use the public tile servers, but they are NOT free to use by
@@ -290,53 +290,53 @@ AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Celular 360×800 com fonte 
       * https://operations.osmfoundation.org/policies/tiles (OSM Tile Usage Policy)
       * https://docs.fleaflet.dev/osm-warn for more information about this warning
 AUDITORIA|{"rota":"/","tela":"Mapa","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/","textos":["Mapa","Buscar","Favoritos","Perfil","5,99","6,09"],"erros":[],"imagem":null}
-00:12 +121: Busca · Tablet em pé 800×1280
+00:11 +121: Busca · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/buscar","tela":"Busca","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/buscar","textos":["Mapa","Buscar","Favoritos","Perfil","Nome, endereço, bairro, cidade ou UF","Gasolina comum"],"erros":[],"imagem":null}
-00:12 +122: Favoritos · Tablet em pé 800×1280
+00:11 +122: Favoritos · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/favoritos","tela":"Favoritos","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/favoritos","textos":["Mapa","Buscar","Favoritos","Perfil","Gasolina comum","Gasolina aditivada"],"erros":[],"imagem":null}
-00:12 +123: Perfil · Tablet em pé 800×1280
+00:11 +123: Perfil · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/perfil","tela":"Perfil","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/perfil","textos":["Mapa","Buscar","Favoritos","Perfil","Contribua com a sua cidade","Com uma conta você atualiza preços por foto, avalia postos, ganha pontos e recebe avisos quando o preço do seu posto favorito mudar."],"erros":[],"imagem":null}
-00:12 +124: Boas-vindas · Tablet em pé 800×1280
+00:11 +124: Boas-vindas · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/boas-vindas","tela":"Boas-vindas","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/boas-vindas","textos":["Pular","Preço de combustível perto de você","Veja o preço da gasolina, do etanol, do diesel e do GNV nos postos do mapa, sem precisar criar conta.","Continuar"],"erros":[],"imagem":null}
-00:12 +125: Posto · Tablet em pé 800×1280
+00:11 +125: Posto · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/posto/1","tela":"Posto","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1","textos":["Posto Vale Verde","Ipiranga","4,6","(128)","· 40 m","Av. João Pessoa, 6094 — Montese — Fortaleza, CE"],"erros":[],"imagem":null}
-00:12 +126: Posto com localização aproximada · Tablet em pé 800×1280
+00:11 +126: Posto com localização aproximada · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/posto/4","tela":"Posto com localização aproximada","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/posto/4","textos":["Posto Messejana","Bandeira branca","4,4","(33)","· 9,3 km","Rua Coronel Guilherme Alencar, 120 — Messejana — Fortaleza, CE"],"erros":[],"imagem":null}
-00:13 +127: Posto sem local e com estimativa · Tablet em pé 800×1280
+00:11 +127: Posto sem local e com estimativa · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/posto/6","tela":"Posto sem local e com estimativa","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/posto/6","textos":["Posto Itaitinga","Bandeira branca","Sem avaliações","· 23,0 km","Rua Principal, 10 — Centro — Itaitinga, CE","Como chegar"],"erros":[],"imagem":null}
-00:13 +128: Histórico · Tablet em pé 800×1280
+00:11 +128: Histórico · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/posto/1/historico?produto=1","tela":"Histórico","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/historico?produto=1","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
-00:13 +129: Avaliações · Tablet em pé 800×1280
+00:11 +129: Avaliações · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/posto/1/avaliacoes","tela":"Avaliações","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliacoes","textos":["4,6","128 avaliações","Mais recentes","Mais úteis","Mariana C.","há 2 dias"],"erros":[],"imagem":null}
-00:13 +130: Avaliar · Tablet em pé 800×1280
+00:11 +130: Avaliar · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/posto/1/avaliar","tela":"Avaliar","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliar","textos":["Posto Vale Verde","Sua nota","Dar nota 0","Toque nas estrelas","Comentário (opcional)","Atendimento, qualidade do combustível, estrutura, conveniência…"],"erros":[],"imagem":null}
-00:13 +131: Enviar preços · Tablet em pé 800×1280
+00:11 +131: Enviar preços · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/posto/1/enviar","tela":"Enviar preços","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/enviar","textos":["Fotografe o painel de preços","O app lê os valores e você confere antes de enviar.","Enquadre o painel inteiro, de frente","Evite reflexo e contraluz","Esteja no posto: a localização confirma o envio (até 300 m)","A foto é lida no seu celular e apagada. Ela nunca é enviada nem guardada."],"erros":[],"imagem":null}
-00:13 +132: Estou neste posto · Tablet em pé 800×1280
+00:12 +132: Estou neste posto · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/posto/4/posicao","tela":"Estou neste posto","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/posto/4/posicao","textos":["Posto Messejana","Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE","Esteja dentro do posto, de preferência ao ar livre","A posição vale quando duas pessoas diferentes informam pontos a até 150 m um do outro","Quando a posição é confirmada, você ganha 5 pontos","Sua posição é usada só para localizar o posto. Nenhum preço é enviado"],"erros":[],"imagem":null}
-00:13 +133: Entrar · Tablet em pé 800×1280
+00:12 +133: Entrar · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/entrar","tela":"Entrar","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:13 +134: Criar conta · Tablet em pé 800×1280
+00:12 +134: Criar conta · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/cadastro","tela":"Criar conta","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/cadastro","textos":["gasprice","Criar conta","Só pedimos nome, e-mail e senha. Seu nome aparece abreviado para outras pessoas.","Nome","E-mail","Senha"],"erros":[],"imagem":null}
-00:13 +135: Recuperar senha · Tablet em pé 800×1280
+00:12 +135: Recuperar senha · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/recuperar-senha","tela":"Recuperar senha","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/recuperar-senha","textos":["gasprice","Recuperar senha","Informe o e-mail da sua conta. Enviamos um link para você criar uma nova senha.","E-mail","Enviar link"],"erros":[],"imagem":null}
-00:13 +136: Nova senha · Tablet em pé 800×1280
+00:12 +136: Nova senha · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/nova-senha","tela":"Nova senha","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/nova-senha","textos":["gasprice","Crie uma nova senha","Use pelo menos 8 caracteres, com letras e números.","Nova senha","Confirme a nova senha","Salvar nova senha"],"erros":[],"imagem":null}
-00:13 +137: Confirme seu e-mail · Tablet em pé 800×1280
+00:12 +137: Confirme seu e-mail · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/verificar-email?email=carla.m%40exemplo.com","tela":"Confirme seu e-mail","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/verificar-email?email=carla.m%40exemplo.com","textos":["gasprice","Confirme seu e-mail","Enviamos um link para carla.m@exemplo.com. Abra a mensagem neste celular e toque no link para ativar a conta.","Não chegou? Veja a caixa de spam ou peça outro link.","Reenviar link","Já confirmei, quero entrar"],"erros":[],"imagem":null}
-00:13 +138: Alterar dados · Tablet em pé 800×1280
+00:12 +138: Alterar dados · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/perfil/editar","tela":"Alterar dados","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:14 +139: Alterar senha · Tablet em pé 800×1280
+00:12 +139: Alterar senha · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/perfil/senha","tela":"Alterar senha","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:14 +140: Meus pontos · Tablet em pé 800×1280
+00:12 +140: Meus pontos · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/pontos","tela":"Meus pontos","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:14 +141: Ranking · Tablet em pé 800×1280
+00:12 +141: Ranking · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/ranking","tela":"Ranking","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/ranking","textos":["Carla M.","1840 pts","Bruno L.","1575 pts","Ana S.","1210 pts"],"erros":[],"imagem":null}
-00:14 +142: Avisos de preço · Tablet em pé 800×1280
+00:12 +142: Avisos de preço · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/notificacoes","tela":"Avisos de preço","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:14 +143: Sobre · Tablet em pé 800×1280
+00:12 +143: Sobre · Tablet em pé 800×1280
 AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Tablet em pé 800×1280","largura":800.0,"altura":1280.0,"fonte":1.0,"logado":false,"rota_final":"/sobre","textos":["De onde vêm os preços","Comunidade","Fotos de painéis enviadas por usuários. Um preço é confirmado quando duas pessoas diferentes informam o mesmo valor em até 24 horas.","Pesquisa da ANP","Levantamento semanal oficial da Agência Nacional do Petróleo. É uma amostra: cobre cerca de 20% dos postos e pouco mais de 400 cidades. Vale quando os envios da comunidade divergem.","Estimativa"],"erros":[],"imagem":null}
-00:14 +144: Mapa · Tablet deitado 1280×800
+00:12 +144: Mapa · Tablet deitado 1280×800
   [1m[flutter_map][0m
     We want to help keep OpenStreetMap available for everyone. Our examples
     and demo app use the public tile servers, but they are NOT free to use by
@@ -346,51 +346,51 @@ AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Tablet em pé 800×1280","l
       * https://operations.osmfoundation.org/policies/tiles (OSM Tile Usage Policy)
       * https://docs.fleaflet.dev/osm-warn for more information about this warning
 AUDITORIA|{"rota":"/","tela":"Mapa","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/","textos":["Mapa","Buscar","Favoritos","Perfil","5,99","6,09"],"erros":[],"imagem":null}
-00:14 +145: Busca · Tablet deitado 1280×800
+00:12 +145: Busca · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/buscar","tela":"Busca","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/buscar","textos":["Mapa","Buscar","Favoritos","Perfil","Nome, endereço, bairro, cidade ou UF","Gasolina comum"],"erros":[],"imagem":null}
-00:14 +146: Favoritos · Tablet deitado 1280×800
+00:12 +146: Favoritos · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/favoritos","tela":"Favoritos","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/favoritos","textos":["Mapa","Buscar","Favoritos","Perfil","Gasolina comum","Gasolina aditivada"],"erros":[],"imagem":null}
-00:14 +147: Perfil · Tablet deitado 1280×800
+00:12 +147: Perfil · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/perfil","tela":"Perfil","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/perfil","textos":["Mapa","Buscar","Favoritos","Perfil","Contribua com a sua cidade","Com uma conta você atualiza preços por foto, avalia postos, ganha pontos e recebe avisos quando o preço do seu posto favorito mudar."],"erros":[],"imagem":null}
-00:14 +148: Boas-vindas · Tablet deitado 1280×800
+00:12 +148: Boas-vindas · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/boas-vindas","tela":"Boas-vindas","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/boas-vindas","textos":["Pular","Preço de combustível perto de você","Veja o preço da gasolina, do etanol, do diesel e do GNV nos postos do mapa, sem precisar criar conta.","Continuar"],"erros":[],"imagem":null}
-00:14 +149: Posto · Tablet deitado 1280×800
+00:13 +149: Posto · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/posto/1","tela":"Posto","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1","textos":["Posto Vale Verde","Ipiranga","4,6","(128)","· 40 m","Av. João Pessoa, 6094 — Montese — Fortaleza, CE"],"erros":[],"imagem":null}
-00:14 +150: Posto com localização aproximada · Tablet deitado 1280×800
+00:13 +150: Posto com localização aproximada · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/posto/4","tela":"Posto com localização aproximada","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/4","textos":["Posto Messejana","Bandeira branca","4,4","(33)","· 9,3 km","Rua Coronel Guilherme Alencar, 120 — Messejana — Fortaleza, CE"],"erros":[],"imagem":null}
-00:15 +151: Posto sem local e com estimativa · Tablet deitado 1280×800
+00:13 +151: Posto sem local e com estimativa · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/posto/6","tela":"Posto sem local e com estimativa","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/6","textos":["Posto Itaitinga","Bandeira branca","Sem avaliações","· 23,0 km","Rua Principal, 10 — Centro — Itaitinga, CE","Como chegar"],"erros":[],"imagem":null}
-00:15 +152: Histórico · Tablet deitado 1280×800
+00:13 +152: Histórico · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/posto/1/historico?produto=1","tela":"Histórico","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/historico?produto=1","textos":["Gasolina comum","Gasolina aditivada","Etanol","Diesel S10","Diesel S500","GNV"],"erros":[],"imagem":null}
-00:15 +153: Avaliações · Tablet deitado 1280×800
+00:13 +153: Avaliações · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/posto/1/avaliacoes","tela":"Avaliações","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliacoes","textos":["4,6","128 avaliações","Mais recentes","Mais úteis","Mariana C.","há 2 dias"],"erros":[],"imagem":null}
-00:15 +154: Avaliar · Tablet deitado 1280×800
+00:13 +154: Avaliar · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/posto/1/avaliar","tela":"Avaliar","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/avaliar","textos":["Posto Vale Verde","Sua nota","Dar nota 0","Toque nas estrelas","Comentário (opcional)","Atendimento, qualidade do combustível, estrutura, conveniência…"],"erros":[],"imagem":null}
-00:15 +155: Enviar preços · Tablet deitado 1280×800
+00:13 +155: Enviar preços · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/posto/1/enviar","tela":"Enviar preços","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/1/enviar","textos":["Fotografe o painel de preços","O app lê os valores e você confere antes de enviar.","Enquadre o painel inteiro, de frente","Evite reflexo e contraluz","Esteja no posto: a localização confirma o envio (até 300 m)","A foto é lida no seu celular e apagada. Ela nunca é enviada nem guardada."],"erros":[],"imagem":null}
-00:15 +156: Estou neste posto · Tablet deitado 1280×800
+00:13 +156: Estou neste posto · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/posto/4/posicao","tela":"Estou neste posto","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/posto/4/posicao","textos":["Posto Messejana","Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE","Esteja dentro do posto, de preferência ao ar livre","A posição vale quando duas pessoas diferentes informam pontos a até 150 m um do outro","Quando a posição é confirmada, você ganha 5 pontos","Sua posição é usada só para localizar o posto. Nenhum preço é enviado"],"erros":[],"imagem":null}
-00:15 +157: Entrar · Tablet deitado 1280×800
+00:13 +157: Entrar · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/entrar","tela":"Entrar","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:15 +158: Criar conta · Tablet deitado 1280×800
+00:13 +158: Criar conta · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/cadastro","tela":"Criar conta","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/cadastro","textos":["gasprice","Criar conta","Só pedimos nome, e-mail e senha. Seu nome aparece abreviado para outras pessoas.","Nome","E-mail","Senha"],"erros":[],"imagem":null}
-00:15 +159: Recuperar senha · Tablet deitado 1280×800
+00:13 +159: Recuperar senha · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/recuperar-senha","tela":"Recuperar senha","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/recuperar-senha","textos":["gasprice","Recuperar senha","Informe o e-mail da sua conta. Enviamos um link para você criar uma nova senha.","E-mail","Enviar link"],"erros":[],"imagem":null}
-00:15 +160: Nova senha · Tablet deitado 1280×800
+00:13 +160: Nova senha · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/nova-senha","tela":"Nova senha","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/nova-senha","textos":["gasprice","Crie uma nova senha","Use pelo menos 8 caracteres, com letras e números.","Nova senha","Confirme a nova senha","Salvar nova senha"],"erros":[],"imagem":null}
-00:15 +161: Confirme seu e-mail · Tablet deitado 1280×800
+00:13 +161: Confirme seu e-mail · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/verificar-email?email=carla.m%40exemplo.com","tela":"Confirme seu e-mail","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/verificar-email?email=carla.m%40exemplo.com","textos":["gasprice","Confirme seu e-mail","Enviamos um link para carla.m@exemplo.com. Abra a mensagem neste celular e toque no link para ativar a conta.","Não chegou? Veja a caixa de spam ou peça outro link.","Reenviar link","Já confirmei, quero entrar"],"erros":[],"imagem":null}
-00:15 +162: Alterar dados · Tablet deitado 1280×800
+00:13 +162: Alterar dados · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/perfil/editar","tela":"Alterar dados","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:16 +163: Alterar senha · Tablet deitado 1280×800
+00:13 +163: Alterar senha · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/perfil/senha","tela":"Alterar senha","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:16 +164: Meus pontos · Tablet deitado 1280×800
+00:13 +164: Meus pontos · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/pontos","tela":"Meus pontos","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:16 +165: Ranking · Tablet deitado 1280×800
+00:13 +165: Ranking · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/ranking","tela":"Ranking","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/ranking","textos":["Carla M.","1840 pts","Bruno L.","1575 pts","Ana S.","1210 pts"],"erros":[],"imagem":null}
-00:16 +166: Avisos de preço · Tablet deitado 1280×800
+00:13 +166: Avisos de preço · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/notificacoes","tela":"Avisos de preço","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/entrar","textos":["gasprice","Entrar","Com a conta você envia preços, avalia postos e ganha pontos.","E-mail","Senha","Esqueci minha senha"],"erros":[],"imagem":null}
-00:16 +167: Sobre · Tablet deitado 1280×800
+00:14 +167: Sobre · Tablet deitado 1280×800
 AUDITORIA|{"rota":"/sobre","tela":"Sobre","tamanho":"Tablet deitado 1280×800","largura":1280.0,"altura":800.0,"fonte":1.0,"logado":false,"rota_final":"/sobre","textos":["De onde vêm os preços","Comunidade","Fotos de painéis enviadas por usuários. Um preço é confirmado quando duas pessoas diferentes informam o mesmo valor em até 24 horas.","Pesquisa da ANP","Levantamento semanal oficial da Agência Nacional do Petróleo. É uma amostra: cobre cerca de 20% dos postos e pouco mais de 400 cidades. Vale quando os envios da comunidade divergem.","Estimativa"],"erros":[],"imagem":null}
-00:16 +168: (tearDownAll)
-00:16 +168: All tests passed!
+00:14 +168: (tearDownAll)
+00:14 +168: All tests passed!

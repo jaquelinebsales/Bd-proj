@@ -1,0 +1,30 @@
+name: Carga semanal da ANP
+
+# Baixa a planilha semanal de preços por posto da ANP e grava no banco (scripts/anp/carga_semanal.py).
+# Roda às segundas e quintas: a ANP publica a semana anterior nos primeiros dias úteis.
+# Segredos usados (já cadastrados): SUPABASE_PROJECT_REF, SUPABASE_DB_PASSWORD.
+on:
+  schedule:
+    - cron: "0 12 * * 1,4"
+  workflow_dispatch:
+
+concurrency:
+  group: carga-anp
+  cancel-in-progress: false
+
+jobs:
+  carga:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "psycopg[binary]" openpyxl
+      - name: Carregar semanas novas
+        env:
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_POOLER_HOST: aws-0-us-west-2.pooler.supabase.com
+        run: python scripts/anp/carga_semanal.py

@@ -44,3 +44,4 @@ Thumbs.db
 # Configuracao pessoal do Claude Code
 .claude/settings.local.json
 app/ios/Flutter/Secrets.xcconfig
+app/test_auditoria/failures/

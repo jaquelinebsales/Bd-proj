@@ -101,18 +101,22 @@ class _TelaAvaliarState extends State<TelaAvaliar> {
           const SizedBox(height: 24),
           Text('Sua nota', style: tt.titleMedium),
           const SizedBox(height: 8),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            for (var n = 1; n <= 5; n++)
-              IconButton(
-                iconSize: 44,
-                tooltip: '$n estrela${n > 1 ? 's' : ''}',
-                onPressed: () => setState(() => _nota = n),
-                icon: Icon(
-                  (_nota ?? 0) >= n ? Icons.star_rounded : Icons.star_outline_rounded,
-                  color: const Color(0xFFE0A100),
+          // As estrelas encolhem para caber em telas estreitas (5 botões de 44 px passam de 300 px)
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              for (var n = 1; n <= 5; n++)
+                IconButton(
+                  iconSize: 44,
+                  tooltip: '$n estrela${n > 1 ? 's' : ''}',
+                  onPressed: () => setState(() => _nota = n),
+                  icon: Icon(
+                    (_nota ?? 0) >= n ? Icons.star_rounded : Icons.star_outline_rounded,
+                    color: const Color(0xFFE0A100),
+                  ),
                 ),
-              ),
-          ]),
+            ]),
+          ),
           Center(
             child: TextButton(
               onPressed: () => setState(() => _nota = 0),

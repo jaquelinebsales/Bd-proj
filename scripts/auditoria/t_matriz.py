@@ -56,7 +56,9 @@ def rodar(s, ctx) -> None:
         filtro, corpo, mud = casos[t]
         alvos = db.execute(f"select count(*) from public.{t} where " + _sql(filtro)).fetchone()[0]
 
-        r = http("GET", f"/rest/v1/{t}?select=*&limit=5")
+        # avaliacoes: só as colunas públicas (quem avaliou não é público; testado à parte em t_seguranca.exposicao)
+        colunas = "id,posto_id,nota,comentario,votos_uteis,criado_em" if t == "avaliacoes" else "*"
+        r = http("GET", f"/rest/v1/{t}?select={colunas}&limit=5")
         ok = (r.status == 200 and isinstance(r.corpo, list)) if publica else (r.status in (401, 403) or (r.status == 200 and r.corpo == []))
         s.check(ok, obtido=f"{resumo(r, 160)} (linhas no banco: {db.execute(f'select count(*) from public.{t}').fetchone()[0]})",
                 aba="Segurança", modulo="Controle de acesso", tela=f"Tabela {t}", tipo="Segurança · RLS",

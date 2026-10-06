@@ -25,7 +25,9 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 
 RAIZ = Path(__file__).resolve().parents[2]
 PASTA = RAIZ / "documentacao" / "auditoria"
-SUITES = ["remoto", "automatizados", "telas", "e2e", "android"]
+# Retrato da auditoria de 06/10/2026, antes das correções. A rodada das telas depois das correções
+# está em resultados/telas.json (304 de 304); a da auditoria, em resultados/telas_antes.json.
+SUITES = ["remoto", "automatizados", "telas_antes", "e2e", "android"]
 TOKEN = re.compile(r"eyJ[\w-]{6,}(?:\.[\w-]*){0,2}")  # trechos de tokens de sessão dos usuários de teste
 
 # aba do registro -> (nome da aba no Excel, prefixo do ID). O Excel não aceita "/" em nome de aba.
@@ -141,6 +143,23 @@ BUGS = [
 ]
 
 
+# Situação da correção de cada bug (atualizar aqui quando mudar)
+SITUACAO = {
+    "BUG-01": "Corrigido (função registrar_envio com trava por usuário; pontos uma vez por pessoa). Publica no git push.",
+    "BUG-02": "Corrigido (contorno dos estados do IBGE e pontos padrão; limpa os postos atuais). Publica no git push.",
+    "BUG-03": "Corrigido e no ar: 14 semanas carregadas (coleta até 02/10/2026); carga semanal no GitHub Actions.",
+    "BUG-04": "Aguardando você: política de senha no painel do Supabase (8 caracteres, letras e números).",
+    "BUG-05": "Corrigido (coluna de autor fora da leitura pública; cada um vê só os próprios votos). Publica no git push.",
+    "BUG-06": "Corrigido e verificado: 304 testes de telas passando. Chega ao celular no próximo APK.",
+    "BUG-07": "Corrigido e verificado: 304 testes de telas passando. Chega ao celular no próximo APK.",
+    "BUG-08": "Corrigido (política de voto do banco). Publica no git push.",
+    "BUG-09": "Corrigido: catálogo de regras reescrito e republicado.",
+    "BUG-10": "Decisão sua: criar o projeto em sa-east-1 antes do lançamento.",
+}
+for _b in BUGS:
+    _b["situacao"] = SITUACAO.get(_b["id"], "")
+
+
 def carregar() -> list[dict]:
     testes = []
     for nome in SUITES:
@@ -155,10 +174,39 @@ def carregar() -> list[dict]:
         for t in dados:
             t = dict(t)
             t["_suite"] = nome
+            if nome == "telas_antes":
+                t["evidencia"] = (t.get("evidencia") or "").replace("evidencias/telas/", "evidencias/telas_antes/")
             if not t.get("evidencia"):
                 t["evidencia"] = {"remoto": "logs/remoto.log", "e2e": "resultados/e2e.json"}.get(nome, f"resultados/{nome}.json")
             testes.append(t)
     return testes
+
+
+def preservar_android(testes: list[dict], destino: Path) -> int:
+    """Mantém o que a pessoa já preencheu na aba Android (manual): resultado obtido, status e evidência."""
+    if not destino.exists():
+        return 0
+    from openpyxl import load_workbook
+    try:
+        ws = load_workbook(destino, read_only=True)["Android (manual)"]
+    except (KeyError, OSError):
+        return 0
+    por_cenario = {}
+    for linha in ws.iter_rows(min_row=5, values_only=True):
+        if linha and linha[4]:
+            por_cenario[linha[4]] = (linha[9], linha[10], linha[12])
+    volta = {v: k for k, v in STATUS.items()}
+    n = 0
+    for t in testes:
+        if t["aba"] != "Android (manual)" or t["cenario"] not in por_cenario:
+            continue
+        obtido, status, evidencia = por_cenario[t["cenario"]]
+        if obtido or (status and volta.get(status, "NOT TESTED") != "NOT TESTED"):
+            t["obtido"] = obtido or ""
+            t["status"] = volta.get(status, t["status"])
+            t["evidencia"] = evidencia or t["evidencia"]
+            n += 1
+    return n
 
 
 def ligar_bugs(testes: list[dict]) -> list[str]:
@@ -251,15 +299,15 @@ def aba_testes(wb, nome: str, linhas: list[dict]) -> None:
 def aba_bugs(wb) -> None:
     ws = wb.create_sheet("Bugs encontrados")
     cab = ["ID", "Título", "Severidade", "Módulo", "Descrição", "Impacto", "Como reproduzir", "Correção sugerida",
-           "Testes que falharam", "Prioridade"]
+           "Testes que falharam", "Prioridade", "Situação da correção"]
     ws.append(cab)
     estilo_cabecalho(ws, 1, len(cab))
     for n, b in enumerate(BUGS, 1):
         b["prioridade"] = n
     for b in BUGS:
         ws.append([b["id"], b["titulo"], b["sev"], b["modulo"], b["descricao"], b["impacto"], b["reproduzir"], b["correcao"],
-                   f"{len(b['testes'])}: " + ", ".join(b["testes"][:12]) + (" …" if len(b["testes"]) > 12 else ""), b["prioridade"]])
-    for i, w in enumerate([9, 40, 11, 24, 50, 44, 40, 50, 30, 10], 1):
+                   f"{len(b['testes'])}: " + ", ".join(b["testes"][:12]) + (" …" if len(b["testes"]) > 12 else ""), b["prioridade"], b["situacao"]])
+    for i, w in enumerate([9, 40, 11, 24, 50, 44, 40, 50, 30, 10, 44], 1):
         ws.column_dimensions[get_column_letter(i)].width = w
     for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
         for cel in row:
@@ -271,7 +319,7 @@ def aba_bugs(wb) -> None:
         ws.conditional_formatting.add(f"C2:C{ws.max_row}", CellIsRule(operator="equal", formula=[f'"{sev}"'],
                                                                      fill=PatternFill("solid", fgColor=cor)))
     ws.freeze_panes = "C2"
-    ws.auto_filter.ref = f"A1:J{ws.max_row}"
+    ws.auto_filter.ref = f"A1:K{ws.max_row}"
 
 
 def dashboard(wb, abas: list[str], commit: str, total_testes: int) -> None:
@@ -280,7 +328,8 @@ def dashboard(wb, abas: list[str], commit: str, total_testes: int) -> None:
     ws["B2"] = "Auditoria do gasprice"
     ws["B2"].font = Font(name=FONTE, size=20, bold=True, color="134E3A")
     ws["B3"] = (f"Executada em {date.today():%d/%m/%Y} sobre o commit {commit}, contra o Supabase real (projeto gasprice), "
-                "o Postgres local, o app em modo demonstração e o app web no Edge.")
+                "o Postgres local, o app em modo demonstração e o app web no Edge. Os resultados são os de antes das correções; "
+                "a coluna 'Situação da correção' da aba Bugs encontrados mostra o que já foi corrigido.")
     ws["B3"].font = Font(name=FONTE, size=10, color="435049")
 
     # Tabela por módulo (base de tudo): fórmulas CONT.SE sobre cada aba
@@ -394,6 +443,10 @@ def dashboard(wb, abas: list[str], commit: str, total_testes: int) -> None:
 
 def main() -> int:
     testes = carregar()
+    destino = PASTA / "auditoria_gasprice.xlsx"
+    preservados = preservar_android(testes, destino)
+    if preservados:
+        print(f"{preservados} caso(s) da aba Android preenchidos à mão foram mantidos")
     sem_bug = ligar_bugs(testes)
     if sem_bug:
         print("FALHAS SEM BUG ASSOCIADO:", *sem_bug, sep="\n  ")
@@ -430,8 +483,11 @@ def main() -> int:
         aba_testes(wb, nome, por_aba[nome])
     aba_bugs(wb)
     wb.calculation.fullCalcOnLoad = True
-    destino = PASTA / "auditoria_gasprice.xlsx"
-    wb.save(destino)
+    try:
+        wb.save(destino)
+    except PermissionError:
+        print(f"Não consegui gravar {destino.name}: o arquivo está aberto no Excel. Feche-o e rode de novo.")
+        return 1
 
     # Conferência: os mesmos números calculados em Python (o que as fórmulas devem mostrar no Excel)
     resumo = {}

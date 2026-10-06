@@ -464,4 +464,106 @@ select pg_temp.checar((select precisao_localizacao = 'exata' and localizacao_fon
 select pg_temp.checar((select precisao_localizacao = 'exata' and localizacao_fonte = 'usuario' from public.postos where id = 22),
                       'posição confirmada por usuários não é trocada pela sincronização');
 
+-- ============================================================ correções da auditoria (06/10/2026)
+-- BUG-01: envio numa só transação, com limite diário e regra de 6 h
+do $$
+declare r jsonb;
+begin
+  r := public.registrar_envio('00000000-0000-0000-0000-00000000000c', 1, -3.7301, -38.5271, 15, '[{"produto_id": 2, "preco": 6.30}]'::jsonb);
+  perform pg_temp.checar((r ->> 'ok')::boolean and r -> 'itens' -> 0 ->> 'status' = 'pendente', 'registrar_envio grava o envio e devolve os itens');
+  r := public.registrar_envio('00000000-0000-0000-0000-00000000000c', 1, -3.7301, -38.5271, 15, '[{"produto_id": 2, "preco": 6.31}]'::jsonb);
+  perform pg_temp.checar(r ->> 'motivo' = 'repetido', 'mesmo combustível no mesmo posto em menos de 6 h é recusado');
+  r := public.registrar_envio('00000000-0000-0000-0000-00000000000c', 1, -3.7301, -38.5271, 15,
+                              '[{"produto_id": 2, "preco": 6.31}, {"produto_id": 4, "preco": 6.10}]'::jsonb);
+  perform pg_temp.checar((r ->> 'ok')::boolean and r -> 'ignorados' = '[2]'::jsonb and jsonb_array_length(r -> 'itens') = 1,
+                         'envio misto ignora o combustível repetido e grava o novo');
+  insert into public.envios (usuario_id, posto_id, posicao, distancia_m)
+  select '00000000-0000-0000-0000-00000000000c', 1, 'SRID=4326;POINT(-38.52 -3.73)', 10 from generate_series(1, 20);
+  r := public.registrar_envio('00000000-0000-0000-0000-00000000000c', 2, -3.7350, -38.5100, 15, '[{"produto_id": 3, "preco": 4.30}]'::jsonb);
+  perform pg_temp.checar(r ->> 'motivo' = 'limite_diario', 'limite de 20 envios em 24 horas vale dentro da função');
+end
+$$;
+
+-- BUG-01: dois envios da mesma pessoa no mesmo consenso rendem pontos uma vez só
+select pg_temp.enviar('00000000-0000-0000-0000-00000000000a', 3, 3, 4.10);
+select pg_temp.enviar('00000000-0000-0000-0000-00000000000a', 3, 3, 4.11);
+select pg_temp.enviar('00000000-0000-0000-0000-00000000000b', 3, 3, 4.10);
+select pg_temp.checar((select count(*) from public.envio_itens where posto_id = 3 and produto_id = 3 and status = 'confirmado') = 3,
+                      'os três envios do consenso ficam confirmados');
+select pg_temp.checar((select count(*) from public.pontos_movimentos m join public.envio_itens i on i.id = m.envio_item_id
+                       where i.posto_id = 3 and i.produto_id = 3 and m.tipo = 'confirmado'
+                         and m.usuario_id = '00000000-0000-0000-0000-00000000000a') = 1,
+                      'quem tinha dois envios no consenso ganha os pontos uma vez só');
+
+-- BUG-02: coordenada da ANP só vale dentro do estado e fora dos pontos de valor padrão
+select pg_temp.checar(public.coordenada_confiavel('CE', 'SRID=4326;POINT(-38.5271 -3.7301)'), 'coordenada de Fortaleza vale para o CE');
+select pg_temp.checar(not public.coordenada_confiavel('AM', 'SRID=4326;POINT(-43.20 -22.90)'), 'coordenada do Rio não vale para posto do AM');
+select pg_temp.checar(not public.coordenada_confiavel('RJ', 'SRID=4326;POINT(-43.3371 -22.7780)'), 'ponto padrão da API da ANP nunca vale');
+select pg_temp.checar(public.coordenada_confiavel('PE', 'SRID=4326;POINT(-32.401 -3.836)'), 'Fernando de Noronha vale para PE');
+select pg_temp.checar(public.coordenada_confiavel('AM', 'SRID=4326;POINT(-71.688 -7.056)'), 'Ipixuna, na divisa com o AC, vale para o AM');
+insert into public.postos (id, cnpj, razao_social, municipio, uf, localizacao, localizacao_fonte, precisao_localizacao) values
+  (200, '20000000000200', 'POSTO PONTO PADRAO LTDA', 'IPIXUNA', 'AM', 'SRID=4326;POINT(-43.3371 -22.7780)', 'anp', 'exata');
+select public.importar_postos_anp('AM', '[
+  {"cnpj": "20000000000200", "razao_social": "POSTO PONTO PADRAO LTDA", "municipio": "IPIXUNA", "lat": -22.7780, "lon": -43.3371,
+   "validada": true, "produtos": []},
+  {"cnpj": "20000000000201", "razao_social": "POSTO NO RIO LTDA", "municipio": "EIRUNEPE", "lat": -22.90, "lon": -43.20,
+   "validada": true, "produtos": []},
+  {"cnpj": "20000000000202", "razao_social": "POSTO CERTO LTDA", "municipio": "IPIXUNA", "lat": -7.056, "lon": -71.688,
+   "validada": false, "produtos": []}
+]'::jsonb, false);
+select pg_temp.checar((select localizacao is null and precisao_localizacao = 'nenhuma' and localizacao_fonte is null
+                       from public.postos where id = 200),
+                      'coordenada ruim já gravada é limpa na sincronização');
+select pg_temp.checar((select localizacao is null and precisao_localizacao = 'nenhuma' from public.postos where cnpj = '20000000000201'),
+                      'posto novo com coordenada fora do estado entra sem posição');
+select pg_temp.checar((select localizacao is not null and precisao_localizacao = 'exata' from public.postos where cnpj = '20000000000202'),
+                      'posto novo com coordenada dentro do estado entra com posição exata');
+
+-- BUG-05 e BUG-08: quem avaliou e quem votou não é público; ninguém vota na própria avaliação
+do $$
+declare
+  negado_coluna boolean := false;
+  notas int;
+  alteradas int;
+  negado_voto boolean := false;
+  votos_visiveis int;
+begin
+  set local role anon;
+  begin
+    perform usuario_id from public.avaliacoes;
+  exception when insufficient_privilege then
+    negado_coluna := true;
+  end;
+  select count(nota) into notas from public.avaliacoes;
+  select count(*) into votos_visiveis from public.avaliacao_votos;
+  reset role;
+  perform pg_temp.checar(negado_coluna, 'visitante não lê quem fez cada avaliação');
+  perform pg_temp.checar(notas >= 1, 'visitante continua lendo nota e comentário');
+  perform pg_temp.checar(votos_visiveis = 0, 'visitante não vê os votos de útil');
+
+  perform set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-00000000000a", "role": "authenticated"}', true);
+  set local role authenticated;
+  update public.avaliacoes set nota = 4 where id = (select id from public.avaliacoes where posto_id = 1);
+  get diagnostics alteradas = row_count;
+  begin
+    insert into public.avaliacao_votos (avaliacao_id, usuario_id)
+    select id, '00000000-0000-0000-0000-00000000000a' from public.avaliacoes where posto_id = 1;
+  exception when insufficient_privilege then
+    negado_voto := true;
+  end;
+  reset role;
+  perform pg_temp.checar(alteradas = 1, 'autora continua editando a própria avaliação');
+  perform pg_temp.checar(negado_voto, 'autora não vota na própria avaliação');
+
+  perform set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-00000000000b", "role": "authenticated"}', true);
+  set local role authenticated;
+  select count(*) into votos_visiveis from public.avaliacao_votos;
+  delete from public.avaliacao_votos where usuario_id = '00000000-0000-0000-0000-00000000000b';
+  get diagnostics alteradas = row_count;
+  reset role;
+  perform pg_temp.checar(votos_visiveis = 1, 'usuário vê só os próprios votos');
+  perform pg_temp.checar(alteradas = 1, 'usuário retira o próprio voto');
+end
+$$;
+
 \echo 'TODOS OS TESTES PASSARAM'

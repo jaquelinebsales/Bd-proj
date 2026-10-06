@@ -182,7 +182,8 @@ def autorizacao(s, ctx) -> None:
     Z = dict(aba="Segurança", modulo="Autorização entre usuários")
 
     # Avaliações
-    r = http("POST", "/rest/v1/avaliacoes", {"posto_id": p["exata"], "usuario_id": ana["id"], "nota": 4, "comentario": "Avaliação de teste da auditoria"},
+    r = http("POST", "/rest/v1/avaliacoes?select=id", {"posto_id": p["exata"], "usuario_id": ana["id"], "nota": 4,
+                                                        "comentario": "Avaliação de teste da auditoria"},
              token=ana["token"], cabecalhos={"Prefer": "return=representation"})
     av_id = r.corpo[0]["id"] if r.status == 201 and isinstance(r.corpo, list) else None
     s.check(av_id is not None, obtido=resumo(r, 200), aba="Funcionais", modulo="Avaliações", tela="Avaliar", tipo="Funcional · positivo",

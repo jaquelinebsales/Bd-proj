@@ -71,7 +71,7 @@ class _TelaEntrarState extends State<TelaEntrar> {
                 const SizedBox(height: 8),
                 BotaoCarregando(carregando: _carregando, aoTocar: _entrar, texto: 'Entrar'),
                 const SizedBox(height: 24),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Wrap(alignment: WrapAlignment.center, crossAxisAlignment: WrapCrossAlignment.center, children: [
                   const Text('Ainda não tem conta?'),
                   TextButton(onPressed: () => context.pushReplacement('/cadastro'), child: const Text('Criar conta')),
                 ]),
