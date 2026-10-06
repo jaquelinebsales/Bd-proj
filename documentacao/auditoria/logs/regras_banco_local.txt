@@ -1,0 +1,112 @@
+aplicado: shims_supabase.sql
+aplicado: 20260929000001_esquema.sql
+aplicado: 20260929000002_seguranca.sql
+aplicado: 20260929000003_regras.sql
+aplicado: 20260929000004_consultas_e_agendamentos.sql
+aplicado: 20260929000005_estimativas_relativas.sql
+aplicado: 20260929000006_margens_medidas.sql
+aplicado: 20260930000007_precisao_localizacao.sql
+ok  perfil criado automaticamente no cadastro
+ok  e-mail curto sem nome gera o nome "Usuário"
+ok  nome abreviado para exibição pública
+ok  busca ignora acentos e maiúsculas
+ok  Fortaleza tem coleta da ANP e Itaitinga não
+ok  estimativa só para posto e combustível sem preço ANP
+ok  estimativa de Itaitinga = mediana dos vizinhos (6,14) com o erro médio medido da faixa 25-50 km
+ok  sem envios, vale o preço oficial da ANP
+ok  preço ANP marcado como anomalia é ignorado
+ok  posto sem nenhuma fonte mostra estimativa com margem
+ok  envio isolado fica pendente
+ok  envio isolado aparece como não confirmado e guarda o último preço confiável
+ok  envio isolado não gera aviso
+ok  dois usuários com o mesmo valor confirmam o preço
+ok  preço exibido passa a ser o confirmado
+ok  primeiro a enviar ganha 10 + 5 de bônus
+ok  quem confirma ganha 10
+ok  confiabilidade sobe com envio confirmado
+ok  preço confirmado entra no histórico no mesmo dia
+ok  quem favoritou é avisado da queda de 6,19 para 5,99
+ok  envio isolado diferente não derruba um preço confirmado
+ok  envios divergentes fazem valer o preço da ANP
+ok  envio contrariado pelo consenso é marcado como contestado
+ok  contestado perde 5 pontos (sem ficar negativo) e confiabilidade
+ok  segundo posto confirmado soma 10 + 5 de bônus
+ok  cidade sem ANP dobra pontos e bônus (20 + 10)
+ok  cidade sem ANP dobra os pontos de quem confirma
+ok  preço da comunidade substitui a estimativa
+ok  em revisão, dois usuários ainda não bastam
+ok  envio em revisão não aparece como preço antes de confirmado
+ok  em revisão, o terceiro usuário confirma
+ok  mudança do etanol também gera aviso para o favorito
+ok  envio sem confirmação há mais de 24 h é fechado
+ok  envio fechado fica como expirado
+ok  envio expirado entra no histórico como não confirmado
+ok  preço confirmado continua exibido
+ok  teto de 200 pontos por dia limita o ganho
+ok  acima do teto não ganha mais pontos
+ok  3 envios contestados em 7 dias pausam novos envios
+ok  recálculo em bloco reproduz o que o caminho individual já tinha calculado
+ok  recálculo preserva o preço confirmado pela comunidade
+ok  em bloco, o preço da ANP vira o preço exibido
+ok  primeiro preço oficial do posto não gera aviso
+ok  nova pesquisa da ANP com mudança de R$ 0,20 avisa quem favoritou
+ok  recalcular de novo não repete o aviso
+ok  posto que perdeu todas as fontes sai dos preços exibidos
+ok  estimativa continua funcionando quando o dado da ANP é antigo
+ok  estimativa gerada a partir de pesquisa com mais de 60 dias de idade
+ok  visitante sem login consulta os postos
+ok  visitante sem login não consegue avaliar
+ok  usuário não avalia em nome de outra pessoa
+ok  usuário não altera os próprios pontos
+ok  usuário só enxerga o próprio perfil
+ok  nota média calculada no servidor
+ok  usuário não altera avaliação de outra pessoa
+ok  voto de "útil" contado
+ok  mapa traz os postos da área visível
+ok  lista de próximos começa pelo mais perto
+ok  busca por cidade
+ok  busca com várias palavras
+ok  busca exige pelo menos 2 letras
+ok  detalhe do posto com preços e notas
+ok  histórico junta ANP e comunidade
+ok  contribuições mostram nomes abreviados
+ok  avaliações do posto
+ok  favoritos locais buscados por id
+ok  ranking ordenado por pontos
+ok  resumo do perfil com pontos, avaliações e posição
+ok  favoritos da conta
+ok  mapa mostra posto de rua e esconde os de CEP da cidade e sem posição
+ok  lista por distância também esconde os de posição fraca
+ok  o mapa informa a precisão da posição
+ok  busca encontra o posto sem posição, sem distância
+ok  posição exata: envio em 300 m
+ok  posição de rua: envio em 1 km
+ok  CEP da cidade: não aceita envio
+ok  validação do envio recebe distância e precisão do posto
+ok  posto sem posição não tem distância
+ok  posto de posição exata não aceita correção
+ok  posição a mais de 100 km da aproximada é recusada
+ok  primeira pessoa informa a posição e o posto aguarda confirmação
+ok  a mesma pessoa informando de novo atualiza a posição e não conta duas vezes
+ok  enquanto aguarda, a posição do posto não muda
+ok  segunda pessoa a menos de 150 m confirma a posição
+ok  posto passa a ter posição exata, no meio das duas informadas
+ok  quem confirma a posição ganha 5 pontos
+ok  as duas posições ficam como confirmadas
+ok  depois de confirmada, a posição não aceita nova correção
+ok  posições a mais de 150 m uma da outra não se confirmam
+ok  a terceira posição, perto da primeira, confirma
+ok  a posição que discorda do consenso é encerrada como contestada
+ok  nenhuma posição fica pendente depois do consenso
+ok  cada pessoa informa no máximo 10 posições por dia
+ok  importação do cadastro grava 2 postos
+ok  cadastro atualiza bandeira e preserva a posição corrigida por usuário
+ok  combustíveis vendidos seguem o cadastro da ANP
+ok  posto novo do cadastro entra com localização
+ok  posto que saiu do cadastro fica inativo
+ok  quatro tarefas agendadas registradas
+ok  posto novo do cadastro com coordenada da ANP entra com posição exata
+ok  importação de um posto que já tinha posição aproximada
+ok  coordenada da ANP substitui a posição aproximada
+ok  posição confirmada por usuários não é trocada pela sincronização
+TODOS OS TESTES PASSARAM

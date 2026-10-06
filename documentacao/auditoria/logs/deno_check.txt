@@ -1,0 +1,4 @@
+Check enviar-precos/index.ts
+Check corrigir-posicao/index.ts
+Check sincronizar-cadastro-anp/index.ts
+Check excluir-conta/index.ts

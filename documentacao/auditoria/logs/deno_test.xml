@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="deno test" tests="17" failures="0" errors="0" time="0.286">
+    <testsuite name="./corrigir-posicao/validacao_test.ts" tests="6" disabled="0" errors="0" failures="0">
+        <testcase name="aceita posição válida com GPS preciso" classname="./corrigir-posicao/validacao_test.ts" time="0.001" line="6" col="6">
+        </testcase>
+        <testcase name="recusa GPS impreciso" classname="./corrigir-posicao/validacao_test.ts" time="0.000" line="11" col="6">
+        </testcase>
+        <testcase name="recusa quando a precisão do GPS não foi enviada" classname="./corrigir-posicao/validacao_test.ts" time="0.000" line="17" col="6">
+        </testcase>
+        <testcase name="recusa posição fora do Brasil" classname="./corrigir-posicao/validacao_test.ts" time="0.000" line="22" col="6">
+        </testcase>
+        <testcase name="recusa posto ausente e corpo inválido" classname="./corrigir-posicao/validacao_test.ts" time="0.000" line="26" col="6">
+        </testcase>
+        <testcase name="mensagens dos motivos do banco" classname="./corrigir-posicao/validacao_test.ts" time="0.000" line="31" col="6">
+        </testcase>
+    </testsuite>
+    <testsuite name="./enviar-precos/validacao_test.ts" tests="7" disabled="0" errors="0" failures="0">
+        <testcase name="raio de envio depende da precisão da posição do posto" classname="./enviar-precos/validacao_test.ts" time="0.002" line="4" col="6">
+        </testcase>
+        <testcase name="aceita envio válido e arredonda para 3 casas" classname="./enviar-precos/validacao_test.ts" time="0.000" line="20" col="6">
+        </testcase>
+        <testcase name="recusa preço fora da faixa" classname="./enviar-precos/validacao_test.ts" time="0.001" line="32" col="6">
+        </testcase>
+        <testcase name="recusa combustível repetido" classname="./enviar-precos/validacao_test.ts" time="0.000" line="37" col="6">
+        </testcase>
+        <testcase name="recusa sem localização" classname="./enviar-precos/validacao_test.ts" time="0.000" line="45" col="6">
+        </testcase>
+        <testcase name="marca revisão quando desvia mais de 20% da referência" classname="./enviar-precos/validacao_test.ts" time="0.000" line="50" col="6">
+        </testcase>
+        <testcase name="marca revisão para usuário com baixa confiabilidade" classname="./enviar-precos/validacao_test.ts" time="0.000" line="56" col="6">
+        </testcase>
+    </testsuite>
+    <testsuite name="./sincronizar-cadastro-anp/normalizar_test.ts" tests="4" disabled="0" errors="0" failures="0">
+        <testcase name="normaliza registro real da API" classname="./sincronizar-cadastro-anp/normalizar_test.ts" time="0.003" line="20" col="6">
+        </testcase>
+        <testcase name="descarta coordenada fora do Brasil" classname="./sincronizar-cadastro-anp/normalizar_test.ts" time="0.000" line="31" col="6">
+        </testcase>
+        <testcase name="mapeia nomes de produto" classname="./sincronizar-cadastro-anp/normalizar_test.ts" time="0.000" line="37" col="6">
+        </testcase>
+        <testcase name="recusa registro sem CNPJ" classname="./sincronizar-cadastro-anp/normalizar_test.ts" time="0.000" line="44" col="6">
+        </testcase>
+    </testsuite>
+</testsuites>

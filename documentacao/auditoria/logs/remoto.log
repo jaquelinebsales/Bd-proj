@@ -1,0 +1,382 @@
+﻿apagados 0 usuários e 0 postos de teste; restam 0 e 0
+dados de teste criados: {'exata': 67264, 'rua': 67265, 'sem_local': 67266, 'inativo': 67267, 'cidade': 67268}
+
+== autenticação
+ok     R-001 Login com e-mail e senha corretos
+ok     R-002 Login com senha errada
+ok     R-003 E-mail inexistente recebe a mesma resposta que senha errada (não revela quem tem conta)
+ok     R-004 Login de conta com e-mail ainda não confirmado é recusado
+ok     R-005 Login com e-mail e senha vazios
+ok     R-006 Login com sem senha
+ok     R-007 Cadastro com senha de 1 caractere(s) é recusado pelo servidor
+ok     R-008 Cadastro com senha de 5 caractere(s) é recusado pelo servidor
+FALHOU R-009 Servidor recusa senha com 6 caracteres, que o app recusa
+FALHOU R-010 Servidor recusa senha com 8 letras e nenhum número, que o app recusa
+ok     R-011 Cadastro com e-mail de domínio inexistente é recusado pelo servidor
+NÃO    R-012 E-mail de confirmação chega a um endereço que não é membro do projeto no Supabase
+ok     R-013 Cadastro com e-mail já usado não revela que a conta existe
+ok     R-014 Token de acesso expira em até 1 hora
+ok     R-015 Renovação da sessão com refresh token
+ok     R-016 Token com assinatura adulterada é recusado pela API do banco
+ok     R-017 enviar-precos recusa token adulterado
+ok     R-018 corrigir-posicao recusa token adulterado
+ok     R-019 excluir-conta recusa token adulterado
+ok     R-020 Troca de senha: a antiga deixa de funcionar e a nova entra
+ok     R-021 Recuperação de senha para e-mail inexistente responde igual (não revela contas)
+NÃO    R-022 Link de recuperação chega ao e-mail e abre a tela Nova senha no app
+ok     R-023 Sair encerra a sessão: o refresh token deixa de valer
+ok     R-024 Access token emitido antes do logout, até expirar
+
+== autorização
+ok     R-025 Usuária logada cria a própria avaliação
+ok     R-026 Nota média e total do posto recalculados ao criar avaliação
+ok     R-027 Usuário não altera a avaliação de outra pessoa
+ok     R-028 Usuário não apaga a avaliação de outra pessoa
+ok     R-029 Usuário não cria avaliação em nome de outra pessoa
+ok     R-030 Autora não altera o contador de votos úteis da própria avaliação
+ok     R-031 Avaliação com nota 6 é recusada pelo banco
+ok     R-032 Avaliação com nota -1 é recusada pelo banco
+ok     R-033 Avaliação com comentário de 2 caracteres é recusada pelo banco
+ok     R-034 Avaliação com comentário de 501 caracteres é recusada pelo banco
+ok     R-035 Segunda avaliação da mesma pessoa no mesmo posto é recusada
+ok     R-036 Usuário banido não consegue avaliar
+ok     R-037 Usuário bloqueado não consegue avaliar
+ok     R-038 Voto útil de outra pessoa conta no contador
+ok     R-039 Usuário não vota em nome de outra pessoa
+FALHOU R-040 Autora não consegue votar na própria avaliação pela API
+ok     R-041 Mesmo usuário não vota duas vezes
+ok     R-042 Usuária favorita um posto
+ok     R-043 Usuário não vê os favoritos de outra pessoa
+ok     R-044 Usuário não apaga favoritos de outra pessoa
+ok     R-045 Usuário não cria favorito para outra pessoa
+ok     R-046 meus_favoritos devolve o posto favoritado com preços e precisão
+ok     R-047 Usuário lê só o próprio perfil
+ok     R-048 Usuário não altera o perfil de outra pessoa
+ok     R-049 Usuário não altera a coluna pontos do próprio perfil
+ok     R-050 Usuário não altera a coluna confiabilidade do próprio perfil
+ok     R-051 Usuário não altera a coluna banido do próprio perfil
+ok     R-052 Usuário não altera a coluna bloqueado_ate do próprio perfil
+ok     R-053 Usuária altera o próprio nome
+ok     R-054 Nome com 1 caractere é recusado
+ok     R-055 Nome com 61 caracteres é recusado
+ok     R-056 Usuário não vê os avisos de outra pessoa
+ok     R-057 Dona do aviso só consegue marcar como lido, não alterar o preço
+ok     R-058 Marcar aviso como lido
+ok     R-059 Usuário logado não grava direto em envios (só o servidor grava)
+ok     R-060 Usuário logado não grava direto em envio_itens (só o servidor grava)
+ok     R-061 Usuário logado não grava direto em pontos_movimentos (só o servidor grava)
+ok     R-062 Usuário logado não grava direto em correcoes_posicao (só o servidor grava)
+ok     R-063 Usuário logado não grava direto em precos_atuais (só o servidor grava)
+ok     R-064 Usuário logado não grava direto em notificacoes (só o servidor grava)
+
+== enviar-precos
+ok     R-065 Envio sem login é recusado
+ok     R-066 GET é recusado
+ok     R-067 Pré-requisição CORS responde com os cabeçalhos
+ok     R-068 Envio com JSON malformado é recusado com mensagem clara
+ok     R-069 Envio com sem posto_id é recusado com mensagem clara
+ok     R-070 Envio com posto_id como texto é recusado com mensagem clara
+ok     R-071 Envio com latitude 91 é recusado com mensagem clara
+ok     R-072 Envio com sem itens é recusado com mensagem clara
+ok     R-073 Envio com 7 itens é recusado com mensagem clara
+ok     R-074 Envio com combustível inexistente é recusado com mensagem clara
+ok     R-075 Envio com combustível repetido é recusado com mensagem clara
+ok     R-076 Envio com preço abaixo do mínimo (R$ 1,99) é recusado com mensagem clara
+ok     R-077 Envio com preço acima do máximo (R$ 15,01) é recusado com mensagem clara
+ok     R-078 Envio com preço como texto é recusado com mensagem clara
+ok     R-079 Envio com preço negativo é recusado com mensagem clara
+ok     R-080 Envios recusados não deixam linha no banco
+ok     R-081 Primeiro envio válido a 100 m do posto fica pendente
+ok     R-082 Envio gravado com distância real, texto lido cortado em 2.000 caracteres e versão do app
+ok     R-083 Envio isolado sem divergência aparece como 'aguardando confirmação', nunca como confirmado
+FALHOU R-084 Texto da regra bate com o comportamento do preço exibido
+ok     R-085 Segundo usuário com diferença de R$ 0,02 confirma o preço
+ok     R-086 Preço exibido passa a ser o da comunidade, confirmado
+ok     R-087 Os dois envios do consenso ganham pelo menos 10 pontos
+ok     R-088 Item pendente da primeira pessoa vira confirmado
+ok     R-089 Consenso entra no histórico diário da comunidade
+ok     R-090 Aviso a quem favoritou só sai quando o preço confiável muda R$ 0,05 ou mais
+ok     R-091 Envio 40% acima da referência entra em revisão
+ok     R-092 Mesmo usuário, posto e combustível em menos de 6 h é recusado
+ok     R-093 Envio misto: o combustível repetido é ignorado e o novo é aceito
+ok     R-094 Posto com posição exata: envio a 500 m é recusado (raio 300 m)
+ok     R-095 Envio a 295 m do posto exato é aceito (borda do raio)
+ok     R-096 Posto com posição pela rua: envio a 800 m é aceito (raio 1 km)
+ok     R-097 Posto com posição pela rua: envio a 1,5 km é recusado com mensagem de 1 km
+ok     R-098 Posto sem localização não aceita envio e orienta a usar 'Estou neste posto'
+ok     R-099 Posto localizado só pelo CEP da cidade não aceita envio e orienta a usar 'Estou neste posto'
+ok     R-100 Posto inativo não aceita envio
+ok     R-101 Posto inexistente
+ok     R-102 Conta banido não envia preços
+ok     R-103 Conta bloqueado não envia preços
+ok     R-104 Sessão de conta cujo e-mail deixou de estar confirmado não envia preços
+ok     R-105 21º envio em 24 horas é recusado
+FALHOU R-106 6 envios simultâneos do mesmo item geram um só registro
+FALHOU R-107 Envios duplicados por concorrência não multiplicam pontos nem confiabilidade
+ok     R-108 Confiança da leitura acima de 1 é limitada a 1 e valor corrigido marca 'editado'
+
+== corrigir-posicao
+ok     R-109 Sem login é recusado
+ok     R-110 GET é recusado
+ok     R-111 Pré-requisição CORS
+ok     R-112 Posição com JSON malformado é recusada
+ok     R-113 Posição com sem posto é recusada
+ok     R-114 Posição com fora do Brasil (Lisboa) é recusada
+ok     R-115 Posição com latitude 91 é recusada
+ok     R-116 Posição com sem precisão do GPS é recusada
+ok     R-117 Posição com precisão do GPS 0 é recusada
+ok     R-118 Posição com GPS impreciso (150 m) é recusada
+ok     R-119 GPS com precisão de exatamente 100 m é aceito
+ok     R-120 Primeira posição informada fica aguardando outra pessoa
+ok     R-121 Informar duas vezes atualiza a mesma posição pendente
+ok     R-122 A mesma pessoa informando de novo não confirma sozinha
+ok     R-123 Segunda pessoa a 600 m da primeira não confirma (tolerância 150 m)
+ok     R-124 Segunda pessoa a 100 m da primeira confirma a posição
+ok     R-125 Posto passa a ter posição exata no meio dos dois pontos
+ok     R-126 Só quem formou o consenso ganha os pontos da posição
+ok     R-127 Posição discordante é encerrada como contestada, sem punição
+ok     R-128 Posto com posição já confirmada recusa nova posição
+ok     R-129 Depois da posição confirmada, o envio passa a usar o raio de 300 m em volta do ponto novo
+ok     R-130 Mapa mostra os postos com posição conhecida e esconde os sem local e os inativos
+ok     R-131 Posto localizado só pelo CEP da cidade não aparece no mapa
+ok     R-132 Posto sem local aparece na busca por nome (só sai do mapa)
+ok     R-133 Posto sem nenhuma posição aceita qualquer ponto do Brasil
+ok     R-134 Posição a mais de 100 km da posição aproximada é recusada
+ok     R-135 Posto inexistente
+ok     R-136 Posto inativo
+ok     R-137 Conta banido não informa posição
+ok     R-138 Conta bloqueado não informa posição
+ok     R-139 11ª posição em 24 h é recusada
+
+== matriz do visitante
+ok     R-140 Visitante sem login lê a tabela produtos
+ok     R-141 Visitante sem login tenta inserir em produtos
+ok     R-142 Visitante sem login tenta alterar linhas de produtos
+ok     R-143 Visitante sem login tenta apagar linhas de produtos
+ok     R-144 Visitante sem login lê a tabela postos
+ok     R-145 Visitante sem login tenta inserir em postos
+ok     R-146 Visitante sem login tenta alterar linhas de postos
+ok     R-147 Visitante sem login tenta apagar linhas de postos
+ok     R-148 Visitante sem login lê a tabela posto_produtos
+ok     R-149 Visitante sem login tenta inserir em posto_produtos
+ok     R-150 Visitante sem login tenta alterar linhas de posto_produtos
+ok     R-151 Visitante sem login tenta apagar linhas de posto_produtos
+ok     R-152 Visitante sem login lê a tabela precos_anp
+ok     R-153 Visitante sem login tenta inserir em precos_anp
+ok     R-154 Visitante sem login tenta alterar linhas de precos_anp
+ok     R-155 Visitante sem login tenta apagar linhas de precos_anp
+ok     R-156 Visitante sem login lê a tabela precos_comunidade
+ok     R-157 Visitante sem login tenta inserir em precos_comunidade
+ok     R-158 Visitante sem login tenta alterar linhas de precos_comunidade
+ok     R-159 Visitante sem login tenta apagar linhas de precos_comunidade
+ok     R-160 Visitante sem login lê a tabela precos_estimados
+ok     R-161 Visitante sem login tenta inserir em precos_estimados
+ok     R-162 Visitante sem login tenta alterar linhas de precos_estimados
+ok     R-163 Visitante sem login tenta apagar linhas de precos_estimados
+ok     R-164 Visitante sem login lê a tabela precos_atuais
+ok     R-165 Visitante sem login tenta inserir em precos_atuais
+ok     R-166 Visitante sem login tenta alterar linhas de precos_atuais
+ok     R-167 Visitante sem login tenta apagar linhas de precos_atuais
+ok     R-168 Visitante sem login lê a tabela avaliacoes
+ok     R-169 Visitante sem login tenta inserir em avaliacoes
+ok     R-170 Visitante sem login tenta alterar linhas de avaliacoes
+ok     R-171 Visitante sem login tenta apagar linhas de avaliacoes
+ok     R-172 Visitante sem login lê a tabela avaliacao_votos
+ok     R-173 Visitante sem login tenta inserir em avaliacao_votos
+ok     R-174 Visitante sem login tenta alterar linhas de avaliacao_votos
+ok     R-175 Visitante sem login tenta apagar linhas de avaliacao_votos
+ok     R-176 Visitante sem login lê a tabela previsoes
+ok     R-177 Visitante sem login tenta inserir em previsoes
+ok     R-178 Visitante sem login tenta alterar linhas de previsoes
+ok     R-179 Visitante sem login tenta apagar linhas de previsoes
+ok     R-180 Visitante sem login lê a tabela parametros
+ok     R-181 Visitante sem login tenta inserir em parametros
+ok     R-182 Visitante sem login tenta alterar linhas de parametros
+ok     R-183 Visitante sem login tenta apagar linhas de parametros
+ok     R-184 Visitante sem login lê a tabela perfis
+ok     R-185 Visitante sem login tenta inserir em perfis
+ok     R-186 Visitante sem login tenta alterar linhas de perfis
+ok     R-187 Visitante sem login tenta apagar linhas de perfis
+ok     R-188 Visitante sem login lê a tabela envios
+ok     R-189 Visitante sem login tenta inserir em envios
+ok     R-190 Visitante sem login tenta alterar linhas de envios
+ok     R-191 Visitante sem login tenta apagar linhas de envios
+ok     R-192 Visitante sem login lê a tabela envio_itens
+ok     R-193 Visitante sem login tenta inserir em envio_itens
+ok     R-194 Visitante sem login tenta alterar linhas de envio_itens
+ok     R-195 Visitante sem login tenta apagar linhas de envio_itens
+ok     R-196 Visitante sem login lê a tabela favoritos
+ok     R-197 Visitante sem login tenta inserir em favoritos
+ok     R-198 Visitante sem login tenta alterar linhas de favoritos
+ok     R-199 Visitante sem login tenta apagar linhas de favoritos
+ok     R-200 Visitante sem login lê a tabela pontos_movimentos
+ok     R-201 Visitante sem login tenta inserir em pontos_movimentos
+ok     R-202 Visitante sem login tenta alterar linhas de pontos_movimentos
+ok     R-203 Visitante sem login tenta apagar linhas de pontos_movimentos
+ok     R-204 Visitante sem login lê a tabela notificacoes
+ok     R-205 Visitante sem login tenta inserir em notificacoes
+ok     R-206 Visitante sem login tenta alterar linhas de notificacoes
+ok     R-207 Visitante sem login tenta apagar linhas de notificacoes
+ok     R-208 Visitante sem login lê a tabela correcoes_posicao
+ok     R-209 Visitante sem login tenta inserir em correcoes_posicao
+ok     R-210 Visitante sem login tenta alterar linhas de correcoes_posicao
+ok     R-211 Visitante sem login tenta apagar linhas de correcoes_posicao
+ok     R-212 Visitante sem login lê a tabela sincronizacoes_anp
+ok     R-213 Visitante sem login tenta inserir em sincronizacoes_anp
+ok     R-214 Visitante sem login tenta alterar linhas de sincronizacoes_anp
+ok     R-215 Visitante sem login tenta apagar linhas de sincronizacoes_anp
+
+== funções
+ok     R-216 Função pública postos_na_area responde ao visitante
+ok     R-217 Função pública postos_proximos responde ao visitante
+ok     R-218 Função pública buscar_postos responde ao visitante
+ok     R-219 Função pública postos_por_ids responde ao visitante
+ok     R-220 Função pública detalhe_posto responde ao visitante
+ok     R-221 Função pública historico_precos responde ao visitante
+ok     R-222 Função pública contribuicoes responde ao visitante
+ok     R-223 Função pública avaliacoes_posto responde ao visitante
+ok     R-224 Função pública ranking responde ao visitante
+ok     R-225 Função pública precos_json responde ao visitante
+ok     R-226 Função pública parametro responde ao visitante
+ok     R-227 Função pública abreviar_nome responde ao visitante
+ok     R-228 Função pública normalizar responde ao visitante
+ok     R-229 Função pública usuario_pode_contribuir responde ao visitante
+ok     R-230 Visitante não consegue chamar a rotina interna registrar_pontos
+ok     R-231 Usuário logado não consegue chamar a rotina interna registrar_pontos
+ok     R-232 Visitante não consegue chamar a rotina interna ajustar_confiabilidade
+ok     R-233 Usuário logado não consegue chamar a rotina interna ajustar_confiabilidade
+ok     R-234 Visitante não consegue chamar a rotina interna atualizar_preco_atual
+ok     R-235 Usuário logado não consegue chamar a rotina interna atualizar_preco_atual
+ok     R-236 Visitante não consegue chamar a rotina interna calcular_preco_exibido
+ok     R-237 Usuário logado não consegue chamar a rotina interna calcular_preco_exibido
+ok     R-238 Visitante não consegue chamar a rotina interna consolidar_preco
+ok     R-239 Usuário logado não consegue chamar a rotina interna consolidar_preco
+ok     R-240 Visitante não consegue chamar a rotina interna consolidar_posicao
+ok     R-241 Usuário logado não consegue chamar a rotina interna consolidar_posicao
+ok     R-242 Visitante não consegue chamar a rotina interna registrar_correcao_posicao
+ok     R-243 Usuário logado não consegue chamar a rotina interna registrar_correcao_posicao
+ok     R-244 Visitante não consegue chamar a rotina interna distancia_e_precisao
+ok     R-245 Usuário logado não consegue chamar a rotina interna distancia_e_precisao
+ok     R-246 Visitante não consegue chamar a rotina interna distancia_ate_posto
+ok     R-247 Usuário logado não consegue chamar a rotina interna distancia_ate_posto
+ok     R-248 Visitante não consegue chamar a rotina interna fechar_envios_antigos
+ok     R-249 Usuário logado não consegue chamar a rotina interna fechar_envios_antigos
+ok     R-250 Visitante não consegue chamar a rotina interna recalcular_estimativas
+ok     R-251 Usuário logado não consegue chamar a rotina interna recalcular_estimativas
+ok     R-252 Visitante não consegue chamar a rotina interna recalcular_precos_atuais
+ok     R-253 Usuário logado não consegue chamar a rotina interna recalcular_precos_atuais
+ok     R-254 Visitante não consegue chamar a rotina interna marcar_municipios_pesquisados
+ok     R-255 Usuário logado não consegue chamar a rotina interna marcar_municipios_pesquisados
+ok     R-256 Visitante não consegue chamar a rotina interna importar_postos_anp
+ok     R-257 Usuário logado não consegue chamar a rotina interna importar_postos_anp
+ok     R-258 Visitante não consegue chamar a rotina interna criar_perfil
+ok     R-259 Usuário logado não consegue chamar a rotina interna criar_perfil
+ok     R-260 Visitante não consegue chamar a rotina interna recalcular_nota_posto
+ok     R-261 Usuário logado não consegue chamar a rotina interna recalcular_nota_posto
+ok     R-262 Visitante não consegue chamar a rotina interna recalcular_votos
+ok     R-263 Usuário logado não consegue chamar a rotina interna recalcular_votos
+ok     R-264 Visitante não consegue chamar a rotina interna marcar_avaliacao_editada
+ok     R-265 Usuário logado não consegue chamar a rotina interna marcar_avaliacao_editada
+ok     R-266 meu_resumo exige login
+ok     R-267 meu_resumo responde ao usuário logado
+ok     R-268 meus_favoritos exige login
+ok     R-269 meus_favoritos responde ao usuário logado
+
+== manipulação
+ok     R-270 Injeção de SQL no texto da busca
+ok     R-271 Curinga % na busca não lista o cadastro inteiro sem limite
+ok     R-272 Busca com texto vazio
+ok     R-273 Busca com 5.000 caracteres
+ok     R-274 Busca pedindo 100.000 resultados
+ok     R-275 Área do Brasil inteiro pedindo 1 milhão de postos
+ok     R-276 Raio de 100.000 km e limite de 1 milhão
+ok     R-277 Latitude impossível (999)
+ok     R-278 Limite negativo
+ok     R-279 Detalhe de posto inexistente
+ok     R-280 Detalhe de posto inativo (fora do cadastro da ANP)
+ok     R-281 Histórico pedindo 100.000 dias
+ok     R-282 Histórico de combustível inexistente
+ok     R-283 Injeção de SQL no parâmetro de ordenação das avaliações
+ok     R-284 Limite enorme e deslocamento negativo
+ok     R-285 Ranking pedindo 100.000 posições
+ok     R-286 Favoritos locais com 5.000 ids
+ok     R-287 Tabela de postos intacta depois das tentativas de injeção
+
+== exposição
+FALHOU R-288 Visitante não consegue ler o identificador (UUID) de quem avaliou
+FALHOU R-289 Visitante não consegue ver quem votou em cada avaliação
+ok     R-290 Lista de contribuições mostra só o nome abreviado, sem e-mail nem id
+ok     R-291 Ranking não expõe e-mail nem id dos usuários
+ok     R-292 Avaliações mostram o nome abreviado (Auditoria A.), nunca o nome completo nem o e-mail
+ok     R-293 Descrição OpenAPI da API REST para quem tem a chave publicável
+ok     R-294 Visitante não lista o bucket privado da série histórica da ANP
+ok     R-295 Visitante não envia arquivo para o bucket de avatares
+
+== excluir-conta
+ok     R-296 Sem login é recusado
+ok     R-297 GET é recusado
+ok     R-298 Usuário exclui a própria conta
+ok     R-299 Exclusão apaga perfil, avaliações, favoritos, pontos e avisos
+ok     R-300 Preços enviados continuam no histórico, sem vínculo com a pessoa
+ok     R-301 Conta excluída não entra mais
+ok     R-302 Token antigo de conta excluída não envia preço
+
+== sincronização
+ok     R-303 Chamada sem o segredo é recusada
+ok     R-304 Chamada com segredo errado é recusada
+ok     R-305 Usuário comum logado não dispara a sincronização
+ok     R-306 UF inválida é recusada sem chamar a ANP
+ok     R-307 Sincronização real de uma UF pequena (Amapá) com a API da ANP
+ok     R-308 Sincronização não desativa uma fatia grande do cadastro da UF de uma vez
+
+apagados 6 usuários e 5 postos de teste; restam 0 e 0
+ok     R-309 Dados de teste apagados do projeto real ao final
+
+remoto: 309 testes, 8 falhas -> C:\Users\michael\Desktop\gasprice\documentacao\auditoria\resultados\remoto.json
+
+== integridade
+ok     R-310 Toda tabela do schema public tem RLS ligado
+ok     R-311 Nenhuma função security definer sem search_path fixo
+ok     R-312 Postos ativos com posição exata têm coordenada
+ok     R-313 Postos sem local (nenhuma) não têm coordenada antiga esquecida
+ok     R-314 Coordenadas dos postos caem dentro do Brasil
+FALHOU R-315 Coordenadas caem perto da UF cadastrada (menos de 1.000 km do centro dos postos da UF)
+FALHOU R-316 Nenhuma coordenada é compartilhada por postos de UFs diferentes (valor padrão da API tratado como posição)
+ok     R-317 Coordenada repetida em postos de UFs diferentes: o ponto e quantos postos
+ok     R-318 CNPJ com 14 dígitos numéricos
+ok     R-319 Preços exibidos dentro da faixa do combustível
+ok     R-320 Nenhum preço exibido vem de preço da ANP marcado como anomalia
+ok     R-321 Preço exibido aponta para posto ativo
+ok     R-322 Estimativas têm margem e distância coerentes
+ok     R-323 Combustível vendido por posto com coordenada, sem preço exibido, mas com referência do mesmo combustível a até
+ok     R-324 Postos ativos com coordenada sem preço exibido, por motivo
+ok     R-325 Nota média e total de avaliações batem com as avaliações
+ok     R-326 Todo usuário do Auth tem perfil
+ok     R-327 Pontos do perfil batem com o extrato (usuários reais)
+FALHOU R-328 Pesquisa da ANP no banco está atualizada (coleta mais recente com até 14 dias)
+ok     R-329 Parâmetros obrigatórios presentes (24)
+ok     R-330 Agendamentos ativos (4)
+ok     R-331 Última execução de cada agendamento terminou sem erro
+ok     R-332 Fechamento de envios antigos rodou na última hora e meia
+ok     R-333 Sincronização do cadastro: última execução de cada UF sem erro
+ok     R-334 Endereço do projeto e segredo da sincronização guardados no Vault (usados pelo agendamento)
+ok     R-335 Tamanho do banco dentro do plano gratuito (500 MB)
+ok     R-336 Índices espaciais e de busca presentes
+ok     R-337 Nenhum índice inválido
+
+== performance
+FALHOU R-338 Mapa · postos na área (Fortaleza): 10 chamadas seguidas
+ok     R-339 Mapa · área grande (região metropolitana de SP): 10 chamadas seguidas
+ok     R-340 Busca · lista por distância: 10 chamadas seguidas
+ok     R-341 Busca · texto: 10 chamadas seguidas
+ok     R-342 Busca · texto curto e comum: 10 chamadas seguidas
+ok     R-343 Posto · detalhe: 10 chamadas seguidas
+ok     R-344 Posto · histórico de 180 dias: 10 chamadas seguidas
+ok     R-345 Posto · avaliações: 10 chamadas seguidas
+ok     R-346 Ranking: 10 chamadas seguidas
+ok     R-347 30 requisições simultâneas em postos_na_area
+ok     R-348 50 requisições simultâneas em buscar_postos
+ok     R-349 enviar-precos responde a 5 chamadas seguidas (inclui partida a frio)
+ok     R-350 corrigir-posicao responde a 5 chamadas seguidas (inclui partida a frio)
+
+remoto: 350 testes, 12 falhas -> C:\Users\michael\Desktop\gasprice\documentacao\auditoria\resultados\remoto.json

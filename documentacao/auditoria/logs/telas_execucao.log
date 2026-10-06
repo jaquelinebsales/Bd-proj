@@ -1,0 +1,306 @@
+﻿ok     T-001 Mapa (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-002 Busca (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+FALHOU T-003 Favoritos (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-004 Perfil (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-005 Boas-vindas (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-006 Posto (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-007 Posto com localização aproximada (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-008 Posto sem local e com estimativa (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-009 Histórico (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-010 Avaliações (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+FALHOU T-011 Avaliar (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-012 Enviar preços (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-013 Estou neste posto (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-014 Entrar (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-015 Criar conta (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-016 Recuperar senha (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-017 Nova senha (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-018 Confirme seu e-mail (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-019 Ranking (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-020 Sobre (visitante) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-021 Mapa (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-022 Busca (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-023 Favoritos (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-024 Perfil (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-025 Boas-vindas (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-026 Posto (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-027 Posto com localização aproximada (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-028 Posto sem local e com estimativa (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-029 Histórico (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-030 Avaliações (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-031 Avaliar (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-032 Enviar preços (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-033 Estou neste posto (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-034 Entrar (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-035 Criar conta (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-036 Recuperar senha (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-037 Nova senha (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-038 Confirme seu e-mail (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-039 Visitante que abre /perfil/editar é levado para Entrar
+ok     T-040 Visitante que abre /perfil/senha é levado para Entrar
+ok     T-041 Visitante que abre /pontos é levado para Entrar
+ok     T-042 Ranking (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-043 Visitante que abre /notificacoes é levado para Entrar
+ok     T-044 Sobre (visitante) em Celular 360×800 abre sem estouro de layout
+ok     T-045 Mapa (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-046 Busca (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-047 Favoritos (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-048 Perfil (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-049 Boas-vindas (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-050 Posto (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-051 Posto com localização aproximada (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-052 Posto sem local e com estimativa (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-053 Histórico (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-054 Avaliações (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-055 Avaliar (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-056 Enviar preços (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-057 Estou neste posto (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-058 Entrar (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-059 Criar conta (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-060 Recuperar senha (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-061 Nova senha (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-062 Confirme seu e-mail (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-063 Ranking (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-064 Sobre (visitante) em Celular grande 412×915 abre sem estouro de layout
+ok     T-065 Mapa (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+FALHOU T-066 Busca (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-067 Favoritos (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-068 Perfil (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-069 Boas-vindas (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-070 Posto (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-071 Posto com localização aproximada (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-072 Posto sem local e com estimativa (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-073 Histórico (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-074 Avaliações (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-075 Avaliar (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-076 Enviar preços (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-077 Estou neste posto (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-078 Entrar (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-079 Criar conta (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-080 Recuperar senha (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-081 Nova senha (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-082 Confirme seu e-mail (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-083 Ranking (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-084 Sobre (visitante) em Celular 360×800 com fonte 130% abre sem estouro de layout
+FALHOU T-085 Mapa (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-086 Busca (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-087 Favoritos (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-088 Perfil (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-089 Boas-vindas (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-090 Posto (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-091 Posto com localização aproximada (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-092 Posto sem local e com estimativa (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-093 Histórico (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-094 Avaliações (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-095 Avaliar (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-096 Enviar preços (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-097 Estou neste posto (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-098 Entrar (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-099 Criar conta (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-100 Recuperar senha (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-101 Nova senha (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-102 Confirme seu e-mail (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-103 Ranking (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-104 Sobre (visitante) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-105 Mapa (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-106 Busca (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-107 Favoritos (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-108 Perfil (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-109 Boas-vindas (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-110 Posto (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-111 Posto com localização aproximada (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-112 Posto sem local e com estimativa (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-113 Histórico (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-114 Avaliações (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-115 Avaliar (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-116 Enviar preços (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-117 Estou neste posto (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-118 Entrar (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-119 Criar conta (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-120 Recuperar senha (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-121 Nova senha (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-122 Confirme seu e-mail (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-123 Ranking (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-124 Sobre (visitante) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-125 Mapa (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-126 Busca (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-127 Favoritos (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-128 Perfil (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-129 Boas-vindas (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-130 Posto (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-131 Posto com localização aproximada (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-132 Posto sem local e com estimativa (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-133 Histórico (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-134 Avaliações (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-135 Avaliar (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-136 Enviar preços (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-137 Estou neste posto (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-138 Entrar (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-139 Criar conta (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-140 Recuperar senha (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-141 Nova senha (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-142 Confirme seu e-mail (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-143 Ranking (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-144 Sobre (visitante) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-145 Mapa (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-146 Busca (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-147 Favoritos (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-148 Perfil (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-149 Boas-vindas (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-150 Posto (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-151 Posto com localização aproximada (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-152 Posto sem local e com estimativa (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-153 Histórico (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-154 Avaliações (logado) em Celular pequeno 320×568 abre sem estouro de layout
+FALHOU T-155 Avaliar (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-156 Enviar preços (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-157 Estou neste posto (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-158 Recuperar senha (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-159 Nova senha (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-160 Confirme seu e-mail (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-161 Alterar dados (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-162 Alterar senha (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-163 Meus pontos (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-164 Ranking (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-165 Avisos de preço (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-166 Sobre (logado) em Celular pequeno 320×568 abre sem estouro de layout
+ok     T-167 Mapa (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-168 Busca (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-169 Favoritos (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-170 Perfil (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-171 Boas-vindas (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-172 Posto (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-173 Posto com localização aproximada (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-174 Posto sem local e com estimativa (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-175 Histórico (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-176 Avaliações (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-177 Avaliar (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-178 Enviar preços (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-179 Estou neste posto (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-180 Usuário logado que abre /entrar vai para o Perfil
+ok     T-181 Usuário logado que abre /cadastro vai para o Perfil
+ok     T-182 Recuperar senha (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-183 Nova senha (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-184 Confirme seu e-mail (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-185 Alterar dados (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-186 Usuário logado abre /perfil/editar
+ok     T-187 Alterar senha (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-188 Usuário logado abre /perfil/senha
+ok     T-189 Meus pontos (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-190 Usuário logado abre /pontos
+ok     T-191 Ranking (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-192 Avisos de preço (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-193 Usuário logado abre /notificacoes
+ok     T-194 Sobre (logado) em Celular 360×800 abre sem estouro de layout
+ok     T-195 Mapa (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-196 Busca (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-197 Favoritos (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-198 Perfil (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-199 Boas-vindas (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-200 Posto (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-201 Posto com localização aproximada (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-202 Posto sem local e com estimativa (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-203 Histórico (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-204 Avaliações (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-205 Avaliar (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-206 Enviar preços (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-207 Estou neste posto (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-208 Recuperar senha (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-209 Nova senha (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-210 Confirme seu e-mail (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-211 Alterar dados (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-212 Alterar senha (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-213 Meus pontos (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-214 Ranking (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-215 Avisos de preço (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-216 Sobre (logado) em Celular grande 412×915 abre sem estouro de layout
+ok     T-217 Mapa (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+FALHOU T-218 Busca (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-219 Favoritos (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-220 Perfil (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-221 Boas-vindas (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-222 Posto (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-223 Posto com localização aproximada (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-224 Posto sem local e com estimativa (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-225 Histórico (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-226 Avaliações (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-227 Avaliar (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-228 Enviar preços (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-229 Estou neste posto (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-230 Recuperar senha (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-231 Nova senha (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-232 Confirme seu e-mail (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-233 Alterar dados (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-234 Alterar senha (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-235 Meus pontos (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-236 Ranking (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-237 Avisos de preço (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+ok     T-238 Sobre (logado) em Celular 360×800 com fonte 130% abre sem estouro de layout
+FALHOU T-239 Mapa (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-240 Busca (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-241 Favoritos (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-242 Perfil (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-243 Boas-vindas (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-244 Posto (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-245 Posto com localização aproximada (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-246 Posto sem local e com estimativa (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+FALHOU T-247 Histórico (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-248 Avaliações (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-249 Avaliar (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-250 Enviar preços (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-251 Estou neste posto (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-252 Recuperar senha (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-253 Nova senha (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-254 Confirme seu e-mail (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-255 Alterar dados (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-256 Alterar senha (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-257 Meus pontos (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-258 Ranking (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-259 Avisos de preço (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-260 Sobre (logado) em Celular 360×800 com fonte 200% abre sem estouro de layout
+ok     T-261 Mapa (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-262 Busca (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-263 Favoritos (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-264 Perfil (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-265 Boas-vindas (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-266 Posto (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-267 Posto com localização aproximada (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-268 Posto sem local e com estimativa (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-269 Histórico (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-270 Avaliações (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-271 Avaliar (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-272 Enviar preços (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-273 Estou neste posto (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-274 Recuperar senha (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-275 Nova senha (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-276 Confirme seu e-mail (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-277 Alterar dados (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-278 Alterar senha (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-279 Meus pontos (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-280 Ranking (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-281 Avisos de preço (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-282 Sobre (logado) em Tablet em pé 800×1280 abre sem estouro de layout
+ok     T-283 Mapa (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-284 Busca (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-285 Favoritos (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-286 Perfil (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-287 Boas-vindas (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-288 Posto (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-289 Posto com localização aproximada (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-290 Posto sem local e com estimativa (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-291 Histórico (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-292 Avaliações (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-293 Avaliar (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-294 Enviar preços (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-295 Estou neste posto (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-296 Recuperar senha (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-297 Nova senha (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-298 Confirme seu e-mail (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-299 Alterar dados (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-300 Alterar senha (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-301 Meus pontos (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-302 Ranking (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-303 Avisos de preço (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+ok     T-304 Sobre (logado) em Tablet deitado 1280×800 abre sem estouro de layout
+
+telas: 304 testes, 18 falhas -> C:\Users\michael\Desktop\gasprice\documentacao\auditoria\resultados\telas.json

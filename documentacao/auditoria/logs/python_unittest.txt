@@ -1,0 +1,23 @@
+test_arquivo_ausente (test_env_util.TesteEnv.test_arquivo_ausente) ... ok
+test_carregar_ignora_comentarios_e_tira_aspas (test_env_util.TesteEnv.test_carregar_ignora_comentarios_e_tira_aspas) ... ok
+test_estado_reconhece_exemplos_e_valores_reais (test_env_util.TesteEnv.test_estado_reconhece_exemplos_e_valores_reais) ... ok
+test_interpreta_url_do_banco (test_env_util.TesteEnv.test_interpreta_url_do_banco) ... ok
+test_lista_o_que_falta (test_env_util.TesteEnv.test_lista_o_que_falta) ... ok
+test_mascara_segredos_e_a_senha_da_url (test_env_util.TesteEnv.test_mascara_segredos_e_a_senha_da_url) ... ok
+test_monta_url_pela_api_com_senha_codificada (test_env_util.TesteEnv.test_monta_url_pela_api_com_senha_codificada) ... ok
+test_ref_vem_da_url (test_env_util.TesteEnv.test_ref_vem_da_url) ... ok
+test_resposta_vazia_da_api (test_env_util.TesteEnv.test_resposta_vazia_da_api) ... ok
+test_senha_com_arroba_e_dois_pontos_ainda_funciona (test_env_util.TesteEnv.test_senha_com_arroba_e_dois_pontos_ainda_funciona) ... ok
+test_senha_com_barra_ou_colchete_e_recusada_com_dica (test_env_util.TesteEnv.test_senha_com_barra_ou_colchete_e_recusada_com_dica) ... ok
+test_senha_do_banco_pode_terminar_em_reticencias (test_env_util.TesteEnv.test_senha_do_banco_pode_terminar_em_reticencias) ... ok
+test_url_fora_do_formato (test_env_util.TesteEnv.test_url_fora_do_formato) ... ok
+test_usa_database_url_quando_preenchida (test_env_util.TesteEnv.test_usa_database_url_quando_preenchida) ... ok
+test_env_em_branco_lista_o_que_falta (test_publicar.TestePublicar.test_env_em_branco_lista_o_que_falta) ... ok
+test_sem_env_para_com_mensagem (test_publicar.TestePublicar.test_sem_env_para_com_mensagem) ... ok
+test_simulacao_lista_os_passos_e_nao_mostra_segredos (test_publicar.TestePublicar.test_simulacao_lista_os_passos_e_nao_mostra_segredos) ... ok
+test_url_fora_do_formato_e_recusada (test_publicar.TestePublicar.test_url_fora_do_formato_e_recusada) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.054s
+
+OK
