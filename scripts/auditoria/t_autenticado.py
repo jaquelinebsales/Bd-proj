@@ -559,18 +559,24 @@ def enviar_precos(s, ctx) -> None:
     # Efeito da duplicidade: quando outra pessoa confirma, quantos pontos o bruno ganha por uma única ação?
     pts_antes = um(db, "select pontos from public.perfis where id=%s", u["bruno"]["id"])
     conf_antes = um(db, "select confiabilidade from public.perfis where id=%s", u["bruno"]["id"])
+    # Cidade sem pesquisa da ANP dobra pontos e bônus (multiplicador_sem_anp): o teto de uma ação é (10 + 5) × multiplicador
+    mult = 1 if um(db, "select municipio_pesquisado_anp from public.postos where id=%s", p["exata"]) else \
+        int(um(db, "select valor from public.parametros where chave='multiplicador_sem_anp'"))
     r = _enviar(u["ana"]["token"], p["exata"], *perto, [{"produto_id": 5, "preco": 6.10}])
     pts_depois = um(db, "select pontos from public.perfis where id=%s", u["bruno"]["id"])
     conf_depois = um(db, "select confiabilidade from public.perfis where id=%s", u["bruno"]["id"])
     ganho = (pts_depois or 0) - (pts_antes or 0)
-    s.check(ganho <= 15, obtido=f"confirmação da ana: HTTP {r.status}; pontos do bruno {pts_antes} → {pts_depois} (+{ganho}); "
-                                f"confiabilidade {conf_antes} → {conf_depois}",
+    subiu = float(conf_depois or 0) - float(conf_antes or 0)
+    s.check(ganho <= 15 * mult and subiu <= 0.05 + 1e-9,
+            obtido=f"confirmação da ana: HTTP {r.status}; pontos do bruno {pts_antes} → {pts_depois} (+{ganho}); "
+                   f"confiabilidade {conf_antes} → {conf_depois} (+{subiu:.2f}); multiplicador da cidade: {mult}",
             aba="Segurança", modulo="Pontos", tela="Enviar preços", tipo="Segurança · abuso de regra",
             cenario="Envios duplicados por concorrência não multiplicam pontos nem confiabilidade",
-            precondicoes=f"bruno com {itens_db} itens iguais gravados ao mesmo tempo (teste anterior)",
-            passos="ana envia o mesmo preço e forma o consenso; comparar pontos do bruno antes e depois",
-            entrada="diesel S10 6,10", esperado="Ganho de no máximo 15 pontos (10 + bônus de 5) por uma ação",
-            severidade=ALTA, obs="Cada item confirmado chama registrar_pontos e ajustar_confiabilidade.")
+            precondicoes=f"bruno com {itens_db} item(ns) iguais gravados ao mesmo tempo (teste anterior)",
+            passos="ana envia o mesmo preço e forma o consenso; comparar pontos e confiabilidade do bruno antes e depois",
+            entrada="diesel S10 6,10",
+            esperado=f"Pontos de uma ação só: no máximo (10 + 5) × {mult} = {15 * mult}; confiabilidade +0,05 uma vez",
+            severidade=ALTA, obs="Posto de teste em cidade sem pesquisa da ANP: pontos e bônus valem em dobro.")
 
     # Confiança da leitura acima de 1 é limitada a 1
     r = _enviar(u["davi"]["token"], p["rua"], *deslocar(-10.6, -59.6, 100), [{"produto_id": 4, "preco": 6.2, "preco_lido": 6.25, "confianca": 7}])

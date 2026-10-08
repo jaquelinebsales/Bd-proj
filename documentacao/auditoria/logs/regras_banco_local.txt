@@ -6,6 +6,8 @@ aplicado: 20260929000004_consultas_e_agendamentos.sql
 aplicado: 20260929000005_estimativas_relativas.sql
 aplicado: 20260929000006_margens_medidas.sql
 aplicado: 20260930000007_precisao_localizacao.sql
+aplicado: 20261006000008_limites_das_ufs.sql
+aplicado: 20261006000009_correcoes_auditoria.sql
 ok  perfil criado automaticamente no cadastro
 ok  e-mail curto sem nome gera o nome "Usuário"
 ok  nome abreviado para exibição pública
@@ -109,4 +111,25 @@ ok  posto novo do cadastro com coordenada da ANP entra com posição exata
 ok  importação de um posto que já tinha posição aproximada
 ok  coordenada da ANP substitui a posição aproximada
 ok  posição confirmada por usuários não é trocada pela sincronização
+ok  registrar_envio grava o envio e devolve os itens
+ok  mesmo combustível no mesmo posto em menos de 6 h é recusado
+ok  envio misto ignora o combustível repetido e grava o novo
+ok  limite de 20 envios em 24 horas vale dentro da função
+ok  os três envios do consenso ficam confirmados
+ok  quem tinha dois envios no consenso ganha os pontos uma vez só
+ok  coordenada de Fortaleza vale para o CE
+ok  coordenada do Rio não vale para posto do AM
+ok  ponto padrão da API da ANP nunca vale
+ok  Fernando de Noronha vale para PE
+ok  Ipixuna, na divisa com o AC, vale para o AM
+ok  coordenada ruim já gravada é limpa na sincronização
+ok  posto novo com coordenada fora do estado entra sem posição
+ok  posto novo com coordenada dentro do estado entra com posição exata
+ok  visitante não lê quem fez cada avaliação
+ok  visitante continua lendo nota e comentário
+ok  visitante não vê os votos de útil
+ok  autora continua editando a própria avaliação
+ok  autora não vota na própria avaliação
+ok  usuário vê só os próprios votos
+ok  usuário retira o próprio voto
 TODOS OS TESTES PASSARAM

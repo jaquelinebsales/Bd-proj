@@ -116,7 +116,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
   <header class="cab">
     <span class="eyebrow">gasprice · acompanhamento</span>
     <h1>Andamento do gasprice</h1>
-    <p class="lead">Situação da construção em {{DATA}}. Backend publicado no seu Supabase, código no GitHub e APK de teste gerado. A auditoria de 873 testes achou 10 bugs: 8 já estão corrigidos, 1 depende de um ajuste seu no painel do Supabase e 1 é uma decisão sobre a região do servidor. Falta testar o app num celular.</p>
+    <p class="lead">Situação da construção em {{DATA}}. Backend publicado no seu Supabase, código no GitHub e APK de teste gerado. A auditoria de 873 testes achou 10 bugs, e o reteste achou mais 1. Estão corrigidos 9; falta um ajuste seu no painel do Supabase e uma decisão sobre a região do servidor. Falta testar o app num celular.</p>
     <ol class="fases" aria-label="Fases do projeto">
       <li class="fase" style="--c: var(--ok)"><span class="num">FASE 1</span><b>Dados da ANP</b><span class="estado ok">Concluída</span><span class="d">Limpeza, cobertura e experimento do modelo.</span></li>
       <li class="fase" style="--c: var(--ok)"><span class="num">FASE 2</span><b>Backend Supabase</b><span class="estado ok">Publicado</span><span class="d">No seu projeto, com 45.823 postos e 1,87 milhão de preços, atualizados toda semana.</span></li>
@@ -130,7 +130,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     <h2 id="t-numeros" class="eyebrow" style="font: 600 .74rem/1 var(--body)">Em números</h2>
     <div class="numeros">
       <div class="numero"><b>22</b><span>telas, mais 2 painéis de filtros e contribuições</span></div>
-      <div class="numero"><b>183</b><span>testes automáticos, todos passando</span></div>
+      <div class="numero"><b>186</b><span>testes automáticos, todos passando</span></div>
       <div class="numero"><b>873</b><span>testes na auditoria de 06/10/2026</span></div>
       <div class="numero"><b>65</b><span>regras de negócio implementadas</span></div>
       <div class="numero"><b>22</b><span>tabelas no banco e 4 funções no servidor</span></div>
@@ -141,15 +141,15 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
     <div class="cab">
       <span class="eyebrow">Próximo passo</span>
       <h2 id="t-pedidos">O que preciso de você</h2>
-      <p class="lead">As correções estão prontas no seu computador. Para chegarem ao Supabase e ao app, faltam estes passos.</p>
+      <p class="lead">As correções do banco já estão no Supabase. Para o app receber as telas corrigidas e a nova tentativa automática, faltam estes passos.</p>
     </div>
     <div class="pedidos">
       <div class="pedido">
-        <h3>1. Publicar as correções</h3>
+        <h3>1. Enviar a última correção e gerar o APK</h3>
         <ol>
-          <li>Na pasta do projeto, rode <code>git push</code>.</li>
-          <li>O GitHub roda os testes e publica as duas migrações novas e a função de envio de preços.</li>
-          <li>Em Actions, confira que Testes e Publicar Supabase ficaram verdes. Depois, rode Gerar APK para ter o app com as telas corrigidas.</li>
+          <li>Na pasta do projeto, rode <code>git push</code> (antes, na mesma janela: <code>$env:Path = "C:\Users\michael\dev-tools\git\cmd;$env:Path"</code>).</li>
+          <li>Em Actions, confira que Testes ficou verde.</li>
+          <li>Rode Gerar APK e instale o arquivo novo no celular.</li>
         </ol>
       </div>
       <div class="pedido">
@@ -256,6 +256,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
       <span class="eyebrow">Auditoria de 06/10/2026</span>
       <h2 id="t-auditoria">Bugs encontrados e correções</h2>
       <p class="lead">873 testes contra o Supabase real, o banco local, as telas em 7 tamanhos e o app no navegador: 810 passaram, 30 falharam e 33 ficam para o celular. As 30 falhas vieram de 10 bugs, listados por prioridade. A planilha completa está em <code>documentacao/auditoria/auditoria_gasprice.xlsx</code>.</p>
+      <p class="lead">Reteste depois das correções, em 07/10/2026: no Supabase real, 344 aprovados, 4 falhas e 2 que precisam de e-mail real; testes locais 185 de 185; telas 304 de 304. No Supabase, continuam falhando a política de senha (2 testes, depende do painel), a latência (BUG-10) e um tempo esgotado ocasional no mapa, que virou o BUG-11.</p>
     </div>
     {{AUDITORIA}}
   </section>
@@ -280,7 +281,7 @@ footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
         <tbody>
           <tr><td>Regras no banco</td><td class="n">124</td><td>Consenso, revisão, contestação, pontos com teto, bloqueio, avisos, recálculo semanal em bloco, permissões de acesso, consultas do app, importação do cadastro, precisão da localização dos postos e as correções da auditoria</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Telas em 7 tamanhos e fontes</td><td class="n">304</td><td>Cada rota do app, como visitante e logado, do celular de 320 px ao tablet deitado e com fonte de 100%, 130% e 200%, sem estouro de layout</td><td class="e"><span class="estado ok">Passou</span></td></tr>
-          <tr><td>App Flutter</td><td class="n">24</td><td>Leitor do painel, filtros e ordenação, idade do preço, componentes de preço e precisão da localização</td><td class="e"><span class="estado ok">Passou</span></td></tr>
+          <tr><td>App Flutter</td><td class="n">27</td><td>Leitor do painel, filtros e ordenação, idade do preço, componentes de preço e precisão da localização</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Edge Functions</td><td class="n">17</td><td>Validação do envio e da posição do posto e normalização da API da ANP com um registro real</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Scripts de publicação</td><td class="n">18</td><td>Leitura do <code>.env</code>, detecção de textos de exemplo, montagem da conexão com senha especial, máscara de segredos e simulação da publicação</td><td class="e"><span class="estado ok">Passou</span></td></tr>
           <tr><td>Análise estática do Dart</td><td class="n">–</td><td>Erros de tipo, APIs obsoletas e estilo</td><td class="e"><span class="estado ok">Sem problemas</span></td></tr>

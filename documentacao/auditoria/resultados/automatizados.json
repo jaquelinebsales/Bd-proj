@@ -17,7 +17,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:36"
+  "executado_em": "2026-10-07T21:54:16"
  },
  {
   "id": "A-002",
@@ -37,30 +37,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:40"
+  "executado_em": "2026-10-07T21:54:19"
  },
  {
   "id": "A-003",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "filtros_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "menor preço deixa postos sem preço no fim",
-  "precondicoes": "flutter test",
-  "passos": "flutter test filtros_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4175 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-004",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "parser_painel_test.dart",
@@ -70,26 +50,6 @@
   "passos": "flutter test parser_painel_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4184 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-005",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "filtros_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "mais próximos",
-  "precondicoes": "flutter test",
-  "passos": "flutter test filtros_test.dart",
-  "entrada": "-",
-  "esperado": "success",
   "obtido": "success em 4187 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
@@ -97,10 +57,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
-  "id": "A-006",
+  "id": "A-004",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "parser_painel_test.dart",
@@ -110,77 +70,17 @@
   "passos": "flutter test parser_painel_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4200 ms (tempo acumulado da suíte)",
+  "obtido": "success em 4196 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
-  "id": "A-007",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "filtros_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "faixa de preço exclui postos sem preço",
-  "precondicoes": "flutter test",
-  "passos": "flutter test filtros_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4202 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-008",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "precisao_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "precisão vem do texto do servidor; sem texto vale exata",
-  "precondicoes": "flutter test",
-  "passos": "flutter test precisao_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4214 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-009",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "filtros_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "distância e avaliação mínima",
-  "precondicoes": "flutter test",
-  "passos": "flutter test filtros_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4218 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-010",
+  "id": "A-005",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "parser_painel_test.dart",
@@ -190,14 +90,114 @@
   "passos": "flutter test parser_painel_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4221 ms (tempo acumulado da suíte)",
+  "obtido": "success em 4202 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-006",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "corrige letra O lida no lugar de zero",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4211 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-007",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "ignora valores fora da faixa de combustível",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4218 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-008",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "preço sem rótulo vira sugestão",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4228 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-009",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "identifica os combustíveis pelos nomes usuais",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4235 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-010",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "precisao_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "precisão vem do texto do servidor; sem texto vale exata",
+  "precondicoes": "flutter test",
+  "passos": "flutter test precisao_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4402 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-011",
@@ -210,14 +210,14 @@
   "passos": "flutter test precisao_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4230 ms (tempo acumulado da suíte)",
+  "obtido": "success em 4411 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-012",
@@ -225,42 +225,22 @@
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
   "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "período da atualização ignora estimativas",
+  "cenario": "menor preço deixa postos sem preço no fim",
   "precondicoes": "flutter test",
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4233 ms (tempo acumulado da suíte)",
+  "obtido": "success em 4414 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-013",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "corrige letra O lida no lugar de zero",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4238 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-014",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "precisao_test.dart",
@@ -270,14 +250,34 @@
   "passos": "flutter test precisao_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4244 ms (tempo acumulado da suíte)",
+  "obtido": "success em 4419 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-014",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "filtros_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "mais próximos",
+  "precondicoes": "flutter test",
+  "passos": "flutter test filtros_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4426 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-015",
@@ -285,122 +285,42 @@
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
   "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "só favoritos",
+  "cenario": "faixa de preço exclui postos sem preço",
   "precondicoes": "flutter test",
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4249 ms (tempo acumulado da suíte)",
+  "obtido": "success em 4435 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-016",
   "aba": "Regressão",
   "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
+  "tela": "filtros_test.dart",
   "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "ignora valores fora da faixa de combustível",
+  "cenario": "distância e avaliação mínima",
   "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
+  "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4252 ms (tempo acumulado da suíte)",
+  "obtido": "success em 4443 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-017",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "filtros_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "frescor segue a regra de 24 h e 7 dias",
-  "precondicoes": "flutter test",
-  "passos": "flutter test filtros_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4255 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-018",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "preço sem rótulo vira sugestão",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4260 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-019",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "filtros_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "nome de exibição remove sufixos societários",
-  "precondicoes": "flutter test",
-  "passos": "flutter test filtros_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4264 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-020",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "identifica os combustíveis pelos nomes usuais",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4279 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
- },
- {
-  "id": "A-021",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "precisao_test.dart",
@@ -410,17 +330,37 @@
   "passos": "flutter test precisao_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4284 ms (tempo acumulado da suíte)",
+  "obtido": "success em 4444 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
-  "id": "A-022",
+  "id": "A-018",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "filtros_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "período da atualização ignora estimativas",
+  "precondicoes": "flutter test",
+  "passos": "flutter test filtros_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4452 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-019",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "precisao_test.dart",
@@ -430,14 +370,74 @@
   "passos": "flutter test precisao_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4291 ms (tempo acumulado da suíte)",
+  "obtido": "success em 4454 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-020",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "filtros_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "só favoritos",
+  "precondicoes": "flutter test",
+  "passos": "flutter test filtros_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4461 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-021",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "filtros_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "frescor segue a regra de 24 h e 7 dias",
+  "precondicoes": "flutter test",
+  "passos": "flutter test filtros_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4469 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
+ },
+ {
+  "id": "A-022",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "filtros_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "nome de exibição remove sufixos societários",
+  "precondicoes": "flutter test",
+  "passos": "flutter test filtros_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4489 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-023",
@@ -450,14 +450,14 @@
   "passos": "flutter test widget_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 5940 ms (tempo acumulado da suíte)",
+  "obtido": "success em 6351 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-024",
@@ -470,14 +470,14 @@
   "passos": "flutter test widget_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 5988 ms (tempo acumulado da suíte)",
+  "obtido": "success em 6403 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-025",
@@ -490,14 +490,14 @@
   "passos": "flutter test widget_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 6026 ms (tempo acumulado da suíte)",
+  "obtido": "success em 6447 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-026",
@@ -510,14 +510,14 @@
   "passos": "flutter test widget_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 6058 ms (tempo acumulado da suíte)",
+  "obtido": "success em 6482 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:51"
+  "executado_em": "2026-10-07T21:54:31"
  },
  {
   "id": "A-027",
@@ -537,7 +537,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-028",
@@ -557,7 +557,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-029",
@@ -577,7 +577,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-030",
@@ -597,7 +597,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-031",
@@ -617,7 +617,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-032",
@@ -637,7 +637,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-033",
@@ -650,14 +650,14 @@
   "passos": "deno test validacao_test.ts",
   "entrada": "-",
   "esperado": "passou",
-  "obtido": "passou em 2 ms",
+  "obtido": "passou em 1 ms",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/deno_test.xml",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-034",
@@ -677,7 +677,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-035",
@@ -690,14 +690,14 @@
   "passos": "deno test validacao_test.ts",
   "entrada": "-",
   "esperado": "passou",
-  "obtido": "passou em 1 ms",
+  "obtido": "passou em 0 ms",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/deno_test.xml",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-036",
@@ -717,7 +717,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-037",
@@ -737,7 +737,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-038",
@@ -757,7 +757,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-039",
@@ -777,7 +777,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-040",
@@ -790,14 +790,14 @@
   "passos": "deno test normalizar_test.ts",
   "entrada": "-",
   "esperado": "passou",
-  "obtido": "passou em 3 ms",
+  "obtido": "passou em 4 ms",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/deno_test.xml",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-041",
@@ -817,7 +817,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-042",
@@ -837,7 +837,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-043",
@@ -857,7 +857,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:53"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-044",
@@ -877,7 +877,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-045",
@@ -897,7 +897,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-046",
@@ -917,7 +917,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-047",
@@ -937,7 +937,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-048",
@@ -957,7 +957,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-049",
@@ -977,7 +977,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-050",
@@ -997,7 +997,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-051",
@@ -1017,7 +1017,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-052",
@@ -1037,7 +1037,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-053",
@@ -1057,7 +1057,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-054",
@@ -1077,7 +1077,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-055",
@@ -1097,7 +1097,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-056",
@@ -1117,7 +1117,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-057",
@@ -1137,7 +1137,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-058",
@@ -1157,7 +1157,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-059",
@@ -1177,7 +1177,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-060",
@@ -1197,7 +1197,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-061",
@@ -1217,7 +1217,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:10:54"
+  "executado_em": "2026-10-07T21:54:33"
  },
  {
   "id": "A-062",
@@ -1237,7 +1237,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-063",
@@ -1257,7 +1257,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-064",
@@ -1277,7 +1277,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-065",
@@ -1297,7 +1297,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-066",
@@ -1317,7 +1317,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-067",
@@ -1337,7 +1337,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-068",
@@ -1357,7 +1357,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-069",
@@ -1377,7 +1377,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-070",
@@ -1397,7 +1397,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-071",
@@ -1417,7 +1417,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-072",
@@ -1437,7 +1437,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-073",
@@ -1457,7 +1457,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-074",
@@ -1477,7 +1477,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-075",
@@ -1497,7 +1497,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-076",
@@ -1517,7 +1517,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-077",
@@ -1537,7 +1537,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-078",
@@ -1557,7 +1557,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-079",
@@ -1577,7 +1577,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-080",
@@ -1597,7 +1597,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-081",
@@ -1617,7 +1617,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-082",
@@ -1637,7 +1637,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-083",
@@ -1657,7 +1657,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-084",
@@ -1677,7 +1677,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-085",
@@ -1697,7 +1697,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-086",
@@ -1717,7 +1717,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-087",
@@ -1737,7 +1737,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-088",
@@ -1757,7 +1757,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-089",
@@ -1777,7 +1777,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-090",
@@ -1797,7 +1797,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-091",
@@ -1817,7 +1817,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-092",
@@ -1837,7 +1837,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-093",
@@ -1857,7 +1857,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-094",
@@ -1877,7 +1877,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-095",
@@ -1897,7 +1897,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-096",
@@ -1917,7 +1917,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-097",
@@ -1937,7 +1937,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-098",
@@ -1957,7 +1957,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-099",
@@ -1977,7 +1977,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-100",
@@ -1997,7 +1997,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-101",
@@ -2017,7 +2017,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-102",
@@ -2037,7 +2037,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-103",
@@ -2057,7 +2057,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-104",
@@ -2077,7 +2077,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-105",
@@ -2097,7 +2097,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-106",
@@ -2117,7 +2117,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-107",
@@ -2137,7 +2137,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-108",
@@ -2157,7 +2157,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-109",
@@ -2177,7 +2177,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-110",
@@ -2197,7 +2197,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-111",
@@ -2217,7 +2217,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-112",
@@ -2237,7 +2237,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-113",
@@ -2257,7 +2257,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-114",
@@ -2277,7 +2277,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-115",
@@ -2297,7 +2297,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-116",
@@ -2317,7 +2317,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-117",
@@ -2337,7 +2337,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-118",
@@ -2357,7 +2357,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-119",
@@ -2377,7 +2377,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-120",
@@ -2397,7 +2397,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-121",
@@ -2417,7 +2417,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-122",
@@ -2437,7 +2437,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-123",
@@ -2457,7 +2457,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-124",
@@ -2477,7 +2477,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-125",
@@ -2497,7 +2497,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-126",
@@ -2517,7 +2517,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-127",
@@ -2537,7 +2537,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-128",
@@ -2557,7 +2557,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-129",
@@ -2577,7 +2577,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-130",
@@ -2597,7 +2597,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-131",
@@ -2617,7 +2617,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-132",
@@ -2637,7 +2637,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-133",
@@ -2657,7 +2657,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-134",
@@ -2677,7 +2677,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-135",
@@ -2697,7 +2697,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-136",
@@ -2717,7 +2717,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-137",
@@ -2737,7 +2737,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-138",
@@ -2757,7 +2757,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-139",
@@ -2777,7 +2777,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-140",
@@ -2797,7 +2797,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-141",
@@ -2817,7 +2817,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-142",
@@ -2837,7 +2837,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-143",
@@ -2857,7 +2857,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-144",
@@ -2877,7 +2877,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-145",
@@ -2897,7 +2897,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-146",
@@ -2917,7 +2917,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-147",
@@ -2937,7 +2937,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-148",
@@ -2957,7 +2957,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-149",
@@ -2977,7 +2977,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-150",
@@ -2997,7 +2997,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-151",
@@ -3017,7 +3017,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-152",
@@ -3037,7 +3037,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-153",
@@ -3057,7 +3057,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-154",
@@ -3077,7 +3077,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-155",
@@ -3097,7 +3097,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-156",
@@ -3117,7 +3117,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-157",
@@ -3137,7 +3137,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-158",
@@ -3157,7 +3157,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-159",
@@ -3177,7 +3177,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-160",
@@ -3197,7 +3197,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-161",
@@ -3217,7 +3217,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-162",
@@ -3237,7 +3237,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-163",
@@ -3257,7 +3257,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
  },
  {
   "id": "A-164",
@@ -3277,6 +3277,426 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-06T11:11:06"
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-165",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Regras gerais",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "registrar_envio grava o envio e devolve os itens",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-166",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Regras gerais",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "mesmo combustível no mesmo posto em menos de 6 h é recusado",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-167",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Regras gerais",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "envio misto ignora o combustível repetido e grava o novo",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-168",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Regras gerais",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "limite de 20 envios em 24 horas vale dentro da função",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-169",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Consenso",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "os três envios do consenso ficam confirmados",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-170",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Consenso",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "quem tinha dois envios no consenso ganha os pontos uma vez só",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-171",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Regras gerais",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "coordenada de Fortaleza vale para o CE",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-172",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Regras gerais",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "coordenada do Rio não vale para posto do AM",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-173",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Pontos e confiabilidade",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "ponto padrão da API da ANP nunca vale",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-174",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Regras gerais",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "Fernando de Noronha vale para PE",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-175",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Regras gerais",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "Ipixuna, na divisa com o AC, vale para o AM",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-176",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Importação ANP",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "coordenada ruim já gravada é limpa na sincronização",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-177",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Localização dos postos",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "posto novo com coordenada fora do estado entra sem posição",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-178",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Localização dos postos",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "posto novo com coordenada dentro do estado entra com posição exata",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-179",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Avaliações",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "visitante não lê quem fez cada avaliação",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-180",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Avaliações",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "visitante continua lendo nota e comentário",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-181",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Avaliações",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "visitante não vê os votos de útil",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-182",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Avaliações",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "autora continua editando a própria avaliação",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-183",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Avaliações",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "autora não vota na própria avaliação",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-184",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Avaliações",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "usuário vê só os próprios votos",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
+ },
+ {
+  "id": "A-185",
+  "aba": "Banco de Dados",
+  "modulo": "Regras · Avaliações",
+  "tela": "Postgres 17.10 + PostGIS local",
+  "tipo": "Teste automatizado · regra de negócio",
+  "cenario": "usuário retira o próprio voto",
+  "precondicoes": "Banco limpo com as 7 migrações aplicadas",
+  "passos": "python scripts/supabase/testar_banco_local.py (supabase/tests/regras_test.sql)",
+  "entrada": "-",
+  "esperado": "ok",
+  "obtido": "ok",
+  "status": "PASS",
+  "severidade": "Alta",
+  "evidencia": "logs/regras_banco_local.txt",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-07T21:54:46"
  }
 ]

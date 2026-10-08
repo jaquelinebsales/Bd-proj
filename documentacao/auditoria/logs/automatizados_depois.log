@@ -1,0 +1,198 @@
+﻿
+== analise_estatica
+ok     A-001 flutter analyze sem avisos nem erros
+ok     A-002 deno check das 4 Edge Functions
+
+== flutter_testes
+ok     A-003 rótulo e preço na mesma linha
+ok     A-004 rótulos e preços em colunas separadas
+ok     A-005 painel de LED sem separador decimal
+ok     A-006 corrige letra O lida no lugar de zero
+ok     A-007 ignora valores fora da faixa de combustível
+ok     A-008 preço sem rótulo vira sugestão
+ok     A-009 identifica os combustíveis pelos nomes usuais
+ok     A-010 precisão vem do texto do servidor; sem texto vale exata
+ok     A-011 o que cada precisão permite
+ok     A-012 menor preço deixa postos sem preço no fim
+ok     A-013 o raio pode vir de parâmetros do servidor
+ok     A-014 mais próximos
+ok     A-015 faixa de preço exclui postos sem preço
+ok     A-016 distância e avaliação mínima
+ok     A-017 posto lido do JSON carrega precisão, raio e posição informada
+ok     A-018 período da atualização ignora estimativas
+ok     A-019 posto sem raio no JSON (CEP da cidade) não aceita envio
+ok     A-020 só favoritos
+ok     A-021 frescor segue a regra de 24 h e 7 dias
+ok     A-022 nome de exibição remove sufixos societários
+ok     A-023 linha de preço mostra valor, origem e selo da comunidade
+ok     A-024 preço da ANP mostra a semana da pesquisa e o selo ANP
+ok     A-025 estimativa aparece com "≈" e margem de erro
+ok     A-026 combustível sem preço convida a enviar foto
+
+== deno_testes
+ok     A-027 aceita posição válida com GPS preciso
+ok     A-028 recusa GPS impreciso
+ok     A-029 recusa quando a precisão do GPS não foi enviada
+ok     A-030 recusa posição fora do Brasil
+ok     A-031 recusa posto ausente e corpo inválido
+ok     A-032 mensagens dos motivos do banco
+ok     A-033 raio de envio depende da precisão da posição do posto
+ok     A-034 aceita envio válido e arredonda para 3 casas
+ok     A-035 recusa preço fora da faixa
+ok     A-036 recusa combustível repetido
+ok     A-037 recusa sem localização
+ok     A-038 marca revisão quando desvia mais de 20% da referência
+ok     A-039 marca revisão para usuário com baixa confiabilidade
+ok     A-040 normaliza registro real da API
+ok     A-041 descarta coordenada fora do Brasil
+ok     A-042 mapeia nomes de produto
+ok     A-043 recusa registro sem CNPJ
+
+== python_testes
+ok     A-044 test_arquivo_ausente.test_arquivo_ausente
+ok     A-045 test_carregar_ignora_comentarios_e_tira_aspas.test_carregar_ignora_comentarios_e_tira_aspas
+ok     A-046 test_estado_reconhece_exemplos_e_valores_reais.test_estado_reconhece_exemplos_e_valores_reais
+ok     A-047 test_interpreta_url_do_banco.test_interpreta_url_do_banco
+ok     A-048 test_lista_o_que_falta.test_lista_o_que_falta
+ok     A-049 test_mascara_segredos_e_a_senha_da_url.test_mascara_segredos_e_a_senha_da_url
+ok     A-050 test_monta_url_pela_api_com_senha_codificada.test_monta_url_pela_api_com_senha_codificada
+ok     A-051 test_ref_vem_da_url.test_ref_vem_da_url
+ok     A-052 test_resposta_vazia_da_api.test_resposta_vazia_da_api
+ok     A-053 test_senha_com_arroba_e_dois_pontos_ainda_funciona.test_senha_com_arroba_e_dois_pontos_ainda_funciona
+ok     A-054 test_senha_com_barra_ou_colchete_e_recusada_com_dica.test_senha_com_barra_ou_colchete_e_recusada_com_dica
+ok     A-055 test_senha_do_banco_pode_terminar_em_reticencias.test_senha_do_banco_pode_terminar_em_reticencias
+ok     A-056 test_url_fora_do_formato.test_url_fora_do_formato
+ok     A-057 test_usa_database_url_quando_preenchida.test_usa_database_url_quando_preenchida
+ok     A-058 test_env_em_branco_lista_o_que_falta.test_env_em_branco_lista_o_que_falta
+ok     A-059 test_sem_env_para_com_mensagem.test_sem_env_para_com_mensagem
+ok     A-060 test_simulacao_lista_os_passos_e_nao_mostra_segredos.test_simulacao_lista_os_passos_e_nao_mostra_segredos
+ok     A-061 test_url_fora_do_formato_e_recusada.test_url_fora_do_formato_e_recusada
+
+== regras_banco
+ok     A-062 perfil criado automaticamente no cadastro
+ok     A-063 e-mail curto sem nome gera o nome "Usuário"
+ok     A-064 nome abreviado para exibição pública
+ok     A-065 busca ignora acentos e maiúsculas
+ok     A-066 Fortaleza tem coleta da ANP e Itaitinga não
+ok     A-067 estimativa só para posto e combustível sem preço ANP
+ok     A-068 estimativa de Itaitinga = mediana dos vizinhos (6,14) com o erro médio medido da faixa 25-50 km
+ok     A-069 sem envios, vale o preço oficial da ANP
+ok     A-070 preço ANP marcado como anomalia é ignorado
+ok     A-071 posto sem nenhuma fonte mostra estimativa com margem
+ok     A-072 envio isolado fica pendente
+ok     A-073 envio isolado aparece como não confirmado e guarda o último preço confiável
+ok     A-074 envio isolado não gera aviso
+ok     A-075 dois usuários com o mesmo valor confirmam o preço
+ok     A-076 preço exibido passa a ser o confirmado
+ok     A-077 primeiro a enviar ganha 10 + 5 de bônus
+ok     A-078 quem confirma ganha 10
+ok     A-079 confiabilidade sobe com envio confirmado
+ok     A-080 preço confirmado entra no histórico no mesmo dia
+ok     A-081 quem favoritou é avisado da queda de 6,19 para 5,99
+ok     A-082 envio isolado diferente não derruba um preço confirmado
+ok     A-083 envios divergentes fazem valer o preço da ANP
+ok     A-084 envio contrariado pelo consenso é marcado como contestado
+ok     A-085 contestado perde 5 pontos (sem ficar negativo) e confiabilidade
+ok     A-086 segundo posto confirmado soma 10 + 5 de bônus
+ok     A-087 cidade sem ANP dobra pontos e bônus (20 + 10)
+ok     A-088 cidade sem ANP dobra os pontos de quem confirma
+ok     A-089 preço da comunidade substitui a estimativa
+ok     A-090 em revisão, dois usuários ainda não bastam
+ok     A-091 envio em revisão não aparece como preço antes de confirmado
+ok     A-092 em revisão, o terceiro usuário confirma
+ok     A-093 mudança do etanol também gera aviso para o favorito
+ok     A-094 envio sem confirmação há mais de 24 h é fechado
+ok     A-095 envio fechado fica como expirado
+ok     A-096 envio expirado entra no histórico como não confirmado
+ok     A-097 preço confirmado continua exibido
+ok     A-098 teto de 200 pontos por dia limita o ganho
+ok     A-099 acima do teto não ganha mais pontos
+ok     A-100 3 envios contestados em 7 dias pausam novos envios
+ok     A-101 recálculo em bloco reproduz o que o caminho individual já tinha calculado
+ok     A-102 recálculo preserva o preço confirmado pela comunidade
+ok     A-103 em bloco, o preço da ANP vira o preço exibido
+ok     A-104 primeiro preço oficial do posto não gera aviso
+ok     A-105 nova pesquisa da ANP com mudança de R$ 0,20 avisa quem favoritou
+ok     A-106 recalcular de novo não repete o aviso
+ok     A-107 posto que perdeu todas as fontes sai dos preços exibidos
+ok     A-108 estimativa continua funcionando quando o dado da ANP é antigo
+ok     A-109 estimativa gerada a partir de pesquisa com mais de 60 dias de idade
+ok     A-110 visitante sem login consulta os postos
+ok     A-111 visitante sem login não consegue avaliar
+ok     A-112 usuário não avalia em nome de outra pessoa
+ok     A-113 usuário não altera os próprios pontos
+ok     A-114 usuário só enxerga o próprio perfil
+ok     A-115 nota média calculada no servidor
+ok     A-116 usuário não altera avaliação de outra pessoa
+ok     A-117 voto de "útil" contado
+ok     A-118 mapa traz os postos da área visível
+ok     A-119 lista de próximos começa pelo mais perto
+ok     A-120 busca por cidade
+ok     A-121 busca com várias palavras
+ok     A-122 busca exige pelo menos 2 letras
+ok     A-123 detalhe do posto com preços e notas
+ok     A-124 histórico junta ANP e comunidade
+ok     A-125 contribuições mostram nomes abreviados
+ok     A-126 avaliações do posto
+ok     A-127 favoritos locais buscados por id
+ok     A-128 ranking ordenado por pontos
+ok     A-129 resumo do perfil com pontos, avaliações e posição
+ok     A-130 favoritos da conta
+ok     A-131 mapa mostra posto de rua e esconde os de CEP da cidade e sem posição
+ok     A-132 lista por distância também esconde os de posição fraca
+ok     A-133 o mapa informa a precisão da posição
+ok     A-134 busca encontra o posto sem posição, sem distância
+ok     A-135 posição exata: envio em 300 m
+ok     A-136 posição de rua: envio em 1 km
+ok     A-137 CEP da cidade: não aceita envio
+ok     A-138 validação do envio recebe distância e precisão do posto
+ok     A-139 posto sem posição não tem distância
+ok     A-140 posto de posição exata não aceita correção
+ok     A-141 posição a mais de 100 km da aproximada é recusada
+ok     A-142 primeira pessoa informa a posição e o posto aguarda confirmação
+ok     A-143 a mesma pessoa informando de novo atualiza a posição e não conta duas vezes
+ok     A-144 enquanto aguarda, a posição do posto não muda
+ok     A-145 segunda pessoa a menos de 150 m confirma a posição
+ok     A-146 posto passa a ter posição exata, no meio das duas informadas
+ok     A-147 quem confirma a posição ganha 5 pontos
+ok     A-148 as duas posições ficam como confirmadas
+ok     A-149 depois de confirmada, a posição não aceita nova correção
+ok     A-150 posições a mais de 150 m uma da outra não se confirmam
+ok     A-151 a terceira posição, perto da primeira, confirma
+ok     A-152 a posição que discorda do consenso é encerrada como contestada
+ok     A-153 nenhuma posição fica pendente depois do consenso
+ok     A-154 cada pessoa informa no máximo 10 posições por dia
+ok     A-155 importação do cadastro grava 2 postos
+ok     A-156 cadastro atualiza bandeira e preserva a posição corrigida por usuário
+ok     A-157 combustíveis vendidos seguem o cadastro da ANP
+ok     A-158 posto novo do cadastro entra com localização
+ok     A-159 posto que saiu do cadastro fica inativo
+ok     A-160 quatro tarefas agendadas registradas
+ok     A-161 posto novo do cadastro com coordenada da ANP entra com posição exata
+ok     A-162 importação de um posto que já tinha posição aproximada
+ok     A-163 coordenada da ANP substitui a posição aproximada
+ok     A-164 posição confirmada por usuários não é trocada pela sincronização
+ok     A-165 registrar_envio grava o envio e devolve os itens
+ok     A-166 mesmo combustível no mesmo posto em menos de 6 h é recusado
+ok     A-167 envio misto ignora o combustível repetido e grava o novo
+ok     A-168 limite de 20 envios em 24 horas vale dentro da função
+ok     A-169 os três envios do consenso ficam confirmados
+ok     A-170 quem tinha dois envios no consenso ganha os pontos uma vez só
+ok     A-171 coordenada de Fortaleza vale para o CE
+ok     A-172 coordenada do Rio não vale para posto do AM
+ok     A-173 ponto padrão da API da ANP nunca vale
+ok     A-174 Fernando de Noronha vale para PE
+ok     A-175 Ipixuna, na divisa com o AC, vale para o AM
+ok     A-176 coordenada ruim já gravada é limpa na sincronização
+ok     A-177 posto novo com coordenada fora do estado entra sem posição
+ok     A-178 posto novo com coordenada dentro do estado entra com posição exata
+ok     A-179 visitante não lê quem fez cada avaliação
+ok     A-180 visitante continua lendo nota e comentário
+ok     A-181 visitante não vê os votos de útil
+ok     A-182 autora continua editando a própria avaliação
+ok     A-183 autora não vota na própria avaliação
+ok     A-184 usuário vê só os próprios votos
+ok     A-185 usuário retira o próprio voto
+regras do banco: 124 verificações
+
+automatizados: 185 testes, 0 falhas -> C:\Users\michael\Desktop\gasprice\documentacao\auditoria\resultados\automatizados.json

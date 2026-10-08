@@ -46,14 +46,14 @@ def rodar(s, ctx) -> None:
              f"""select count(*) from public.postos p where {REAIS} and localizacao is not null and
                 (st_y(localizacao::extensions.geometry) not between -34 and 5.5 or st_x(localizacao::extensions.geometry) not between -74.5 and -28.5)""",
              zero, "0 fora da caixa do Brasil", MEDIA, tela="Tabela postos")
-    consulta("Coordenadas caem perto da UF cadastrada (menos de 1.000 km do centro dos postos da UF)",
-             f"""with centro as (select uf, st_centroid(st_collect(localizacao::extensions.geometry)) c from public.postos
-                                 where localizacao is not null and cnpj not like '99999999%%' group by uf)
-                select count(*) from public.postos p join centro on centro.uf = p.uf
-                where {REAIS} and p.ativo and p.localizacao is not null
-                  and extensions.st_distance(p.localizacao::extensions.geometry, centro.c) > 9""",
-             zero, "0 postos a mais de ~1.000 km (9 graus) do centro da própria UF", BAIXA, tela="Tabela postos",
-             obs="Detecta latitude e longitude trocadas ou com sinal errado na base da ANP.")
+    consulta("Coordenadas da ANP caem dentro do contorno do próprio estado (malha do IBGE, 15 km de tolerância)",
+             f"""select count(*) from public.postos p
+                where {REAIS} and p.ativo and p.localizacao is not null and coalesce(p.localizacao_fonte, 'anp') <> 'usuario'
+                  and not public.coordenada_confiavel(p.uf, p.localizacao)""",
+             zero, "0 postos com coordenada fora do próprio estado ou num ponto padrão da API", ALTA, tela="Tabela postos",
+             obs="Usa a mesma regra do importador (coordenada_confiavel). Na auditoria de 06/10 a checagem era aproximada "
+                 "(distância ao centro dos postos da UF) e apontou 132 postos; ela dava falso alarme no oeste do Amazonas, "
+                 "a mais de 1.000 km de Manaus.")
     consulta("Nenhuma coordenada é compartilhada por postos de UFs diferentes (valor padrão da API tratado como posição)",
              f"""select coalesce(sum(n), 0)::int from (select count(*) n from public.postos p where {REAIS} and ativo and localizacao is not null
                 group by localizacao having count(distinct uf) > 1) x""",

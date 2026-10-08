@@ -25,9 +25,15 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 
 RAIZ = Path(__file__).resolve().parents[2]
 PASTA = RAIZ / "documentacao" / "auditoria"
-# Retrato da auditoria de 06/10/2026, antes das correções. A rodada das telas depois das correções
-# está em resultados/telas.json (304 de 304); a da auditoria, em resultados/telas_antes.json.
-SUITES = ["remoto", "automatizados", "telas_antes", "e2e", "android"]
+# Retrato da auditoria de 06/10/2026, antes das correções (arquivos *_antes). O reteste depois das correções
+# está em remoto.json, automatizados.json e telas.json e aparece no Dashboard e na aba Bugs encontrados.
+SUITES = ["remoto_antes", "automatizados_antes", "telas_antes", "e2e", "android"]
+RETESTE = {"remoto": "Supabase real", "automatizados": "Testes locais (banco, app, funções, scripts)", "telas": "Telas em 7 tamanhos e fontes"}
+# Testes que mudaram de nome no reteste porque a checagem ficou mais precisa
+RENOMEADOS = {
+    "Coordenadas caem perto da UF cadastrada (menos de 1.000 km do centro dos postos da UF)":
+        "Coordenadas da ANP caem dentro do contorno do próprio estado (malha do IBGE, 15 km de tolerância)",
+}
 TOKEN = re.compile(r"eyJ[\w-]{6,}(?:\.[\w-]*){0,2}")  # trechos de tokens de sessão dos usuários de teste
 
 # aba do registro -> (nome da aba no Excel, prefixo do ID). O Excel não aceita "/" em nome de aba.
@@ -145,14 +151,14 @@ BUGS = [
 
 # Situação da correção de cada bug (atualizar aqui quando mudar)
 SITUACAO = {
-    "BUG-01": "Corrigido (função registrar_envio com trava por usuário; pontos uma vez por pessoa). Publica no git push.",
-    "BUG-02": "Corrigido (contorno dos estados do IBGE e pontos padrão; limpa os postos atuais). Publica no git push.",
+    "BUG-01": "Corrigido e no ar (função registrar_envio com trava por usuário; pontos uma vez por pessoa).",
+    "BUG-02": "Corrigido e no ar (contorno dos estados do IBGE e pontos padrão; 184 postos corrigidos).",
     "BUG-03": "Corrigido e no ar: 14 semanas carregadas (coleta até 02/10/2026); carga semanal no GitHub Actions.",
     "BUG-04": "Aguardando você: política de senha no painel do Supabase (8 caracteres, letras e números).",
-    "BUG-05": "Corrigido (coluna de autor fora da leitura pública; cada um vê só os próprios votos). Publica no git push.",
+    "BUG-05": "Corrigido e no ar (coluna de autor fora da leitura pública; cada um vê só os próprios votos).",
     "BUG-06": "Corrigido e verificado: 304 testes de telas passando. Chega ao celular no próximo APK.",
     "BUG-07": "Corrigido e verificado: 304 testes de telas passando. Chega ao celular no próximo APK.",
-    "BUG-08": "Corrigido (política de voto do banco). Publica no git push.",
+    "BUG-08": "Corrigido e no ar (política de voto do banco).",
     "BUG-09": "Corrigido: catálogo de regras reescrito e republicado.",
     "BUG-10": "Decisão sua: criar o projeto em sa-east-1 antes do lançamento.",
 }
@@ -177,9 +183,36 @@ def carregar() -> list[dict]:
             if nome == "telas_antes":
                 t["evidencia"] = (t.get("evidencia") or "").replace("evidencias/telas/", "evidencias/telas_antes/")
             if not t.get("evidencia"):
-                t["evidencia"] = {"remoto": "logs/remoto.log", "e2e": "resultados/e2e.json"}.get(nome, f"resultados/{nome}.json")
+                t["evidencia"] = {"remoto_antes": "resultados/remoto_antes.json", "e2e": "resultados/e2e.json"}.get(
+                    nome, f"resultados/{nome}.json")
             testes.append(t)
     return testes
+
+
+def carregar_reteste() -> tuple[dict[str, Counter], dict[str, str]]:
+    """Contagem por suíte do reteste e o status de cada cenário depois das correções."""
+    contagem, status = {}, {}
+    for nome in RETESTE:
+        arq = PASTA / "resultados" / f"{nome}.json"
+        if not arq.exists():
+            continue
+        dados = json.loads(arq.read_text(encoding="utf-8"))
+        contagem[nome] = Counter(t["status"] for t in dados)
+        for t in dados:
+            status[t["cenario"]] = t["status"]
+    return contagem, status
+
+
+def ligar_reteste(bugs_testes: dict[str, list[dict]], status: dict[str, str]) -> None:
+    for b in BUGS:
+        lista = bugs_testes.get(b["id"], [])
+        achados = [status.get(RENOMEADOS.get(t["cenario"], t["cenario"])) for t in lista]
+        validos = [s for s in achados if s]
+        if not validos:
+            b["reteste"] = "Não retestado"
+        else:
+            ok = sum(s == "PASS" for s in validos)
+            b["reteste"] = f"{ok} de {len(validos)} passaram no reteste" + ("" if ok == len(validos) else f"; {len(validos) - ok} ainda falha(m)")
 
 
 def preservar_android(testes: list[dict], destino: Path) -> int:
@@ -299,15 +332,16 @@ def aba_testes(wb, nome: str, linhas: list[dict]) -> None:
 def aba_bugs(wb) -> None:
     ws = wb.create_sheet("Bugs encontrados")
     cab = ["ID", "Título", "Severidade", "Módulo", "Descrição", "Impacto", "Como reproduzir", "Correção sugerida",
-           "Testes que falharam", "Prioridade", "Situação da correção"]
+           "Testes que falharam", "Prioridade", "Situação da correção", "Reteste depois da correção"]
     ws.append(cab)
     estilo_cabecalho(ws, 1, len(cab))
     for n, b in enumerate(BUGS, 1):
         b["prioridade"] = n
     for b in BUGS:
         ws.append([b["id"], b["titulo"], b["sev"], b["modulo"], b["descricao"], b["impacto"], b["reproduzir"], b["correcao"],
-                   f"{len(b['testes'])}: " + ", ".join(b["testes"][:12]) + (" …" if len(b["testes"]) > 12 else ""), b["prioridade"], b["situacao"]])
-    for i, w in enumerate([9, 40, 11, 24, 50, 44, 40, 50, 30, 10, 44], 1):
+                   f"{len(b['testes'])}: " + ", ".join(b["testes"][:12]) + (" …" if len(b["testes"]) > 12 else ""), b["prioridade"], b["situacao"],
+                   b.get("reteste", "Não retestado")])
+    for i, w in enumerate([9, 40, 11, 24, 50, 44, 40, 50, 30, 10, 44, 30], 1):
         ws.column_dimensions[get_column_letter(i)].width = w
     for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
         for cel in row:
@@ -319,10 +353,17 @@ def aba_bugs(wb) -> None:
         ws.conditional_formatting.add(f"C2:C{ws.max_row}", CellIsRule(operator="equal", formula=[f'"{sev}"'],
                                                                      fill=PatternFill("solid", fgColor=cor)))
     ws.freeze_panes = "C2"
-    ws.auto_filter.ref = f"A1:K{ws.max_row}"
+    ws.auto_filter.ref = f"A1:L{ws.max_row}"
+    for r in range(2, ws.max_row + 1):
+        cel = ws.cell(row=r, column=12)
+        texto = str(cel.value or "")
+        if texto.startswith(("Não", "0 de")) or "ainda falha" in texto:
+            cel.fill = PatternFill("solid", fgColor="FBF0CF" if not texto.startswith("0 de") else "FBE0DE")
+        else:
+            cel.fill = PatternFill("solid", fgColor="DFF3E7")
 
 
-def dashboard(wb, abas: list[str], commit: str, total_testes: int) -> None:
+def dashboard(wb, abas: list[str], commit: str, total_testes: int, reteste: dict | None = None) -> None:
     ws = wb["Dashboard"]
     ws.sheet_view.showGridLines = False
     ws["B2"] = "Auditoria do gasprice"
@@ -421,6 +462,33 @@ def dashboard(wb, abas: list[str], commit: str, total_testes: int) -> None:
         "Evidências: pasta evidencias (imagens) e logs (saída completa de cada suíte)."
     )).font = Font(name=FONTE, size=9, color="435049")
 
+    # Reteste depois das correções: valores gravados pelos scripts (resultados/remoto.json, automatizados.json, telas.json)
+    if reteste:
+        r0 = nota + 3
+        ws.cell(row=r0, column=2, value="Reteste depois das correções").font = Font(name=FONTE, size=12, bold=True, color="134E3A")
+        cab_r = ["Suíte", "Testes", "🟢 PASS", "🔴 FAIL", "🟡 BLOCKED", "⚪ NOT TESTED"]
+        for j, v in enumerate(cab_r):
+            ws.cell(row=r0 + 1, column=2 + j, value=v)
+        estilo_cabecalho(ws, r0 + 1, 7)
+        ws.cell(row=r0 + 1, column=1).fill = PatternFill(fill_type=None)
+        for i, (nome, c) in enumerate(reteste.items()):
+            r = r0 + 2 + i
+            valores = [RETESTE[nome], sum(c.values()), c["PASS"], c["FAIL"], c["BLOCKED"], c["NOT TESTED"]]
+            for j, v in enumerate(valores):
+                cel = ws.cell(row=r, column=2 + j, value=v)
+                cel.font = Font(name=FONTE, size=10)
+                cel.border = BORDA
+                if j:
+                    cel.alignment = Alignment(horizontal="center")
+        ws.cell(row=r0 + 2 + len(reteste), column=2, value=(
+            "Valores gravados pelos scripts no reteste, depois das correções (arquivos resultados/remoto.json, "
+            "automatizados.json e telas.json). A coluna 'Reteste depois da correção' da aba Bugs encontrados mostra cada bug."
+        )).font = Font(name=FONTE, size=9, color="435049")
+        ws.cell(row=r0 + 3 + len(reteste), column=2, value=(
+            "Achado novo no reteste (BUG-11, Média): com o servidor gratuito ocupado, a consulta do mapa passou do limite de 3 s "
+            "uma vez (HTTP 500). Correção: o app repete sozinho, uma vez, a leitura que falhar por tempo esgotado."
+        )).font = Font(name=FONTE, size=9, color="A3231A")
+
     graf = BarChart()
     graf.type = "bar"
     graf.grouping = "stacked"
@@ -469,6 +537,12 @@ def main() -> int:
     for b in ativos:
         b["id"] = novo[b["id"]]
     BUGS[:] = ativos
+    bugs_testes: dict[str, list[dict]] = {}
+    for t in testes:
+        if t.get("bug"):
+            bugs_testes.setdefault(t["bug"], []).append(t)
+    contagem_reteste, status_reteste = carregar_reteste()
+    ligar_reteste(bugs_testes, status_reteste)
     try:
         commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=RAIZ, capture_output=True, text=True).stdout.strip()
     except OSError:
@@ -478,7 +552,7 @@ def main() -> int:
     wb = Workbook()
     wb.active.title = "Dashboard"
     ordem = [v[0] for v in ABAS.values() if v[0] in por_aba]
-    dashboard(wb, ordem, commit, len(testes))
+    dashboard(wb, ordem, commit, len(testes), contagem_reteste)
     for nome in ordem:
         aba_testes(wb, nome, por_aba[nome])
     aba_bugs(wb)

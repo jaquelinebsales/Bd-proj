@@ -5,4 +5,4 @@
 │ To update to the latest version, run "flutter upgrade". │
 └─────────────────────────────────────────────────────────┘
 Analyzing app...                                                
-No issues found! (ran in 74.2s)
+No issues found! (ran in 83.5s)

@@ -59,7 +59,8 @@ ETAPAS = [
     ]),
     ("Fase 5 · Evolução", [
         ("Auditoria completa: 873 testes, 10 bugs encontrados", OK),
-        ("Correções da auditoria: 8 feitas, 1 depende do painel do Supabase, 1 é decisão de região", OK),
+        ("Correções da auditoria: 9 feitas e retestadas, 1 depende do painel do Supabase, 1 é decisão de região", OK),
+        ("Reteste no Supabase real depois das correções: 344 aprovados, 4 falhas (senha, latência e BUG-11)", OK),
         ("Carga automática das semanas novas da pesquisa da ANP", OK),
         ("Teste de localização dos postos sem coordenada com 200 postos de amostra", OK),
         ("Nova regra de envio para posições aproximadas, no app e no servidor", OK),
@@ -169,37 +170,43 @@ def geocodificacao() -> tuple[str, str]:
 
 # ------------------------------------------------------------------ auditoria
 # Situação: ("ok", texto) corrigido e verificado; ("espera", texto) depende de você; ("prox", texto) decisão ou etapa futura.
-CORRIGIDO, NO_PUSH, VOCE, DECISAO = ("ok", "Corrigido"), ("espera", "Publica no push"), ("espera", "Aguardando você"), ("prox", "Decisão sua")
+CORRIGIDO, CONFIRMADO, NO_PUSH, VOCE, DECISAO = (("ok", "Corrigido"), ("ok", "Corrigido e confirmado"), ("espera", "Publica no push"),
+                                                ("espera", "Aguardando você"), ("prox", "Decisão sua"))
 BUGS = [
     ("BUG-01", "Alta", "Envios simultâneos furavam a regra de 6 horas: uma única ação rendeu +70 pontos e +0,15 de confiabilidade.",
      "Limite diário, regra de 6 h e gravação passaram para uma única função do banco, com trava por usuário. Pontos e confiabilidade "
-     "agora contam uma vez por pessoa em cada consenso.", NO_PUSH, "Testado no Postgres local; a Edge Function e a migração sobem no push."),
+     "agora contam uma vez por pessoa em cada consenso.", CONFIRMADO,
+     "Reteste no Supabase real: 6 envios simultâneos gravam 1 item; a confirmação rende os pontos de uma ação só."),
     ("BUG-02", "Alta", "Cerca de 180 postos com coordenada errada da ANP: 148 de 21 estados no mesmo ponto do Rio e outros a centenas de km do estado.",
      "A coordenada da ANP só vale dentro do contorno do estado do posto (malha do IBGE, 15 km de tolerância) e fora dos pontos padrão. "
-     "Os postos atingidos voltam a 'localização desconhecida' até a comunidade confirmar.", NO_PUSH,
-     "Regra testada no banco real: Noronha e as cidades de divisa continuam válidas."),
+     "Os postos atingidos voltam a 'localização desconhecida' até a comunidade confirmar.", CONFIRMADO,
+     "Reteste no Supabase real: 184 postos corrigidos; nenhum fora do próprio estado; Noronha e o oeste do Amazonas continuam válidos."),
     ("BUG-03", "Alta", "Preços da ANP parados em 30/06/2026, sem carga automática.",
      "Carga semanal pela planilha 'revendas_lpc' da ANP, com marcação de anomalias. As 14 semanas que faltavam já foram carregadas "
-     "(224 mil preços, coleta mais recente 02/10/2026). Agendamento no GitHub Actions às segundas e quintas.", CORRIGIDO,
-     "Dados no ar; o agendamento passa a rodar depois do push."),
+     "(224 mil preços, coleta mais recente 02/10/2026). Agendamento no GitHub Actions às segundas e quintas.", CONFIRMADO,
+     "Reteste: coleta mais recente 02/10/2026. O agendamento já está no GitHub."),
     ("BUG-04", "Média", "O servidor aceitava senhas 'abc123' e 'abcdefgh', que o app recusa.",
      "No painel do Supabase: Authentication, política de senha com mínimo de 8 caracteres e letras e números.", VOCE,
-     "A configuração local já tem a regra; o projeto real precisa da mudança no painel."),
+     "Reteste: o servidor ainda aceita; falta a mudança no painel."),
     ("BUG-05", "Média", "Qualquer pessoa lia o identificador de quem escreveu cada avaliação e de quem votou.",
      "A coluna de autor deixou de ser pública e cada pessoa vê só os próprios votos. O app continua usando o nome abreviado.",
-     NO_PUSH, "Testado no Postgres local."),
+     CONFIRMADO, "Reteste no Supabase real: visitante recebe 'permissão negada' e não vê votos."),
     ("BUG-06", "Média", "Telas estouravam em celular pequeno (Favoritos e Avaliar em 320 px) e na Busca com fonte de 130%.",
      "Estado vazio com rolagem, estrelas que encolhem, lista de cartões com altura do conteúdo.", CORRIGIDO,
-     "304 testes de telas em 7 tamanhos e fontes, todos passando."),
+     "304 testes de telas passando. Chega ao celular no próximo APK."),
     ("BUG-07", "Baixa", "Sete telas estouravam com a fonte do sistema em 200%.",
      "Quebra de linha no rodapé de Entrar e Criar conta, legenda e períodos do histórico, preço e selo do posto; pinos do mapa com teto de fonte.",
-     CORRIGIDO, "Mesmos 304 testes de telas."),
+     CORRIGIDO, "Mesmos 304 testes de telas. Chega ao celular no próximo APK."),
     ("BUG-08", "Baixa", "A autora conseguia votar na própria avaliação chamando a API.",
-     "A política de voto do banco passou a recusar o voto na própria avaliação.", NO_PUSH, "Testado no Postgres local."),
+     "A política de voto do banco passou a recusar o voto na própria avaliação.", CONFIRMADO,
+     "Reteste no Supabase real: voto na própria avaliação recusado."),
     ("BUG-09", "Baixa", "A página de regras dizia que um envio nunca altera o preço exibido, mas ele aparece como 'aguardando confirmação'.",
-     "Regra reescrita e catálogo atualizado com as regras novas das correções (65 regras).", CORRIGIDO, "PDF conferido contra a página."),
+     "Regra reescrita e catálogo atualizado com as regras novas das correções (65 regras).", CONFIRMADO, "Reteste: regra e comportamento iguais."),
     ("BUG-10", "Baixa", "Latência alta: o projeto está nos EUA (us-west-2) e os usuários no Brasil, com picos de até 5 s.",
      "Criar o projeto em São Paulo (sa-east-1) antes do lançamento e migrar os dados.", DECISAO, "Exige um projeto novo no Supabase."),
+    ("BUG-11", "Média", "Achado no reteste: com o servidor gratuito ocupado, a consulta do mapa pode passar do limite de 3 s e o app mostra erro.",
+     "O app repete sozinho, uma vez, a leitura que falhar por tempo esgotado (só leituras, para nunca gravar duas vezes).", NO_PUSH,
+     "3 testes novos no app. Ao vivo, depende também do BUG-10."),
 ]
 
 

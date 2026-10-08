@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../config.dart';
 import '../modelos/modelos.dart';
+import '../util/nova_tentativa.dart';
 import 'demo.dart';
 
 /// Erro com mensagem pronta para mostrar ao usuário.
@@ -33,7 +34,7 @@ class Api {
   Future<T> _comCache<T extends Object>(String chave, Duration validade, Future<T> Function() buscar) async {
     final c = _cache[chave];
     if (c != null && DateTime.now().difference(c.quando) < validade) return c.valor as T;
-    final v = await buscar();
+    final v = await lerComNovaTentativa(buscar);
     _cache[chave] = _ItemCache(v);
     if (_cache.length > 200) _cache.remove(_cache.keys.first);
     return v;
