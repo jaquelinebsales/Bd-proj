@@ -87,20 +87,16 @@ class _TelaPosicaoPostoState extends State<TelaPosicaoPosto> {
         Card(
           child: Column(children: [
             ListTile(
-              leading: Icon(Icons.place_outlined, color: cs.primary),
-              title: const Text('Esteja dentro do posto, de preferência ao ar livre'),
+              leading: Icon(Icons.lock_outline, color: cs.primary),
+              title: const Text('A posição é usada apenas para localizar o posto'),
             ),
             ListTile(
-              leading: Icon(Icons.groups_outlined, color: cs.primary),
-              title: const Text('A posição vale quando duas pessoas diferentes informam pontos a até 150 m um do outro'),
+              leading: Icon(Icons.place_outlined, color: cs.primary),
+              title: const Text('Esteja próximo ao posto'),
             ),
             ListTile(
               leading: Icon(Icons.stars_outlined, color: cs.primary),
-              title: const Text('Quando a posição é confirmada, você ganha 5 pontos'),
-            ),
-            ListTile(
-              leading: Icon(Icons.lock_outline, color: cs.primary),
-              title: const Text('Sua posição é usada só para localizar o posto. Nenhum preço é enviado'),
+              title: const Text('Após a confirmação da localização, você ganha 5 pontos!'),
             ),
           ]),
         ),

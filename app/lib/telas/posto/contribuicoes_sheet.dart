@@ -148,7 +148,6 @@ class _LinhaContribuicao extends StatelessWidget {
       'confirmado' => '',
       'pendente' => ' · aguardando confirmação',
       'contestado' => ' · contrariado',
-      'expirado' => ' · sem outras confirmações',
       _ => '',
     };
     return ListTile(

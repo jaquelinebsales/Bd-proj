@@ -42,7 +42,6 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
   final _incluir = <int, bool>{};
   int? _campoEmFoco;
   double? _distanciaM;
-  Map<String, dynamic>? _resposta;
   String? _erro;
 
   @override
@@ -133,7 +132,7 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
     }
     setState(() => _etapa = _Etapa.enviando);
     try {
-      _resposta = await Api.instancia.enviarPrecos(
+      await Api.instancia.enviarPrecos(
         postoId: widget.postoId,
         latitude: pos.latitude,
         longitude: pos.longitude,
@@ -302,46 +301,16 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
 
   String _dicaLeitura(LeituraPreco? lido, int produtoId) {
     if (lido == null) return 'Não lido na foto';
-    final conf = lido.confianca >= 0.8 ? 'leitura boa' : 'confira com atenção';
-    return 'Lido: ${preco(lido.preco)} · $conf';
+    return 'Lido: ${preco(lido.preco)}';
   }
 
   Widget _concluido() {
     final tt = Theme.of(context).textTheme;
     final cs = Theme.of(context).colorScheme;
-    final itens = ((_resposta?['itens'] as List?) ?? const []).map((e) => Map<String, dynamic>.from(e as Map)).toList();
-    final ignorados = ((_resposta?['ignorados'] as List?) ?? const []).length;
     return ListView(padding: const EdgeInsets.all(20), children: [
       Icon(Icons.check_circle_rounded, size: 72, color: cs.primary),
       const SizedBox(height: 12),
       Text('Obrigado por contribuir!', style: tt.headlineSmall, textAlign: TextAlign.center),
-      const SizedBox(height: 8),
-      Text(_resposta?['mensagem']?.toString() ?? '', style: tt.bodyLarge, textAlign: TextAlign.center),
-      const SizedBox(height: 20),
-      Card(
-        child: Column(children: [
-          for (final i in itens)
-            ListTile(
-              leading: Icon(
-                i['status'] == 'confirmado' ? Icons.verified : Icons.hourglass_top,
-                color: i['status'] == 'confirmado' ? cs.primary : cs.outline,
-              ),
-              title: Text(Produto.porId((i['produto_id'] as num).toInt()).nome),
-              subtitle: Text(i['status'] == 'confirmado'
-                  ? 'Confirmado com outros usuários'
-                  : i['em_revisao'] == true
-                      ? 'Em revisão: precisa de 3 confirmações. ${i['motivo_revisao'] ?? ''}'
-                      : 'Aguardando outra pessoa confirmar'),
-              trailing: Text(preco((i['preco'] as num).toDouble()), style: const TextStyle(fontWeight: FontWeight.w800)),
-            ),
-        ]),
-      ),
-      if (ignorados > 0)
-        Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: Text('$ignorados preço(s) não foram enviados porque você já os enviou nas últimas 6 horas.',
-              style: tt.bodySmall, textAlign: TextAlign.center),
-        ),
       const SizedBox(height: 24),
       FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Voltar ao posto')),
       TextButton(onPressed: () => context.push('/pontos'), child: const Text('Ver meus pontos')),

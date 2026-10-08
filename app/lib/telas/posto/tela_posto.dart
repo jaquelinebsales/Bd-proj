@@ -73,7 +73,7 @@ class _TelaPostoState extends State<TelaPosto> {
         context: context,
         builder: (c) => AlertDialog(
           title: const Text('Localização desconhecida'),
-          content: const Text('O envio de preço é liberado depois que a posição do posto for confirmada no local.'),
+          content: const Text('Ajude a mapear este posto: confirme a localização no local.'),
           actions: [
             TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Agora não')),
             FilledButton(
@@ -256,11 +256,7 @@ class _TelaPostoState extends State<TelaPosto> {
                 ]),
                 const SizedBox(height: 8),
                 Text(
-                  p.precisao.aproximada
-                      ? 'Posição estimada pelo endereço, com margem de algumas centenas de metros. '
-                          'A posição exata é definida quando dois usuários a confirmam no local.'
-                      : 'Posição não cadastrada: o posto não aparece no mapa e não recebe envio de preço '
-                          'até que dois usuários confirmem a localização no local.',
+                  'Ajude a mapear este posto: confirme a localização no local.',
                   style: tt.bodyMedium?.copyWith(color: cs.onTertiaryContainer),
                 ),
                 const SizedBox(height: 12),

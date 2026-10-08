@@ -34,14 +34,14 @@ CELULAR = [
         ("08-historico", "Histórico", "/posto/:id/historico", "Gráfico com a pesquisa da ANP e os envios da comunidade em linhas separadas."),
         ("07-posto-estimativa", "Posto sem local conhecido", "/posto/:id", "Posto sem pesquisa da ANP mostra uma estimativa com margem de erro. Sem local conhecido, não recebe envio de preço."),
         ("21-posto-aproximado", "Localização aproximada", "/posto/:id", "Posição só pela rua. O envio vale a até 1 km, e o botão Estou neste posto corrige a posição."),
-        ("22-posicao-posto", "Estou neste posto", "/posto/:id/posicao", "Informa a posição de quem está no posto. Duas pessoas a até 150 m confirmam e cada uma ganha 5 pontos. Nenhum preço é enviado."),
+        ("22-posicao-posto", "Estou neste posto", "/posto/:id/posicao", "Informa a posição de quem está no posto. Após a confirmação da localização, a pessoa ganha 5 pontos."),
         ("09-avaliacoes", "Avaliações", "/posto/:id/avaliacoes", "Distribuição das notas, avaliações recentes e as mais úteis."),
         ("10-avaliar", "Avaliar", "/posto/:id/avaliar", "De 0 a 5 estrelas e um comentário opcional. Pode ser editada ou apagada."),
     ]),
     ("Envio de preço", "Da foto do painel ao preço confirmado", [
         ("11-enviar-instrucoes", "Antes da foto", "/posto/:id/enviar", "Explica como fotografar o painel e que a foto não sai do celular. Exige estar no raio do posto."),
         ("12-enviar-revisao", "Revisão", "/posto/:id/enviar", "Valores lidos no aparelho. A pessoa corrige o que estiver errado e escolhe o que enviar."),
-        ("13-enviar-concluido", "Envio concluído", "/posto/:id/enviar", "Status de cada preço (confirmado ou aguardando) e os pontos ganhos."),
+        ("13-enviar-concluido", "Envio concluído", "/posto/:id/enviar", "Agradecimento pelo envio e atalhos para voltar ao posto ou ver os pontos."),
     ]),
     ("Conta", "Cadastro, entrada e recuperação", [
         ("14-entrar", "Entrar", "/entrar", "E-mail e senha."),
@@ -57,7 +57,7 @@ CELULAR = [
         ("25-alterar-senha", "Alterar senha", "/perfil/senha", "Pede a senha atual antes de aceitar a nova."),
         ("26-pontos", "Meus pontos", "/pontos", "Como os pontos funcionam e o extrato de cada movimento."),
         ("18-ranking", "Ranking", "/ranking", "Comunidade por pontos. Nomes sempre abreviados."),
-        ("27-avisos", "Avisos de preço", "/notificacoes", "Mudanças de R$ 0,05 ou mais nos postos favoritos. As não lidas ficam destacadas."),
+        ("27-avisos", "Avisos de preço", "/notificacoes", "Preço novo e ícone de queda ou alta nos postos favoritos. Toque para ver o gráfico do histórico."),
         ("20-sobre", "Sobre", "/sobre", "Versão, fontes de dados e privacidade."),
     ]),
 ]

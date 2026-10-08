@@ -64,16 +64,14 @@ class _TelaNotificacoesState extends State<TelaNotificacoes> {
                 return Card(
                   color: n.lida ? null : cs.secondaryContainer,
                   child: ListTile(
-                    onTap: () => context.push('/posto/${n.postoId}'),
+                    // Toque abre o gráfico do histórico de preço daquele combustível
+                    onTap: () => context.push('/posto/${n.postoId}/historico?produto=${n.produtoId}'),
                     leading: CircleAvatar(
                       backgroundColor: (caiu ? cs.primary : cs.error).withValues(alpha: 0.15),
                       child: Icon(caiu ? Icons.trending_down : Icons.trending_up, color: caiu ? cs.primary : cs.error),
                     ),
                     title: Text(n.nomePosto ?? 'Posto favorito'),
-                    subtitle: Text(
-                      '$produto ${caiu ? 'caiu' : 'subiu'} de ${preco(n.precoAnterior)} para ${preco(n.precoNovo)} · '
-                      '${tempoRelativo(n.criadoEm)}',
-                    ),
+                    subtitle: Text(produto),
                     trailing: Text(preco(n.precoNovo), style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
                   ),
                 );
