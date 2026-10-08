@@ -17,7 +17,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:16"
+  "executado_em": "2026-10-08T16:25:16"
  },
  {
   "id": "A-002",
@@ -37,190 +37,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:19"
+  "executado_em": "2026-10-08T16:25:17"
  },
  {
   "id": "A-003",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "rótulo e preço na mesma linha",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4187 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-004",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "rótulos e preços em colunas separadas",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4196 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-005",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "painel de LED sem separador decimal",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4202 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-006",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "corrige letra O lida no lugar de zero",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4211 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-007",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "ignora valores fora da faixa de combustível",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4218 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-008",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "preço sem rótulo vira sugestão",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4228 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-009",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "parser_painel_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "identifica os combustíveis pelos nomes usuais",
-  "precondicoes": "flutter test",
-  "passos": "flutter test parser_painel_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4235 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-010",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "precisao_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "precisão vem do texto do servidor; sem texto vale exata",
-  "precondicoes": "flutter test",
-  "passos": "flutter test precisao_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4402 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-011",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "precisao_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "o que cada precisão permite",
-  "precondicoes": "flutter test",
-  "passos": "flutter test precisao_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4411 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-012",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
@@ -230,37 +50,17 @@
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4414 ms (tempo acumulado da suíte)",
+  "obtido": "success em 3066 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-013",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "precisao_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "o raio pode vir de parâmetros do servidor",
-  "precondicoes": "flutter test",
-  "passos": "flutter test precisao_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4419 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-014",
+  "id": "A-004",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
@@ -270,17 +70,17 @@
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4426 ms (tempo acumulado da suíte)",
+  "obtido": "success em 3074 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-015",
+  "id": "A-005",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
@@ -290,17 +90,17 @@
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4435 ms (tempo acumulado da suíte)",
+  "obtido": "success em 3081 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-016",
+  "id": "A-006",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
@@ -310,37 +110,17 @@
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4443 ms (tempo acumulado da suíte)",
+  "obtido": "success em 3086 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-017",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "precisao_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "posto lido do JSON carrega precisão, raio e posição informada",
-  "precondicoes": "flutter test",
-  "passos": "flutter test precisao_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4444 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-018",
+  "id": "A-007",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
@@ -350,37 +130,17 @@
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4452 ms (tempo acumulado da suíte)",
+  "obtido": "success em 3098 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-019",
-  "aba": "Regressão",
-  "modulo": "App Flutter",
-  "tela": "precisao_test.dart",
-  "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "posto sem raio no JSON (CEP da cidade) não aceita envio",
-  "precondicoes": "flutter test",
-  "passos": "flutter test precisao_test.dart",
-  "entrada": "-",
-  "esperado": "success",
-  "obtido": "success em 4454 ms (tempo acumulado da suíte)",
-  "status": "PASS",
-  "severidade": "Média",
-  "evidencia": "logs/flutter_test.jsonl",
-  "bug": "",
-  "obs": "",
-  "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
- },
- {
-  "id": "A-020",
+  "id": "A-008",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
@@ -390,17 +150,17 @@
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4461 ms (tempo acumulado da suíte)",
+  "obtido": "success em 3105 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-021",
+  "id": "A-009",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
@@ -410,17 +170,17 @@
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4469 ms (tempo acumulado da suíte)",
+  "obtido": "success em 3111 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-022",
+  "id": "A-010",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "filtros_test.dart",
@@ -430,17 +190,497 @@
   "passos": "flutter test filtros_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 4489 ms (tempo acumulado da suíte)",
+  "obtido": "success em 3121 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-011",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "rótulo e preço na mesma linha",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3794 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-012",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "rótulos e preços em colunas separadas",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3800 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-013",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "painel de LED sem separador decimal",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3805 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-014",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "corrige letra O lida no lugar de zero",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3810 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-015",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "ignora valores fora da faixa de combustível",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3814 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-016",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "preço sem rótulo vira sugestão",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3819 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-017",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "parser_painel_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "identifica os combustíveis pelos nomes usuais",
+  "precondicoes": "flutter test",
+  "passos": "flutter test parser_painel_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3824 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-018",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "nova_tentativa_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "tempo esgotado no banco: tenta de novo e devolve o resultado",
+  "precondicoes": "flutter test",
+  "passos": "flutter test nova_tentativa_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3886 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-019",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "nova_tentativa_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "tempo esgotado duas vezes: o erro chega a quem chamou",
+  "precondicoes": "flutter test",
+  "passos": "flutter test nova_tentativa_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3894 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-020",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "nova_tentativa_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "outros erros não são repetidos",
+  "precondicoes": "flutter test",
+  "passos": "flutter test nova_tentativa_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3902 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-021",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "precisao_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "precisão vem do texto do servidor; sem texto vale exata",
+  "precondicoes": "flutter test",
+  "passos": "flutter test precisao_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3932 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-022",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "precisao_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "o que cada precisão permite",
+  "precondicoes": "flutter test",
+  "passos": "flutter test precisao_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3939 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
   "id": "A-023",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "precisao_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "o raio pode vir de parâmetros do servidor",
+  "precondicoes": "flutter test",
+  "passos": "flutter test precisao_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3945 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-024",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "precisao_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "posto lido do JSON carrega precisão, raio e posição informada",
+  "precondicoes": "flutter test",
+  "passos": "flutter test precisao_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3957 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-025",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "precisao_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "posto sem raio no JSON (CEP da cidade) não aceita envio",
+  "precondicoes": "flutter test",
+  "passos": "flutter test precisao_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 3962 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-026",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "senha_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "senha completa é aceita",
+  "precondicoes": "flutter test",
+  "passos": "flutter test senha_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4074 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-027",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "senha_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "falta de qualquer exigência mostra sempre o texto padrão",
+  "precondicoes": "flutter test",
+  "passos": "flutter test senha_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4083 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-028",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "senha_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "espaço não conta como caractere especial",
+  "precondicoes": "flutter test",
+  "passos": "flutter test senha_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4089 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-029",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "senha_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "o texto padrão cita as quatro exigências",
+  "precondicoes": "flutter test",
+  "passos": "flutter test senha_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4096 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-030",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "tema_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "paleta Asfalto: marca e fundos fixos nos dois temas",
+  "precondicoes": "flutter test",
+  "passos": "flutter test tema_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4982 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-031",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "tema_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "as cores do preço trocam com o tema",
+  "precondicoes": "flutter test",
+  "passos": "flutter test tema_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 4996 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-032",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "tema_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "textos passam de 4,5:1 sobre o fundo, as barras e os cartões nos dois temas",
+  "precondicoes": "flutter test",
+  "passos": "flutter test tema_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 5010 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-033",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "tema_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "pinos preenchidos: número branco legível sobre o verde e o âmbar",
+  "precondicoes": "flutter test",
+  "passos": "flutter test tema_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 5015 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-034",
+  "aba": "Regressão",
+  "modulo": "App Flutter",
+  "tela": "tema_test.dart",
+  "tipo": "Teste automatizado · unidade/widget",
+  "cenario": "bolinha de idade usa o verde claro no tema escuro",
+  "precondicoes": "flutter test",
+  "passos": "flutter test tema_test.dart",
+  "entrada": "-",
+  "esperado": "success",
+  "obtido": "success em 5701 ms (tempo acumulado da suíte)",
+  "status": "PASS",
+  "severidade": "Média",
+  "evidencia": "logs/flutter_test.jsonl",
+  "bug": "",
+  "obs": "",
+  "duracao_ms": null,
+  "executado_em": "2026-10-08T16:25:26"
+ },
+ {
+  "id": "A-035",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "widget_test.dart",
@@ -450,77 +690,77 @@
   "passos": "flutter test widget_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 6351 ms (tempo acumulado da suíte)",
+  "obtido": "success em 5972 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-024",
+  "id": "A-036",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "widget_test.dart",
   "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "preço da ANP mostra a semana da pesquisa e o selo ANP",
+  "cenario": "preço da ANP mostra o ícone da pesquisa, sem texto de origem",
   "precondicoes": "flutter test",
   "passos": "flutter test widget_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 6403 ms (tempo acumulado da suíte)",
+  "obtido": "success em 6019 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-025",
+  "id": "A-037",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "widget_test.dart",
   "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "estimativa aparece com \"≈\" e margem de erro",
+  "cenario": "estimativa aparece com \"≈\" e o ícone, e o erro médio fica fora da linha",
   "precondicoes": "flutter test",
   "passos": "flutter test widget_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 6447 ms (tempo acumulado da suíte)",
+  "obtido": "success em 6058 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-026",
+  "id": "A-038",
   "aba": "Regressão",
   "modulo": "App Flutter",
   "tela": "widget_test.dart",
   "tipo": "Teste automatizado · unidade/widget",
-  "cenario": "combustível sem preço convida a enviar foto",
+  "cenario": "combustível sem preço mostra só \"Sem preço\"",
   "precondicoes": "flutter test",
   "passos": "flutter test widget_test.dart",
   "entrada": "-",
   "esperado": "success",
-  "obtido": "success em 6482 ms (tempo acumulado da suíte)",
+  "obtido": "success em 6085 ms (tempo acumulado da suíte)",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/flutter_test.jsonl",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:31"
+  "executado_em": "2026-10-08T16:25:26"
  },
  {
-  "id": "A-027",
+  "id": "A-039",
   "aba": "Edge Functions",
   "modulo": "corrigir-posicao",
   "tela": "validacao_test.ts",
@@ -537,10 +777,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-028",
+  "id": "A-040",
   "aba": "Edge Functions",
   "modulo": "corrigir-posicao",
   "tela": "validacao_test.ts",
@@ -557,10 +797,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-029",
+  "id": "A-041",
   "aba": "Edge Functions",
   "modulo": "corrigir-posicao",
   "tela": "validacao_test.ts",
@@ -577,10 +817,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-030",
+  "id": "A-042",
   "aba": "Edge Functions",
   "modulo": "corrigir-posicao",
   "tela": "validacao_test.ts",
@@ -597,10 +837,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-031",
+  "id": "A-043",
   "aba": "Edge Functions",
   "modulo": "corrigir-posicao",
   "tela": "validacao_test.ts",
@@ -617,10 +857,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-032",
+  "id": "A-044",
   "aba": "Edge Functions",
   "modulo": "corrigir-posicao",
   "tela": "validacao_test.ts",
@@ -637,10 +877,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-033",
+  "id": "A-045",
   "aba": "Edge Functions",
   "modulo": "enviar-precos",
   "tela": "validacao_test.ts",
@@ -657,10 +897,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-034",
+  "id": "A-046",
   "aba": "Edge Functions",
   "modulo": "enviar-precos",
   "tela": "validacao_test.ts",
@@ -677,10 +917,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-035",
+  "id": "A-047",
   "aba": "Edge Functions",
   "modulo": "enviar-precos",
   "tela": "validacao_test.ts",
@@ -697,10 +937,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-036",
+  "id": "A-048",
   "aba": "Edge Functions",
   "modulo": "enviar-precos",
   "tela": "validacao_test.ts",
@@ -717,10 +957,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-037",
+  "id": "A-049",
   "aba": "Edge Functions",
   "modulo": "enviar-precos",
   "tela": "validacao_test.ts",
@@ -737,10 +977,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-038",
+  "id": "A-050",
   "aba": "Edge Functions",
   "modulo": "enviar-precos",
   "tela": "validacao_test.ts",
@@ -757,10 +997,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-039",
+  "id": "A-051",
   "aba": "Edge Functions",
   "modulo": "enviar-precos",
   "tela": "validacao_test.ts",
@@ -777,10 +1017,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-040",
+  "id": "A-052",
   "aba": "Edge Functions",
   "modulo": "sincronizar-cadastro-anp",
   "tela": "normalizar_test.ts",
@@ -790,17 +1030,17 @@
   "passos": "deno test normalizar_test.ts",
   "entrada": "-",
   "esperado": "passou",
-  "obtido": "passou em 4 ms",
+  "obtido": "passou em 5 ms",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/deno_test.xml",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-041",
+  "id": "A-053",
   "aba": "Edge Functions",
   "modulo": "sincronizar-cadastro-anp",
   "tela": "normalizar_test.ts",
@@ -817,10 +1057,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-042",
+  "id": "A-054",
   "aba": "Edge Functions",
   "modulo": "sincronizar-cadastro-anp",
   "tela": "normalizar_test.ts",
@@ -837,10 +1077,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-043",
+  "id": "A-055",
   "aba": "Edge Functions",
   "modulo": "sincronizar-cadastro-anp",
   "tela": "normalizar_test.ts",
@@ -857,10 +1097,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-044",
+  "id": "A-056",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -877,10 +1117,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-045",
+  "id": "A-057",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -897,10 +1137,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-046",
+  "id": "A-058",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -917,10 +1157,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-047",
+  "id": "A-059",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -937,10 +1177,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-048",
+  "id": "A-060",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -957,10 +1197,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-049",
+  "id": "A-061",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -977,10 +1217,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-050",
+  "id": "A-062",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -997,10 +1237,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-051",
+  "id": "A-063",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -1017,10 +1257,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-052",
+  "id": "A-064",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -1037,10 +1277,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-053",
+  "id": "A-065",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -1057,10 +1297,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-054",
+  "id": "A-066",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -1077,10 +1317,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-055",
+  "id": "A-067",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -1097,10 +1337,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-056",
+  "id": "A-068",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -1117,10 +1357,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-057",
+  "id": "A-069",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_env_util",
@@ -1137,10 +1377,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-058",
+  "id": "A-070",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_publicar",
@@ -1157,10 +1397,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-059",
+  "id": "A-071",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_publicar",
@@ -1177,10 +1417,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-060",
+  "id": "A-072",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_publicar",
@@ -1197,10 +1437,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-061",
+  "id": "A-073",
   "aba": "Regressão",
   "modulo": "Scripts de publicação",
   "tela": "test_publicar",
@@ -1217,10 +1457,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:33"
+  "executado_em": "2026-10-08T16:25:28"
  },
  {
-  "id": "A-062",
+  "id": "A-074",
   "aba": "Banco de Dados",
   "modulo": "Regras · Importação ANP",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1237,10 +1477,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-063",
+  "id": "A-075",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1257,10 +1497,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-064",
+  "id": "A-076",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1277,10 +1517,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-065",
+  "id": "A-077",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1297,10 +1537,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-066",
+  "id": "A-078",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1317,10 +1557,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-067",
+  "id": "A-079",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1337,10 +1577,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-068",
+  "id": "A-080",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1357,10 +1597,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-069",
+  "id": "A-081",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1377,10 +1617,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-070",
+  "id": "A-082",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1397,10 +1637,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-071",
+  "id": "A-083",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1417,10 +1657,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-072",
+  "id": "A-084",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1437,10 +1677,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-073",
+  "id": "A-085",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1457,10 +1697,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-074",
+  "id": "A-086",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avisos de preço",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1477,10 +1717,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-075",
+  "id": "A-087",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1497,10 +1737,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-076",
+  "id": "A-088",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1517,10 +1757,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-077",
+  "id": "A-089",
   "aba": "Banco de Dados",
   "modulo": "Regras · Pontos e confiabilidade",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1537,10 +1777,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-078",
+  "id": "A-090",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1557,10 +1797,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-079",
+  "id": "A-091",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1577,10 +1817,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-080",
+  "id": "A-092",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1597,10 +1837,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-081",
+  "id": "A-093",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1617,10 +1857,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-082",
+  "id": "A-094",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1637,10 +1877,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-083",
+  "id": "A-095",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1657,10 +1897,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-084",
+  "id": "A-096",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1677,10 +1917,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-085",
+  "id": "A-097",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1697,10 +1937,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-086",
+  "id": "A-098",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1717,10 +1957,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-087",
+  "id": "A-099",
   "aba": "Banco de Dados",
   "modulo": "Regras · Pontos e confiabilidade",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1737,10 +1977,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-088",
+  "id": "A-100",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1757,10 +1997,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-089",
+  "id": "A-101",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1777,10 +2017,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-090",
+  "id": "A-102",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1797,10 +2037,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-091",
+  "id": "A-103",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1817,10 +2057,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-092",
+  "id": "A-104",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1837,10 +2077,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-093",
+  "id": "A-105",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avisos de preço",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1857,10 +2097,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-094",
+  "id": "A-106",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1877,10 +2117,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-095",
+  "id": "A-107",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1897,10 +2137,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-096",
+  "id": "A-108",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1917,10 +2157,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-097",
+  "id": "A-109",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1937,10 +2177,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-098",
+  "id": "A-110",
   "aba": "Banco de Dados",
   "modulo": "Regras · Pontos e confiabilidade",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1957,10 +2197,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-099",
+  "id": "A-111",
   "aba": "Banco de Dados",
   "modulo": "Regras · Pontos e confiabilidade",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1977,10 +2217,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-100",
+  "id": "A-112",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -1997,10 +2237,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-101",
+  "id": "A-113",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2017,10 +2257,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-102",
+  "id": "A-114",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2037,10 +2277,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-103",
+  "id": "A-115",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2057,10 +2297,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-104",
+  "id": "A-116",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avisos de preço",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2077,10 +2317,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-105",
+  "id": "A-117",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2097,10 +2337,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-106",
+  "id": "A-118",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2117,10 +2357,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-107",
+  "id": "A-119",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2137,10 +2377,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-108",
+  "id": "A-120",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2157,10 +2397,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-109",
+  "id": "A-121",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2177,10 +2417,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-110",
+  "id": "A-122",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2197,10 +2437,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-111",
+  "id": "A-123",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2217,10 +2457,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-112",
+  "id": "A-124",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2237,10 +2477,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-113",
+  "id": "A-125",
   "aba": "Banco de Dados",
   "modulo": "Regras · Pontos e confiabilidade",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2257,10 +2497,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-114",
+  "id": "A-126",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2277,10 +2517,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-115",
+  "id": "A-127",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2297,10 +2537,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-116",
+  "id": "A-128",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2317,10 +2557,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-117",
+  "id": "A-129",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2337,10 +2577,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-118",
+  "id": "A-130",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2357,10 +2597,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-119",
+  "id": "A-131",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2377,10 +2617,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-120",
+  "id": "A-132",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2397,10 +2637,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-121",
+  "id": "A-133",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2417,10 +2657,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-122",
+  "id": "A-134",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2437,10 +2677,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-123",
+  "id": "A-135",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2457,10 +2697,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-124",
+  "id": "A-136",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2477,10 +2717,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-125",
+  "id": "A-137",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2497,10 +2737,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-126",
+  "id": "A-138",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2517,10 +2757,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-127",
+  "id": "A-139",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2537,10 +2777,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-128",
+  "id": "A-140",
   "aba": "Banco de Dados",
   "modulo": "Regras · Pontos e confiabilidade",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2557,10 +2797,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-129",
+  "id": "A-141",
   "aba": "Banco de Dados",
   "modulo": "Regras · Pontos e confiabilidade",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2577,10 +2817,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-130",
+  "id": "A-142",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2597,10 +2837,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-131",
+  "id": "A-143",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2617,10 +2857,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-132",
+  "id": "A-144",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2637,10 +2877,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-133",
+  "id": "A-145",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2657,10 +2897,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-134",
+  "id": "A-146",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2677,10 +2917,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-135",
+  "id": "A-147",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2697,10 +2937,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-136",
+  "id": "A-148",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2717,10 +2957,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-137",
+  "id": "A-149",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2737,10 +2977,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-138",
+  "id": "A-150",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2757,10 +2997,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-139",
+  "id": "A-151",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2777,10 +3017,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-140",
+  "id": "A-152",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2797,10 +3037,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-141",
+  "id": "A-153",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2817,10 +3057,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-142",
+  "id": "A-154",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2837,10 +3077,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-143",
+  "id": "A-155",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2857,10 +3097,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-144",
+  "id": "A-156",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2877,10 +3117,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-145",
+  "id": "A-157",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2897,10 +3137,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-146",
+  "id": "A-158",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2917,10 +3157,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-147",
+  "id": "A-159",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2937,10 +3177,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-148",
+  "id": "A-160",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2957,10 +3197,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-149",
+  "id": "A-161",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2977,10 +3217,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-150",
+  "id": "A-162",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -2997,10 +3237,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-151",
+  "id": "A-163",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3017,10 +3257,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-152",
+  "id": "A-164",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3037,10 +3277,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-153",
+  "id": "A-165",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3057,10 +3297,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-154",
+  "id": "A-166",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3077,10 +3317,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-155",
+  "id": "A-167",
   "aba": "Banco de Dados",
   "modulo": "Regras · Importação ANP",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3097,10 +3337,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-156",
+  "id": "A-168",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3117,10 +3357,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-157",
+  "id": "A-169",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3137,10 +3377,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-158",
+  "id": "A-170",
   "aba": "Banco de Dados",
   "modulo": "Regras · Importação ANP",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3157,10 +3397,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-159",
+  "id": "A-171",
   "aba": "Banco de Dados",
   "modulo": "Regras · Importação ANP",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3177,10 +3417,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-160",
+  "id": "A-172",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3197,10 +3437,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-161",
+  "id": "A-173",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3217,10 +3457,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-162",
+  "id": "A-174",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3237,10 +3477,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-163",
+  "id": "A-175",
   "aba": "Banco de Dados",
   "modulo": "Regras · Preço exibido",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3257,10 +3497,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-164",
+  "id": "A-176",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3277,10 +3517,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-165",
+  "id": "A-177",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3297,10 +3537,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-166",
+  "id": "A-178",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3317,10 +3557,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-167",
+  "id": "A-179",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3337,10 +3577,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-168",
+  "id": "A-180",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3357,10 +3597,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-169",
+  "id": "A-181",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3377,10 +3617,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-170",
+  "id": "A-182",
   "aba": "Banco de Dados",
   "modulo": "Regras · Consenso",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3397,10 +3637,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-171",
+  "id": "A-183",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3417,10 +3657,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-172",
+  "id": "A-184",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3437,10 +3677,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-173",
+  "id": "A-185",
   "aba": "Banco de Dados",
   "modulo": "Regras · Pontos e confiabilidade",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3457,10 +3697,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-174",
+  "id": "A-186",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3477,10 +3717,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-175",
+  "id": "A-187",
   "aba": "Banco de Dados",
   "modulo": "Regras · Regras gerais",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3497,10 +3737,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-176",
+  "id": "A-188",
   "aba": "Banco de Dados",
   "modulo": "Regras · Importação ANP",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3517,10 +3757,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-177",
+  "id": "A-189",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3537,10 +3777,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-178",
+  "id": "A-190",
   "aba": "Banco de Dados",
   "modulo": "Regras · Localização dos postos",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3557,10 +3797,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-179",
+  "id": "A-191",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3577,10 +3817,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-180",
+  "id": "A-192",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3597,10 +3837,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-181",
+  "id": "A-193",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3617,10 +3857,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-182",
+  "id": "A-194",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3637,10 +3877,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-183",
+  "id": "A-195",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3657,10 +3897,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-184",
+  "id": "A-196",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3677,10 +3917,10 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  },
  {
-  "id": "A-185",
+  "id": "A-197",
   "aba": "Banco de Dados",
   "modulo": "Regras · Avaliações",
   "tela": "Postgres 17.10 + PostGIS local",
@@ -3697,6 +3937,6 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-07T21:54:46"
+  "executado_em": "2026-10-08T16:25:40"
  }
 ]

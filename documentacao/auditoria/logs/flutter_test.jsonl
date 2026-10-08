@@ -1,71 +1,107 @@
-{"protocolVersion":"0.1.1","runnerVersion":null,"pid":9100,"type":"start","time":0}
+{"protocolVersion":"0.1.1","runnerVersion":null,"pid":21256,"type":"start","time":0}
 {"suite":{"id":0,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"suite","time":0}
 {"test":{"id":1,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
-{"suite":{"id":2,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"suite","time":6}
-{"test":{"id":3,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6}
-{"suite":{"id":4,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"suite","time":6}
-{"test":{"id":5,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6}
-{"suite":{"id":6,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"suite","time":8}
-{"test":{"id":7,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":8}
-{"count":4,"time":8,"type":"allSuites"}
-{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4124}
-{"group":{"id":8,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":7,"line":null,"column":null,"url":null},"type":"group","time":4130}
-{"test":{"id":9,"name":"rótulo e preço na mesma linha","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":4132}
-{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4187}
-{"test":{"id":10,"name":"rótulos e preços em colunas separadas","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":20,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":4188}
-{"testID":10,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4196}
-{"test":{"id":11,"name":"painel de LED sem separador decimal","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":34,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":4197}
-{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4202}
-{"test":{"id":12,"name":"corrige letra O lida no lugar de zero","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":40,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":4203}
-{"testID":12,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4211}
-{"test":{"id":13,"name":"ignora valores fora da faixa de combustível","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":45,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":4212}
-{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4218}
-{"test":{"id":14,"name":"preço sem rótulo vira sugestão","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":50,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":4219}
-{"testID":14,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4228}
-{"test":{"id":15,"name":"identifica os combustíveis pelos nomes usuais","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":56,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":4229}
-{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4235}
-{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4269}
-{"group":{"id":16,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":4270}
-{"test":{"id":17,"name":"precisão vem do texto do servidor; sem texto vale exata","suiteID":4,"groupIDs":[16],"metadata":{"skip":false,"skipReason":null},"line":5,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":4271}
-{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4359}
-{"group":{"id":18,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":8,"line":null,"column":null,"url":null},"type":"group","time":4360}
-{"test":{"id":19,"name":"menor preço deixa postos sem preço no fim","suiteID":0,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":36,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":4361}
-{"testID":17,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4402}
-{"test":{"id":20,"name":"o que cada precisão permite","suiteID":4,"groupIDs":[16],"metadata":{"skip":false,"skipReason":null},"line":15,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":4403}
-{"testID":20,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4411}
-{"test":{"id":21,"name":"o raio pode vir de parâmetros do servidor","suiteID":4,"groupIDs":[16],"metadata":{"skip":false,"skipReason":null},"line":32,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":4412}
-{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4414}
-{"test":{"id":22,"name":"mais próximos","suiteID":0,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":41,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":4415}
-{"testID":21,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4419}
-{"test":{"id":23,"name":"posto lido do JSON carrega precisão, raio e posição informada","suiteID":4,"groupIDs":[16],"metadata":{"skip":false,"skipReason":null},"line":37,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":4420}
-{"testID":22,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4426}
-{"test":{"id":24,"name":"faixa de preço exclui postos sem preço","suiteID":0,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":46,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":4427}
-{"testID":24,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4435}
-{"test":{"id":25,"name":"distância e avaliação mínima","suiteID":0,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":51,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":4436}
-{"testID":25,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4443}
-{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4444}
-{"test":{"id":26,"name":"período da atualização ignora estimativas","suiteID":0,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":56,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":4444}
-{"test":{"id":27,"name":"posto sem raio no JSON (CEP da cidade) não aceita envio","suiteID":4,"groupIDs":[16],"metadata":{"skip":false,"skipReason":null},"line":54,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":4446}
-{"testID":26,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4452}
-{"test":{"id":28,"name":"só favoritos","suiteID":0,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":61,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":4453}
-{"testID":27,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4454}
-{"testID":28,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4461}
-{"test":{"id":29,"name":"frescor segue a regra de 24 h e 7 dias","suiteID":0,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":66,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":4462}
-{"testID":29,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4469}
-{"test":{"id":30,"name":"nome de exibição remove sufixos societários","suiteID":0,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":74,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":4470}
-{"testID":30,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4489}
-{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":5526}
-{"group":{"id":31,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":5527}
-{"test":{"id":32,"name":"(setUpAll)","suiteID":6,"groupIDs":[31],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":5527}
-{"testID":32,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":5560}
-{"test":{"id":33,"name":"linha de preço mostra valor, origem e selo da comunidade","suiteID":6,"groupIDs":[31],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":12,"root_column":3,"root_url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":5561}
-{"testID":33,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6351}
-{"test":{"id":34,"name":"preço da ANP mostra a semana da pesquisa e o selo ANP","suiteID":6,"groupIDs":[31],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":30,"root_column":3,"root_url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":6351}
-{"testID":34,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6403}
-{"test":{"id":35,"name":"estimativa aparece com \"≈\" e margem de erro","suiteID":6,"groupIDs":[31],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":45,"root_column":3,"root_url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":6405}
-{"testID":35,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6447}
-{"test":{"id":36,"name":"combustível sem preço convida a enviar foto","suiteID":6,"groupIDs":[31],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":64,"root_column":3,"root_url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":6448}
-{"testID":36,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6482}
-{"test":{"id":37,"name":"(tearDownAll)","suiteID":6,"groupIDs":[31],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6482}
-{"testID":37,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":6485}
-{"success":true,"type":"done","time":6515}
+{"suite":{"id":2,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/nova_tentativa_test.dart"},"type":"suite","time":7}
+{"test":{"id":3,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/nova_tentativa_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"suite":{"id":4,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"suite","time":7}
+{"test":{"id":5,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"suite":{"id":6,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"suite","time":8}
+{"test":{"id":7,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":8}
+{"count":7,"time":9,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3019}
+{"group":{"id":8,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":8,"line":null,"column":null,"url":null},"type":"group","time":3022}
+{"test":{"id":9,"name":"menor preço deixa postos sem preço no fim","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":36,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":3023}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3066}
+{"test":{"id":10,"name":"mais próximos","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":41,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":3067}
+{"testID":10,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3074}
+{"test":{"id":11,"name":"faixa de preço exclui postos sem preço","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":46,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":3075}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3081}
+{"test":{"id":12,"name":"distância e avaliação mínima","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":51,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":3082}
+{"testID":12,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3086}
+{"test":{"id":13,"name":"período da atualização ignora estimativas","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":56,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":3094}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3098}
+{"test":{"id":14,"name":"só favoritos","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":61,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":3099}
+{"testID":14,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3105}
+{"test":{"id":15,"name":"frescor segue a regra de 24 h e 7 dias","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":66,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":3106}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3111}
+{"test":{"id":16,"name":"nome de exibição remove sufixos societários","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":74,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/filtros_test.dart"},"type":"testStart","time":3112}
+{"testID":16,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3121}
+{"suite":{"id":17,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/senha_test.dart"},"type":"suite","time":3157}
+{"test":{"id":18,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/senha_test.dart","suiteID":17,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3157}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3759}
+{"group":{"id":19,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":7,"line":null,"column":null,"url":null},"type":"group","time":3759}
+{"test":{"id":20,"name":"rótulo e preço na mesma linha","suiteID":4,"groupIDs":[19],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":3760}
+{"testID":20,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3794}
+{"test":{"id":21,"name":"rótulos e preços em colunas separadas","suiteID":4,"groupIDs":[19],"metadata":{"skip":false,"skipReason":null},"line":20,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":3795}
+{"testID":21,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3800}
+{"test":{"id":22,"name":"painel de LED sem separador decimal","suiteID":4,"groupIDs":[19],"metadata":{"skip":false,"skipReason":null},"line":34,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":3801}
+{"testID":22,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3805}
+{"test":{"id":23,"name":"corrige letra O lida no lugar de zero","suiteID":4,"groupIDs":[19],"metadata":{"skip":false,"skipReason":null},"line":40,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":3806}
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3810}
+{"test":{"id":24,"name":"ignora valores fora da faixa de combustível","suiteID":4,"groupIDs":[19],"metadata":{"skip":false,"skipReason":null},"line":45,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":3810}
+{"testID":24,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3814}
+{"test":{"id":25,"name":"preço sem rótulo vira sugestão","suiteID":4,"groupIDs":[19],"metadata":{"skip":false,"skipReason":null},"line":50,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":3815}
+{"testID":25,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3819}
+{"test":{"id":26,"name":"identifica os combustíveis pelos nomes usuais","suiteID":4,"groupIDs":[19],"metadata":{"skip":false,"skipReason":null},"line":56,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/parser_painel_test.dart"},"type":"testStart","time":3820}
+{"testID":26,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3824}
+{"suite":{"id":27,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/tema_test.dart"},"type":"suite","time":3847}
+{"test":{"id":28,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/tema_test.dart","suiteID":27,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3847}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3856}
+{"group":{"id":29,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":3856}
+{"test":{"id":30,"name":"tempo esgotado no banco: tenta de novo e devolve o resultado","suiteID":2,"groupIDs":[29],"metadata":{"skip":false,"skipReason":null},"line":6,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/nova_tentativa_test.dart"},"type":"testStart","time":3856}
+{"testID":30,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3886}
+{"test":{"id":31,"name":"tempo esgotado duas vezes: o erro chega a quem chamou","suiteID":2,"groupIDs":[29],"metadata":{"skip":false,"skipReason":null},"line":17,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/nova_tentativa_test.dart"},"type":"testStart","time":3886}
+{"testID":31,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3894}
+{"test":{"id":32,"name":"outros erros não são repetidos","suiteID":2,"groupIDs":[29],"metadata":{"skip":false,"skipReason":null},"line":29,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/nova_tentativa_test.dart"},"type":"testStart","time":3895}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3901}
+{"group":{"id":33,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":3901}
+{"test":{"id":34,"name":"precisão vem do texto do servidor; sem texto vale exata","suiteID":6,"groupIDs":[33],"metadata":{"skip":false,"skipReason":null},"line":5,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":3901}
+{"testID":32,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3902}
+{"suite":{"id":35,"platform":"vm","path":"C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"suite","time":3926}
+{"test":{"id":36,"name":"loading C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart","suiteID":35,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3926}
+{"testID":34,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3932}
+{"test":{"id":37,"name":"o que cada precisão permite","suiteID":6,"groupIDs":[33],"metadata":{"skip":false,"skipReason":null},"line":15,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":3932}
+{"testID":37,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3939}
+{"test":{"id":38,"name":"o raio pode vir de parâmetros do servidor","suiteID":6,"groupIDs":[33],"metadata":{"skip":false,"skipReason":null},"line":32,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":3940}
+{"testID":38,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3945}
+{"test":{"id":39,"name":"posto lido do JSON carrega precisão, raio e posição informada","suiteID":6,"groupIDs":[33],"metadata":{"skip":false,"skipReason":null},"line":37,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":3945}
+{"testID":39,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3957}
+{"test":{"id":40,"name":"posto sem raio no JSON (CEP da cidade) não aceita envio","suiteID":6,"groupIDs":[33],"metadata":{"skip":false,"skipReason":null},"line":54,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/precisao_test.dart"},"type":"testStart","time":3958}
+{"testID":40,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3962}
+{"testID":18,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4038}
+{"group":{"id":41,"suiteID":17,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":4038}
+{"test":{"id":42,"name":"senha completa é aceita","suiteID":17,"groupIDs":[41],"metadata":{"skip":false,"skipReason":null},"line":5,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/senha_test.dart"},"type":"testStart","time":4039}
+{"testID":42,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4074}
+{"test":{"id":43,"name":"falta de qualquer exigência mostra sempre o texto padrão","suiteID":17,"groupIDs":[41],"metadata":{"skip":false,"skipReason":null},"line":11,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/senha_test.dart"},"type":"testStart","time":4075}
+{"testID":43,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4083}
+{"test":{"id":44,"name":"espaço não conta como caractere especial","suiteID":17,"groupIDs":[41],"metadata":{"skip":false,"skipReason":null},"line":25,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/senha_test.dart"},"type":"testStart","time":4083}
+{"testID":44,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4089}
+{"test":{"id":45,"name":"o texto padrão cita as quatro exigências","suiteID":17,"groupIDs":[41],"metadata":{"skip":false,"skipReason":null},"line":29,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/senha_test.dart"},"type":"testStart","time":4089}
+{"testID":45,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4096}
+{"testID":28,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4860}
+{"group":{"id":46,"suiteID":27,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":4860}
+{"test":{"id":47,"name":"paleta Asfalto: marca e fundos fixos nos dois temas","suiteID":27,"groupIDs":[46],"metadata":{"skip":false,"skipReason":null},"line":16,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/tema_test.dart"},"type":"testStart","time":4860}
+{"testID":47,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4982}
+{"test":{"id":48,"name":"as cores do preço trocam com o tema","suiteID":27,"groupIDs":[46],"metadata":{"skip":false,"skipReason":null},"line":26,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/tema_test.dart"},"type":"testStart","time":4982}
+{"testID":48,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4996}
+{"test":{"id":49,"name":"textos passam de 4,5:1 sobre o fundo, as barras e os cartões nos dois temas","suiteID":27,"groupIDs":[46],"metadata":{"skip":false,"skipReason":null},"line":31,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/tema_test.dart"},"type":"testStart","time":4997}
+{"testID":49,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5010}
+{"test":{"id":50,"name":"pinos preenchidos: número branco legível sobre o verde e o âmbar","suiteID":27,"groupIDs":[46],"metadata":{"skip":false,"skipReason":null},"line":56,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/tema_test.dart"},"type":"testStart","time":5010}
+{"testID":50,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5015}
+{"test":{"id":51,"name":"bolinha de idade usa o verde claro no tema escuro","suiteID":27,"groupIDs":[46],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":61,"root_column":3,"root_url":"file:///C:/Users/michael/Desktop/gasprice/app/test/tema_test.dart"},"type":"testStart","time":5015}
+{"testID":36,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":5160}
+{"group":{"id":52,"suiteID":35,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":5160}
+{"test":{"id":53,"name":"(setUpAll)","suiteID":35,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":5160}
+{"testID":53,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":5190}
+{"test":{"id":54,"name":"linha de preço mostra valor, origem e selo da comunidade","suiteID":35,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":12,"root_column":3,"root_url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":5190}
+{"testID":51,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5701}
+{"testID":54,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5972}
+{"test":{"id":55,"name":"preço da ANP mostra o ícone da pesquisa, sem texto de origem","suiteID":35,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":31,"root_column":3,"root_url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":5973}
+{"testID":55,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6019}
+{"test":{"id":56,"name":"estimativa aparece com \"≈\" e o ícone, e o erro médio fica fora da linha","suiteID":35,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":46,"root_column":3,"root_url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":6019}
+{"testID":56,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6058}
+{"test":{"id":57,"name":"combustível sem preço mostra só \"Sem preço\"","suiteID":35,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":64,"root_column":3,"root_url":"file:///C:/Users/michael/Desktop/gasprice/app/test/widget_test.dart"},"type":"testStart","time":6058}
+{"testID":57,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6085}
+{"test":{"id":58,"name":"(tearDownAll)","suiteID":35,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6086}
+{"testID":58,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":6088}
+{"success":true,"type":"done","time":6122}

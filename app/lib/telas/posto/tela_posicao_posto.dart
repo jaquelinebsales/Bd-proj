@@ -88,11 +88,11 @@ class _TelaPosicaoPostoState extends State<TelaPosicaoPosto> {
           child: Column(children: [
             ListTile(
               leading: Icon(Icons.lock_outline, color: cs.primary),
-              title: const Text('A posição é usada apenas para localizar o posto'),
+              title: const Text('A posição é usada apenas para localizar o posto.'),
             ),
             ListTile(
               leading: Icon(Icons.place_outlined, color: cs.primary),
-              title: const Text('Esteja próximo ao posto'),
+              title: const Text('Esteja próximo ao posto.'),
             ),
             ListTile(
               leading: Icon(Icons.stars_outlined, color: cs.primary),

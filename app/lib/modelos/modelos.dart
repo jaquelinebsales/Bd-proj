@@ -118,8 +118,8 @@ enum PrecisaoLocalizacao {
 
   String get rotulo => switch (this) {
         exata => 'Localização confirmada',
-        rua => 'Localização aproximada (rua)',
-        cepRua => 'Localização aproximada (CEP)',
+        rua => 'Localização aproximada',
+        cepRua => 'Localização aproximada',
         cepCidade => 'Localização desconhecida',
         municipio => 'Localização desconhecida',
         nenhuma => 'Localização desconhecida',

@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config.dart';
 import '../modelos/modelos.dart';
 import '../util/nova_tentativa.dart';
+import '../util/senha.dart';
 import 'demo.dart';
 
 /// Erro com mensagem pronta para mostrar ao usuário.
@@ -316,7 +317,7 @@ String traduzirErroAuth(AuthException e) {
     return 'Já existe uma conta com este e-mail. Entre ou recupere a senha.';
   }
   if (m.contains('password') && (m.contains('weak') || m.contains('at least') || m.contains('characters'))) {
-    return 'A senha precisa ter pelo menos 8 caracteres, com letras e números.';
+    return regraSenha;
   }
   if (m.contains('rate limit') || m.contains('too many')) return 'Muitas tentativas. Aguarde alguns minutos e tente de novo.';
   if (m.contains('same password') || m.contains('different from the old')) return 'A nova senha precisa ser diferente da atual.';

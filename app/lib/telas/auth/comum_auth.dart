@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// As telas de conta usam validarSenha a partir daqui
+export '../../util/senha.dart' show validarSenha;
+
 /// Moldura comum das telas de conta: largura limitada, marca e título.
 class LayoutAuth extends StatelessWidget {
   final String titulo;
@@ -49,15 +52,6 @@ String? validarEmail(String? v) {
   return null;
 }
 
-/// Mesma regra configurada no Supabase: 8+ caracteres, com letras e números.
-String? validarSenha(String? v) {
-  final t = v ?? '';
-  // A regra só aparece no erro: as telas de senha não têm texto de ajuda fixo
-  if (t.length < 8 || !RegExp(r'[A-Za-z]').hasMatch(t) || !RegExp(r'\d').hasMatch(t)) {
-    return 'Use pelo menos 8 caracteres, com letras e números.';
-  }
-  return null;
-}
 
 class CampoSenha extends StatefulWidget {
   final TextEditingController controle;

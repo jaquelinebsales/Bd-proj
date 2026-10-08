@@ -187,7 +187,7 @@ BUGS = [
      "(224 mil preços, coleta mais recente 02/10/2026). Agendamento no GitHub Actions às segundas e quintas.", CONFIRMADO,
      "Reteste: coleta mais recente 02/10/2026. O agendamento já está no GitHub."),
     ("BUG-04", "Média", "O servidor aceitava senhas 'abc123' e 'abcdefgh', que o app recusa.",
-     "No painel do Supabase: Authentication, política de senha com mínimo de 8 caracteres e letras e números.", VOCE,
+     "No painel do Supabase: Authentication, política de senha com mínimo de 8 caracteres, com maiúscula, minúscula, número e símbolo.", VOCE,
      "Reteste: o servidor ainda aceita; falta a mudança no painel."),
     ("BUG-05", "Média", "Qualquer pessoa lia o identificador de quem escreveu cada avaliação e de quem votou.",
      "A coluna de autor deixou de ser pública e cada pessoa vê só os próprios votos. O app continua usando o nome abreviado.",

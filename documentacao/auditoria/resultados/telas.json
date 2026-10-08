@@ -17,7 +17,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-002",
@@ -37,7 +37,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-003",
@@ -57,7 +57,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-004",
@@ -77,7 +77,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-005",
@@ -97,7 +97,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-006",
@@ -117,7 +117,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-007",
@@ -137,7 +137,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-008",
@@ -157,7 +157,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-009",
@@ -177,7 +177,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-010",
@@ -197,7 +197,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-011",
@@ -217,7 +217,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-012",
@@ -237,7 +237,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-013",
@@ -250,14 +250,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 320×568 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_visitante.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-014",
@@ -277,7 +277,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-015",
@@ -297,7 +297,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-016",
@@ -317,7 +317,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-017",
@@ -337,7 +337,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-018",
@@ -357,7 +357,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-019",
@@ -377,7 +377,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-020",
@@ -397,7 +397,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-021",
@@ -417,7 +417,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-022",
@@ -437,7 +437,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-023",
@@ -457,7 +457,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-024",
@@ -477,7 +477,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-025",
@@ -497,7 +497,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-026",
@@ -517,7 +517,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-027",
@@ -537,7 +537,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-028",
@@ -557,7 +557,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-029",
@@ -577,7 +577,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-030",
@@ -597,7 +597,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-031",
@@ -617,7 +617,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-032",
@@ -637,7 +637,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-033",
@@ -650,14 +650,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 360×800 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_visitante.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-034",
@@ -677,7 +677,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-035",
@@ -697,7 +697,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-036",
@@ -717,7 +717,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-037",
@@ -737,7 +737,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-038",
@@ -757,7 +757,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-039",
@@ -777,7 +777,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-040",
@@ -797,7 +797,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-041",
@@ -817,7 +817,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-042",
@@ -837,7 +837,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-043",
@@ -857,7 +857,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-044",
@@ -877,7 +877,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-045",
@@ -897,7 +897,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-046",
@@ -917,7 +917,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-047",
@@ -937,7 +937,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-048",
@@ -957,7 +957,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-049",
@@ -977,7 +977,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-050",
@@ -997,7 +997,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-051",
@@ -1017,7 +1017,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-052",
@@ -1037,7 +1037,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-053",
@@ -1057,7 +1057,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-054",
@@ -1077,7 +1077,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-055",
@@ -1097,7 +1097,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-056",
@@ -1117,7 +1117,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-057",
@@ -1130,14 +1130,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 412×915 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_visitante.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-058",
@@ -1157,7 +1157,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-059",
@@ -1177,7 +1177,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-060",
@@ -1197,7 +1197,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-061",
@@ -1217,7 +1217,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-062",
@@ -1237,7 +1237,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-063",
@@ -1257,7 +1257,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-064",
@@ -1277,7 +1277,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-065",
@@ -1297,7 +1297,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-066",
@@ -1317,7 +1317,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-067",
@@ -1337,7 +1337,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-068",
@@ -1357,7 +1357,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-069",
@@ -1377,7 +1377,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-070",
@@ -1397,7 +1397,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-071",
@@ -1417,7 +1417,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-072",
@@ -1437,7 +1437,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-073",
@@ -1457,7 +1457,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-074",
@@ -1477,7 +1477,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-075",
@@ -1497,7 +1497,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-076",
@@ -1517,7 +1517,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-077",
@@ -1530,14 +1530,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 360×800 e fonte 130%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_visitante.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-078",
@@ -1557,7 +1557,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-079",
@@ -1577,7 +1577,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-080",
@@ -1597,7 +1597,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-081",
@@ -1617,7 +1617,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-082",
@@ -1637,7 +1637,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-083",
@@ -1657,7 +1657,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-084",
@@ -1677,7 +1677,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-085",
@@ -1697,7 +1697,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-086",
@@ -1717,7 +1717,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-087",
@@ -1737,7 +1737,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-088",
@@ -1757,7 +1757,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-089",
@@ -1777,7 +1777,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-090",
@@ -1797,7 +1797,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-091",
@@ -1817,7 +1817,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-092",
@@ -1837,7 +1837,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-093",
@@ -1857,7 +1857,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-094",
@@ -1877,7 +1877,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-095",
@@ -1897,7 +1897,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-096",
@@ -1917,7 +1917,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-097",
@@ -1930,14 +1930,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 360×800 e fonte 200%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Baixa",
   "evidencia": "logs/telas_visitante.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-098",
@@ -1957,7 +1957,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-099",
@@ -1977,7 +1977,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-100",
@@ -1997,7 +1997,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-101",
@@ -2017,7 +2017,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-102",
@@ -2037,7 +2037,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-103",
@@ -2057,7 +2057,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-104",
@@ -2077,7 +2077,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-105",
@@ -2097,7 +2097,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-106",
@@ -2117,7 +2117,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-107",
@@ -2137,7 +2137,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-108",
@@ -2157,7 +2157,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-109",
@@ -2177,7 +2177,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-110",
@@ -2197,7 +2197,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-111",
@@ -2217,7 +2217,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-112",
@@ -2237,7 +2237,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-113",
@@ -2257,7 +2257,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-114",
@@ -2277,7 +2277,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-115",
@@ -2297,7 +2297,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-116",
@@ -2317,7 +2317,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-117",
@@ -2330,14 +2330,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 800×1280 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_visitante.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-118",
@@ -2357,7 +2357,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-119",
@@ -2377,7 +2377,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-120",
@@ -2397,7 +2397,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-121",
@@ -2417,7 +2417,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-122",
@@ -2437,7 +2437,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-123",
@@ -2457,7 +2457,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-124",
@@ -2477,7 +2477,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-125",
@@ -2497,7 +2497,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-126",
@@ -2517,7 +2517,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-127",
@@ -2537,7 +2537,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-128",
@@ -2557,7 +2557,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-129",
@@ -2577,7 +2577,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-130",
@@ -2597,7 +2597,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-131",
@@ -2617,7 +2617,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-132",
@@ -2637,7 +2637,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-133",
@@ -2657,7 +2657,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-134",
@@ -2677,7 +2677,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-135",
@@ -2697,7 +2697,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-136",
@@ -2717,7 +2717,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-137",
@@ -2730,14 +2730,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 1280×800 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_visitante.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-138",
@@ -2757,7 +2757,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-139",
@@ -2777,7 +2777,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-140",
@@ -2797,7 +2797,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-141",
@@ -2817,7 +2817,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-142",
@@ -2837,7 +2837,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-143",
@@ -2857,7 +2857,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-144",
@@ -2877,7 +2877,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:08:52"
+  "executado_em": "2026-10-08T16:26:00"
  },
  {
   "id": "T-145",
@@ -2897,7 +2897,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-146",
@@ -2917,7 +2917,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-147",
@@ -2937,7 +2937,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-148",
@@ -2957,7 +2957,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-149",
@@ -2977,7 +2977,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-150",
@@ -2997,7 +2997,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-151",
@@ -3017,7 +3017,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-152",
@@ -3037,7 +3037,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-153",
@@ -3057,7 +3057,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-154",
@@ -3077,7 +3077,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-155",
@@ -3097,7 +3097,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-156",
@@ -3117,7 +3117,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-157",
@@ -3130,14 +3130,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 320×568 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_logado.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-158",
@@ -3157,7 +3157,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-159",
@@ -3177,7 +3177,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-160",
@@ -3197,7 +3197,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-161",
@@ -3217,7 +3217,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-162",
@@ -3237,7 +3237,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-163",
@@ -3257,7 +3257,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-164",
@@ -3277,7 +3277,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-165",
@@ -3297,7 +3297,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-166",
@@ -3317,7 +3317,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-167",
@@ -3337,7 +3337,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-168",
@@ -3357,7 +3357,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-169",
@@ -3377,7 +3377,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-170",
@@ -3397,7 +3397,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-171",
@@ -3417,7 +3417,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-172",
@@ -3437,7 +3437,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-173",
@@ -3457,7 +3457,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-174",
@@ -3477,7 +3477,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-175",
@@ -3497,7 +3497,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-176",
@@ -3517,7 +3517,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-177",
@@ -3537,7 +3537,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-178",
@@ -3557,7 +3557,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-179",
@@ -3570,14 +3570,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 360×800 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_logado.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-180",
@@ -3597,7 +3597,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-181",
@@ -3617,7 +3617,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-182",
@@ -3637,7 +3637,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-183",
@@ -3657,7 +3657,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-184",
@@ -3677,7 +3677,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-185",
@@ -3697,7 +3697,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-186",
@@ -3717,7 +3717,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-187",
@@ -3737,7 +3737,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-188",
@@ -3757,7 +3757,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-189",
@@ -3777,7 +3777,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-190",
@@ -3797,7 +3797,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-191",
@@ -3817,7 +3817,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-192",
@@ -3837,7 +3837,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-193",
@@ -3857,7 +3857,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-194",
@@ -3877,7 +3877,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-195",
@@ -3897,7 +3897,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-196",
@@ -3917,7 +3917,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-197",
@@ -3937,7 +3937,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-198",
@@ -3957,7 +3957,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-199",
@@ -3977,7 +3977,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-200",
@@ -3997,7 +3997,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-201",
@@ -4017,7 +4017,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-202",
@@ -4037,7 +4037,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-203",
@@ -4057,7 +4057,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-204",
@@ -4077,7 +4077,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-205",
@@ -4097,7 +4097,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-206",
@@ -4117,7 +4117,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-207",
@@ -4130,14 +4130,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 412×915 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_logado.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-208",
@@ -4157,7 +4157,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-209",
@@ -4177,7 +4177,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-210",
@@ -4197,7 +4197,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-211",
@@ -4217,7 +4217,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-212",
@@ -4237,7 +4237,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-213",
@@ -4257,7 +4257,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-214",
@@ -4277,7 +4277,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-215",
@@ -4297,7 +4297,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-216",
@@ -4317,7 +4317,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-217",
@@ -4337,7 +4337,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-218",
@@ -4357,7 +4357,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-219",
@@ -4377,7 +4377,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-220",
@@ -4397,7 +4397,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-221",
@@ -4417,7 +4417,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-222",
@@ -4437,7 +4437,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-223",
@@ -4457,7 +4457,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-224",
@@ -4477,7 +4477,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-225",
@@ -4497,7 +4497,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-226",
@@ -4517,7 +4517,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-227",
@@ -4537,7 +4537,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-228",
@@ -4557,7 +4557,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-229",
@@ -4570,14 +4570,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 360×800 e fonte 130%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_logado.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-230",
@@ -4597,7 +4597,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-231",
@@ -4617,7 +4617,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-232",
@@ -4637,7 +4637,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-233",
@@ -4657,7 +4657,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-234",
@@ -4677,7 +4677,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-235",
@@ -4697,7 +4697,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-236",
@@ -4717,7 +4717,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-237",
@@ -4737,7 +4737,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-238",
@@ -4757,7 +4757,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-239",
@@ -4777,7 +4777,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-240",
@@ -4797,7 +4797,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-241",
@@ -4817,7 +4817,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-242",
@@ -4837,7 +4837,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-243",
@@ -4857,7 +4857,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-244",
@@ -4877,7 +4877,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-245",
@@ -4897,7 +4897,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-246",
@@ -4917,7 +4917,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-247",
@@ -4937,7 +4937,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-248",
@@ -4957,7 +4957,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-249",
@@ -4977,7 +4977,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-250",
@@ -4997,7 +4997,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-251",
@@ -5010,14 +5010,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 360×800 e fonte 200%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Baixa",
   "evidencia": "logs/telas_logado.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-252",
@@ -5037,7 +5037,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-253",
@@ -5057,7 +5057,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-254",
@@ -5077,7 +5077,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-255",
@@ -5097,7 +5097,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-256",
@@ -5117,7 +5117,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-257",
@@ -5137,7 +5137,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-258",
@@ -5157,7 +5157,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-259",
@@ -5177,7 +5177,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-260",
@@ -5197,7 +5197,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-261",
@@ -5217,7 +5217,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-262",
@@ -5237,7 +5237,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-263",
@@ -5257,7 +5257,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-264",
@@ -5277,7 +5277,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-265",
@@ -5297,7 +5297,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-266",
@@ -5317,7 +5317,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-267",
@@ -5337,7 +5337,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-268",
@@ -5357,7 +5357,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-269",
@@ -5377,7 +5377,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-270",
@@ -5397,7 +5397,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-271",
@@ -5417,7 +5417,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-272",
@@ -5437,7 +5437,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-273",
@@ -5450,14 +5450,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 800×1280 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_logado.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-274",
@@ -5477,7 +5477,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-275",
@@ -5497,7 +5497,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-276",
@@ -5517,7 +5517,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-277",
@@ -5537,7 +5537,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-278",
@@ -5557,7 +5557,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-279",
@@ -5577,7 +5577,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-280",
@@ -5597,7 +5597,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-281",
@@ -5617,7 +5617,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-282",
@@ -5637,7 +5637,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-283",
@@ -5657,7 +5657,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-284",
@@ -5677,7 +5677,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-285",
@@ -5697,7 +5697,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-286",
@@ -5717,7 +5717,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-287",
@@ -5737,7 +5737,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-288",
@@ -5757,7 +5757,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-289",
@@ -5777,7 +5777,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-290",
@@ -5797,7 +5797,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-291",
@@ -5817,7 +5817,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-292",
@@ -5837,7 +5837,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-293",
@@ -5857,7 +5857,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-294",
@@ -5877,7 +5877,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-295",
@@ -5890,14 +5890,14 @@
   "passos": "Abrir a rota /posto/4/posicao com tela de 1280×800 e fonte 100%",
   "entrada": "-",
   "esperado": "Nenhum 'RenderFlex overflowed', erro de layout ou exceção",
-  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto | Esteja próximo ao posto",
+  "obtido": "Sem estouro de layout nem exceção · textos: Posto Messejana | Rua Coronel Guilherme Alencar, 120 · Fortaleza, CE | A posição é usada apenas para localizar o posto. | Esteja próximo ao posto.",
   "status": "PASS",
   "severidade": "Média",
   "evidencia": "logs/telas_logado.txt",
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-296",
@@ -5917,7 +5917,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-297",
@@ -5937,7 +5937,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-298",
@@ -5957,7 +5957,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-299",
@@ -5977,7 +5977,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-300",
@@ -5997,7 +5997,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-301",
@@ -6017,7 +6017,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-302",
@@ -6037,7 +6037,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-303",
@@ -6057,7 +6057,7 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  },
  {
   "id": "T-304",
@@ -6077,6 +6077,6 @@
   "bug": "",
   "obs": "",
   "duracao_ms": null,
-  "executado_em": "2026-10-08T16:09:13"
+  "executado_em": "2026-10-08T16:26:20"
  }
 ]

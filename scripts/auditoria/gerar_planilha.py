@@ -154,7 +154,7 @@ SITUACAO = {
     "BUG-01": "Corrigido e no ar (função registrar_envio com trava por usuário; pontos uma vez por pessoa).",
     "BUG-02": "Corrigido e no ar (contorno dos estados do IBGE e pontos padrão; 184 postos corrigidos).",
     "BUG-03": "Corrigido e no ar: 14 semanas carregadas (coleta até 02/10/2026); carga semanal no GitHub Actions.",
-    "BUG-04": "Aguardando você: política de senha no painel do Supabase (8 caracteres, letras e números).",
+    "BUG-04": "Aguardando você: política de senha no painel do Supabase (8 caracteres, com maiúscula, minúscula, número e símbolo).",
     "BUG-05": "Corrigido e no ar (coluna de autor fora da leitura pública; cada um vê só os próprios votos).",
     "BUG-06": "Corrigido e verificado: 304 testes de telas passando. Chega ao celular no próximo APK.",
     "BUG-07": "Corrigido e verificado: 304 testes de telas passando. Chega ao celular no próximo APK.",

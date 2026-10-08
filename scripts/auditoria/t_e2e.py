@@ -227,19 +227,22 @@ def rodar(s: Suite, nav, ctx) -> None:
             c.botao("Criar conta", exato=True)
             return c
 
-        for senha, msg in (("abc", "Use pelo menos 8 caracteres"), ("abcdefgh", "Use letras e números")):
+        # Regra: 8+ caracteres com maiúscula, minúscula, número e caractere especial; sempre o mesmo texto de erro
+        msg_regra = "A senha precisa ter pelo menos 8 caracteres"
+        for senha, msg in (("Ab1#", msg_regra), ("abcdefg1#", msg_regra), ("ABCDEFG1#", msg_regra), ("Abcdefgh1", msg_regra),
+                           ("Abcdefgh#", msg_regra)):
             c = cadastro(senha, senha)
             ok = c.esperar_texto(msg, 5000)
             caso("Autenticação", "Criar conta", "Criar conta", "Funcional · valor inválido", f"Senha '{senha}' é recusada na tela",
                  "Preencher o cadastro com a senha", senha, f"'{msg}.'", ok, "validação exibida" if ok else c.texto()[:300], sev=MEDIA)
             c.fechar()
-        c = cadastro("Senha1234", "Senha9999")
+        c = cadastro("Senha#1234", "Senha#9999")
         ok = c.esperar_texto("As senhas não conferem", 5000)
         caso("Autenticação", "Criar conta", "Criar conta", "Funcional · valor inválido", "Confirmação de senha diferente é recusada",
-             "Senha e confirmação diferentes", "Senha1234 / Senha9999", "'As senhas não conferem.'", ok,
+             "Senha e confirmação diferentes", "Senha#1234 / Senha#9999", "'As senhas não conferem.'", ok,
              "validação exibida" if ok else c.texto()[:300], c.foto("cadastro_senhas_diferentes"), MEDIA)
         c.fechar()
-        c = cadastro("Senha1234", "Senha1234")
+        c = cadastro("Senha#1234", "Senha#1234")
         aviso = c.esperar_texto("aceite os termos", 4000)
         ev = c.foto("cadastro_sem_termos")
         criado = db.execute("select count(*) from auth.users where email = %s", ("teste@" + dt.DOMINIO,)).fetchone()[0]

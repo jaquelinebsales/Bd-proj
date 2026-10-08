@@ -71,20 +71,21 @@ def autenticacao(s, ctx) -> None:
                 tipo="Segurança · política de senha", cenario=f"Cadastro com senha de {len(senha)} caractere(s) é recusado pelo servidor",
                 precondicoes="-", passos="POST /auth/v1/signup", entrada=f"senha '{senha}'", esperado="HTTP 422 weak_password",
                 severidade=MEDIA)
-    # A regra do app (8+ caracteres, letras e números) também vale no servidor? Testado pela troca de senha,
-    # que passa pela mesma validação do cadastro e não dispara e-mail.
-    for senha, desc in (("abc123", "6 caracteres"), ("abcdefgh", "8 letras e nenhum número")):
+    # A regra do app (8+ caracteres com maiúscula, minúscula, número e caractere especial) também vale no servidor?
+    # Testado pela troca de senha, que passa pela mesma validação do cadastro e não dispara e-mail.
+    for senha, desc in (("Ab1#xy", "6 caracteres"), ("abcdefg1#", "nenhuma maiúscula"), ("ABCDEFG1#", "nenhuma minúscula"),
+                        ("Abcdefgh#", "nenhum número"), ("Abcdefgh1", "nenhum caractere especial")):
         r = http("PUT", "/auth/v1/user", {"password": senha}, token=u["bruno"]["token"])
         aceitou = r.status == 200
         s.check(not aceitou, obtido=resumo(r, 300), **A, tela="Criar conta / Alterar senha", tipo="Segurança · política de senha",
                 cenario=f"Servidor recusa senha com {desc}, que o app recusa",
-                precondicoes="Regra do app: pelo menos 8 caracteres, com letras e números; bruno logado",
+                precondicoes="Regra do app: 8+ caracteres, com maiúscula, minúscula, número e caractere especial; bruno logado",
                 passos="PUT /auth/v1/user {password} (mesma validação do cadastro)", entrada=f"'{senha}'",
                 esperado="HTTP 422 weak_password", severidade=MEDIA,
                 obs="Se o servidor aceitar, a regra existe só na tela do app e qualquer chamada direta à API cria senhas mais fracas.")
         if aceitou:
             http("PUT", "/auth/v1/user", {"password": u["bruno"]["senha"]}, token=u["bruno"]["token"])
-    r = http("POST", "/auth/v1/signup", {"email": f"cadastro.novo@{dt.DOMINIO}", "password": "Senha1234", "data": {"nome": "Cadastro Novo"}})
+    r = http("POST", "/auth/v1/signup", {"email": f"cadastro.novo@{dt.DOMINIO}", "password": "Senha#1234", "data": {"nome": "Cadastro Novo"}})
     s.check(r.status in (400, 422) and "invalid" in r.texto.lower(), obtido=resumo(r, 300), **A, tela="Criar conta",
             tipo="Funcional · validação", cenario="Cadastro com e-mail de domínio inexistente é recusado pelo servidor",
             precondicoes="-", passos="POST /auth/v1/signup", entrada=f"cadastro.novo@{dt.DOMINIO} (domínio .test, sem servidor de e-mail)",
@@ -96,7 +97,7 @@ def autenticacao(s, ctx) -> None:
           entrada="e-mail real", esperado="E-mail chega em minutos; o link confirma e o app entra",
           severidade=CRITICA, obs="Teste do Android. O SMTP padrão do Supabase tem limite baixo por hora e pode restringir destinatários; "
                                   "se o e-mail não chegar, é preciso configurar SMTP próprio antes de lançar.")
-    r = http("POST", "/auth/v1/signup", {"email": u["ana"]["email"], "password": "OutraSenha123"})
+    r = http("POST", "/auth/v1/signup", {"email": u["ana"]["email"], "password": "OutraSenha#123"})
     revela = r.status in (400, 422) and "already" in r.texto.lower()
     s.check(not revela, obtido=resumo(r, 300), **A, tela="Criar conta", tipo="Segurança · enumeração",
             cenario="Cadastro com e-mail já usado não revela que a conta existe", precondicoes="Conta ana existente",
