@@ -20,9 +20,18 @@ class _FiltrosSheet extends StatefulWidget {
 
 class _FiltrosSheetState extends State<_FiltrosSheet> {
   late Filtros f = widget.inicial;
-  late RangeValues _faixa = RangeValues(f.precoMin ?? 3, f.precoMax ?? 9);
-  late bool _usarFaixa = f.precoMin != null || f.precoMax != null;
+  // Sem interruptor: com as duas pontas nos extremos, a faixa vale como "qualquer preço"
+  static const _precoMin = 1.5, _precoMax = 12.0;
+  late RangeValues _faixa = RangeValues(f.precoMin ?? _precoMin, f.precoMax ?? _precoMax);
+  bool get _usarFaixa => _faixa.start > _precoMin || _faixa.end < _precoMax;
   static const _distancias = [2.0, 5.0, 10.0, 20.0];
+
+  @override
+  void initState() {
+    super.initState();
+    // Faixa salva fora dos limites do controle (versões antigas) volta para dentro deles
+    _faixa = RangeValues(_faixa.start.clamp(_precoMin, _precoMax), _faixa.end.clamp(_precoMin, _precoMax));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,21 +59,15 @@ class _FiltrosSheetState extends State<_FiltrosSheet> {
                 ),
             ]),
             titulo('Faixa de preço'),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(_usarFaixa ? '${reais(_faixa.start)} a ${reais(_faixa.end)}' : 'Qualquer preço'),
-              value: _usarFaixa,
-              onChanged: (v) => setState(() => _usarFaixa = v),
+            Text('${reais(_faixa.start)} a ${reais(_faixa.end)}', style: tt.bodyLarge),
+            RangeSlider(
+              values: _faixa,
+              min: _precoMin,
+              max: _precoMax,
+              divisions: 105,
+              labels: RangeLabels(reais(_faixa.start), reais(_faixa.end)),
+              onChanged: (v) => setState(() => _faixa = v),
             ),
-            if (_usarFaixa)
-              RangeSlider(
-                values: _faixa,
-                min: 1.5,
-                max: 12,
-                divisions: 105,
-                labels: RangeLabels(reais(_faixa.start), reais(_faixa.end)),
-                onChanged: (v) => setState(() => _faixa = v),
-              ),
             titulo('Distância'),
             Wrap(spacing: 8, runSpacing: 8, children: [
               ChoiceChip(

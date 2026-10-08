@@ -78,18 +78,24 @@ class _ContribuicoesState extends State<_Contribuicoes> {
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Row(children: [
-                    Text(preco(atual.preco), style: tt.headlineMedium?.copyWith(fontWeight: FontWeight.w800)),
-                    const Spacer(),
-                    if (confianca != null)
-                      // Texto escuro e bolinha colorida: verde e âmbar como texto ficavam abaixo de 4,5:1 no tema claro
-                      Chip(
-                        avatar: Icon(Icons.circle, size: 10, color: confianca.$2),
-                        label: Text(confianca.$1),
-                        labelStyle: TextStyle(color: cs.onSurface, fontWeight: FontWeight.w700),
-                        backgroundColor: confianca.$2.withValues(alpha: 0.12),
-                        side: BorderSide.none,
-                      ),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Row(children: [
+                      Text(preco(atual.preco), style: tt.headlineMedium?.copyWith(fontWeight: FontWeight.w800)),
+                      const Spacer(),
+                      if (confianca != null)
+                        // Texto escuro e bolinha colorida: verde e âmbar como texto ficavam abaixo de 4,5:1 no tema claro
+                        Chip(
+                          avatar: Icon(Icons.circle, size: 10, color: confianca.$2),
+                          label: Text(confianca.$1),
+                          labelStyle: TextStyle(color: cs.onSurface, fontWeight: FontWeight.w700),
+                          backgroundColor: confianca.$2.withValues(alpha: 0.12),
+                          side: BorderSide.none,
+                        ),
+                    ]),
+                    // A linha de preço mostra só o ícone de estimativa: o erro médio aparece aqui
+                    if (atual.fonte == FontePreco.estimativa)
+                      Text('Erro médio ${reais(atual.margem ?? 0)} · referência a ${distancia(atual.distanciaKm)}',
+                          style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant)),
                   ]),
                 ),
               ),

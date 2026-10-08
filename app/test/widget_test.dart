@@ -23,11 +23,12 @@ void main() {
     )));
     expect(find.text('Gasolina comum'), findsOneWidget);
     expect(find.textContaining('5,99'), findsOneWidget);
-    expect(find.textContaining('comunidade'), findsOneWidget);
-    expect(find.text('3'), findsOneWidget);
+    // Só o ícone da origem: a contagem de confirmações fica no painel de contribuições
+    expect(find.byTooltip('Confirmado pela comunidade'), findsOneWidget);
+    expect(find.text('3'), findsNothing);
   });
 
-  testWidgets('preço da ANP mostra a semana da pesquisa e o selo ANP', (tester) async {
+  testWidgets('preço da ANP mostra o ícone da pesquisa, sem texto de origem', (tester) async {
     await tester.pumpWidget(emTela(LinhaPreco(
       produtoId: 3,
       preco: PrecoAtual(
@@ -38,11 +39,11 @@ void main() {
         atualizadoEm: DateTime(2026, 9, 21),
       ),
     )));
-    expect(find.textContaining('Pesquisa ANP'), findsOneWidget);
-    expect(find.text('ANP'), findsOneWidget);
+    expect(find.byTooltip('Pesquisa ANP'), findsOneWidget);
+    expect(find.textContaining('semana'), findsNothing);
   });
 
-  testWidgets('estimativa aparece com "≈" e margem de erro', (tester) async {
+  testWidgets('estimativa aparece com "≈" e o ícone, e o erro médio fica fora da linha', (tester) async {
     await tester.pumpWidget(emTela(LinhaPreco(
       produtoId: 1,
       preco: PrecoAtual(
@@ -56,9 +57,8 @@ void main() {
       ),
     )));
     expect(find.textContaining('≈'), findsOneWidget);
-    expect(find.textContaining('Estimativa · erro médio'), findsOneWidget);
-    expect(find.textContaining('0,29'), findsOneWidget);
-    expect(find.text('ESTIMATIVA'), findsOneWidget);
+    expect(find.byTooltip('Estimativa'), findsOneWidget);
+    expect(find.textContaining('erro médio'), findsNothing);
   });
 
   testWidgets('combustível sem preço mostra só "Sem preço"', (tester) async {

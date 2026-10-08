@@ -176,7 +176,7 @@ class _TelaPostoState extends State<TelaPosto> {
         FilledButton.icon(
           onPressed: () => _atualizarPrecos(d),
           icon: const Icon(Icons.photo_camera_outlined),
-          label: const Text('Atualizar preços com uma foto'),
+          label: const Text('Atualizar preços'),
         ),
       ]),
     );
@@ -233,8 +233,6 @@ class _TelaPostoState extends State<TelaPosto> {
                 ? p.precisao.rotulo
                 : (d.localizacaoValidada ? 'Confirmada por usuários' : 'Informada pela ANP, ainda não validada')),
           ),
-          if (d.sincronizadoEm != null)
-            ListTile(title: const Text('Cadastro atualizado em'), subtitle: Text(data(d.sincronizadoEm!))),
         ]),
       ),
     );

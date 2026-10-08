@@ -60,7 +60,8 @@ class PontoFrescor extends StatelessWidget {
       );
 }
 
-/// Selo da origem: ANP, contagem de confirmações da comunidade ou estimativa.
+/// Selo da origem, só com ícone: ANP, comunidade (confirmado ou aguardando) ou estimativa.
+/// Os detalhes (quantas pessoas confirmaram, semana da pesquisa, erro médio) ficam no painel que abre ao tocar no preço.
 class SeloFonte extends StatelessWidget {
   final PrecoAtual preco;
   const SeloFonte(this.preco, {super.key});
@@ -69,28 +70,26 @@ class SeloFonte extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final cores = Tema.cores(context);
-    // Encolhe quando falta espaço (fonte do sistema ampliada) em vez de estourar a linha
-    Widget chip(String texto, Color cor, {IconData? icone}) => FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(color: cor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(99)),
-            child: Row(mainAxisSize: MainAxisSize.min, children: [
-              if (icone != null) ...[Icon(icone, size: 14, color: cor), const SizedBox(width: 4)],
-              Text(texto, style: TextStyle(color: cor, fontWeight: FontWeight.w700, fontSize: 12)),
-            ]),
-          ),
-        );
-    return switch (preco.fonte) {
-      FontePreco.anp => chip('ANP', cores.anp, icone: Icons.account_balance_outlined),
-      FontePreco.estimativa => chip('ESTIMATIVA', cores.estimativa),
-      FontePreco.comunidade => chip(
-          '${preco.confirmacoes > 0 ? preco.confirmacoes : 1}',
+    final confirmado = preco.situacao == SituacaoPreco.confirmado;
+    final (icone, cor, descricao) = switch (preco.fonte) {
+      FontePreco.anp => (Icons.account_balance_outlined, cores.anp, 'Pesquisa ANP'),
+      FontePreco.estimativa => (Icons.insights_outlined, cores.estimativa, 'Estimativa'),
+      FontePreco.comunidade => confirmado
+          ? (Icons.groups_rounded, cs.primary, 'Confirmado pela comunidade')
           // Não confirmado: cinza do texto secundário (o tom de contorno ficava abaixo de 4,5:1 no selo)
-          preco.situacao == SituacaoPreco.confirmado ? cs.primary : cs.onSurfaceVariant,
-          icone: preco.situacao == SituacaoPreco.confirmado ? Icons.groups_rounded : Icons.person_outline,
-        ),
+          : (Icons.person_outline, cs.onSurfaceVariant, 'Aguardando confirmação'),
     };
+    return Tooltip(
+      message: descricao,
+      child: Semantics(
+        label: descricao,
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(color: cor.withValues(alpha: 0.12), shape: BoxShape.circle),
+          child: ExcludeSemantics(child: Icon(icone, size: 16, color: cor)),
+        ),
+      ),
+    );
   }
 }
 
@@ -98,7 +97,7 @@ class SeloFonte extends StatelessWidget {
 class LinhaPreco extends StatelessWidget {
   final int produtoId;
   final PrecoAtual? preco;
-  final int aguardando;
+  final int aguardando; // não aparece na linha: a contagem fica no painel de contribuições
   final VoidCallback? aoTocar;
   const LinhaPreco({super.key, required this.produtoId, this.preco, this.aguardando = 0, this.aoTocar});
 
@@ -107,54 +106,33 @@ class LinhaPreco extends StatelessWidget {
     final tt = Theme.of(context).textTheme;
     final cs = Theme.of(context).colorScheme;
     final p = preco;
+    // Nome à esquerda; preço encostado à direita, com a idade (bolinha) e a origem (ícone) embaixo.
+    // Os detalhes ficam no painel que abre ao tocar.
     return InkWell(
       onTap: aoTocar,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(children: [
-          Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(Produto.porId(produtoId).nome, style: tt.titleMedium),
-              const SizedBox(height: 4),
-              if (p == null)
-                Text('Sem preço', style: tt.bodySmall?.copyWith(color: cs.outline))
-              else
-                Row(children: [
-                  PontoFrescor(p.frescor()),
-                  const SizedBox(width: 6),
-                  Flexible(child: Text(origemPreco(p), style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant))),
-                ]),
-              if (aguardando > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Text('$aguardando envio(s) aguardando confirmação',
-                      style: tt.bodySmall?.copyWith(color: cs.primary)),
+          Expanded(child: Text(Produto.porId(produtoId).nome, style: tt.titleMedium)),
+          const SizedBox(width: 12),
+          if (p == null)
+            Text('Sem preço', style: tt.bodyMedium?.copyWith(color: cs.outline))
+          else
+            Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.end, children: [
+              Text(
+                p.fonte == FontePreco.estimativa ? '≈ ${preco_(p.preco)}' : preco_(p.preco),
+                style: tt.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: p.fonte == FontePreco.estimativa ? cs.onSurfaceVariant : null,
                 ),
-            ]),
-          ),
-          if (p != null) ...[
-            const SizedBox(width: 8),
-            // Com fonte grande, o selo desce para baixo do preço em vez de empurrar a linha para fora da tela
-            Flexible(
-              child: Wrap(
-                alignment: WrapAlignment.end,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 8,
-                runSpacing: 4,
-                children: [
-                  Text(
-                    p.fonte == FontePreco.estimativa ? '≈ ${preco_(p.preco)}' : preco_(p.preco),
-                    style: tt.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      color: p.fonte == FontePreco.estimativa ? cs.onSurfaceVariant : null,
-                    ),
-                  ),
-                  SeloFonte(p),
-                ],
               ),
-            ),
-          ],
-          if (aoTocar != null) Icon(Icons.chevron_right, color: cs.outline),
+              const SizedBox(height: 4),
+              Row(mainAxisSize: MainAxisSize.min, children: [
+                PontoFrescor(p.frescor()),
+                const SizedBox(width: 6),
+                SeloFonte(p),
+              ]),
+            ]),
         ]),
       ),
     );

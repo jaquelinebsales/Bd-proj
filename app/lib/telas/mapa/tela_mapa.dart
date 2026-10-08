@@ -62,6 +62,7 @@ class _TelaMapaState extends State<TelaMapa> {
   bool _creditosAbertos = true;
   String? _erro;
   Timer? _espera;
+  Timer? _vigia;
   String? _areaPedida;
   int _pedidos = 0;
 
@@ -70,7 +71,14 @@ class _TelaMapaState extends State<TelaMapa> {
     super.initState();
     Preferencias.produto.addListener(_redesenhar);
     Localizacao.instancia.addListener(_redesenhar);
-    if (_semMapaNativo) WidgetsBinding.instance.addPostFrameCallback((_) => _iniciar());
+    if (_semMapaNativo) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _iniciar());
+    } else {
+      // Se o mapa nativo não for criado, a tela avisa em vez de ficar vazia sem explicação
+      _vigia = Timer(const Duration(seconds: 15), () {
+        if (mounted && _mapa == null) setState(() => _erro = 'Não foi possível carregar o mapa.');
+      });
+    }
   }
 
   @override
@@ -86,6 +94,7 @@ class _TelaMapaState extends State<TelaMapa> {
     Preferencias.produto.removeListener(_redesenhar);
     Localizacao.instancia.removeListener(_redesenhar);
     _espera?.cancel();
+    _vigia?.cancel();
     super.dispose();
   }
 
@@ -109,6 +118,8 @@ class _TelaMapaState extends State<TelaMapa> {
 
   void _aoCriar(MapController mapa) {
     _mapa = mapa;
+    _vigia?.cancel();
+    if (_erro != null) setState(() => _erro = null);
     // O tema pode ter mudado entre a criação das opções e a do mapa
     if (_estilo != null && _estilo != _opcoes?.initStyle) mapa.setStyle(_estilo!);
     _iniciar();
