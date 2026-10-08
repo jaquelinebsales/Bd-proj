@@ -83,7 +83,6 @@ class _TelaFavoritosState extends State<TelaFavoritos> {
                 child: ListTile(
                   leading: const Icon(Icons.cloud_off_outlined),
                   title: const Text('Favoritos salvos só neste aparelho'),
-                  subtitle: const Text('Entre na sua conta para guardá-los e receber avisos de preço.'),
                   trailing: TextButton(onPressed: () => context.push('/entrar'), child: const Text('Entrar')),
                 ),
               ),

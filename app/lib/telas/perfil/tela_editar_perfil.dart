@@ -108,7 +108,6 @@ class _TelaEditarPerfilState extends State<TelaEditarPerfil> {
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('Avisos de preço dos favoritos'),
-              subtitle: const Text('Receba um aviso quando o preço de um posto favorito mudar pelo menos R\$ 0,05.'),
               value: _notificacoes,
               onChanged: (v) => setState(() => _notificacoes = v),
             ),

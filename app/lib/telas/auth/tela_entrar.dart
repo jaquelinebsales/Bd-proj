@@ -48,7 +48,6 @@ class _TelaEntrarState extends State<TelaEntrar> {
   @override
   Widget build(BuildContext context) => LayoutAuth(
         titulo: 'Entrar',
-        subtitulo: 'Com a conta você envia preços, avalia postos e ganha pontos.',
         filhos: [
           Form(
             key: _form,

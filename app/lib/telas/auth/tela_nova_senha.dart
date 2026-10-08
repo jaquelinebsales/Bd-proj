@@ -43,7 +43,6 @@ class _TelaNovaSenhaState extends State<TelaNovaSenha> {
   @override
   Widget build(BuildContext context) => LayoutAuth(
         titulo: 'Crie uma nova senha',
-        subtitulo: 'Use pelo menos 8 caracteres, com letras e números.',
         filhos: [
           Form(
             key: _form,

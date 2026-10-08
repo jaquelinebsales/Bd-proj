@@ -52,8 +52,10 @@ String? validarEmail(String? v) {
 /// Mesma regra configurada no Supabase: 8+ caracteres, com letras e números.
 String? validarSenha(String? v) {
   final t = v ?? '';
-  if (t.length < 8) return 'Use pelo menos 8 caracteres.';
-  if (!RegExp(r'[A-Za-z]').hasMatch(t) || !RegExp(r'\d').hasMatch(t)) return 'Use letras e números.';
+  // A regra só aparece no erro: as telas de senha não têm texto de ajuda fixo
+  if (t.length < 8 || !RegExp(r'[A-Za-z]').hasMatch(t) || !RegExp(r'\d').hasMatch(t)) {
+    return 'Use pelo menos 8 caracteres, com letras e números.';
+  }
   return null;
 }
 

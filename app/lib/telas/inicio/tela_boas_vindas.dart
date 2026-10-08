@@ -96,12 +96,6 @@ class _TelaBoasVindasState extends State<TelaBoasVindas> {
                     : () => _paginas.nextPage(duration: const Duration(milliseconds: 250), curve: Curves.easeOut),
                 child: Text(ultima ? 'Permitir localização e começar' : 'Continuar'),
               ),
-              if (ultima)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Text('Sem localização, você ainda pode buscar postos por cidade ou endereço.',
-                      style: tt.bodySmall, textAlign: TextAlign.center),
-                ),
             ]),
           ),
         ),

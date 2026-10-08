@@ -61,8 +61,8 @@ void main() {
     expect(find.text('ESTIMATIVA'), findsOneWidget);
   });
 
-  testWidgets('combustível sem preço convida a enviar foto', (tester) async {
+  testWidgets('combustível sem preço mostra só "Sem preço"', (tester) async {
     await tester.pumpWidget(emTela(const LinhaPreco(produtoId: 6)));
-    expect(find.textContaining('Envie uma foto do painel'), findsOneWidget);
+    expect(find.text('Sem preço'), findsOneWidget);
   });
 }

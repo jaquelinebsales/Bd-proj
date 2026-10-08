@@ -108,7 +108,6 @@ class _FiltrosSheetState extends State<_FiltrosSheet> {
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('Incluir preços estimados'),
-              subtitle: const Text('Postos sem preço da comunidade nem da ANP mostram uma estimativa da região.'),
               value: f.incluirEstimativas,
               onChanged: (v) => setState(() => f = f.copiar(incluirEstimativas: v)),
             ),

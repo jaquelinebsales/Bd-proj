@@ -51,7 +51,6 @@ class _TelaCadastroState extends State<TelaCadastro> {
   @override
   Widget build(BuildContext context) => LayoutAuth(
         titulo: 'Criar conta',
-        subtitulo: 'Só pedimos nome, e-mail e senha. Seu nome aparece abreviado para outras pessoas.',
         filhos: [
           Form(
             key: _form,
@@ -86,9 +85,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   acao: TextInputAction.next,
                   preenchimento: const [AutofillHints.newPassword],
                 ),
-                const SizedBox(height: 4),
-                Text('  Pelo menos 8 caracteres, com letras e números.', style: Theme.of(context).textTheme.bodySmall),
-                const SizedBox(height: 12),
+                const SizedBox(height: 16),
                 CampoSenha(
                   controle: _confirmacao,
                   rotulo: 'Confirme a senha',

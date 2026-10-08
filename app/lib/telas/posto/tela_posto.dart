@@ -72,9 +72,8 @@ class _TelaPostoState extends State<TelaPosto> {
       final informar = await showDialog<bool>(
         context: context,
         builder: (c) => AlertDialog(
-          title: const Text('Ainda não sabemos onde este posto fica'),
-          content: const Text('Para enviar preços, precisamos da posição do posto. Se você está nele agora, toque em '
-              '"Estou neste posto". Quando outra pessoa também confirmar, o envio de preço fica liberado.'),
+          title: const Text('Localização desconhecida'),
+          content: const Text('O envio de preço é liberado depois que a posição do posto for confirmada no local.'),
           actions: [
             TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Agora não')),
             FilledButton(
@@ -153,7 +152,6 @@ class _TelaPostoState extends State<TelaPosto> {
 
     final precos = Secao(
       titulo: 'Preços',
-      subtitulo: 'Valor mais provável por combustível, combinando ANP e comunidade',
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Card(
           clipBehavior: Clip.antiAlias,
@@ -170,16 +168,8 @@ class _TelaPostoState extends State<TelaPosto> {
             if (d.produtosExibidos.isEmpty)
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: Text('A ANP não informou os combustíveis deste posto. Envie uma foto do painel para começar.'),
+                child: Text('Combustíveis não informados'),
               ),
-          ]),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 8, left: 4),
-          child: Row(children: [
-            Icon(Icons.info_outline, size: 16, color: cs.outline),
-            const SizedBox(width: 6),
-            Expanded(child: Text('Toque em um preço para ver quem enviou e o dado oficial.', style: tt.bodySmall?.copyWith(color: cs.outline))),
           ]),
         ),
         const SizedBox(height: 16),
@@ -188,12 +178,6 @@ class _TelaPostoState extends State<TelaPosto> {
           icon: const Icon(Icons.photo_camera_outlined),
           label: const Text('Atualizar preços com uma foto'),
         ),
-        if (!p.municipioPesquisadoAnp)
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text('A ANP não pesquisa preços nesta cidade. Envios confirmados aqui valem pontos em dobro.',
-                style: tt.bodySmall?.copyWith(color: cs.primary), textAlign: TextAlign.center),
-          ),
       ]),
     );
 
@@ -233,7 +217,6 @@ class _TelaPostoState extends State<TelaPosto> {
 
     final dados = Secao(
       titulo: 'Dados do posto',
-      subtitulo: 'Cadastro oficial da ANP. As avaliações são 100% dos usuários.',
       child: Card(
         child: Column(children: [
           ListTile(title: const Text('Razão social'), subtitle: Text(d.razaoSocial)),
@@ -274,11 +257,10 @@ class _TelaPostoState extends State<TelaPosto> {
                 const SizedBox(height: 8),
                 Text(
                   p.precisao.aproximada
-                      ? 'O ponto deste posto no mapa pode estar a algumas centenas de metros do lugar certo. '
-                          'Se você está nele, toque em "Estou neste posto". Quando duas pessoas confirmarem, '
-                          'ele passa a aparecer com a posição exata.'
-                      : 'Ainda não sabemos onde este posto fica, então ele não aparece no mapa e não recebe envio de preço. '
-                          'Se você está nele, toque em "Estou neste posto". Quando duas pessoas confirmarem, o envio de preço fica liberado.',
+                      ? 'Posição estimada pelo endereço, com margem de algumas centenas de metros. '
+                          'A posição exata é definida quando dois usuários a confirmam no local.'
+                      : 'Posição não cadastrada: o posto não aparece no mapa e não recebe envio de preço '
+                          'até que dois usuários confirmem a localização no local.',
                   style: tt.bodyMedium?.copyWith(color: cs.onTertiaryContainer),
                 ),
                 const SizedBox(height: 12),

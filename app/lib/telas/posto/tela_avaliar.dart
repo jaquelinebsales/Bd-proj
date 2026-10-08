@@ -135,8 +135,6 @@ class _TelaAvaliarState extends State<TelaAvaliar> {
               alignLabelWithHint: true,
             ),
           ),
-          const SizedBox(height: 8),
-          Text('Seu nome aparece abreviado, por exemplo "Carla M.".', style: tt.bodySmall),
           const SizedBox(height: 24),
           FilledButton(
             onPressed: _salvando ? null : _salvar,

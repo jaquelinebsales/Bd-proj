@@ -70,12 +70,6 @@ class _TelaPontosState extends State<TelaPontos> {
                   ),
               ]),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Os pontos também medem a sua confiabilidade. Com três envios contrariados em sete dias, novos envios ficam '
-              'pausados por sete dias.',
-              style: tt.bodySmall,
-            ),
             const SizedBox(height: 20),
             Text('Extrato', style: tt.titleMedium),
             const SizedBox(height: 8),

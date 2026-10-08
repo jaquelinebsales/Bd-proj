@@ -46,7 +46,6 @@ class _TelaAlterarSenhaState extends State<TelaAlterarSenha> {
   @override
   Widget build(BuildContext context) => LayoutAuth(
         titulo: 'Alterar senha',
-        subtitulo: 'Confirme a senha atual e escolha a nova.',
         filhos: [
           Form(
             key: _form,

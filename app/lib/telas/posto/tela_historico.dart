@@ -79,12 +79,6 @@ class _TelaHistoricoState extends State<TelaHistorico> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  'A ANP pesquisa uma amostra de postos por semana, com metodologia própria. Os pontos da comunidade vêm de fotos '
-                  'dos painéis enviadas por usuários; os não confirmados entram no histórico depois de 24 horas.',
-                  style: tt.bodySmall,
-                ),
-                const SizedBox(height: 16),
                 if (pontos.isNotEmpty) ...[
                   Text('Todos os registros', style: tt.titleMedium),
                   const SizedBox(height: 8),

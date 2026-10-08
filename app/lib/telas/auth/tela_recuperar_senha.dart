@@ -39,8 +39,8 @@ class _TelaRecuperarSenhaState extends State<TelaRecuperarSenha> {
   Widget build(BuildContext context) => LayoutAuth(
         titulo: 'Recuperar senha',
         subtitulo: _enviado
-            ? 'Se existir uma conta com ${_email.text.trim()}, você vai receber um link. Abra o link neste celular para criar uma nova senha.'
-            : 'Informe o e-mail da sua conta. Enviamos um link para você criar uma nova senha.',
+            ? 'Link de redefinição enviado para ${_email.text.trim()}.'
+            : null,
         filhos: _enviado
             ? [
                 const Icon(Icons.outgoing_mail, size: 72),

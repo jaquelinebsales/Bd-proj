@@ -191,15 +191,13 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
       Icon(Icons.photo_camera_outlined, size: 64, color: cs.primary),
       const SizedBox(height: 12),
       Text('Fotografe o painel de preços', style: tt.headlineSmall, textAlign: TextAlign.center),
-      const SizedBox(height: 8),
-      Text('O app lê os valores e você confere antes de enviar.', style: tt.bodyLarge, textAlign: TextAlign.center),
       const SizedBox(height: 16),
       Card(
         child: Column(children: [
-          passo(Icons.crop_free, 'Enquadre o painel inteiro, de frente'),
-          passo(Icons.wb_sunny_outlined, 'Evite reflexo e contraluz'),
-          passo(Icons.place_outlined, 'Esteja no posto: a localização confirma o envio (até ${_textoRaio()})'),
-          passo(Icons.lock_outline, 'A foto é lida no seu celular e apagada. Ela nunca é enviada nem guardada.'),
+          passo(Icons.crop_free, 'Painel inteiro, de frente'),
+          passo(Icons.wb_sunny_outlined, 'Sem reflexo nem contraluz'),
+          passo(Icons.place_outlined, 'No posto, a até ${_textoRaio()}'),
+          passo(Icons.lock_outline, 'A foto não sai do celular'),
         ]),
       ),
       if (_erro != null)
@@ -223,19 +221,10 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
     final longe = _distanciaM != null && _distanciaM! > _raioM;
     return ListView(padding: const EdgeInsets.all(16), children: [
       Text('Confira os preços', style: tt.headlineSmall),
-      const SizedBox(height: 4),
-      Text(
-        leitura.resultado.leituras.isEmpty
-            ? 'Não reconhecemos preços na foto. Digite os valores do painel.'
-            : 'Reconhecemos ${leitura.resultado.leituras.length} preço(s). Corrija o que estiver errado e desmarque o que não quiser enviar.',
-        style: tt.bodyMedium,
-      ),
-      const SizedBox(height: 8),
-      Row(children: [
-        Icon(Icons.delete_sweep_outlined, size: 18, color: cs.outline),
-        const SizedBox(width: 6),
-        Expanded(child: Text('A foto já foi apagada do seu celular.', style: tt.bodySmall?.copyWith(color: cs.outline))),
-      ]),
+      if (leitura.resultado.leituras.isEmpty) ...[
+        const SizedBox(height: 4),
+        Text('Nenhum preço reconhecido na foto', style: tt.bodyMedium),
+      ],
       if (longe)
         Card(
           color: cs.errorContainer,
@@ -284,7 +273,7 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
         ),
       if (leitura.resultado.precosSemRotulo.isNotEmpty) ...[
         const SizedBox(height: 4),
-        Text('Outros valores vistos na foto. Toque para usar no campo selecionado:', style: tt.bodySmall),
+        Text('Outros valores na foto', style: tt.bodySmall),
         const SizedBox(height: 6),
         Wrap(spacing: 8, children: [
           for (final v in leitura.resultado.precosSemRotulo)
@@ -307,12 +296,6 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
         onPressed: _fotografar,
         icon: const Icon(Icons.replay),
         label: const Text('Tirar outra foto'),
-      ),
-      const SizedBox(height: 12),
-      Text(
-        'Seu envio é uma proposta: ele vira o preço exibido quando outra pessoa confirmar o mesmo valor em até 24 horas.',
-        style: tt.bodySmall,
-        textAlign: TextAlign.center,
       ),
     ]);
   }

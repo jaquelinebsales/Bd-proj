@@ -58,13 +58,9 @@ class _TelaVerificarEmailState extends State<TelaVerificarEmail> {
   @override
   Widget build(BuildContext context) => LayoutAuth(
         titulo: 'Confirme seu e-mail',
-        subtitulo: 'Enviamos um link para ${widget.email.isEmpty ? 'o seu e-mail' : widget.email}. '
-            'Abra a mensagem neste celular e toque no link para ativar a conta.',
         filhos: [
           const Icon(Icons.mark_email_unread_outlined, size: 80),
           const SizedBox(height: 24),
-          const Text('Não chegou? Veja a caixa de spam ou peça outro link.'),
-          const SizedBox(height: 16),
           OutlinedButton(
             style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(52)),
             onPressed: _espera > 0 || widget.email.isEmpty ? null : _reenviar,

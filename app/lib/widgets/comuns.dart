@@ -117,7 +117,7 @@ class LinhaPreco extends StatelessWidget {
               Text(Produto.porId(produtoId).nome, style: tt.titleMedium),
               const SizedBox(height: 4),
               if (p == null)
-                Text('Sem preço ainda. Envie uma foto do painel.', style: tt.bodySmall?.copyWith(color: cs.outline))
+                Text('Sem preço', style: tt.bodySmall?.copyWith(color: cs.outline))
               else
                 Row(children: [
                   PontoFrescor(p.frescor()),
@@ -243,9 +243,9 @@ class CartaoPosto extends StatelessWidget {
 class EstadoVazio extends StatelessWidget {
   final IconData icone;
   final String titulo;
-  final String texto;
+  final String? texto;
   final Widget? acao;
-  const EstadoVazio({super.key, required this.icone, required this.titulo, required this.texto, this.acao});
+  const EstadoVazio({super.key, required this.icone, required this.titulo, this.texto, this.acao});
 
   @override
   Widget build(BuildContext context) {
@@ -262,8 +262,10 @@ class EstadoVazio extends StatelessWidget {
                 Icon(icone, size: 56, color: Theme.of(context).colorScheme.primary),
                 const SizedBox(height: 16),
                 Text(titulo, style: tt.titleLarge, textAlign: TextAlign.center),
-                const SizedBox(height: 8),
-                Text(texto, style: tt.bodyMedium, textAlign: TextAlign.center),
+                if (texto != null) ...[
+                  const SizedBox(height: 8),
+                  Text(texto!, style: tt.bodyMedium, textAlign: TextAlign.center),
+                ],
                 if (acao != null) ...[const SizedBox(height: 20), acao!],
               ]),
             ),
@@ -305,7 +307,7 @@ Future<bool> exigirLogin(BuildContext context, String motivo) async {
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Text('Entre para continuar', style: Theme.of(c).textTheme.headlineSmall),
           const SizedBox(height: 8),
-          Text('$motivo Consultar preços continua livre, sem conta.'),
+          Text(motivo),
           const SizedBox(height: 24),
           FilledButton(
             onPressed: () {

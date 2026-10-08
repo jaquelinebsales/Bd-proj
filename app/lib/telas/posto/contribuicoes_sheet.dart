@@ -78,22 +78,18 @@ class _ContribuicoesState extends State<_Contribuicoes> {
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Row(children: [
-                      Text(preco(atual.preco), style: tt.headlineMedium?.copyWith(fontWeight: FontWeight.w800)),
-                      const Spacer(),
-                      if (confianca != null)
-                        // Texto escuro e bolinha colorida: verde e âmbar como texto ficavam abaixo de 4,5:1 no tema claro
-                        Chip(
-                          avatar: Icon(Icons.circle, size: 10, color: confianca.$2),
-                          label: Text(confianca.$1),
-                          labelStyle: TextStyle(color: cs.onSurface, fontWeight: FontWeight.w700),
-                          backgroundColor: confianca.$2.withValues(alpha: 0.12),
-                          side: BorderSide.none,
-                        ),
-                    ]),
-                    const SizedBox(height: 6),
-                    Text(_explicacao(atual), style: tt.bodyMedium),
+                  child: Row(children: [
+                    Text(preco(atual.preco), style: tt.headlineMedium?.copyWith(fontWeight: FontWeight.w800)),
+                    const Spacer(),
+                    if (confianca != null)
+                      // Texto escuro e bolinha colorida: verde e âmbar como texto ficavam abaixo de 4,5:1 no tema claro
+                      Chip(
+                        avatar: Icon(Icons.circle, size: 10, color: confianca.$2),
+                        label: Text(confianca.$1),
+                        labelStyle: TextStyle(color: cs.onSurface, fontWeight: FontWeight.w700),
+                        backgroundColor: confianca.$2.withValues(alpha: 0.12),
+                        side: BorderSide.none,
+                      ),
                   ]),
                 ),
               ),
@@ -108,7 +104,7 @@ class _ContribuicoesState extends State<_Contribuicoes> {
             if (contrib.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Text('Ninguém enviou este preço nos últimos 7 dias.', style: tt.bodyMedium?.copyWith(color: cs.outline)),
+                child: Text('Nenhum envio nos últimos 7 dias', style: tt.bodyMedium?.copyWith(color: cs.outline)),
               ),
             _titulo(context, 'DADO OFICIAL'),
             Card(
@@ -116,9 +112,7 @@ class _ContribuicoesState extends State<_Contribuicoes> {
               child: ListTile(
                 leading: const CircleAvatar(child: Icon(Icons.account_balance_outlined)),
                 title: Text('Pesquisa ANP', style: TextStyle(color: cores.anp, fontWeight: FontWeight.w700)),
-                subtitle: Text(anp == null
-                    ? 'Este posto não entrou na amostra da ANP nos últimos 4 meses.'
-                    : 'Semana de ${data(anp.dia)} · usada quando os envios divergem'),
+                subtitle: Text(anp == null ? 'Sem pesquisa nos últimos 4 meses' : 'Semana de ${data(anp.dia)}'),
                 trailing: anp == null
                     ? null
                     : Text(preco(anp.preco), style: tt.titleMedium?.copyWith(color: cores.anp, fontWeight: FontWeight.w800)),
@@ -129,16 +123,6 @@ class _ContribuicoesState extends State<_Contribuicoes> {
       ),
     );
   }
-
-  String _explicacao(PrecoAtual p) => switch (p.situacao) {
-        SituacaoPreco.confirmado =>
-          '${p.confirmacoes} usuários confirmaram esse valor. É o preço exibido para este posto.',
-        SituacaoPreco.naoConfirmado => 'Enviado ${tempoRelativo(p.atualizadoEm)} e ainda sem confirmação de outra pessoa.',
-        SituacaoPreco.divergente => 'Os envios recentes não concordam entre si. Por isso vale o dado da ANP.',
-        SituacaoPreco.oficial => 'Não há envio recente da comunidade. Vale a última pesquisa da ANP.',
-        SituacaoPreco.estimado =>
-          'Nenhuma fonte para este posto. Estimativa pela mediana dos postos pesquisados mais próximos, a ${distancia(p.distanciaKm)}.',
-      };
 
   Widget _titulo(BuildContext context, String t) => Padding(
         padding: const EdgeInsets.fromLTRB(4, 20, 4, 8),
