@@ -23,6 +23,12 @@ class Tema {
         // Filtro de combustível escolhido e aba ativa usam o tom suave da marca
         secondaryContainer: const Color(0xFFD9E2EE),
         onSecondaryContainer: const Color(0xFF142235),
+        // Aviso de localização: também na família da marca. O terciário gerado pelo Material era lilás, e qualquer
+        // outra cor esbarrava em uma das cores do preço, da estimativa ou da ANP
+        tertiary: marca,
+        onTertiary: Colors.white,
+        tertiaryContainer: const Color(0xFFD9E2EE),
+        onTertiaryContainer: const Color(0xFF142235),
         surface: const Color(0xFFF6F7F9),
         surfaceDim: const Color(0xFFD7DBE1),
         surfaceBright: const Color(0xFFF6F7F9),
@@ -47,6 +53,10 @@ class Tema {
       onPrimaryContainer: const Color(0xFFDCE6F3),
       secondaryContainer: const Color(0xFF33465F),
       onSecondaryContainer: const Color(0xFFDCE6F3),
+      tertiary: const Color(0xFFA9C3E6),
+      onTertiary: const Color(0xFF0E2340),
+      tertiaryContainer: const Color(0xFF33465F),
+      onTertiaryContainer: const Color(0xFFDCE6F3),
       surface: const Color(0xFF101317),
       surfaceDim: const Color(0xFF101317),
       surfaceBright: const Color(0xFF343C47),

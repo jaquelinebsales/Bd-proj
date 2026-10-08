@@ -47,6 +47,9 @@ void main() {
       }
       expect(contraste(cs.onPrimary, cs.primary), greaterThanOrEqualTo(4.5));
       expect(contraste(cs.onSecondaryContainer, cs.secondaryContainer), greaterThanOrEqualTo(4.5));
+      expect(contraste(cs.onTertiaryContainer, cs.tertiaryContainer), greaterThanOrEqualTo(4.5));
+      // Aviso de localização na família da marca, sem o lilás gerado pelo Material
+      expect(cs.tertiaryContainer, cs.secondaryContainer);
     }
   });
 
