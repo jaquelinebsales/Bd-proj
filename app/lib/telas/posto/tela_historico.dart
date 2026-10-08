@@ -95,7 +95,7 @@ class _TelaHistoricoState extends State<TelaHistorico> {
                           dense: true,
                           leading: Icon(
                             p.anp ? Icons.account_balance_outlined : Icons.photo_camera_outlined,
-                            color: p.anp ? Tema.anp : Theme.of(context).colorScheme.primary,
+                            color: p.anp ? Tema.cores(context).anp : Theme.of(context).colorScheme.primary,
                           ),
                           title: Text(data(p.dia)),
                           subtitle: Text(p.anp ? 'Pesquisa ANP' : (p.confirmado ? 'Comunidade · confirmado' : 'Comunidade · não confirmado')),

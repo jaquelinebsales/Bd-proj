@@ -55,7 +55,7 @@ class PontoFrescor extends StatelessWidget {
         child: Container(
           width: 8,
           height: 8,
-          decoration: BoxDecoration(color: corFrescor(frescor), shape: BoxShape.circle),
+          decoration: BoxDecoration(color: corFrescor(frescor, Tema.cores(context)), shape: BoxShape.circle),
         ),
       );
 }
@@ -68,6 +68,7 @@ class SeloFonte extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final cores = Tema.cores(context);
     // Encolhe quando falta espaço (fonte do sistema ampliada) em vez de estourar a linha
     Widget chip(String texto, Color cor, {IconData? icone}) => FittedBox(
           fit: BoxFit.scaleDown,
@@ -81,11 +82,12 @@ class SeloFonte extends StatelessWidget {
           ),
         );
     return switch (preco.fonte) {
-      FontePreco.anp => chip('ANP', Tema.anp, icone: Icons.account_balance_outlined),
-      FontePreco.estimativa => chip('ESTIMATIVA', Tema.estimativa),
+      FontePreco.anp => chip('ANP', cores.anp, icone: Icons.account_balance_outlined),
+      FontePreco.estimativa => chip('ESTIMATIVA', cores.estimativa),
       FontePreco.comunidade => chip(
           '${preco.confirmacoes > 0 ? preco.confirmacoes : 1}',
-          preco.situacao == SituacaoPreco.confirmado ? cs.primary : cs.outline,
+          // Não confirmado: cinza do texto secundário (o tom de contorno ficava abaixo de 4,5:1 no selo)
+          preco.situacao == SituacaoPreco.confirmado ? cs.primary : cs.onSurfaceVariant,
           icone: preco.situacao == SituacaoPreco.confirmado ? Icons.groups_rounded : Icons.person_outline,
         ),
     };

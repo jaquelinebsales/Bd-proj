@@ -49,10 +49,10 @@ String origemPreco(PrecoAtual p) => switch (p.situacao) {
         'Estimativa · erro médio ${reais(p.margem ?? 0)} · referência a ${distancia(p.distanciaKm)}',
     };
 
-Color corFrescor(Frescor f) => switch (f) {
-      Frescor.recente => Tema.recente,
-      Frescor.antigo => Tema.antigo,
-      Frescor.semAtualizacao => Tema.semAtualizacao,
+Color corFrescor(Frescor f, CoresPreco cores) => switch (f) {
+      Frescor.recente => cores.recente,
+      Frescor.antigo => cores.antigo,
+      Frescor.semAtualizacao => cores.semAtualizacao,
     };
 
 String textoFrescor(Frescor f) => switch (f) {

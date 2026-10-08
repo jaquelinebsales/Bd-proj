@@ -12,6 +12,7 @@ class TelaSobre extends StatelessWidget {
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
     final cs = Theme.of(context).colorScheme;
+    final cores = Tema.cores(context);
 
     Widget titulo(String t) => Padding(
           padding: const EdgeInsets.fromLTRB(4, 24, 4, 8),
@@ -29,18 +30,22 @@ class TelaSobre extends StatelessWidget {
             child: Column(children: [
               item(Icons.groups_rounded, cs.primary, 'Comunidade',
                   'Fotos de painéis enviadas por usuários. Um preço é confirmado quando duas pessoas diferentes informam o mesmo valor em até 24 horas.'),
-              item(Icons.account_balance_outlined, Tema.anp, 'Pesquisa da ANP',
+              item(Icons.account_balance_outlined, cores.anp, 'Pesquisa da ANP',
                   'Levantamento semanal oficial da Agência Nacional do Petróleo. É uma amostra: cobre cerca de 20% dos postos e pouco mais de 400 cidades. Vale quando os envios da comunidade divergem.'),
-              item(Icons.insights_outlined, Tema.estimativa, 'Estimativa',
+              item(Icons.insights_outlined, cores.estimativa, 'Estimativa',
                   'Quando o posto não tem nenhum preço, mostramos a mediana dos postos pesquisados mais próximos, com a margem de erro medida para aquela distância.'),
             ]),
           ),
           titulo('O que as cores significam'),
           Card(
             child: Column(children: [
-              item(Icons.circle, Tema.recente, 'Atualizado recentemente', 'Até 24 horas.'),
-              item(Icons.circle, Tema.antigo, 'Atualização antiga', 'De 2 a 7 dias.'),
-              item(Icons.circle, Tema.semAtualizacao, 'Sem atualização recente', 'Mais de 7 dias, ou preço estimado.'),
+              item(Icons.circle, cores.recente, 'Atualizado recentemente', 'Até 24 horas. No mapa, pino verde.'),
+              item(Icons.circle, cores.antigo, 'Atualização antiga', 'De 2 a 7 dias. No mapa, pino âmbar.'),
+              item(Icons.circle, cores.semAtualizacao, 'Sem atualização recente',
+                  'Mais de 7 dias, ou preço estimado. No mapa, pino com contorno vermelho.'),
+              item(Icons.circle_outlined, cores.estimativa, 'Estimativa no mapa',
+                  'Pino com contorno tracejado e o sinal ≈ antes do preço.'),
+              item(Icons.circle_outlined, cores.semPreco, 'Posto sem preço', 'Pino com contorno cinza e um traço no lugar do preço.'),
             ]),
           ),
           titulo('Cadastro dos postos'),

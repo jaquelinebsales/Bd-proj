@@ -46,8 +46,10 @@ dependencies:
   url_launcher: ^6.3.2
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^8.3.2
-  latlong2: ^0.10.1
+  # Mapa vetorial com os estilos do OpenFreeMap. Na 0.3.6 o Android precisa do ktlint declarado em
+  # android/settings.gradle.kts (issue #565 do flutter-maplibre, corrigida na 0.3.7).
+  maplibre: ^0.3.6
+  pointer_interceptor: ^0.10.1+3
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,7 @@
 name: Gerar APK
 
 # Gera o APK de teste sob demanda (aba Actions → Gerar APK → Run workflow).
-# Segredos necessários: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY. O mapa (OpenStreetMap) não usa chave.
+# Segredos necessários: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY. O mapa (OpenFreeMap) não usa chave.
 on:
   workflow_dispatch:
 

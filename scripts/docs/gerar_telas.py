@@ -1,8 +1,8 @@
 """
 Gera documentacao/telas_do_app.html: todas as telas do app, em ordem de uso, com a rota e o que cada uma faz.
 
-As imagens vêm de documentacao/telas/*.webp (capturas do modo de demonstração, com dados de exemplo) e
-ficam embutidas na página. Para refazer as capturas: veja o README, seção "Capturas das telas".
+As imagens vêm de documentacao/telas/*.webp e documentacao/telas/escuro/*.webp (capturas do modo de demonstração,
+com dados de exemplo) e ficam embutidas na página. Para refazer as capturas: scripts/docs/capturar_telas.py --build.
 
 Uso: python scripts/docs/gerar_telas.py
 """
@@ -21,8 +21,9 @@ e = html.escape
 CELULAR = [
     ("Primeiros passos", "Entrar no app e achar um posto", [
         ("01-boas-vindas", "Boas-vindas", "/boas-vindas", "Primeira abertura. Explica o app e pede a localização. Dá para pular."),
-        ("04-mapa", "Mapa", "/", "OpenStreetMap com um pino de preço por posto. A cor mostra a idade do preço. O ícone de mira marca posição aproximada."),
-        ("04b-mapa-posto", "Posto no mapa", "/", "Toque no pino para ver o posto, a distância e o preço. Daqui dá para atualizar o preço ou abrir o posto."),
+        ("04-mapa", "Mapa", "/", "OpenFreeMap com um pino de preço por posto. Pino preenchido: verde até 24 h, âmbar de 2 a 7 dias. O ícone de mira marca posição aproximada."),
+        ("04b-mapa-posto", "Posto no mapa", "/", "Toque no pino para ver o posto, a distância e o preço. O pino escolhido ganha um anel. Daqui dá para atualizar o preço ou abrir o posto."),
+        ("04c-mapa-diesel", "Pinos de contorno", "/", "Preço de mais de 7 dias tem contorno vermelho; posto sem preço, contorno cinza e um traço. Estimativa usa contorno tracejado e o sinal ≈."),
         ("02-busca", "Busca", "/buscar", "Por nome, endereço ou cidade, sem acento. Cada posto mostra a origem do preço."),
         ("03-filtros", "Filtros", "/buscar", "Combustível, faixa de preço, distância, nota e data. Rodam no aparelho."),
         ("19b-favoritos-lista", "Favoritos", "/favoritos", "Postos salvos, com o preço do combustível escolhido e o sino de aviso. Sem login ficam no aparelho."),
@@ -66,10 +67,21 @@ TABLET = [
     ("30-tablet-posto", "Posto", "Preços e informações em duas colunas."),
     ("32-tablet-cadastro", "Cadastro", "Formulário centralizado, sem esticar."),
 ]
+# Tema escuro (documentacao/telas/escuro): o app segue o modo do celular, e o mapa troca para o estilo escuro
+ESCURO = [
+    ("04-mapa", "Mapa", "Mapa escuro do OpenFreeMap. Os pinos preenchidos mantêm as cores do tema claro."),
+    ("04b-mapa-posto", "Posto no mapa", "O anel de seleção fica claro sobre o mapa escuro."),
+    ("04c-mapa-diesel", "Pinos de contorno", "Contorno sobre o fundo grafite, nos tons claros do preço."),
+    ("02-busca", "Busca", "Cartões grafite sobre o fundo quase preto."),
+    ("05-posto", "Posto", "Bolinhas de idade e selo ANP em tons claros."),
+    ("06-contribuicoes", "Contribuições", "Selo de confiança com texto claro e bolinha colorida."),
+    ("08-historico", "Histórico", "ANP em azul tracejado; comunidade em linha neutra."),
+    ("23-perfil", "Perfil", "Pontos, ranking e últimos envios."),
+]
 
 
-def imagem(nome: str) -> str:
-    arq = RAIZ / "documentacao" / "telas" / f"{nome}.webp"
+def imagem(nome: str, pasta: str = "") -> str:
+    arq = RAIZ / "documentacao" / "telas" / pasta / f"{nome}.webp"
     return "data:image/webp;base64," + base64.b64encode(arq.read_bytes()).decode()
 
 
@@ -95,6 +107,15 @@ def secoes() -> str:
         f'<figcaption><b>{e(titulo)}</b><span>{e(desc)}</span></figcaption></figure>' for arq, titulo, desc in TABLET)
     partes.append('<section><div class="cab"><h2>Tablet</h2><p class="lead">As mesmas telas, com layout para tela larga.</p></div>'
                   f'<div class="tablets">{tablets}</div></section>')
+    escuras = "".join(
+        f'<figure><img src="{imagem(arq, "escuro")}" alt="Tela {e(titulo)} no tema escuro" loading="lazy">'
+        f'<figcaption><b>{e(titulo)}</b><span>{e(desc)}</span></figcaption></figure>' for arq, titulo, desc in ESCURO)
+    partes.append('<section><div class="cab"><h2>Tema escuro</h2><p class="lead">O app segue o modo claro ou escuro do celular. '
+                  'Paleta Asfalto: fundo quase preto, cartões grafite e a marca em azul-acinzentado claro.</p></div>'
+                  f'<div class="telas">{escuras}</div>'
+                  f'<div class="tablets"><figure><img src="{imagem("33-tablet-mapa", "escuro")}" alt="Mapa no tablet, tema escuro" '
+                  'loading="lazy"><figcaption><b>Mapa no tablet</b><span>Mapa escuro com a lista de postos ao lado.</span>'
+                  '</figcaption></figure></div></section>')
     return "".join(partes)
 
 
@@ -151,10 +172,10 @@ footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rul
     <span class="eyebrow">gasprice · telas do app</span>
     <h1>Todas as telas do gasprice</h1>
     <p class="lead">As 22 telas do app em {{TOTAL}} capturas, na ordem em que a pessoa as encontra, cada uma com a rota e o que faz. Algumas telas aparecem mais de uma vez, em estados diferentes. Para celular e tablet.</p>
-    <p class="nota">As imagens vêm do modo de demonstração: os postos, preços e a conta de Carla M. são dados de exemplo, não reais. O mapa usa o OpenStreetMap.</p>
+    <p class="nota">As imagens vêm do modo de demonstração: os postos, preços e a conta de Carla M. são dados de exemplo, não reais. O mapa usa o OpenFreeMap, com dados do OpenStreetMap.</p>
   </header>
   {{SECOES}}
-  <footer>Gerado em {{DATA}} a partir do commit {{COMMIT}}. Mapa: © colaboradores do OpenStreetMap.</footer>
+  <footer>Gerado em {{DATA}} a partir do commit {{COMMIT}}. Mapa: OpenFreeMap, © OpenMapTiles, dados © colaboradores do OpenStreetMap.</footer>
 </main>
 """
 

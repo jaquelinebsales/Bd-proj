@@ -58,15 +58,16 @@ class _ContribuicoesState extends State<_Contribuicoes> {
               .toList();
           final outras = contrib.where((c) => !confirmadas.contains(c)).toList();
 
+          final cores = Tema.cores(context);
           final confianca = atual == null
               ? null
               : switch (atual.situacao) {
-                  SituacaoPreco.confirmado when atual.confirmacoes >= 3 => ('Confiança alta', Tema.recente),
-                  SituacaoPreco.confirmado => ('Confiança média', Tema.recente),
-                  SituacaoPreco.oficial => ('Dado oficial', Tema.anp),
-                  SituacaoPreco.estimado => ('Estimativa', Tema.estimativa),
-                  SituacaoPreco.divergente => ('Envios divergentes', Tema.antigo),
-                  SituacaoPreco.naoConfirmado => ('Aguardando confirmação', Tema.antigo),
+                  SituacaoPreco.confirmado when atual.confirmacoes >= 3 => ('Confiança alta', cores.recente),
+                  SituacaoPreco.confirmado => ('Confiança média', cores.recente),
+                  SituacaoPreco.oficial => ('Dado oficial', cores.anp),
+                  SituacaoPreco.estimado => ('Estimativa', cores.estimativa),
+                  SituacaoPreco.divergente => ('Envios divergentes', cores.antigo),
+                  SituacaoPreco.naoConfirmado => ('Aguardando confirmação', cores.antigo),
                 };
 
           return ListView(controller: rolagem, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: [
@@ -82,9 +83,11 @@ class _ContribuicoesState extends State<_Contribuicoes> {
                       Text(preco(atual.preco), style: tt.headlineMedium?.copyWith(fontWeight: FontWeight.w800)),
                       const Spacer(),
                       if (confianca != null)
+                        // Texto escuro e bolinha colorida: verde e âmbar como texto ficavam abaixo de 4,5:1 no tema claro
                         Chip(
+                          avatar: Icon(Icons.circle, size: 10, color: confianca.$2),
                           label: Text(confianca.$1),
-                          labelStyle: TextStyle(color: confianca.$2, fontWeight: FontWeight.w700),
+                          labelStyle: TextStyle(color: cs.onSurface, fontWeight: FontWeight.w700),
                           backgroundColor: confianca.$2.withValues(alpha: 0.12),
                           side: BorderSide.none,
                         ),
@@ -109,16 +112,16 @@ class _ContribuicoesState extends State<_Contribuicoes> {
               ),
             _titulo(context, 'DADO OFICIAL'),
             Card(
-              color: Tema.anp.withValues(alpha: 0.08),
+              color: Color.alphaBlend(cores.anp.withValues(alpha: 0.08), cs.surfaceContainer),
               child: ListTile(
                 leading: const CircleAvatar(child: Icon(Icons.account_balance_outlined)),
-                title: const Text('Pesquisa ANP', style: TextStyle(color: Tema.anp, fontWeight: FontWeight.w700)),
+                title: Text('Pesquisa ANP', style: TextStyle(color: cores.anp, fontWeight: FontWeight.w700)),
                 subtitle: Text(anp == null
                     ? 'Este posto não entrou na amostra da ANP nos últimos 4 meses.'
                     : 'Semana de ${data(anp.dia)} · usada quando os envios divergem'),
                 trailing: anp == null
                     ? null
-                    : Text(preco(anp.preco), style: tt.titleMedium?.copyWith(color: Tema.anp, fontWeight: FontWeight.w800)),
+                    : Text(preco(anp.preco), style: tt.titleMedium?.copyWith(color: cores.anp, fontWeight: FontWeight.w800)),
               ),
             ),
           ]);

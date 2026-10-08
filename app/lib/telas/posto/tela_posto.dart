@@ -120,6 +120,7 @@ class _TelaPostoState extends State<TelaPosto> {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
     final expandido = tamanhoDe(context) == Tamanho.expandido;
+    final topo = Theme.of(context).brightness == Brightness.dark ? cs.primaryContainer : cs.primary;
 
     final cabecalho = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Wrap(spacing: 10, runSpacing: 6, crossAxisAlignment: WrapCrossAlignment.center, children: [
@@ -299,6 +300,17 @@ class _TelaPostoState extends State<TelaPosto> {
         SliverAppBar(
           pinned: true,
           expandedHeight: 140,
+          // O topo é escuro: a seta ganha o mesmo fundo do botão de favoritar para não sumir sobre ele
+          leading: (ModalRoute.of(context)?.impliesAppBarDismissal ?? false)
+              ? Center(
+                  child: BackButton(
+                    style: IconButton.styleFrom(
+                      backgroundColor: cs.secondaryContainer,
+                      foregroundColor: cs.onSecondaryContainer,
+                    ),
+                  ),
+                )
+              : null,
           actions: [
             ListenableBuilder(
               listenable: Favoritos.instancia,
@@ -317,7 +329,8 @@ class _TelaPostoState extends State<TelaPosto> {
             background: DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [cs.primary, Color.lerp(cs.primary, Colors.black, 0.45)!],
+                  // No escuro a marca é um azul-claro: o topo usa o tom escuro dela para não virar um bloco claro
+                  colors: [topo, Color.lerp(topo, Colors.black, 0.45)!],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),

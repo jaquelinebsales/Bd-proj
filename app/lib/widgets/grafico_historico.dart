@@ -14,6 +14,7 @@ class GraficoHistorico extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final corAnp = Tema.cores(context).anp;
     if (pontos.isEmpty) {
       return SizedBox(
         height: compacto ? 120 : 260,
@@ -51,8 +52,9 @@ class GraficoHistorico extends StatelessWidget {
           minY: minY,
           maxY: maxY,
           lineBarsData: [
-            if (anp.isNotEmpty) serie(anp, Tema.anp, tracejada: true),
-            if (comunidade.isNotEmpty) serie(comunidade, cs.primary),
+            if (anp.isNotEmpty) serie(anp, corAnp, tracejada: true),
+            // Comunidade em tom neutro: a marca Asfalto é azulada e se confundiria com o azul da ANP
+            if (comunidade.isNotEmpty) serie(comunidade, cs.onSurface),
           ],
           gridData: FlGridData(
             show: !compacto,
@@ -68,10 +70,13 @@ class GraficoHistorico extends StatelessWidget {
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 52,
-                getTitlesWidget: (v, meta) => SideTitleWidget(
-                  meta: meta,
-                  child: Text(reais(v), style: TextStyle(fontSize: 10, color: cs.outline)),
-                ),
+                // As pontas do eixo (mínimo e máximo com folga de R$ 0,10) não caem no intervalo e encavalavam no vizinho
+                getTitlesWidget: (v, meta) => v == meta.min || v == meta.max
+                    ? const SizedBox.shrink()
+                    : SideTitleWidget(
+                        meta: meta,
+                        child: Text(reais(v), style: TextStyle(fontSize: 10, color: cs.outline)),
+                      ),
               ),
             ),
             bottomTitles: AxisTitles(
@@ -91,7 +96,7 @@ class GraficoHistorico extends StatelessWidget {
             touchTooltipData: LineTouchTooltipData(
               getTooltipColor: (_) => cs.inverseSurface,
               getTooltipItems: (itens) => itens.map((s) {
-                final eAnp = s.bar.color == Tema.anp;
+                final eAnp = s.bar.color == corAnp;
                 return LineTooltipItem(
                   '${eAnp ? 'ANP' : 'Comunidade'} · ${dataCurta(inicio.add(Duration(days: s.x.round())))}\n${preco(s.y)}',
                   TextStyle(color: cs.onInverseSurface, fontWeight: FontWeight.w600),
@@ -122,8 +127,8 @@ class LegendaHistorico extends StatelessWidget {
           Flexible(child: Text(t, style: Theme.of(context).textTheme.bodySmall)),
         ]);
     return Wrap(spacing: 16, runSpacing: 4, children: [
-      item(Tema.anp, 'Pesquisa ANP (semanal)', tracejado: true),
-      item(cs.primary, 'Comunidade (fotos dos usuários)'),
+      item(Tema.cores(context).anp, 'Pesquisa ANP (semanal)', tracejado: true),
+      item(cs.onSurface, 'Comunidade (fotos dos usuários)'),
     ]);
   }
 }

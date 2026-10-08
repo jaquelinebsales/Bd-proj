@@ -4,7 +4,7 @@ App de preços de combustíveis para Android e iOS, em celular e tablet. Combina
 
 | Pasta | Conteúdo |
 |---|---|
-| `app/` | App Flutter (Material 3, go_router, mapa do OpenStreetMap com flutter_map, ML Kit para ler o painel) |
+| `app/` | App Flutter (Material 3, go_router, mapa do OpenFreeMap com MapLibre, ML Kit para ler o painel) |
 | `supabase/migrations/` | Banco: tabelas, regras de acesso (RLS), regras de negócio e tarefas agendadas |
 | `supabase/functions/` | Edge Functions em TypeScript: envio de preços, posição dos postos ("Estou neste posto"), sincronização com a ANP, exclusão de conta |
 | `supabase/tests/` | Testes das regras de negócio no banco |
@@ -34,7 +34,7 @@ O script testa cada chave contra o Supabase e diz o que falta, sem nunca mostrar
 
 Se preferir informar a `DATABASE_URL` à mão, copie do botão **Connect** no topo do painel, opção **Session pooler**, e troque `[YOUR-PASSWORD]` pela senha. Se a senha tiver `@ : / # ? %`, não use essa linha: deixe-a vazia e preencha só `SUPABASE_DB_PASSWORD`. A conexão direta (`db.xxx.supabase.co`) só funciona em redes com IPv6; o Session pooler funciona em qualquer rede.
 
-O mapa usa o OpenStreetMap e não precisa de chave nem de cartão. Os blocos do mapa vêm dos servidores públicos do OpenStreetMap, que servem bem para testes e para um projeto acadêmico. Se o app passar a ter muitos usuários, troque só o endereço `urlTemplate` em `app/lib/telas/mapa/tela_mapa.dart` por um serviço com plano gratuito, como MapTiler ou Stadia Maps, e mantenha a atribuição do OpenStreetMap visível.
+O mapa usa o OpenFreeMap (estilos Positron, no tema claro, e Dark, no escuro) desenhado pelo pacote `maplibre`. Não precisa de chave nem de cartão, e o uso é livre, inclusive comercial, sem limite de acessos. Os créditos do OpenFreeMap, do OpenMapTiles e do OpenStreetMap ficam visíveis no canto do mapa e não podem ser removidos. Os endereços dos estilos ficam em `app/lib/telas/mapa/tela_mapa.dart`. Na versão 0.3.6 do `maplibre`, o Android precisa da linha do plugin ktlint em `app/android/settings.gradle.kts`; ela pode sair quando o pacote for atualizado para a 0.3.7.
 
 Os arquivos `.env` e `app/config/app.json` estão no `.gitignore`.
 
