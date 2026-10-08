@@ -599,32 +599,57 @@ class _CartaoSelecionado extends StatelessWidget {
   const _CartaoSelecionado({required this.posto, required this.produtoId});
 
   @override
-  Widget build(BuildContext context) => Material(
-        elevation: 6,
-        borderRadius: BorderRadius.circular(16),
-        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          CartaoPosto(posto: posto, produtoId: produtoId, aoTocar: () => context.push('/posto/${posto.id}')),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-            child: Row(children: [
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: () => context.push('/posto/${posto.id}/enviar'),
-                  icon: const Icon(Icons.photo_camera_outlined),
-                  label: const Text('Atualizar preço'),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: FilledButton.tonal(
-                  onPressed: () => context.push('/posto/${posto.id}'),
-                  child: const Text('Ver posto'),
-                ),
-              ),
-            ]),
+  Widget build(BuildContext context) {
+    final tema = Theme.of(context);
+    final cs = tema.colorScheme;
+    const altura = Size(0, 48);
+    // Um só cartão: o resumo do posto perde a borda e o fundo próprios e divide a superfície com os botões
+    return Material(
+      elevation: 6,
+      color: cs.surfaceContainer,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: BorderSide(color: cs.outlineVariant)),
+      clipBehavior: Clip.antiAlias,
+      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Theme(
+          data: tema.copyWith(
+            cardTheme: tema.cardTheme.copyWith(
+              color: Colors.transparent,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
           ),
-        ]),
-      );
+          child: CartaoPosto(posto: posto, produtoId: produtoId, aoTocar: () => context.push('/posto/${posto.id}')),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+          child: Row(children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                style: OutlinedButton.styleFrom(
+                  minimumSize: altura,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                ),
+                onPressed: () => context.push('/posto/${posto.id}/enviar'),
+                icon: const Icon(Icons.photo_camera_outlined),
+                label: const Text('Atualizar preço'),
+              ),
+            ),
+            const SizedBox(width: 8),
+            // Ação principal no botão cheio da marca, como nas outras telas
+            Expanded(
+              child: FilledButton(
+                style: FilledButton.styleFrom(
+                  minimumSize: altura,
+                  textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+                onPressed: () => context.push('/posto/${posto.id}'),
+                child: const Text('Ver posto'),
+              ),
+            ),
+          ]),
+        ),
+      ]),
+    );
+  }
 }
 
 class _ListaLateral extends StatelessWidget {
