@@ -1,12 +1,10 @@
 name: Publicar Supabase
 
-# Aplica as migrações e publica as Edge Functions a cada push na main que mude supabase/.
+# Aplica as migrações e publica as Edge Functions no Supabase da NUVEM.
+# Desde 10/10/2026 o app usa o servidor próprio (servidor-michael, schema combustivel; ver servidor/LEIA-ME.md),
+# então este workflow só roda à mão, enquanto o projeto da nuvem existir.
 # Segredos necessários no repositório: SUPABASE_ACCESS_TOKEN, SUPABASE_DB_PASSWORD, SUPABASE_PROJECT_REF.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "supabase/**"
   workflow_dispatch:
 
 concurrency:

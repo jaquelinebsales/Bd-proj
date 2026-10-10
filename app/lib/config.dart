@@ -11,6 +11,9 @@ class Config {
     'SUPABASE_PUBLISHABLE_KEY',
     defaultValue: String.fromEnvironment('SUPABASE_ANON_KEY'),
   );
+  /// Schema das tabelas: public no Supabase da nuvem; combustivel no servidor próprio (self-hosted),
+  /// que guarda cada sistema num schema separado.
+  static const supabaseSchema = String.fromEnvironment('SUPABASE_SCHEMA', defaultValue: 'public');
   static const versao = '0.1.0';
 
   /// Modo demonstração: dados de exemplo, sem Supabase (--dart-define=DEMO=true).

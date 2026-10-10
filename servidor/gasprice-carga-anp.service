@@ -1,0 +1,11 @@
+[Unit]
+Description=gasprice: carga semanal da pesquisa de precos da ANP
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/gasprice/carga-anp.sh
+StandardOutput=append:/var/log/gasprice-carga-anp.log
+StandardError=inherit
+TimeoutStartSec=2h

@@ -1,11 +1,10 @@
 name: Carga semanal da ANP
 
-# Baixa a planilha semanal de preços por posto da ANP e grava no banco (scripts/anp/carga_semanal.py).
-# Roda às segundas e quintas: a ANP publica a semana anterior nos primeiros dias úteis.
-# Segredos usados (já cadastrados): SUPABASE_PROJECT_REF, SUPABASE_DB_PASSWORD.
+# Baixa a planilha semanal de preços por posto da ANP e grava no banco da NUVEM (scripts/anp/carga_semanal.py).
+# Desde 10/10/2026 a carga agendada roda no próprio servidor (servidor/carga-anp.timer, segundas e quintas),
+# porque o GitHub não alcança o servidor na Tailscale. Este workflow fica só para rodar à mão na nuvem.
+# Segredos usados: SUPABASE_PROJECT_REF, SUPABASE_DB_PASSWORD.
 on:
-  schedule:
-    - cron: "0 12 * * 1,4"
   workflow_dispatch:
 
 concurrency:

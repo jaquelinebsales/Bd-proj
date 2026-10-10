@@ -1,0 +1,21 @@
+# Complemento do gasprice para o Supabase self-hosted. Copiar para /opt/supabase/docker-compose.override.yml
+# (o "docker compose" lê este arquivo sozinho, inclusive quando os scripts do servidor rodam "up -d").
+# Se já existir um override no servidor, junte os blocos em vez de substituir.
+#
+# Variável que precisa existir em /opt/supabase/.env:
+#   GASPRICE_CRON_SECRET=<o mesmo CRON_SECRET do .env do projeto>
+#
+# Em YAML entre aspas simples, '' é uma aspa simples; no Docker Compose, $$ é um cifrão.
+services:
+  auth:
+    environment:
+      # Mesma regra do app (app/lib/util/senha.dart): 8+ caracteres com minúscula, maiúscula, número e símbolo
+      GOTRUE_PASSWORD_MIN_LENGTH: "8"
+      GOTRUE_PASSWORD_REQUIRED_CHARACTERS: 'abcdefghijklmnopqrstuvwxyz:ABCDEFGHIJKLMNOPQRSTUVWXYZ:0123456789:!@#$$%^&*()_+-=[]{};''"|<>?,./`~'
+
+  functions:
+    environment:
+      # As Edge Functions do gasprice leem as tabelas deste schema (supabase/functions/_shared/comum.ts)
+      GASPRICE_SCHEMA: combustivel
+      # A tarefa do pg_cron chama sincronizar-cadastro-anp com este segredo no cabeçalho x-cron-secret
+      CRON_SECRET: ${GASPRICE_CRON_SECRET}

@@ -12,7 +12,7 @@ a mais de 35% da mediana do combustível na UF na semana (com 5 preços ou mais)
 do próprio posto nos 180 dias anteriores. Preço anômalo é guardado, mas nunca vira preço exibido.
 
 Conexão: DATABASE_URL, ou SUPABASE_PROJECT_REF + SUPABASE_DB_PASSWORD (+ SUPABASE_POOLER_HOST), do ambiente
-ou do .env. Uso:
+ou do .env. Schema das tabelas: SUPABASE_SCHEMA (padrão public; no servidor próprio, combustivel). Uso:
   python scripts/anp/carga_semanal.py              # carrega o que falta
   python scripts/anp/carga_semanal.py --simular    # só mostra o que faria
 """
@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import io
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -56,6 +57,19 @@ def url_banco(env: dict) -> str:
     ref = env.get("SUPABASE_PROJECT_REF") or env["SUPABASE_URL"].split("//")[1].split(".")[0]
     host = env.get("SUPABASE_POOLER_HOST", "aws-0-us-west-2.pooler.supabase.com")
     return f"postgresql://postgres.{ref}:{quote(env['SUPABASE_DB_PASSWORD'], safe='')}@{host}:5432/postgres"
+
+
+def esquema(env: dict) -> str:
+    """Schema das tabelas do app: public no Supabase da nuvem, combustivel no servidor próprio."""
+    s = env.get("SUPABASE_SCHEMA") or "public"
+    if not re.fullmatch(r"[a-z_][a-z0-9_]*", s):
+        raise SystemExit(f"SUPABASE_SCHEMA inválido: {s!r}")
+    return s
+
+
+def no_esquema(sql: str, s: str) -> str:
+    """As consultas são escritas com public.; aqui viram o schema configurado."""
+    return sql.replace("public.", f"{s}.")
 
 
 def domingo(d: date) -> date:
@@ -149,10 +163,11 @@ def main() -> int:
     ap.add_argument("--simular", action="store_true")
     a = ap.parse_args()
     env = configuracao()
+    esq = esquema(env)
     # autocommit: cada "with con.transaction()" abaixo é uma transação real, confirmada ao fim de cada semana
     con = psycopg.connect(url_banco(env), autocommit=True, connect_timeout=30)
     con.execute("set statement_timeout = '15min'")
-    ultima = con.execute("select max(data_coleta) from public.precos_anp").fetchone()[0] or date(2024, 7, 1)
+    ultima = con.execute(no_esquema("select max(data_coleta) from public.precos_anp", esq)).fetchone()[0] or date(2024, 7, 1)
     semanas, s = [], domingo(ultima)
     while s <= date.today():
         semanas.append(s)
@@ -174,7 +189,7 @@ def main() -> int:
             with con.cursor().copy("copy stg_semana from stdin") as cp:
                 for linha in linhas:
                     cp.write_row(linha)
-            novos, anomalos, casados, sem_posto = con.execute(GRAVAR).fetchone()
+            novos, anomalos, casados, sem_posto = con.execute(no_esquema(GRAVAR, esq)).fetchone()
         total_novos += novos
         resumo.append((inicio, len(linhas), casados, novos, anomalos, sem_posto))
         print(f"  {inicio:%d/%m/%Y}: {len(linhas)} preços; {casados} de postos cadastrados; {novos} novos; "
@@ -182,11 +197,11 @@ def main() -> int:
     if total_novos and not a.simular:
         print("recalculando municípios pesquisados, estimativas e preços exibidos…")
         with con.transaction():
-            con.execute("select public.marcar_municipios_pesquisados()")
-            n_est = con.execute("select public.recalcular_estimativas()").fetchone()[0]
-            n_atu = con.execute("select public.recalcular_precos_atuais()").fetchone()[0]
+            con.execute(no_esquema("select public.marcar_municipios_pesquisados()", esq))
+            n_est = con.execute(no_esquema("select public.recalcular_estimativas()", esq)).fetchone()[0]
+            n_atu = con.execute(no_esquema("select public.recalcular_precos_atuais()", esq)).fetchone()[0]
         print(f"estimativas: {n_est}; preços exibidos: {n_atu}")
-    nova = con.execute("select max(data_coleta) from public.precos_anp").fetchone()[0]
+    nova = con.execute(no_esquema("select max(data_coleta) from public.precos_anp", esq)).fetchone()[0]
     print(f"coleta mais recente agora: {nova:%d/%m/%Y}; preços novos: {total_novos}")
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:

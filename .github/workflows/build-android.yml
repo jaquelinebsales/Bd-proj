@@ -25,8 +25,11 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+          # Variável do repositório (Settings → Secrets and variables → Actions → Variables): combustivel no servidor próprio
+          SUPABASE_SCHEMA: ${{ vars.SUPABASE_SCHEMA || 'public' }}
         run: |
-          printf '{"SUPABASE_URL":"%s","SUPABASE_PUBLISHABLE_KEY":"%s"}' "$SUPABASE_URL" "$SUPABASE_PUBLISHABLE_KEY" > config/app.json
+          printf '{"SUPABASE_URL":"%s","SUPABASE_PUBLISHABLE_KEY":"%s","SUPABASE_SCHEMA":"%s"}' \
+            "$SUPABASE_URL" "$SUPABASE_PUBLISHABLE_KEY" "$SUPABASE_SCHEMA" > config/app.json
       - run: flutter pub get
       - run: flutter build apk --release --dart-define-from-file=config/app.json
       - uses: actions/upload-artifact@v4

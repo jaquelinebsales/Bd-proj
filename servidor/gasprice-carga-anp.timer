@@ -1,0 +1,11 @@
+[Unit]
+Description=gasprice: carga da ANP as segundas e quintas, 09:00 de Fortaleza
+
+[Timer]
+# A ANP publica a semana anterior nos primeiros dias úteis. O servidor está no fuso America/Fortaleza.
+OnCalendar=Mon,Thu *-*-* 09:00:00
+Persistent=true
+RandomizedDelaySec=10min
+
+[Install]
+WantedBy=timers.target

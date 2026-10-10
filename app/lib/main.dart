@@ -17,7 +17,12 @@ Future<void> main() async {
   await initializeDateFormatting('pt_BR');
 
   if (Config.configurado) {
-    await Supabase.initialize(url: Config.supabaseUrl, publishableKey: Config.supabaseChavePublica);
+    await Supabase.initialize(
+      url: Config.supabaseUrl,
+      publishableKey: Config.supabaseChavePublica,
+      // Tabelas e funções do app ficam no schema configurado (combustivel no servidor próprio)
+      postgrestOptions: const PostgrestClientOptions(schema: Config.supabaseSchema),
+    );
   }
   await Preferencias.carregar();
   Sessao.instancia.iniciar();

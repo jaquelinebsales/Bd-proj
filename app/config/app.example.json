@@ -1,4 +1,5 @@
 {
   "SUPABASE_URL": "https://SEU-PROJETO.supabase.co",
-  "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_COLE_AQUI"
+  "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_COLE_AQUI",
+  "SUPABASE_SCHEMA": "public"
 }

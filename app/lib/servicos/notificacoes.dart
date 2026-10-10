@@ -62,7 +62,7 @@ class ServicoNotificacoes extends ChangeNotifier {
         .channel('notificacoes-$uid')
         .onPostgresChanges(
           event: PostgresChangeEvent.insert,
-          schema: 'public',
+          schema: Config.supabaseSchema,
           table: 'notificacoes',
           filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: 'usuario_id', value: uid),
           callback: (payload) => _mostrar(Notificacao.deJson(payload.newRecord)),

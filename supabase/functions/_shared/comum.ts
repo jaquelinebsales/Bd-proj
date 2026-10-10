@@ -46,11 +46,23 @@ export function chaveServidor(): string {
   return variavel("GASPRICE_SECRET_KEY");
 }
 
+/**
+ * Schema das tabelas do app: public no Supabase da nuvem; no servidor próprio cada sistema tem o seu
+ * (combustivel), informado em GASPRICE_SCHEMA.
+ */
+export function schemaDoApp(): string {
+  const s = Deno.env.get("GASPRICE_SCHEMA") || "public";
+  if (!/^[a-z_][a-z0-9_]*$/.test(s)) throw new Error(`GASPRICE_SCHEMA inválido: ${s}`);
+  return s;
+}
+
 /** Cliente com privilégio de servidor. Nunca expor ao app. */
 export function clienteAdmin(): SupabaseClient {
+  // O schema só é conhecido em tempo de execução; o tipo genérico do cliente fica como o de antes
   return createClient(variavel("SUPABASE_URL"), chaveServidor(), {
     auth: { persistSession: false, autoRefreshToken: false },
-  });
+    db: { schema: schemaDoApp() },
+  }) as unknown as SupabaseClient;
 }
 
 /** Usuário dono do token enviado pelo app, ou null. */
