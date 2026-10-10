@@ -45,12 +45,12 @@ Depois ajuste (com `sudo nano /opt/supabase/.env`):
 |---|---|
 | `DISABLE_SIGNUP` | `false` |
 | `ENABLE_EMAIL_SIGNUP` | `true` |
-| `ENABLE_EMAIL_AUTOCONFIRM` | `true` enquanto o e-mail não estiver configurado; `false` depois do passo 6 |
+| `ENABLE_EMAIL_AUTOCONFIRM` | `true` enquanto o e-mail não estiver configurado; `false` depois do passo 5 (Brevo) |
 | `FUNCTIONS_VERIFY_JWT` | `false` (as funções do gasprice conferem o login sozinhas; a de sincronização usa o `x-cron-secret`) |
 | `GASPRICE_CRON_SECRET` | o mesmo valor de `CRON_SECRET` do `.env` do projeto (linha nova) |
 | `ADDITIONAL_REDIRECT_URLS` | `br.com.gasprice.app://auth-callback` |
 
-`SITE_URL`, `API_EXTERNAL_URL` e `SUPABASE_PUBLIC_URL` mudam no passo 5, quando houver o endereço público.
+`SITE_URL`, `API_EXTERNAL_URL` e `SUPABASE_PUBLIC_URL` mudam no passo 6, quando houver o endereço público.
 
 ## 2. Complemento do docker compose
 
@@ -58,10 +58,19 @@ Depois ajuste (com `sudo nano /opt/supabase/.env`):
 cd /opt/supabase
 ls docker-compose.override.yml 2>/dev/null && echo "JÁ EXISTE: junte os blocos à mão"
 sudo cp /tmp/gasprice/servidor/docker-compose.override.yml /opt/supabase/
+grep '^COMPOSE_FILE=' .env
+```
+
+**Atenção:** o `.env` do servidor define `COMPOSE_FILE=docker-compose.yml`, e com isso o compose **ignora** o
+override. Troque a linha por `COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml` e só então rode:
+
+```bash
 sudo docker compose up -d
 ```
 
-O `up -d` relê o `.env` e o override (o `restart` não relê). Confira: `sudo docker compose ps` com tudo `healthy`.
+O `up -d` relê o `.env` e o override (o `restart` não relê). Confira: `sudo docker compose ps` com tudo `healthy`,
+e que a regra de senha e o `GASPRICE_SCHEMA` chegaram aos containers
+(`sudo docker compose config | grep -E 'GOTRUE_PASSWORD|GASPRICE_SCHEMA'`).
 
 ## 3. Banco: gatilho, Storage, Realtime, Vault e pg_cron
 
@@ -85,24 +94,11 @@ curl -s -o /dev/null -w '%{http_code}\n' -X POST http://localhost:8000/functions
 Esperado: `401` (a função recusa quem não está logado). `404` quer dizer que a função não foi publicada.
 Na primeira chamada as funções baixam o `supabase-js` do npm: a VM precisa de internet.
 
-## 5. Endereço público com HTTPS (Tailscale Funnel)
+## 5. E-mail pelo Brevo (faça ANTES do Funnel)
 
-O app no celular precisa de HTTPS e de um endereço que qualquer aparelho alcance. Na conta da Tailscale:
-DNS → ligar MagicDNS e HTTPS Certificates; Access controls → permitir `funnel` para o servidor
-(`"nodeAttrs": [{"target": ["autogroup:member"], "attr": ["funnel"]}]`).
-
-```bash
-sudo tailscale funnel --bg --https=443 http://localhost:8000
-tailscale funnel status
-```
-
-O endereço fica `https://servidor-michael.<sua-rede>.ts.net`. Ponha esse endereço em `SITE_URL`, `API_EXTERNAL_URL`
-e `SUPABASE_PUBLIC_URL` no `/opt/supabase/.env` e rode `cd /opt/supabase && sudo docker compose up -d`.
-
-Atenção: o Funnel publica tudo o que passa pela porta 8000, inclusive o Studio (protegido pelo usuário e senha do
-painel). Use uma senha forte no Studio (`sudo definir-login-studio.sh <usuario>`).
-
-## 6. E-mail pelo Brevo
+Com o cadastro aberto e a confirmação de e-mail automática (passo 1), quem alcançar o servidor cria conta sem
+confirmar o e-mail. Hoje só chega quem está na Tailscale; com o Funnel ligado seria qualquer pessoa na internet.
+Por isso o e-mail vem primeiro, e `ENABLE_EMAIL_AUTOCONFIRM` volta para `false` aqui.
 
 No `/opt/supabase/.env`:
 
@@ -116,7 +112,32 @@ No `/opt/supabase/.env`:
 | `SMTP_SENDER_NAME` | `gasprice` |
 | `ENABLE_EMAIL_AUTOCONFIRM` | `false` |
 
-Depois: `cd /opt/supabase && sudo docker compose up -d`.
+Depois: `cd /opt/supabase && sudo docker compose up -d`. Teste criando uma conta com outro e-mail seu: o link de
+confirmação deve chegar (veja também o spam).
+
+## 6. Endereço público com HTTPS (Tailscale Funnel)
+
+O app no celular precisa de HTTPS e de um endereço que qualquer aparelho alcance. Na conta da Tailscale:
+DNS → ligar MagicDNS e HTTPS Certificates; Access controls → permitir `funnel` para o servidor
+(`"nodeAttrs": [{"target": ["autogroup:member"], "attr": ["funnel"]}]`).
+
+Antes, troque a senha do Studio (`sudo definir-login-studio.sh <usuario>`). Depois, publique **só os caminhos que o
+app usa**, e não a porta inteira: assim o Studio e o resto da API não ficam na internet.
+
+```bash
+for c in rest/v1 auth/v1 functions/v1 storage/v1 realtime/v1; do
+  sudo tailscale funnel --bg --https=443 --set-path "/$c" "http://localhost:8000/$c"
+done
+tailscale funnel status
+curl -s -o /dev/null -w 'raiz: %{http_code}\n' https://servidor-michael.<sua-rede>.ts.net/
+```
+
+A raiz (`/`), onde fica o Studio, deve responder 404 ou ser recusada. Se o `--set-path` não existir na versão da
+Tailscale instalada, ou a raiz continuar respondendo, publique a porta inteira com
+`sudo tailscale funnel --bg --https=443 http://localhost:8000` e confie na senha forte do Studio.
+
+O endereço fica `https://servidor-michael.<sua-rede>.ts.net`. Ponha esse endereço em `SITE_URL`, `API_EXTERNAL_URL`
+e `SUPABASE_PUBLIC_URL` no `/opt/supabase/.env` e rode `cd /opt/supabase && sudo docker compose up -d`.
 
 ## 7. Carga semanal da ANP no próprio servidor
 
@@ -132,7 +153,7 @@ Em 10/10/2026 faltava a semana de 04/10/2026 (17.085 preços).
 ## 8. Fora do servidor
 
 - GitHub (Settings → Secrets and variables → Actions):
-  - segredo `SUPABASE_URL` = o endereço do Funnel (passo 5)
+  - segredo `SUPABASE_URL` = o endereço do Funnel (passo 6)
   - segredo `SUPABASE_PUBLISHABLE_KEY` = a `ANON_KEY` do servidor (`sudo cat /root/supabase-segredos.txt`)
   - aba Variables → variável `SUPABASE_SCHEMA` = `combustivel`
 - Rodar "Gerar APK", desinstalar o app antigo do celular e instalar o novo.
