@@ -27,6 +27,7 @@ import '../../servicos/api.dart';
 import '../../servicos/localizacao.dart';
 import '../../servicos/preferencias.dart';
 import '../../tema.dart';
+import '../../util/diagnostico.dart';
 import '../../util/responsivo.dart';
 import '../../widgets/comuns.dart';
 import '../../widgets/seletor_produto.dart';
@@ -76,7 +77,10 @@ class _TelaMapaState extends State<TelaMapa> {
     } else {
       // Se o mapa nativo não for criado, a tela avisa em vez de ficar vazia sem explicação
       _vigia = Timer(const Duration(seconds: 15), () {
-        if (mounted && _mapa == null) setState(() => _erro = 'Não foi possível carregar o mapa.');
+        if (mounted && _mapa == null) {
+          final causa = Diagnostico.ultimoErro;
+          setState(() => _erro = 'Não foi possível carregar o mapa.${causa == null ? '' : '\n$causa'}');
+        }
       });
     }
   }

@@ -10,9 +10,11 @@ import 'servicos/favoritos.dart';
 import 'servicos/notificacoes.dart';
 import 'servicos/preferencias.dart';
 import 'servicos/sessao.dart';
+import 'util/diagnostico.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Diagnostico.instalar();
   Intl.defaultLocale = 'pt_BR';
   await initializeDateFormatting('pt_BR');
 
