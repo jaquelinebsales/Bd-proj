@@ -44,14 +44,14 @@ Deno.serve(async (req) => {
     if (raio === null || alvo.distancia_m === null) {
       return erro(
         422,
-        'A localização deste posto ainda não é conhecida. Se você está nele, toque em "Estou neste posto" para ajudar a localizá-lo. Depois disso o envio de preço fica liberado.',
+        'Para enviar preços deste posto, toque em "Estou neste posto" quando estiver nele. Depois disso o envio fica liberado.',
       );
     }
     if (alvo.distancia_m > raio) {
       const km = raio >= 1000 ? `${raio / 1000} km` : `${raio} m`;
       return erro(422, `Você precisa estar a até ${km} do posto para enviar preços. Distância atual: ${
         Math.round(alvo.distancia_m)
-      } m.${raio > 300 ? " A localização deste posto é aproximada." : ""}`);
+      } m.`);
     }
 
     // Referência para detectar envio suspeito

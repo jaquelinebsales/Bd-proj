@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../modelos/modelos.dart';
 import '../../servicos/filtros.dart';
+import '../../servicos/preferencias.dart';
 import '../../util/formatos.dart';
 
 Future<Filtros?> mostrarFiltros(BuildContext context, Filtros atuais) => showModalBottomSheet<Filtros>(
@@ -24,7 +25,7 @@ class _FiltrosSheetState extends State<_FiltrosSheet> {
   static const _precoMin = 1.5, _precoMax = 12.0;
   late RangeValues _faixa = RangeValues(f.precoMin ?? _precoMin, f.precoMax ?? _precoMax);
   bool get _usarFaixa => _faixa.start > _precoMin || _faixa.end < _precoMax;
-  static const _distancias = [2.0, 5.0, 10.0, 20.0];
+  static const _distancias = Preferencias.raios;
 
   @override
   void initState() {

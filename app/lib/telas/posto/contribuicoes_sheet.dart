@@ -59,15 +59,14 @@ class _ContribuicoesState extends State<_Contribuicoes> {
           final outras = contrib.where((c) => !confirmadas.contains(c)).toList();
 
           final cores = Tema.cores(context);
-          final confianca = atual == null
+          final origem = atual == null
               ? null
               : switch (atual.situacao) {
-                  SituacaoPreco.confirmado when atual.confirmacoes >= 3 => ('Confiança alta', cores.recente),
-                  SituacaoPreco.confirmado => ('Confiança média', cores.recente),
+                  SituacaoPreco.confirmado => ('Confirmado pela comunidade', cores.recente),
                   SituacaoPreco.oficial => ('Dado oficial', cores.anp),
-                  SituacaoPreco.estimado => ('Estimativa', cores.estimativa),
-                  SituacaoPreco.divergente => ('Envios divergentes', cores.antigo),
-                  SituacaoPreco.naoConfirmado => ('Aguardando confirmação', cores.antigo),
+                  SituacaoPreco.estimado => ('Estimativa regional', cores.estimativa),
+                  SituacaoPreco.divergente when atual.fonte == FontePreco.anp => ('Dado oficial', cores.anp),
+                  SituacaoPreco.divergente || SituacaoPreco.naoConfirmado => ('Comunidade', cs.primary),
                 };
 
           return ListView(controller: rolagem, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: [
@@ -82,19 +81,18 @@ class _ContribuicoesState extends State<_Contribuicoes> {
                     Row(children: [
                       Text(preco(atual.preco), style: tt.headlineMedium?.copyWith(fontWeight: FontWeight.w800)),
                       const Spacer(),
-                      if (confianca != null)
+                      if (origem != null)
                         // Texto escuro e bolinha colorida: verde e âmbar como texto ficavam abaixo de 4,5:1 no tema claro
                         Chip(
-                          avatar: Icon(Icons.circle, size: 10, color: confianca.$2),
-                          label: Text(confianca.$1),
+                          avatar: Icon(Icons.circle, size: 10, color: origem.$2),
+                          label: Text(origem.$1),
                           labelStyle: TextStyle(color: cs.onSurface, fontWeight: FontWeight.w700),
-                          backgroundColor: confianca.$2.withValues(alpha: 0.12),
+                          backgroundColor: origem.$2.withValues(alpha: 0.12),
                           side: BorderSide.none,
                         ),
                     ]),
-                    // A linha de preço mostra só o ícone de estimativa: o erro médio aparece aqui
                     if (atual.fonte == FontePreco.estimativa)
-                      Text('Erro médio ${reais(atual.margem ?? 0)} · referência a ${distancia(atual.distanciaKm)}',
+                      Text('Referência a ${distancia(atual.distanciaKm)}',
                           style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant)),
                   ]),
                 ),
@@ -104,7 +102,7 @@ class _ContribuicoesState extends State<_Contribuicoes> {
               Card(child: Column(children: [for (final c in confirmadas) _LinhaContribuicao(c)])),
             ],
             if (outras.isNotEmpty) ...[
-              _titulo(context, 'OUTRAS VARIAÇÕES REPORTADAS'),
+              _titulo(context, 'OUTROS ENVIOS'),
               Card(child: Column(children: [for (final c in outras) _LinhaContribuicao(c, apagada: true)])),
             ],
             if (contrib.isEmpty)
@@ -150,19 +148,13 @@ class _LinhaContribuicao extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final iniciais = c.autor.split(' ').where((e) => e.isNotEmpty).take(2).map((e) => e[0]).join().toUpperCase();
-    final status = switch (c.status) {
-      'confirmado' => '',
-      'pendente' => ' · aguardando confirmação',
-      'contestado' => ' · contrariado',
-      _ => '',
-    };
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: apagada ? cs.surfaceContainerHighest : cs.primaryContainer,
         child: Text(iniciais, style: TextStyle(color: apagada ? cs.outline : cs.onPrimaryContainer, fontWeight: FontWeight.w700)),
       ),
       title: Text(c.souEu ? '${c.autor} (você)' : c.autor, style: TextStyle(color: apagada ? cs.outline : null)),
-      subtitle: Text('${tempoRelativo(c.criadoEm)}$status${c.editado ? ' · corrigido à mão' : ''}'),
+      subtitle: Text(tempoRelativo(c.criadoEm)),
       trailing: Row(mainAxisSize: MainAxisSize.min, children: [
         Tooltip(message: 'Lido de uma foto do painel', child: Icon(Icons.photo_camera_outlined, color: cs.outline, size: 20)),
         const SizedBox(width: 8),

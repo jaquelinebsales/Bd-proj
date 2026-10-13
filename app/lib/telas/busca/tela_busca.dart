@@ -25,7 +25,7 @@ class _TelaBuscaState extends State<TelaBusca> {
   final _texto = TextEditingController();
   Timer? _espera;
   List<PostoResumo> _resultados = [];
-  Filtros _filtros = Filtros(produtoId: Preferencias.produto.value);
+  Filtros _filtros = Filtros(produtoId: Preferencias.produto.value, distanciaMaxKm: Preferencias.raioKm.value);
   bool _carregando = false;
   Object? _erro;
   bool _semLocalizacao = false;
@@ -34,6 +34,7 @@ class _TelaBuscaState extends State<TelaBusca> {
   void initState() {
     super.initState();
     Preferencias.produto.addListener(_aoMudarProduto);
+    Preferencias.raioKm.addListener(_aoMudarRaio);
     Favoritos.instancia.addListener(_atualizarTela);
     _carregar();
   }
@@ -41,6 +42,7 @@ class _TelaBuscaState extends State<TelaBusca> {
   @override
   void dispose() {
     Preferencias.produto.removeListener(_aoMudarProduto);
+    Preferencias.raioKm.removeListener(_aoMudarRaio);
     Favoritos.instancia.removeListener(_atualizarTela);
     _espera?.cancel();
     _texto.dispose();
@@ -49,6 +51,23 @@ class _TelaBuscaState extends State<TelaBusca> {
 
   void _atualizarTela() => setState(() {});
   void _aoMudarProduto() => setState(() => _filtros = _filtros.copiar(produtoId: Preferencias.produto.value));
+
+  /// O raio é o mesmo do mapa: mudar num lugar muda no outro.
+  void _aoMudarRaio() {
+    final raio = Preferencias.raioKm.value;
+    if (raio == _filtros.distanciaMaxKm) return;
+    setState(() => _filtros = _filtros.copiar(distanciaMaxKm: raio, limparDistancia: raio == null));
+    _carregar();
+  }
+
+  void _usarFiltros(Filtros novo) {
+    final mudouRaio = novo.distanciaMaxKm != _filtros.distanciaMaxKm;
+    setState(() => _filtros = novo);
+    if (novo.produtoId != Preferencias.produto.value) Preferencias.produto.value = novo.produtoId;
+    if (novo.distanciaMaxKm != Preferencias.raioKm.value) Preferencias.raioKm.value = novo.distanciaMaxKm;
+    // A lista de perto é buscada já no raio escolhido
+    if (mudouRaio) _carregar();
+  }
 
   void _aoDigitar(String _) {
     _espera?.cancel();
@@ -69,7 +88,7 @@ class _TelaBuscaState extends State<TelaBusca> {
         lista = await Api.instancia.buscar(termo, lat: pos?.latitude, lon: pos?.longitude);
         _semLocalizacao = false;
       } else if (pos != null) {
-        lista = await Api.instancia.postosProximos(pos.latitude, pos.longitude, raioKm: 20);
+        lista = await Api.instancia.postosProximos(pos.latitude, pos.longitude, raioKm: _filtros.distanciaMaxKm ?? 20);
         _semLocalizacao = false;
       } else {
         lista = [];
@@ -85,10 +104,7 @@ class _TelaBuscaState extends State<TelaBusca> {
 
   Future<void> _abrirFiltros() async {
     final novo = await mostrarFiltros(context, _filtros);
-    if (novo != null) {
-      setState(() => _filtros = novo);
-      if (novo.produtoId != Preferencias.produto.value) Preferencias.produto.value = novo.produtoId;
-    }
+    if (novo != null) _usarFiltros(novo);
   }
 
   @override
@@ -131,7 +147,7 @@ class _TelaBuscaState extends State<TelaBusca> {
                         ? 'Buscando…'
                         : _texto.text.trim().length >= 2
                             ? '${visiveis.length} postos encontrados'
-                            : '${visiveis.length} postos em até 20 km',
+                            : '${visiveis.length} postos em até ${(_filtros.distanciaMaxKm ?? 20).toStringAsFixed(0)} km',
                     style: tt.bodyMedium,
                   ),
                 ),
@@ -192,7 +208,7 @@ class _TelaBuscaState extends State<TelaBusca> {
         texto: _filtros.ativos > 0 ? 'Tente remover alguns filtros.' : 'Confira a grafia ou busque pela cidade.',
         acao: _filtros.ativos > 0
             ? TextButton(
-                onPressed: () => setState(() => _filtros = Filtros(produtoId: _filtros.produtoId, ordenacao: _filtros.ordenacao)),
+                onPressed: () => _usarFiltros(Filtros(produtoId: _filtros.produtoId, ordenacao: _filtros.ordenacao)),
                 child: const Text('Limpar filtros'),
               )
             : null,

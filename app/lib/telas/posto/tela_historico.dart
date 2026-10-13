@@ -92,7 +92,7 @@ class _TelaHistoricoState extends State<TelaHistorico> {
                             color: p.anp ? Tema.cores(context).anp : Theme.of(context).colorScheme.primary,
                           ),
                           title: Text(data(p.dia)),
-                          subtitle: Text(p.anp ? 'Pesquisa ANP' : (p.confirmado ? 'Comunidade · confirmado' : 'Comunidade · não confirmado')),
+                          subtitle: Text(p.anp ? 'Pesquisa ANP' : 'Comunidade'),
                           trailing: Text(preco(p.preco), style: const TextStyle(fontWeight: FontWeight.w700)),
                         ),
                     ]),

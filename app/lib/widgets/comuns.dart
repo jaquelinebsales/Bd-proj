@@ -60,8 +60,8 @@ class PontoFrescor extends StatelessWidget {
       );
 }
 
-/// Selo da origem, só com ícone: ANP, comunidade (confirmado ou aguardando) ou estimativa.
-/// Os detalhes (quantas pessoas confirmaram, semana da pesquisa, erro médio) ficam no painel que abre ao tocar no preço.
+/// Selo da origem, só com ícone: ANP, comunidade ou estimativa.
+/// Os detalhes (quem enviou, semana da pesquisa) ficam no painel que abre ao tocar no preço.
 class SeloFonte extends StatelessWidget {
   final PrecoAtual preco;
   const SeloFonte(this.preco, {super.key});
@@ -77,7 +77,7 @@ class SeloFonte extends StatelessWidget {
       FontePreco.comunidade => confirmado
           ? (Icons.groups_rounded, cs.primary, 'Confirmado pela comunidade')
           // Não confirmado: cinza do texto secundário (o tom de contorno ficava abaixo de 4,5:1 no selo)
-          : (Icons.person_outline, cs.onSurfaceVariant, 'Aguardando confirmação'),
+          : (Icons.person_outline, cs.onSurfaceVariant, 'Enviado pela comunidade'),
     };
     return Tooltip(
       message: descricao,
@@ -177,13 +177,6 @@ class CartaoPosto extends StatelessWidget {
                 Wrap(spacing: 8, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.center, children: [
                   NotaCompacta(posto.notaMedia, posto.totalAvaliacoes),
                   if (posto.distanciaKm != null) Text(distancia(posto.distanciaKm), style: tt.bodyMedium),
-                  if (posto.precisao != PrecisaoLocalizacao.exata)
-                    Row(mainAxisSize: MainAxisSize.min, children: [
-                      Icon(Icons.location_searching, size: 14, color: cs.tertiary),
-                      const SizedBox(width: 3),
-                      Text(posto.precisao.aproximada ? 'Local aproximado' : 'Local desconhecido',
-                          style: tt.bodySmall?.copyWith(color: cs.tertiary, fontWeight: FontWeight.w600)),
-                    ]),
                   if (posto.bandeira != null) Text(posto.bandeira!, style: tt.bodySmall?.copyWith(color: cs.outline)),
                 ]),
                 const SizedBox(height: 4),

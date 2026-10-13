@@ -85,7 +85,7 @@ class Api {
             'p_lon_min': r(lonMin),
             'p_lat_max': r2(latMax),
             'p_lon_max': r2(lonMax),
-            'p_limite': 400,
+            'p_limite': 500,
           });
           final lista = _postos(d);
           _salvarUltimaArea(d);
@@ -93,11 +93,11 @@ class Api {
         }));
   }
 
-  Future<List<PostoResumo>> postosProximos(double lat, double lon, {double raioKm = 20}) => Config.demo
+  Future<List<PostoResumo>> postosProximos(double lat, double lon, {double raioKm = 20, int limite = 300}) => Config.demo
       ? Future.value(Demo.postos.where((p) => p.precisao.noMapa).toList())
-      : _proteger(() => _comCache('prox:${lat.toStringAsFixed(3)}:${lon.toStringAsFixed(3)}:$raioKm',
+      : _proteger(() => _comCache('prox:${lat.toStringAsFixed(3)}:${lon.toStringAsFixed(3)}:$raioKm:$limite',
           const Duration(minutes: 3), () async {
-        final d = await _db.rpc('postos_proximos', params: {'p_lat': lat, 'p_lon': lon, 'p_raio_km': raioKm, 'p_limite': 300});
+        final d = await _db.rpc('postos_proximos', params: {'p_lat': lat, 'p_lon': lon, 'p_raio_km': raioKm, 'p_limite': limite});
         return _postos(d);
       }));
 

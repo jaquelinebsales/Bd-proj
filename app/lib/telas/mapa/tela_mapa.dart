@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io' show Platform;
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -7,7 +9,12 @@ import 'package:go_router/go_router.dart';
 import 'package:maplibre/maplibre.dart'
     show
         CameraChangeReason,
+        CircleStyleLayer,
+        FillStyleLayer,
+        GeoJsonSource,
         Geographic,
+        LineStyleLayer,
+        LngLatBounds,
         MapController,
         MapEvent,
         MapEventCameraIdle,
@@ -16,8 +23,8 @@ import 'package:maplibre/maplibre.dart'
         MapGestures,
         MapLibreMap,
         MapOptions,
-        Marker,
-        WidgetLayer;
+        StyleController,
+        SymbolStyleLayer;
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -31,6 +38,34 @@ import '../../util/diagnostico.dart';
 import '../../util/responsivo.dart';
 import '../../widgets/comuns.dart';
 import '../../widgets/seletor_produto.dart';
+import '../../widgets/seletor_raio.dart';
+import 'pino.dart';
+
+typedef _Area = ({double sul, double oeste, double norte, double leste});
+
+const _geoVazio = '{"type":"FeatureCollection","features":[]}';
+
+/// Retângulo que contém o círculo de [km] em volta do ponto.
+_Area _caixa(double lat, double lon, double km) {
+  final dLat = km / 111.32, dLon = km / (111.32 * math.cos(lat * math.pi / 180));
+  return (sul: lat - dLat, oeste: lon - dLon, norte: lat + dLat, leste: lon + dLon);
+}
+
+String _circulo(double lat, double lon, double km) {
+  final cos = math.cos(lat * math.pi / 180);
+  final anel = [
+    for (var i = 0; i <= 64; i++)
+      [lon + km * math.cos(2 * math.pi * i / 64) / (111.32 * cos), lat + km * math.sin(2 * math.pi * i / 64) / 111.32],
+  ];
+  return jsonEncode({
+    'type': 'FeatureCollection',
+    'features': [
+      {'type': 'Feature', 'properties': <String, Object>{}, 'geometry': {'type': 'Polygon', 'coordinates': [anel]}},
+    ],
+  });
+}
+
+String _hex(Color c) => '#${(c.toARGB32() & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
 
 /// Tela inicial: mapa do OpenFreeMap com os postos da área visível e o preço do combustível escolhido.
 /// O mapa é vetorial (MapLibre), segue o tema claro ou escuro do celular e não usa chave de API.
@@ -64,14 +99,25 @@ class _TelaMapaState extends State<TelaMapa> {
   String? _erro;
   Timer? _espera;
   Timer? _vigia;
-  String? _areaPedida;
+  String? _chavePedida;
   int _pedidos = 0;
+
+  /// O que já está carregado: a chave da consulta e, fora do modo raio, a área com folga em volta da tela.
+  String? _chaveCarregada;
+  _Area? _areaCarregada;
+
+  /// Estilo atual do mapa e as imagens de pino já registradas nele (uma por aparência).
+  StyleController? _estiloMapa;
+  Map<String, Future<void>> _imagens = {};
+  int _desenhos = 0;
+  Object? _desenhado;
 
   @override
   void initState() {
     super.initState();
     Preferencias.produto.addListener(_redesenhar);
-    Localizacao.instancia.addListener(_redesenhar);
+    Preferencias.raioKm.addListener(_aoMudarRaio);
+    Localizacao.instancia.addListener(_aoMudarLocalizacao);
     if (_semMapaNativo) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _iniciar());
     } else {
@@ -96,7 +142,8 @@ class _TelaMapaState extends State<TelaMapa> {
   @override
   void dispose() {
     Preferencias.produto.removeListener(_redesenhar);
-    Localizacao.instancia.removeListener(_redesenhar);
+    Preferencias.raioKm.removeListener(_aoMudarRaio);
+    Localizacao.instancia.removeListener(_aoMudarLocalizacao);
     _espera?.cancel();
     _vigia?.cancel();
     super.dispose();
@@ -104,6 +151,29 @@ class _TelaMapaState extends State<TelaMapa> {
 
   void _redesenhar() {
     if (mounted) setState(() {});
+  }
+
+  bool get _porRaio => Preferencias.raioKm.value != null && Localizacao.instancia.atual != null;
+
+  void _aoMudarLocalizacao() {
+    _redesenhar();
+    if (_porRaio) _carregarArea();
+  }
+
+  Future<void> _aoMudarRaio() async {
+    if (Preferencias.raioKm.value != null && Localizacao.instancia.atual == null) {
+      final pos = await Localizacao.instancia.obter();
+      if (!mounted) return;
+      if (pos == null) {
+        Preferencias.raioKm.value = null;
+        mostrarMensagem(context, 'Permita o acesso à localização para ver os postos por distância.');
+        return;
+      }
+    }
+    // O posto aberto pode ter ficado fora do novo raio
+    setState(() => _selecionado = null);
+    if (_porRaio) unawaited(_enquadrarRaio());
+    _carregarArea();
   }
 
   MapOptions _criarOpcoes() {
@@ -129,17 +199,72 @@ class _TelaMapaState extends State<TelaMapa> {
     _iniciar();
   }
 
+  /// Cada estilo novo (inclusive na troca de tema) chega sem as camadas do app: elas são criadas de novo.
+  Future<void> _aoCarregarEstilo(StyleController estilo) async {
+    _estiloMapa = estilo;
+    _imagens = {};
+    _desenhado = null;
+    final marca = _hex(Theme.of(context).colorScheme.primary);
+    try {
+      for (final id in ['gasprice-raio', 'gasprice-usuario', CamadaPinos.fonte]) {
+        await estilo.addSource(GeoJsonSource(id: id, data: _geoVazio));
+      }
+      await estilo.addLayer(FillStyleLayer(
+        id: 'gasprice-raio-area',
+        sourceId: 'gasprice-raio',
+        paint: {'fill-color': marca, 'fill-opacity': 0.08},
+      ));
+      await estilo.addLayer(LineStyleLayer(
+        id: 'gasprice-raio-borda',
+        sourceId: 'gasprice-raio',
+        paint: {'line-color': marca, 'line-width': 2, 'line-opacity': 0.6},
+      ));
+      await estilo.addLayer(const CircleStyleLayer(
+        id: 'gasprice-usuario-halo',
+        sourceId: 'gasprice-usuario',
+        paint: {'circle-radius': 14, 'circle-color': '#1A73E8', 'circle-opacity': 0.2},
+      ));
+      await estilo.addLayer(const CircleStyleLayer(
+        id: 'gasprice-usuario',
+        sourceId: 'gasprice-usuario',
+        paint: {'circle-radius': 7, 'circle-color': '#1A73E8', 'circle-stroke-width': 3, 'circle-stroke-color': '#FFFFFF'},
+      ));
+      await estilo.addLayer(const SymbolStyleLayer(
+        id: CamadaPinos.id,
+        sourceId: CamadaPinos.fonte,
+        layout: CamadaPinos.layout,
+        paint: CamadaPinos.paint,
+      ));
+    } catch (e) {
+      // Na troca rápida de tema o estilo pode ser substituído no meio da criação
+      if (estilo == _estiloMapa && mounted) setState(() => _erro = 'Não foi possível desenhar os postos no mapa.\n$e');
+      return;
+    }
+    if (mounted) setState(() {});
+  }
+
   void _aoEvento(MapEvent e) {
     switch (e) {
       case MapEventStartMoveCamera(reason: CameraChangeReason.apiGesture) when _creditosAbertos:
         setState(() => _creditosAbertos = false);
       case MapEventCameraIdle():
         _espera?.cancel();
-        _espera = Timer(const Duration(milliseconds: 250), _carregarArea);
-      case MapEventClick():
-        if (_selecionado != null) setState(() => _selecionado = null);
+        _espera = Timer(const Duration(milliseconds: 150), _carregarArea);
+      case MapEventClick(:final screenPoint):
+        _tocarNoMapa(screenPoint);
       default:
         break;
+    }
+  }
+
+  void _tocarNoMapa(Offset ponto) {
+    final tocados = _mapa?.featuresAtPoint(ponto, layerIds: [CamadaPinos.id]) ?? const [];
+    final id = tocados.isEmpty ? null : num.tryParse('${tocados.first.properties['id']}')?.toInt();
+    final posto = id == null ? null : _postos.where((p) => p.id == id).firstOrNull;
+    if (posto != null) {
+      _selecionar(posto, mover: false);
+    } else if (_selecionado != null) {
+      setState(() => _selecionado = null);
     }
   }
 
@@ -150,11 +275,15 @@ class _TelaMapaState extends State<TelaMapa> {
     if (!mounted) return;
     final mapa = _mapa;
     if (mapa != null) {
-      // Também sem posição: na web os pinos só aparecem depois do primeiro movimento da câmera
-      await mapa.moveCamera(
-        center: pos == null ? mapa.getCamera().center : Geographic(lon: pos.longitude, lat: pos.latitude),
-        zoom: pos == null ? null : _zoomLocal,
-      );
+      if (_porRaio) {
+        await _enquadrarRaio(animar: false);
+      } else {
+        // Também sem posição: na web os pinos só aparecem depois do primeiro movimento da câmera
+        await mapa.moveCamera(
+          center: pos == null ? mapa.getCamera().center : Geographic(lon: pos.longitude, lat: pos.latitude),
+          zoom: pos == null ? null : _zoomLocal,
+        );
+      }
     }
     _carregarArea();
   }
@@ -163,6 +292,20 @@ class _TelaMapaState extends State<TelaMapa> {
   Future<void> _irPara(Geographic centro, {double? zoom}) async {
     try {
       await _mapa?.animateCamera(center: centro, zoom: zoom, nativeDuration: const Duration(milliseconds: 700));
+    } catch (_) {}
+  }
+
+  /// Mostra o círculo inteiro do raio, abaixo da busca e dos filtros.
+  Future<void> _enquadrarRaio({bool animar = true}) async {
+    final raio = Preferencias.raioKm.value, pos = Localizacao.instancia.atual, mapa = _mapa;
+    if (raio == null || pos == null || mapa == null) return;
+    final c = _caixa(pos.latitude, pos.longitude, raio);
+    try {
+      await mapa.fitBounds(
+        bounds: LngLatBounds(longitudeWest: c.oeste, longitudeEast: c.leste, latitudeSouth: c.sul, latitudeNorth: c.norte),
+        padding: const EdgeInsets.fromLTRB(24, 190, 24, 24),
+        nativeDuration: animar ? const Duration(milliseconds: 700) : Duration.zero,
+      );
     } catch (_) {}
   }
 
@@ -178,52 +321,81 @@ class _TelaMapaState extends State<TelaMapa> {
       );
       return;
     }
-    await _irPara(Geographic(lon: pos.longitude, lat: pos.latitude), zoom: _zoomLocal);
+    if (_porRaio) {
+      await _enquadrarRaio();
+    } else {
+      await _irPara(Geographic(lon: pos.longitude, lat: pos.latitude), zoom: _zoomLocal);
+    }
   }
 
   /// Zoom e limites da área visível. Sem mapa nativo (testes), uma área fixa de uns 25 km em volta da posição.
-  ({double zoom, double sul, double oeste, double norte, double leste})? _areaVisivel() {
+  ({double zoom, _Area area})? _areaVisivel() {
     if (_semMapaNativo) {
       final pos = Localizacao.instancia.atual;
       final lat = pos?.latitude ?? _brasil.lat, lon = pos?.longitude ?? _brasil.lon;
-      return (zoom: _zoomLocal, sul: lat - 0.12, oeste: lon - 0.12, norte: lat + 0.12, leste: lon + 0.12);
+      return (zoom: _zoomLocal, area: (sul: lat - 0.12, oeste: lon - 0.12, norte: lat + 0.12, leste: lon + 0.12));
     }
     final mapa = _mapa;
     if (mapa == null) return null;
     final r = mapa.getVisibleRegion();
     return (
       zoom: mapa.getCamera().zoom,
-      sul: r.latitudeSouth,
-      oeste: r.longitudeWest,
-      norte: r.latitudeNorth,
-      leste: r.longitudeEast,
+      area: (sul: r.latitudeSouth, oeste: r.longitudeWest, norte: r.latitudeNorth, leste: r.longitudeEast),
     );
   }
 
+  /// Carrega os postos do raio em volta do usuário ou, sem raio, da área visível com uma folga de 25% em cada lado.
+  /// Enquanto a tela continua dentro da área já carregada, mover o mapa não faz consulta nenhuma.
   Future<void> _carregarArea() async {
     if (!mounted || (!Config.configurado && !Config.demo)) return;
-    final area = _areaVisivel();
-    if (area == null) return;
-    if (area.zoom < _zoomMinimo) {
-      setState(() => _longeDemais = true);
-      return;
+    final String chave;
+    final Future<List<PostoResumo>> Function() consulta;
+    _Area? area;
+    final raio = Preferencias.raioKm.value, pos = Localizacao.instancia.atual;
+    if (raio != null && pos != null) {
+      if (_longeDemais) setState(() => _longeDemais = false);
+      chave = 'raio:${pos.latitude.toStringAsFixed(3)}:${pos.longitude.toStringAsFixed(3)}:$raio';
+      if (chave == _chaveCarregada) return;
+      consulta = () => Api.instancia.postosProximos(pos.latitude, pos.longitude, raioKm: raio, limite: 500);
+    } else {
+      final visivel = _areaVisivel();
+      if (visivel == null) return;
+      if (visivel.zoom < _zoomMinimo) {
+        if (!_longeDemais) setState(() => _longeDemais = true);
+        return;
+      }
+      if (_longeDemais) setState(() => _longeDemais = false);
+      final v = visivel.area, c = _areaCarregada;
+      if (_chaveCarregada != null &&
+          c != null &&
+          v.sul >= c.sul &&
+          v.norte <= c.norte &&
+          v.oeste >= c.oeste &&
+          v.leste <= c.leste) {
+        return;
+      }
+      final fLat = (v.norte - v.sul) * 0.25, fLon = (v.leste - v.oeste) * 0.25;
+      final pedida = (sul: v.sul - fLat, oeste: v.oeste - fLon, norte: v.norte + fLat, leste: v.leste + fLon);
+      area = pedida;
+      chave = 'area:${[pedida.sul, pedida.oeste, pedida.norte, pedida.leste].map((x) => (x * 50).round()).join(':')}';
+      consulta = () => Api.instancia.postosNaArea(pedida.sul, pedida.oeste, pedida.norte, pedida.leste);
     }
     // O fim de um movimento e a abertura da tela podem pedir a mesma área ao mesmo tempo
-    final chave = [area.sul, area.oeste, area.norte, area.leste].map((v) => (v * 50).round()).join(':');
-    if (_carregando && chave == _areaPedida) return;
-    _areaPedida = chave;
+    if (_carregando && chave == _chavePedida) return;
+    _chavePedida = chave;
     final pedido = ++_pedidos;
     setState(() {
-      _longeDemais = false;
       _carregando = true;
       _erro = null;
     });
     try {
-      final lista = await Api.instancia.postosNaArea(area.sul, area.oeste, area.norte, area.leste);
+      final lista = await consulta();
       // Uma área mais nova foi pedida enquanto esta carregava: a resposta antiga é descartada
       if (pedido != _pedidos) return;
       final loc = Localizacao.instancia;
-      _postos = lista.map((p) => p.comDistancia(loc.distanciaKm(p.lat, p.lon))).toList();
+      _postos = lista.map((p) => p.comDistancia(p.distanciaKm ?? loc.distanciaKm(p.lat, p.lon))).toList();
+      _chaveCarregada = chave;
+      _areaCarregada = area;
     } catch (e) {
       if (pedido == _pedidos) _erro = e.toString();
     } finally {
@@ -236,9 +408,18 @@ class _TelaMapaState extends State<TelaMapa> {
     if (mover && p.lat != null) _irPara(Geographic(lon: p.lon!, lat: p.lat!));
   }
 
-  List<PostoResumo> get _ordenadosPorPreco {
+  /// Postos que aparecem no mapa: com posição e, no modo raio, dentro do círculo.
+  List<PostoResumo> get _visiveis {
+    if (_longeDemais) return const [];
+    final raio = _porRaio ? Preferencias.raioKm.value : null;
+    return _postos
+        .where((p) => p.lat != null && p.lon != null && (raio == null || (p.distanciaKm != null && p.distanciaKm! <= raio)))
+        .toList();
+  }
+
+  List<PostoResumo> _ordenadosPorPreco(List<PostoResumo> postos) {
     final produto = Preferencias.produto.value;
-    final l = [..._postos];
+    final l = [...postos];
     l.sort((a, b) {
       final pa = a.preco(produto)?.preco, pb = b.preco(produto)?.preco;
       if (pa == null && pb == null) return (a.distanciaKm ?? 999).compareTo(b.distanciaKm ?? 999);
@@ -249,51 +430,116 @@ class _TelaMapaState extends State<TelaMapa> {
     return l;
   }
 
-  List<Marker> _marcadores() {
+  /// Passa postos, posição e raio para as camadas do mapa nativo. As imagens de fundo dos pinos são
+  /// registradas uma vez por aparência; o preço é texto do próprio mapa.
+  Future<void> _desenhar(List<PostoResumo> postos) async {
+    final estilo = _estiloMapa;
+    if (estilo == null || !mounted) return;
+    final desenho = ++_desenhos;
     final produto = Preferencias.produto.value;
-    final visiveis = _longeDemais ? <PostoResumo>[] : _postos.where((p) => p.lat != null && p.lon != null).toList();
-    // Postos com preço por cima dos sem preço, e o selecionado por cima de todos
-    int camada(PostoResumo p) => p.id == _selecionado?.id ? 2 : (p.preco(produto) == null ? 0 : 1);
-    visiveis.sort((a, b) => camada(a).compareTo(camada(b)));
+    final cores = Tema.cores(context);
+    final cs = Theme.of(context).colorScheme;
+    final densidade = MediaQuery.devicePixelRatioOf(context);
+    final aparencias = <String, AparenciaPino>{};
+    final pontos = <Map<String, Object>>[];
+    for (final p in postos) {
+      final preco = p.preco(produto);
+      final selecionado = p.id == _selecionado?.id;
+      final a = AparenciaPino.de(preco, selecionado: selecionado, cores: cores, cs: cs);
+      aparencias[a.id] = a;
+      pontos.add({
+        'type': 'Feature',
+        'geometry': {'type': 'Point', 'coordinates': [p.lon!, p.lat!]},
+        'properties': {
+          'id': p.id,
+          'icone': a.id,
+          'texto': textoPino(preco),
+          'corTexto': a.corTextoHex,
+          'ordem': selecionado ? 2 : (preco == null ? 0 : 1),
+        },
+      });
+    }
     final pos = Localizacao.instancia.atual;
-    return [
-      for (final p in visiveis)
-        Marker(
-          point: Geographic(lon: p.lon!, lat: p.lat!),
-          size: const Size(110, 44),
-          // A ponta do pino marca o posto
-          alignment: Alignment.bottomCenter,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: _PinoPreco(
-              posto: p,
-              preco: p.preco(produto),
-              selecionado: _selecionado?.id == p.id,
-              aoTocar: () => _selecionar(p, mover: false),
-            ),
-          ),
-        ),
-      if (pos != null)
-        Marker(point: Geographic(lon: pos.longitude, lat: pos.latitude), size: const Size(22, 22), child: const _PontoUsuario()),
-    ];
+    final raio = Preferencias.raioKm.value;
+    try {
+      final imagens = _imagens;
+      await Future.wait([
+        for (final a in aparencias.values)
+          imagens.putIfAbsent(a.id, () async => estilo.addImage(a.id, await a.png(densidade))),
+      ]);
+      if (desenho != _desenhos || estilo != _estiloMapa) return;
+      await estilo.updateGeoJsonSource(
+        id: CamadaPinos.fonte,
+        data: jsonEncode({'type': 'FeatureCollection', 'features': pontos}),
+      );
+      await estilo.updateGeoJsonSource(
+        id: 'gasprice-usuario',
+        data: pos == null
+            ? _geoVazio
+            : jsonEncode({
+                'type': 'FeatureCollection',
+                'features': [
+                  {
+                    'type': 'Feature',
+                    'properties': <String, Object>{},
+                    'geometry': {'type': 'Point', 'coordinates': [pos.longitude, pos.latitude]},
+                  },
+                ],
+              }),
+      );
+      await estilo.updateGeoJsonSource(
+        id: 'gasprice-raio',
+        data: raio == null || pos == null ? _geoVazio : _circulo(pos.latitude, pos.longitude, raio),
+      );
+    } catch (e) {
+      if (estilo == _estiloMapa && mounted) setState(() => _erro = 'Não foi possível desenhar os postos no mapa.\n$e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final expandido = tamanhoDe(context) == Tamanho.expandido;
     final cartaoAberto = _selecionado != null && !expandido;
-    final marcadores = _marcadores();
+    final visiveis = _visiveis;
+    final pos = Localizacao.instancia.atual;
+
+    // Redesenha as camadas nativas só quando algo que aparece nelas muda
+    final retrato = Object.hash(
+      Object.hashAll(visiveis.map((p) => p.id)),
+      identityHashCode(_postos),
+      _selecionado?.id,
+      Preferencias.produto.value,
+      pos?.latitude,
+      pos?.longitude,
+      Preferencias.raioKm.value,
+      Theme.of(context).brightness,
+      _estiloMapa,
+    );
+    if (!_semMapaNativo && _estiloMapa != null && retrato != _desenhado) {
+      _desenhado = retrato;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _desenhar(visiveis));
+    }
 
     final mapa = Stack(children: [
       if (_semMapaNativo)
-        Positioned.fill(child: _MapaDeTeste(marcadores: marcadores))
+        Positioned.fill(
+          child: _MapaDeTeste(pinos: [
+            for (final p in visiveis)
+              _PinoPreco(
+                posto: p,
+                preco: p.preco(Preferencias.produto.value),
+                selecionado: _selecionado?.id == p.id,
+                aoTocar: () => _selecionar(p, mover: false),
+              ),
+          ]),
+        )
       else
         MapLibreMap(
           // Criadas uma vez: opções novas a cada quadro fariam o mapa reaplicar zoom e gestos
           options: _opcoes ??= _criarOpcoes(),
           onMapCreated: _aoCriar,
+          onStyleLoaded: _aoCarregarEstilo,
           onEvent: _aoEvento,
-          children: [WidgetLayer(allowInteraction: true, markers: marcadores)],
         ),
       Positioned(
         left: 8,
@@ -339,6 +585,7 @@ class _TelaMapaState extends State<TelaMapa> {
               ),
             )),
             _sobreOMapa(const SeletorProduto(sobreMapa: true)),
+            Row(children: [_sobreOMapa(const SeletorRaio())]),
             if (!Config.configurado && !Config.demo)
               _sobreOMapa(const _Aviso('App sem conexão configurada com o Supabase. Veja o README.')),
             if (_longeDemais) _sobreOMapa(const _Aviso('Aproxime o mapa para ver os postos e preços.')),
@@ -372,7 +619,7 @@ class _TelaMapaState extends State<TelaMapa> {
               SizedBox(
                 width: 380,
                 child: _ListaLateral(
-                  postos: _ordenadosPorPreco,
+                  postos: _ordenadosPorPreco(visiveis),
                   selecionado: _selecionado,
                   aoSelecionar: _selecionar,
                   longeDemais: _longeDemais,
@@ -387,10 +634,7 @@ class _TelaMapaState extends State<TelaMapa> {
 /// Na web, o mapa é um elemento HTML que capturaria os toques nos controles desenhados por cima dele.
 Widget _sobreOMapa(Widget filho) => PointerInterceptor(intercepting: kIsWeb, child: filho);
 
-enum _EstiloPino { cheio, contorno, tracejado, vazio }
-
-/// Pino com o preço. Até 7 dias: preenchido, com o número em branco. Preço velho, estimativa e posto sem preço:
-/// contorno (tracejado na estimativa), para que a idade do dado não dependa só da cor.
+/// Pino como widget, para os testes de widget, onde não há mapa nativo. Mesmo desenho do pino do mapa.
 class _PinoPreco extends StatelessWidget {
   final PostoResumo posto;
   final PrecoAtual? preco;
@@ -401,35 +645,11 @@ class _PinoPreco extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = preco;
-    final cores = Tema.cores(context);
-    // Os pinos preenchidos usam os tons do tema claro também no escuro: ficam sobre o mapa, com o número em branco
-    final (estilo, cor) = p == null
-        ? (_EstiloPino.vazio, cores.semPreco)
-        : p.fonte == FontePreco.estimativa
-            ? (_EstiloPino.tracejado, cores.estimativa)
-            : switch (p.frescor()) {
-                Frescor.recente => (_EstiloPino.cheio, CoresPreco.claro.recente),
-                Frescor.antigo => (_EstiloPino.cheio, CoresPreco.claro.antigo),
-                Frescor.semAtualizacao => (_EstiloPino.contorno, cores.semAtualizacao),
-              };
-    final cheio = estilo == _EstiloPino.cheio;
-    final corTexto = cheio ? Colors.white : cor;
-    final borda = switch (estilo) {
-      _EstiloPino.cheio => Colors.white,
-      _EstiloPino.vazio => cores.bordaSemPreco,
-      // Tracejado: a borda contínua fica transparente, com a mesma largura, e o traço é desenhado por cima
-      _EstiloPino.tracejado => Colors.transparent,
-      _EstiloPino.contorno => cor,
-    };
-    final larguraBorda = cheio || estilo == _EstiloPino.vazio ? 1.5 : 2.0;
-    final texto = p == null
-        ? '–'
-        : (p.fonte == FontePreco.estimativa ? '≈${preco_(p.preco)}' : preco_(p.preco)).replaceAll('R\$ ', '').replaceAll('R\$', '');
-    final rotulo = (p == null
-            ? '${posto.nome}, sem preço'
-            : '${posto.nome}, ${preco_(p.preco)}${p.fonte == FontePreco.estimativa ? ', estimativa' : ''}') +
-        (posto.precisao.aproximada ? ', localização aproximada' : '');
-    // O marcador do mapa tem tamanho fixo: a fonte do pino cresce no máximo 15%
+    final a = AparenciaPino.de(p, selecionado: selecionado, cores: Tema.cores(context), cs: Theme.of(context).colorScheme);
+    final rotulo = p == null
+        ? '${posto.nome}, sem preço'
+        : '${posto.nome}, ${preco_(p.preco)}${p.fonte == FontePreco.estimativa ? ', estimativa' : ''}';
+    // O pino do mapa tem tamanho fixo: a fonte cresce no máximo 15%
     return MediaQuery.withClampedTextScaling(
       maxScaleFactor: 1.15,
       child: Semantics(
@@ -437,98 +657,27 @@ class _PinoPreco extends StatelessWidget {
         label: rotulo,
         child: GestureDetector(
           onTap: aoTocar,
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            CustomPaint(
-              foregroundPainter: estilo == _EstiloPino.tracejado ? _BordaTracejada(cor) : null,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
-                decoration: BoxDecoration(
-                  color: cheio ? cor : cores.fundoPino,
-                  borderRadius: BorderRadius.circular(99),
-                  border: Border.all(color: borda, width: larguraBorda),
-                  boxShadow: [
-                    const BoxShadow(color: Color(0x40000000), blurRadius: 4, offset: Offset(0, 1)),
-                    // Selecionado: anel na cor do texto do tema, por fora da borda
-                    if (selecionado) BoxShadow(color: Theme.of(context).colorScheme.onSurface, spreadRadius: 2.5),
-                  ],
+          child: CustomPaint(
+            painter: PintorPino(a),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                MedidasPino.margem + MedidasPino.folgaH,
+                MedidasPino.margem + MedidasPino.folgaV,
+                MedidasPino.margem + MedidasPino.folgaH,
+                MedidasPino.folgaV + MedidasPino.ponta,
+              ),
+              child: ExcludeSemantics(
+                child: Text(
+                  textoPino(p),
+                  style: TextStyle(color: a.corTexto, fontWeight: FontWeight.w800, fontSize: MedidasPino.fonte, height: 1.2),
                 ),
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  if (posto.precisao.aproximada) ...[
-                    Icon(Icons.location_searching, size: 13, color: corTexto),
-                    const SizedBox(width: 3),
-                  ],
-                  Text(texto,
-                      style: TextStyle(
-                        color: corTexto,
-                        fontWeight: estilo == _EstiloPino.vazio ? FontWeight.w700 : FontWeight.w800,
-                        fontSize: 13,
-                        height: 1.1,
-                      )),
-                ]),
               ),
             ),
-            CustomPaint(size: const Size(12, 7), painter: _Ponta(estilo == _EstiloPino.vazio ? cores.bordaSemPreco : cor)),
-          ]),
+          ),
         ),
       ),
     );
   }
-}
-
-class _Ponta extends CustomPainter {
-  final Color cor;
-  const _Ponta(this.cor);
-  @override
-  void paint(Canvas canvas, Size size) {
-    final path = Path()
-      ..moveTo(0, 0)
-      ..lineTo(size.width / 2, size.height)
-      ..lineTo(size.width, 0)
-      ..close();
-    canvas.drawPath(path, Paint()..color = cor);
-  }
-
-  @override
-  bool shouldRepaint(_Ponta old) => old.cor != cor;
-}
-
-/// Contorno tracejado do pino de estimativa, sobre a borda transparente de 2 px.
-class _BordaTracejada extends CustomPainter {
-  final Color cor;
-  const _BordaTracejada(this.cor);
-  @override
-  void paint(Canvas canvas, Size size) {
-    final contorno = Path()
-      ..addRRect(RRect.fromRectAndRadius(Offset.zero & size, Radius.circular(size.height / 2)).deflate(1));
-    final tinta = Paint()
-      ..color = cor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
-    for (final trecho in contorno.computeMetrics()) {
-      for (var d = 0.0; d < trecho.length; d += 8) {
-        canvas.drawPath(trecho.extractPath(d, d + 5), tinta);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(_BordaTracejada old) => old.cor != cor;
-}
-
-class _PontoUsuario extends StatelessWidget {
-  const _PontoUsuario();
-  @override
-  Widget build(BuildContext context) => Semantics(
-        label: 'Sua localização',
-        child: Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF1A73E8),
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.white, width: 3),
-            boxShadow: const [BoxShadow(color: Color(0x551A73E8), blurRadius: 8, spreadRadius: 4)],
-          ),
-        ),
-      );
 }
 
 /// Créditos exigidos pelo OpenFreeMap e pela licença do OpenStreetMap. Começam abertos e recolhem no primeiro
@@ -574,19 +723,16 @@ class _Creditos extends StatelessWidget {
   }
 }
 
-/// Usado só nos testes de widget, onde não há mapa nativo. Cada pino fica na caixa de tamanho fixo que teria no
-/// mapa, para a auditoria de telas continuar medindo o pino com fonte ampliada.
+/// Usado só nos testes de widget, onde não há mapa nativo: os pinos ficam lado a lado sobre um fundo liso.
 class _MapaDeTeste extends StatelessWidget {
-  final List<Marker> marcadores;
-  const _MapaDeTeste({required this.marcadores});
+  final List<Widget> pinos;
+  const _MapaDeTeste({required this.pinos});
 
   @override
   Widget build(BuildContext context) => ColoredBox(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
         child: Center(
-          child: Wrap(alignment: WrapAlignment.center, spacing: 4, runSpacing: 4, children: [
-            for (final m in marcadores) SizedBox.fromSize(size: m.size, child: m.child),
-          ]),
+          child: Wrap(alignment: WrapAlignment.center, spacing: 4, runSpacing: 4, children: pinos),
         ),
       );
 }

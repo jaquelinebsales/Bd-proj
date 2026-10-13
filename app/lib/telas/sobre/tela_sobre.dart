@@ -31,9 +31,9 @@ class TelaSobre extends StatelessWidget {
               item(Icons.groups_rounded, cs.primary, 'Comunidade',
                   'Fotos de painéis enviadas por usuários. Um preço é confirmado quando duas pessoas diferentes informam o mesmo valor em até 24 horas.'),
               item(Icons.account_balance_outlined, cores.anp, 'Pesquisa da ANP',
-                  'Levantamento semanal oficial da Agência Nacional do Petróleo. É uma amostra: cobre cerca de 20% dos postos e pouco mais de 400 cidades. Vale quando os envios da comunidade divergem.'),
+                  'Levantamento semanal da Agência Nacional do Petróleo. O valor da pesquisa aparece quando os envios da comunidade são divergentes ou quando o posto ainda não tem envio recente.'),
               item(Icons.insights_outlined, cores.estimativa, 'Estimativa',
-                  'Quando o posto não tem nenhum preço, mostramos a mediana dos postos pesquisados mais próximos, com a margem de erro medida para aquela distância.'),
+                  'Quando o posto ainda não tem preço informado, o valor é calculado a partir dos postos pesquisados mais próximos.'),
             ]),
           ),
           titulo('O que as cores significam'),
@@ -57,8 +57,8 @@ class TelaSobre extends StatelessWidget {
           titulo('Privacidade'),
           Card(
             child: Column(children: [
-              item(Icons.no_photography_outlined, cs.primary, 'A foto do painel não sai do seu celular',
-                  'O texto é lido no próprio aparelho e a foto é apagada em seguida. Guardamos só os valores que você confirmou e o texto reconhecido.'),
+              item(Icons.photo_camera_outlined, cs.primary, 'Foto do painel',
+                  'A única informação que utilizamos são os valores dos preços capturados por meio da foto.'),
               item(Icons.place_outlined, cs.primary, 'Localização',
                   'Usada para mostrar postos próximos. Ao enviar preços, registramos a posição daquele momento para confirmar que você estava no posto.'),
               item(Icons.badge_outlined, cs.primary, 'Dados da conta',
@@ -70,8 +70,7 @@ class TelaSobre extends StatelessWidget {
           titulo('Termos de uso'),
           Text(
             'Envie apenas preços que você viu no painel do posto, estando no local. Envios falsos são contrariados pela '
-            'comunidade, tiram pontos e podem pausar sua conta. Os preços exibidos são informativos: confira o valor na bomba '
-            'antes de abastecer.',
+            'comunidade, tiram pontos e podem pausar sua conta. O valor cobrado é sempre o da bomba no momento do abastecimento.',
             style: tt.bodyLarge,
           ),
           const SizedBox(height: 24),

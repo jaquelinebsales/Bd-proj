@@ -227,12 +227,6 @@ class _TelaPostoState extends State<TelaPosto> {
                 .where((e) => e != null && e.isNotEmpty)
                 .join(', ')),
           ),
-          ListTile(
-            title: const Text('Localização no mapa'),
-            subtitle: Text(p.precisao != PrecisaoLocalizacao.exata
-                ? p.precisao.rotulo
-                : (d.localizacaoValidada ? 'Confirmada por usuários' : 'Informada pela ANP, ainda não validada')),
-          ),
         ]),
       ),
     );
@@ -244,24 +238,15 @@ class _TelaPostoState extends State<TelaPosto> {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Row(children: [
-                  Icon(Icons.location_searching, color: cs.onTertiaryContainer),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(p.precisao.rotulo,
-                        style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w700, color: cs.onTertiaryContainer)),
-                  ),
-                ]),
-                const SizedBox(height: 8),
                 Text(
                   'Ajude a mapear este posto: confirme a localização no local.',
-                  style: tt.bodyMedium?.copyWith(color: cs.onTertiaryContainer),
+                  style: tt.bodyLarge?.copyWith(color: cs.onTertiaryContainer),
                 ),
                 const SizedBox(height: 12),
                 FilledButton.icon(
                   onPressed: d.posicaoInformada ? null : _informarPosicao,
                   icon: const Icon(Icons.my_location),
-                  label: Text(d.posicaoInformada ? 'Posição informada, aguardando outra pessoa' : 'Estou neste posto'),
+                  label: Text(d.posicaoInformada ? 'Posição informada' : 'Estou neste posto'),
                 ),
               ]),
             ),

@@ -115,15 +115,6 @@ enum PrecisaoLocalizacao {
   /// Raio de envio em metros, ou null se o posto não aceita envio.
   int? raioEnvioM({int exataM = 300, int aproximadoM = 1000}) =>
       this == exata ? exataM : (aproximada ? aproximadoM : null);
-
-  String get rotulo => switch (this) {
-        exata => 'Localização confirmada',
-        rua => 'Localização aproximada',
-        cepRua => 'Localização aproximada',
-        cepCidade => 'Localização desconhecida',
-        municipio => 'Localização desconhecida',
-        nenhuma => 'Localização desconhecida',
-      };
 }
 
 class PostoResumo {

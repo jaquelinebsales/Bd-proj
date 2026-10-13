@@ -53,7 +53,7 @@ export function mensagemDoMotivo(motivo: string, par: { posicoes_por_dia: number
     case "longe_do_posto":
       return {
         status: 422,
-        mensagem: `A sua localização está a mais de ${par.distancia_max_correcao_km} km da posição aproximada deste posto. Confira se você está no posto certo.`,
+        mensagem: `A sua localização está a mais de ${par.distancia_max_correcao_km} km da posição deste posto. Confira se você está no posto certo.`,
       };
     default:
       return { status: 422, mensagem: "Não foi possível registrar a posição." };

@@ -40,13 +40,12 @@ String tempoRelativo(DateTime quando, [DateTime? agora]) {
 /// Texto da origem do preço, como no item 14 do documento de requisitos.
 String origemPreco(PrecoAtual p) => switch (p.situacao) {
       SituacaoPreco.confirmado => '${tempoRelativo(p.atualizadoEm)} · comunidade',
-      SituacaoPreco.naoConfirmado => '${tempoRelativo(p.atualizadoEm)} · aguardando confirmação',
+      SituacaoPreco.naoConfirmado => '${tempoRelativo(p.atualizadoEm)} · comunidade',
       SituacaoPreco.divergente => p.fonte == FontePreco.anp
-          ? 'Pesquisa ANP de ${dataCurta(p.atualizadoEm)} · envios divergentes'
-          : '${tempoRelativo(p.atualizadoEm)} · envios divergentes',
+          ? 'Pesquisa ANP · semana de ${dataCurta(p.atualizadoEm)}'
+          : '${tempoRelativo(p.atualizadoEm)} · comunidade',
       SituacaoPreco.oficial => 'Pesquisa ANP · semana de ${dataCurta(p.atualizadoEm)}',
-      SituacaoPreco.estimado =>
-        'Estimativa · erro médio ${reais(p.margem ?? 0)} · referência a ${distancia(p.distanciaKm)}',
+      SituacaoPreco.estimado => 'Estimativa regional · referência a ${distancia(p.distanciaKm)}',
     };
 
 Color corFrescor(Frescor f, CoresPreco cores) => switch (f) {
