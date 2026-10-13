@@ -168,28 +168,45 @@ class PintorPino extends CustomPainter {
 /// (icon-text-fit), e a base da ponta fica exatamente sobre o posto.
 abstract final class CamadaPinos {
   static const id = 'gasprice-postos';
+  static const idSelecionado = 'gasprice-posto-selecionado';
   static const fonte = 'gasprice-postos';
+
+  static const _textFitPadding = [
+    MedidasPino.margem + MedidasPino.folgaV,
+    MedidasPino.margem + MedidasPino.folgaH,
+    MedidasPino.folgaV + MedidasPino.ponta,
+    MedidasPino.margem + MedidasPino.folgaH,
+  ];
+  static const _textOffset = [0.0, -(MedidasPino.folgaV + MedidasPino.ponta) / MedidasPino.fonte];
 
   static const layout = <String, Object>{
     'icon-image': ['get', 'icone'],
     'icon-text-fit': 'both',
-    'icon-text-fit-padding': [
-      MedidasPino.margem + MedidasPino.folgaV,
-      MedidasPino.margem + MedidasPino.folgaH,
-      MedidasPino.folgaV + MedidasPino.ponta,
-      MedidasPino.margem + MedidasPino.folgaH,
-    ],
+    'icon-text-fit-padding': _textFitPadding,
+    'icon-allow-overlap': false,
+    'icon-padding': 2.0,
+    'text-field': ['get', 'texto'],
+    'text-font': ['Noto Sans Bold'],
+    'text-size': MedidasPino.fonte,
+    'text-anchor': 'bottom',
+    'text-offset': _textOffset,
+    'text-allow-overlap': false,
+    'symbol-sort-key': ['get', 'ordem'],
+  };
+
+  static const layoutSelecionado = <String, Object>{
+    'icon-image': ['get', 'icone'],
+    'icon-text-fit': 'both',
+    'icon-text-fit-padding': _textFitPadding,
     'icon-allow-overlap': true,
     'icon-ignore-placement': true,
     'text-field': ['get', 'texto'],
     'text-font': ['Noto Sans Bold'],
     'text-size': MedidasPino.fonte,
     'text-anchor': 'bottom',
-    'text-offset': [0.0, -(MedidasPino.folgaV + MedidasPino.ponta) / MedidasPino.fonte],
+    'text-offset': _textOffset,
     'text-allow-overlap': true,
     'text-ignore-placement': true,
-    // Selecionado por cima de todos, e postos com preço por cima dos sem preço
-    'symbol-sort-key': ['get', 'ordem'],
   };
 
   static const paint = <String, Object>{

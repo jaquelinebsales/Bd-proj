@@ -137,20 +137,11 @@ class _TelaBuscaState extends State<TelaBusca> {
                 ],
               ),
             ),
-            const SeletorProduto(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 8, 4),
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
               child: Row(children: [
-                Expanded(
-                  child: Text(
-                    _carregando
-                        ? 'Buscando…'
-                        : _texto.text.trim().length >= 2
-                            ? '${visiveis.length} postos encontrados'
-                            : '${visiveis.length} postos em até ${(_filtros.distanciaMaxKm ?? 20).toStringAsFixed(0)} km',
-                    style: tt.bodyMedium,
-                  ),
-                ),
+                const SeletorProduto(),
+                const Spacer(),
                 PopupMenuButton<Ordenacao>(
                   tooltip: 'Ordenar',
                   initialValue: _filtros.ordenacao,
@@ -175,6 +166,17 @@ class _TelaBuscaState extends State<TelaBusca> {
                   ),
                 ),
               ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+              child: Text(
+                _carregando
+                    ? 'Buscando…'
+                    : _texto.text.trim().length >= 2
+                        ? '${visiveis.length} postos encontrados'
+                        : '${visiveis.length} postos em até ${(_filtros.distanciaMaxKm ?? 20).toStringAsFixed(0)} km',
+                style: tt.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+              ),
             ),
             if (_carregando) const LinearProgressIndicator(),
             Expanded(child: _corpo(visiveis)),

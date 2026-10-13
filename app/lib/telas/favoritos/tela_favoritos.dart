@@ -75,7 +75,10 @@ class _TelaFavoritosState extends State<TelaFavoritos> {
       body: LarguraMaxima(
         maxima: 900,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          const SeletorProduto(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+            child: const Row(children: [SeletorProduto()]),
+          ),
           if (!logado)
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),

@@ -35,6 +35,7 @@ import '../../servicos/localizacao.dart';
 import '../../servicos/preferencias.dart';
 import '../../tema.dart';
 import '../../util/diagnostico.dart';
+import '../../util/formatos.dart';
 import '../../util/responsivo.dart';
 import '../../widgets/comuns.dart';
 import '../../widgets/seletor_produto.dart';
@@ -206,7 +207,7 @@ class _TelaMapaState extends State<TelaMapa> {
     _desenhado = null;
     final marca = _hex(Theme.of(context).colorScheme.primary);
     try {
-      for (final id in ['gasprice-raio', 'gasprice-usuario', CamadaPinos.fonte]) {
+      for (final id in ['gasprice-raio', 'gasprice-usuario', CamadaPinos.fonte, CamadaPinos.idSelecionado]) {
         await estilo.addSource(GeoJsonSource(id: id, data: _geoVazio));
       }
       await estilo.addLayer(FillStyleLayer(
@@ -235,6 +236,12 @@ class _TelaMapaState extends State<TelaMapa> {
         layout: CamadaPinos.layout,
         paint: CamadaPinos.paint,
       ));
+      await estilo.addLayer(const SymbolStyleLayer(
+        id: CamadaPinos.idSelecionado,
+        sourceId: CamadaPinos.idSelecionado,
+        layout: CamadaPinos.layoutSelecionado,
+        paint: CamadaPinos.paint,
+      ));
     } catch (e) {
       // Na troca rápida de tema o estilo pode ser substituído no meio da criação
       if (estilo == _estiloMapa && mounted) setState(() => _erro = 'Não foi possível desenhar os postos no mapa.\n$e');
@@ -258,7 +265,7 @@ class _TelaMapaState extends State<TelaMapa> {
   }
 
   void _tocarNoMapa(Offset ponto) {
-    final tocados = _mapa?.featuresAtPoint(ponto, layerIds: [CamadaPinos.id]) ?? const [];
+    final tocados = _mapa?.featuresAtPoint(ponto, layerIds: [CamadaPinos.idSelecionado, CamadaPinos.id]) ?? const [];
     final id = tocados.isEmpty ? null : num.tryParse('${tocados.first.properties['id']}')?.toInt();
     final posto = id == null ? null : _postos.where((p) => p.id == id).firstOrNull;
     if (posto != null) {
@@ -442,12 +449,13 @@ class _TelaMapaState extends State<TelaMapa> {
     final densidade = MediaQuery.devicePixelRatioOf(context);
     final aparencias = <String, AparenciaPino>{};
     final pontos = <Map<String, Object>>[];
+    Map<String, Object>? pontoSelecionado;
     for (final p in postos) {
       final preco = p.preco(produto);
       final selecionado = p.id == _selecionado?.id;
       final a = AparenciaPino.de(preco, selecionado: selecionado, cores: cores, cs: cs);
       aparencias[a.id] = a;
-      pontos.add({
+      final feat = <String, Object>{
         'type': 'Feature',
         'geometry': {'type': 'Point', 'coordinates': [p.lon!, p.lat!]},
         'properties': {
@@ -455,9 +463,14 @@ class _TelaMapaState extends State<TelaMapa> {
           'icone': a.id,
           'texto': textoPino(preco),
           'corTexto': a.corTextoHex,
-          'ordem': selecionado ? 2 : (preco == null ? 0 : 1),
+          'ordem': preco == null ? 2 : 0,
         },
-      });
+      };
+      if (selecionado) {
+        pontoSelecionado = feat;
+      } else {
+        pontos.add(feat);
+      }
     }
     final pos = Localizacao.instancia.atual;
     final raio = Preferencias.raioKm.value;
@@ -471,6 +484,12 @@ class _TelaMapaState extends State<TelaMapa> {
       await estilo.updateGeoJsonSource(
         id: CamadaPinos.fonte,
         data: jsonEncode({'type': 'FeatureCollection', 'features': pontos}),
+      );
+      await estilo.updateGeoJsonSource(
+        id: CamadaPinos.idSelecionado,
+        data: pontoSelecionado == null
+            ? _geoVazio
+            : jsonEncode({'type': 'FeatureCollection', 'features': [pontoSelecionado]}),
       );
       await estilo.updateGeoJsonSource(
         id: 'gasprice-usuario',
@@ -499,11 +518,9 @@ class _TelaMapaState extends State<TelaMapa> {
   @override
   Widget build(BuildContext context) {
     final expandido = tamanhoDe(context) == Tamanho.expandido;
-    final cartaoAberto = _selecionado != null && !expandido;
     final visiveis = _visiveis;
     final pos = Localizacao.instancia.atual;
 
-    // Redesenha as camadas nativas só quando algo que aparece nelas muda
     final retrato = Object.hash(
       Object.hashAll(visiveis.map((p) => p.id)),
       identityHashCode(_postos),
@@ -520,6 +537,8 @@ class _TelaMapaState extends State<TelaMapa> {
       WidgetsBinding.instance.addPostFrameCallback((_) => _desenhar(visiveis));
     }
 
+    final cs = Theme.of(context).colorScheme;
+
     final mapa = Stack(children: [
       if (_semMapaNativo)
         Positioned.fill(
@@ -535,16 +554,16 @@ class _TelaMapaState extends State<TelaMapa> {
         )
       else
         MapLibreMap(
-          // Criadas uma vez: opções novas a cada quadro fariam o mapa reaplicar zoom e gestos
           options: _opcoes ??= _criarOpcoes(),
           onMapCreated: _aoCriar,
           onStyleLoaded: _aoCarregarEstilo,
           onEvent: _aoEvento,
         ),
+      // Créditos
       Positioned(
         left: 8,
         right: 88,
-        bottom: cartaoAberto ? 220 : 8,
+        bottom: 8,
         child: Align(
           alignment: Alignment.bottomLeft,
           child: _sobreOMapa(_Creditos(
@@ -553,6 +572,7 @@ class _TelaMapaState extends State<TelaMapa> {
           )),
         ),
       ),
+      // Barra superior: busca + filtros
       Positioned(
         top: 0,
         left: 0,
@@ -561,22 +581,22 @@ class _TelaMapaState extends State<TelaMapa> {
           bottom: false,
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             _sobreOMapa(Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 6),
               child: Material(
                 elevation: 3,
                 borderRadius: BorderRadius.circular(28),
-                color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                color: cs.surfaceContainerHigh,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(28),
                   onTap: () => context.go('/buscar'),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     child: Row(children: [
-                      const Icon(Icons.search),
-                      const SizedBox(width: 12),
+                      const Icon(Icons.search, size: 22),
+                      const SizedBox(width: 10),
                       Expanded(
-                        child: Text('Buscar posto, endereço ou cidade',
-                            style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                        child: Text('Buscar posto ou endereço',
+                            style: TextStyle(color: cs.onSurfaceVariant, fontSize: 15)),
                       ),
                       if (_carregando) const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2)),
                     ]),
@@ -584,8 +604,14 @@ class _TelaMapaState extends State<TelaMapa> {
                 ),
               ),
             )),
-            _sobreOMapa(const SeletorProduto(sobreMapa: true)),
-            Row(children: [_sobreOMapa(const SeletorRaio())]),
+            _sobreOMapa(Padding(
+              padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
+              child: Row(children: [
+                const SeletorProduto(),
+                const SizedBox(width: 8),
+                const SeletorRaio(),
+              ]),
+            )),
             if (!Config.configurado && !Config.demo)
               _sobreOMapa(const _Aviso('App sem conexão configurada com o Supabase. Veja o README.')),
             if (_longeDemais) _sobreOMapa(const _Aviso('Aproxime o mapa para ver os postos e preços.')),
@@ -593,22 +619,31 @@ class _TelaMapaState extends State<TelaMapa> {
           ]),
         ),
       ),
+      // FAB de localização
       Positioned(
         right: 16,
-        bottom: cartaoAberto ? 228 : 16,
-        child: _sobreOMapa(FloatingActionButton(
+        bottom: _selecionado != null && !expandido ? 180 : 16,
+        child: _sobreOMapa(FloatingActionButton.small(
           heroTag: 'centralizar',
           tooltip: 'Minha localização',
+          backgroundColor: cs.surface,
+          foregroundColor: cs.onSurface,
+          elevation: 4,
           onPressed: _centralizar,
           child: const Icon(Icons.my_location),
         )),
       ),
-      if (cartaoAberto)
+      // Bottom sheet do posto selecionado
+      if (_selecionado != null && !expandido)
         Positioned(
-          left: 12,
-          right: 12,
-          bottom: 12,
-          child: _sobreOMapa(_CartaoSelecionado(posto: _selecionado!, produtoId: Preferencias.produto.value)),
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: _sobreOMapa(_FolhaPosto(
+            posto: _selecionado!,
+            produtoId: Preferencias.produto.value,
+            aoFechar: () => setState(() => _selecionado = null),
+          )),
         ),
     ]);
 
@@ -754,61 +789,100 @@ class _Aviso extends StatelessWidget {
       );
 }
 
-class _CartaoSelecionado extends StatelessWidget {
+/// Folha inferior com resumo do posto. Aparece recolhida e pode ser arrastada para cima.
+class _FolhaPosto extends StatelessWidget {
   final PostoResumo posto;
   final int produtoId;
-  const _CartaoSelecionado({required this.posto, required this.produtoId});
+  final VoidCallback aoFechar;
+  const _FolhaPosto({required this.posto, required this.produtoId, required this.aoFechar});
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context);
-    final cs = tema.colorScheme;
-    const altura = Size(0, 48);
-    // Um só cartão: o resumo do posto perde a borda e o fundo próprios e divide a superfície com os botões
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
+    final p = posto.preco(produtoId);
     return Material(
-      elevation: 6,
+      elevation: 8,
       color: cs.surfaceContainer,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: BorderSide(color: cs.outlineVariant)),
-      clipBehavior: Clip.antiAlias,
-      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Theme(
-          data: tema.copyWith(
-            cardTheme: tema.cardTheme.copyWith(
-              color: Colors.transparent,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            // Alça de arrasto
+            Container(
+              width: 36,
+              height: 4,
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(color: cs.outlineVariant, borderRadius: BorderRadius.circular(2)),
             ),
-          ),
-          child: CartaoPosto(posto: posto, produtoId: produtoId, aoTocar: () => context.push('/posto/${posto.id}')),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-          child: Row(children: [
-            Expanded(
-              child: OutlinedButton.icon(
-                style: OutlinedButton.styleFrom(
-                  minimumSize: altura,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                ),
-                onPressed: () => context.push('/posto/${posto.id}/enviar'),
-                icon: const Icon(Icons.photo_camera_outlined),
-                label: const Text('Atualizar preço'),
+            // Nome + preço
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(posto.nome, style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                      maxLines: 2, overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 2),
+                  Text(
+                    [posto.endereco, posto.bairro].where((e) => e != null && e.isNotEmpty).join(' · '),
+                    style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (posto.distanciaKm != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(distancia(posto.distanciaKm), style: tt.bodySmall?.copyWith(color: cs.outline)),
+                    ),
+                ]),
               ),
-            ),
-            const SizedBox(width: 8),
-            // Ação principal no botão cheio da marca, como nas outras telas
-            Expanded(
-              child: FilledButton(
-                style: FilledButton.styleFrom(
-                  minimumSize: altura,
-                  textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              const SizedBox(width: 12),
+              if (p != null)
+                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  Text(
+                    p.fonte == FontePreco.estimativa ? '≈ ${preco(p.preco)}' : preco(p.preco),
+                    style: tt.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+                  ),
+                  Row(mainAxisSize: MainAxisSize.min, children: [
+                    PontoFrescor(p.frescor()),
+                    const SizedBox(width: 6),
+                    SeloFonte(p),
+                  ]),
+                ])
+              else
+                Text('Sem preço', style: tt.bodyMedium?.copyWith(color: cs.outline)),
+            ]),
+            const SizedBox(height: 12),
+            // Botões
+            Row(children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(0, 44),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onPressed: () => context.push('/posto/${posto.id}/enviar'),
+                  icon: const Icon(Icons.photo_camera_outlined, size: 20),
+                  label: const Text('Atualizar'),
                 ),
-                onPressed: () => context.push('/posto/${posto.id}'),
-                child: const Text('Ver posto'),
               ),
-            ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: FilledButton(
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size(0, 44),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
+                  onPressed: () => context.push('/posto/${posto.id}'),
+                  child: const Text('Ver detalhes'),
+                ),
+              ),
+            ]),
           ]),
         ),
-      ]),
+      ),
     );
   }
 }
