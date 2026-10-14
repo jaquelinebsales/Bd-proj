@@ -15,6 +15,7 @@ class SeletorRaio extends StatelessWidget {
       valueListenable: Preferencias.raioKm,
       builder: (context, raio, _) => PopupMenuButton<double>(
         tooltip: 'Distância dos postos',
+        position: PopupMenuPosition.under,
         initialValue: raio ?? 0,
         onSelected: (v) => Preferencias.raioKm.value = v == 0 ? null : v,
         itemBuilder: (_) => [
