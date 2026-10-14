@@ -3,10 +3,27 @@ import 'package:flutter/material.dart';
 import '../modelos/modelos.dart';
 import '../servicos/preferencias.dart';
 
-/// Dropdown compacto para escolher um ou mais combustíveis. Toque num item para selecionar/desmarcar.
-/// Pelo menos um combustível fica sempre selecionado.
-class SeletorProduto extends StatelessWidget {
+/// Dropdown compacto para escolher um ou mais combustíveis. Menu fica aberto até clicar novamente.
+/// Toque num item para selecionar/desmarcar. Pelo menos um combustível fica sempre selecionado.
+class SeletorProduto extends StatefulWidget {
   const SeletorProduto({super.key});
+
+  @override
+  State<SeletorProduto> createState() => _SeletorProdutoState();
+}
+
+class _SeletorProdutoState extends State<SeletorProduto> {
+  bool _menuAberto = false;
+
+  void _alternarItem(int id) {
+    final set = Set<int>.from(Preferencias.produto.value);
+    if (set.contains(id)) {
+      if (set.length > 1) set.remove(id);
+    } else {
+      set.add(id);
+    }
+    Preferencias.produto.value = set;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,38 +35,15 @@ class SeletorProduto extends StatelessWidget {
         final rotulo = multi
             ? '${selecionados.length} combustíveis'
             : Produto.porId(selecionados.isEmpty ? 1 : selecionados.first).nome;
-        return PopupMenuButton<int>(
-          tooltip: 'Combustível',
-          onSelected: (v) {
-            final set = Set<int>.from(Preferencias.produto.value);
-            if (set.contains(v)) {
-              if (set.length > 1) set.remove(v);
+
+        return GestureDetector(
+          onTap: () {
+            if (_menuAberto) {
+              setState(() => _menuAberto = false);
             } else {
-              set.add(v);
+              _abrirMenu(context, selecionados, cs);
             }
-            Preferencias.produto.value = set;
           },
-          itemBuilder: (_) => [
-            for (final p in Produto.todos)
-              PopupMenuItem(
-                value: p.id,
-                child: Row(children: [
-                  Icon(
-                    selecionados.contains(p.id) ? Icons.circle : Icons.circle_outlined,
-                    size: 14,
-                    color: selecionados.contains(p.id) ? cs.primary : cs.outlineVariant,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    p.nome,
-                    style: TextStyle(
-                      color: selecionados.contains(p.id) ? cs.primary : cs.onSurface,
-                      fontWeight: selecionados.contains(p.id) ? FontWeight.w600 : null,
-                    ),
-                  ),
-                ]),
-              ),
-          ],
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 40),
             child: Center(
@@ -73,8 +67,10 @@ class SeletorProduto extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Icon(Icons.arrow_drop_down,
-                        color: multi ? cs.onPrimaryContainer : cs.onSecondaryContainer),
+                    Icon(
+                      _menuAberto ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                      color: multi ? cs.onPrimaryContainer : cs.onSecondaryContainer,
+                    ),
                   ]),
                 ),
               ),
@@ -83,5 +79,44 @@ class SeletorProduto extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> _abrirMenu(BuildContext context, Set<int> selecionados, ColorScheme cs) async {
+    setState(() => _menuAberto = true);
+    final RenderBox renderBox = context.findRenderObject() as RenderBox;
+    final Offset offset = renderBox.localToGlobal(Offset.zero);
+    final tamanho = renderBox.size;
+
+    await showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        offset.dx,
+        offset.dy + tamanho.height + 8,
+        offset.dx + tamanho.width,
+        0,
+      ),
+      items: [
+        for (final p in Produto.todos)
+          PopupMenuItem(
+            onTap: () => _alternarItem(p.id),
+            child: Row(children: [
+              Icon(
+                selecionados.contains(p.id) ? Icons.circle : Icons.circle_outlined,
+                size: 14,
+                color: selecionados.contains(p.id) ? cs.primary : cs.outlineVariant,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                p.nome,
+                style: TextStyle(
+                  color: selecionados.contains(p.id) ? cs.primary : cs.onSurface,
+                  fontWeight: selecionados.contains(p.id) ? FontWeight.w600 : null,
+                ),
+              ),
+            ]),
+          ),
+      ],
+    );
+    if (mounted) setState(() => _menuAberto = false);
   }
 }
