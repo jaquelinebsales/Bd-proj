@@ -182,6 +182,16 @@ class PostoResumo {
     return null;
   }
 
+  /// Retorna o preço do primeiro produto selecionado que tiver preço cadastrado.
+  PrecoAtual? melhorPreco(Set<int> ids) {
+    if (ids.isEmpty) return null;
+    for (final id in ids) {
+      final p = preco(id);
+      if (p != null) return p;
+    }
+    return null;
+  }
+
   PostoResumo comDistancia(double? km) => PostoResumo(
         id: id,
         nome: nome,

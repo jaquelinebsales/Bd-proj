@@ -25,7 +25,7 @@ class _TelaBuscaState extends State<TelaBusca> {
   final _texto = TextEditingController();
   Timer? _espera;
   List<PostoResumo> _resultados = [];
-  Filtros _filtros = Filtros(produtoId: Preferencias.produto.value, distanciaMaxKm: Preferencias.raioKm.value);
+  Filtros _filtros = Filtros(produtoId: Preferencias.primario, distanciaMaxKm: Preferencias.raioKm.value);
   bool _carregando = false;
   Object? _erro;
   bool _semLocalizacao = false;
@@ -50,7 +50,7 @@ class _TelaBuscaState extends State<TelaBusca> {
   }
 
   void _atualizarTela() => setState(() {});
-  void _aoMudarProduto() => setState(() => _filtros = _filtros.copiar(produtoId: Preferencias.produto.value));
+  void _aoMudarProduto() => setState(() => _filtros = _filtros.copiar(produtoId: Preferencias.primario));
 
   /// O raio é o mesmo do mapa: mudar num lugar muda no outro.
   void _aoMudarRaio() {
@@ -63,7 +63,7 @@ class _TelaBuscaState extends State<TelaBusca> {
   void _usarFiltros(Filtros novo) {
     final mudouRaio = novo.distanciaMaxKm != _filtros.distanciaMaxKm;
     setState(() => _filtros = novo);
-    if (novo.produtoId != Preferencias.produto.value) Preferencias.produto.value = novo.produtoId;
+    if (novo.produtoId != Preferencias.primario) Preferencias.produto.value = {novo.produtoId};
     if (novo.distanciaMaxKm != Preferencias.raioKm.value) Preferencias.raioKm.value = novo.distanciaMaxKm;
     // A lista de perto é buscada já no raio escolhido
     if (mudouRaio) _carregar();

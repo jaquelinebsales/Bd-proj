@@ -124,7 +124,7 @@ class _TelaFavoritosState extends State<TelaFavoritos> {
                       final p = postos[i];
                       return CartaoPosto(
                         posto: p,
-                        produtoId: Preferencias.produto.value,
+                        produtoId: Preferencias.primario,
                         aoTocar: () => context.push('/posto/${p.id}'),
                         acao: logado
                             ? IconButton(

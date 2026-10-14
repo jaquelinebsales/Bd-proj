@@ -68,13 +68,25 @@ class Sessao extends ChangeNotifier {
       _executar(() async => _auth.auth.signInWithPassword(email: email.trim(), password: senha));
 
   /// Cria a conta. Retorna true se o e-mail ainda precisa ser confirmado.
-  Future<bool> cadastrar(String nome, String email, String senha) async {
+  Future<bool> cadastrar(
+    String nome,
+    String email,
+    String senha, {
+    String? sobrenome,
+    String? genero,
+    DateTime? dataNascimento,
+  }) async {
     var precisaConfirmar = true;
     await _executar(() async {
       final r = await _auth.auth.signUp(
         email: email.trim(),
         password: senha,
-        data: {'nome': nome.trim()},
+        data: {
+          'nome': nome.trim(),
+          if (sobrenome != null && sobrenome.trim().isNotEmpty) 'sobrenome': sobrenome.trim(),
+          'genero': ?genero,
+          'data_nascimento': ?dataNascimento?.toIso8601String().split('T').first,
+        },
         emailRedirectTo: Config.esquemaRetorno,
       );
       precisaConfirmar = r.session == null;

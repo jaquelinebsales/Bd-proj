@@ -65,6 +65,13 @@ class _Logado extends StatelessWidget {
   final String email;
   const _Logado({required this.perfil, required this.email});
 
+  /// Retorna null se o nome não foi definido ou se coincide com o prefixo do e-mail (padrão do trigger).
+  static String? _nomeValido(String? nome, String email) {
+    if (nome == null || nome.isEmpty) return null;
+    if (nome == email.split('@').first) return null;
+    return nome;
+  }
+
   Future<void> _sair(BuildContext context) async {
     try {
       await Sessao.instancia.sair();
@@ -94,7 +101,8 @@ class _Logado extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     final p = perfil;
     final naoLidas = ServicoNotificacoes.instancia.naoLidas;
-    final iniciais = (p?.nome ?? email).split(' ').where((e) => e.isNotEmpty).take(2).map((e) => e[0].toUpperCase()).join();
+    final nomeValido = _nomeValido(p?.nome, email);
+    final iniciais = (nomeValido ?? email).split(' ').where((e) => e.isNotEmpty).take(2).map((e) => e[0].toUpperCase()).join();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Perfil'), actions: [
@@ -118,7 +126,7 @@ class _Logado extends StatelessWidget {
               const SizedBox(width: 16),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(p?.nome ?? '…', style: tt.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+                  Text(nomeValido ?? '…', style: tt.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
                   Text(email, style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant)),
                   if (!Sessao.instancia.emailConfirmado)
                     Text('E-mail ainda não confirmado', style: tt.bodySmall?.copyWith(color: cs.error)),

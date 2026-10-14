@@ -181,8 +181,8 @@ class _TelaPostoState extends State<TelaPosto> {
       ]),
     );
 
-    final produtoHistorico = d.produtosExibidos.contains(Preferencias.produto.value)
-        ? Preferencias.produto.value
+    final produtoHistorico = d.produtosExibidos.contains(Preferencias.primario)
+        ? Preferencias.primario
         : (d.produtosExibidos.isEmpty ? 1 : d.produtosExibidos.first);
     final historico = Secao(
       titulo: 'Histórico de preços',

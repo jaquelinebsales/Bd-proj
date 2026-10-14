@@ -425,7 +425,7 @@ class _TelaMapaState extends State<TelaMapa> {
   }
 
   List<PostoResumo> _ordenadosPorPreco(List<PostoResumo> postos) {
-    final produto = Preferencias.produto.value;
+    final produto = Preferencias.primario;
     final l = [...postos];
     l.sort((a, b) {
       final pa = a.preco(produto)?.preco, pb = b.preco(produto)?.preco;
@@ -443,7 +443,7 @@ class _TelaMapaState extends State<TelaMapa> {
     final estilo = _estiloMapa;
     if (estilo == null || !mounted) return;
     final desenho = ++_desenhos;
-    final produto = Preferencias.produto.value;
+    final produtos = Preferencias.produto.value;
     final cores = Tema.cores(context);
     final cs = Theme.of(context).colorScheme;
     final densidade = MediaQuery.devicePixelRatioOf(context);
@@ -451,7 +451,7 @@ class _TelaMapaState extends State<TelaMapa> {
     final pontos = <Map<String, Object>>[];
     Map<String, Object>? pontoSelecionado;
     for (final p in postos) {
-      final preco = p.preco(produto);
+      final preco = p.melhorPreco(produtos);
       final selecionado = p.id == _selecionado?.id;
       final a = AparenciaPino.de(preco, selecionado: selecionado, cores: cores, cs: cs);
       aparencias[a.id] = a;
@@ -546,7 +546,7 @@ class _TelaMapaState extends State<TelaMapa> {
             for (final p in visiveis)
               _PinoPreco(
                 posto: p,
-                preco: p.preco(Preferencias.produto.value),
+                preco: p.melhorPreco(Preferencias.produto.value),
                 selecionado: _selecionado?.id == p.id,
                 aoTocar: () => _selecionar(p, mover: false),
               ),
@@ -622,7 +622,7 @@ class _TelaMapaState extends State<TelaMapa> {
       // FAB de localização
       Positioned(
         right: 16,
-        bottom: _selecionado != null && !expandido ? 180 : 16,
+        bottom: _selecionado != null && !expandido ? 196 : 16,
         child: _sobreOMapa(FloatingActionButton.small(
           heroTag: 'centralizar',
           tooltip: 'Minha localização',
@@ -635,13 +635,10 @@ class _TelaMapaState extends State<TelaMapa> {
       ),
       // Bottom sheet do posto selecionado
       if (_selecionado != null && !expandido)
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
+        Positioned.fill(
           child: _sobreOMapa(_FolhaPosto(
             posto: _selecionado!,
-            produtoId: Preferencias.produto.value,
+            produtoId: Preferencias.primario,
             aoFechar: () => setState(() => _selecionado = null),
           )),
         ),
@@ -789,98 +786,235 @@ class _Aviso extends StatelessWidget {
       );
 }
 
-/// Folha inferior com resumo do posto. Aparece recolhida e pode ser arrastada para cima.
-class _FolhaPosto extends StatelessWidget {
+/// Folha inferior com resumo do posto. Recolhida mostra o cartão; ao arrastar para cima expande
+/// para mostrar todos os preços e informações do posto.
+class _FolhaPosto extends StatefulWidget {
   final PostoResumo posto;
   final int produtoId;
   final VoidCallback aoFechar;
   const _FolhaPosto({required this.posto, required this.produtoId, required this.aoFechar});
 
   @override
+  State<_FolhaPosto> createState() => _FolhaPostoState();
+}
+
+class _FolhaPostoState extends State<_FolhaPosto> {
+  final _ctrl = DraggableScrollableController();
+  bool _expandido = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl.addListener(_aoMudar);
+  }
+
+  @override
+  void dispose() {
+    _ctrl.removeListener(_aoMudar);
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  void _aoMudar() {
+    if (!_ctrl.isAttached) return;
+    final exp = _ctrl.size > 0.5;
+    if (exp != _expandido) setState(() => _expandido = exp);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      controller: _ctrl,
+      initialChildSize: 0.28,
+      minChildSize: 0.28,
+      maxChildSize: 0.92,
+      snap: true,
+      snapSizes: const [0.28, 0.92],
+      builder: (context, scrollCtrl) => _conteudo(context, scrollCtrl),
+    );
+  }
+
+  Widget _conteudo(BuildContext context, ScrollController scrollCtrl) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
-    final p = posto.preco(produtoId);
+    final posto = widget.posto;
+    final p = posto.preco(widget.produtoId);
+    final precosDisponiveis = Produto.todos.where((pr) => posto.preco(pr.id) != null).toList();
+
     return Material(
       elevation: 8,
       color: cs.surfaceContainer,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       child: SafeArea(
         top: false,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            // Alça de arrasto
-            Container(
-              width: 36,
-              height: 4,
-              margin: const EdgeInsets.only(bottom: 12),
-              decoration: BoxDecoration(color: cs.outlineVariant, borderRadius: BorderRadius.circular(2)),
-            ),
-            // Nome + preço
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Expanded(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(posto.nome, style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-                      maxLines: 2, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 2),
-                  Text(
-                    [posto.endereco, posto.bairro].where((e) => e != null && e.isNotEmpty).join(' · '),
-                    style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (posto.distanciaKm != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Text(distancia(posto.distanciaKm), style: tt.bodySmall?.copyWith(color: cs.outline)),
+        child: CustomScrollView(
+          controller: scrollCtrl,
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            // Cabeçalho fixo: alça, nome, preço, botões
+            SliverToBoxAdapter(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                // Alça + botão fechar
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 8, 0),
+                  child: Row(children: [
+                    const Spacer(),
+                    Container(
+                      width: 36,
+                      height: 4,
+                      decoration: BoxDecoration(
+                          color: cs.outlineVariant, borderRadius: BorderRadius.circular(2)),
                     ),
-                ]),
-              ),
-              const SizedBox(width: 12),
-              if (p != null)
-                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                  Text(
-                    p.fonte == FontePreco.estimativa ? '≈ ${preco(p.preco)}' : preco(p.preco),
-                    style: tt.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
-                  ),
-                  Row(mainAxisSize: MainAxisSize.min, children: [
-                    PontoFrescor(p.frescor()),
-                    const SizedBox(width: 6),
-                    SeloFonte(p),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: const Icon(Icons.close, size: 20),
+                          tooltip: 'Fechar',
+                          onPressed: widget.aoFechar,
+                        ),
+                      ),
+                    ),
                   ]),
-                ])
+                ),
+                // Nome + preço
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
+                  child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Expanded(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(posto.nome,
+                            style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis),
+                        const SizedBox(height: 2),
+                        Text(
+                          [posto.endereco, posto.bairro]
+                              .where((e) => e != null && e.isNotEmpty)
+                              .join(' · '),
+                          style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        if (posto.distanciaKm != null)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 2),
+                            child: Text(distancia(posto.distanciaKm),
+                                style: tt.bodySmall?.copyWith(color: cs.outline)),
+                          ),
+                      ]),
+                    ),
+                    const SizedBox(width: 12),
+                    if (p != null)
+                      Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                        Text(
+                          p.fonte == FontePreco.estimativa ? '≈ ${preco(p.preco)}' : preco(p.preco),
+                          style: tt.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+                        ),
+                        Row(mainAxisSize: MainAxisSize.min, children: [
+                          PontoFrescor(p.frescor()),
+                          const SizedBox(width: 6),
+                          SeloFonte(p),
+                        ]),
+                      ])
+                    else
+                      Text('Sem preço', style: tt.bodyMedium?.copyWith(color: cs.outline)),
+                  ]),
+                ),
+                // Botões
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+                  child: Row(children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size(0, 44),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                        onPressed: () => context.push('/posto/${posto.id}/enviar'),
+                        icon: const Icon(Icons.photo_camera_outlined, size: 20),
+                        label: const Text('Atualizar'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: FilledButton(
+                        style: FilledButton.styleFrom(
+                          minimumSize: const Size(0, 44),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                        onPressed: () => context.push('/posto/${posto.id}'),
+                        child: const Text('Ver detalhes'),
+                      ),
+                    ),
+                  ]),
+                ),
+              ]),
+            ),
+            // Conteúdo expandido: todos os preços e informações
+            if (_expandido) ...[
+              SliverToBoxAdapter(child: Divider(height: 1, color: cs.outlineVariant)),
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
+                sliver: SliverToBoxAdapter(
+                  child: Text('Preços',
+                      style: tt.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600, color: cs.onSurfaceVariant)),
+                ),
+              ),
+              if (precosDisponiveis.isEmpty)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+                    child: Text('Nenhum preço cadastrado.',
+                        style: tt.bodyMedium?.copyWith(color: cs.outline)),
+                  ),
+                )
               else
-                Text('Sem preço', style: tt.bodyMedium?.copyWith(color: cs.outline)),
-            ]),
-            const SizedBox(height: 12),
-            // Botões
-            Row(children: [
-              Expanded(
-                child: OutlinedButton.icon(
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: const Size(0, 44),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, i) {
+                      final pr = precosDisponiveis[i];
+                      final pc = posto.preco(pr.id)!;
+                      return ListTile(
+                        dense: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                        title: Text(pr.nome, style: tt.bodyMedium),
+                        trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                          PontoFrescor(pc.frescor()),
+                          const SizedBox(width: 8),
+                          Text(
+                            pc.fonte == FontePreco.estimativa
+                                ? '≈ ${preco(pc.preco)}'
+                                : preco(pc.preco),
+                            style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ]),
+                      );
+                    },
+                    childCount: precosDisponiveis.length,
                   ),
-                  onPressed: () => context.push('/posto/${posto.id}/enviar'),
-                  icon: const Icon(Icons.photo_camera_outlined, size: 20),
-                  label: const Text('Atualizar'),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: FilledButton(
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size(0, 44),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              if (posto.notaMedia != null)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 6, 16, 4),
+                    child: Row(children: [
+                      Icon(Icons.star_rounded, size: 16, color: cs.primary),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${posto.notaMedia!.toStringAsFixed(1)}  (${posto.totalAvaliacoes} avaliações)',
+                        style: tt.bodySmall,
+                      ),
+                    ]),
                   ),
-                  onPressed: () => context.push('/posto/${posto.id}'),
-                  child: const Text('Ver detalhes'),
                 ),
+              SliverToBoxAdapter(
+                child: SizedBox(height: MediaQuery.paddingOf(context).bottom + 16),
               ),
-            ]),
-          ]),
+            ],
+          ],
         ),
       ),
     );
@@ -896,7 +1030,7 @@ class _ListaLateral extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final produto = Preferencias.produto.value;
+    final produto = Preferencias.primario;
     return Material(
       color: Theme.of(context).colorScheme.surface,
       child: SafeArea(
