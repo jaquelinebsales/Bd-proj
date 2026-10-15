@@ -45,3 +45,7 @@ Thumbs.db
 .claude/settings.local.json
 app/ios/Flutter/Secrets.xcconfig
 app/test_auditoria/failures/
+
+# QA no Android: APKs gerados e arquivos de execução
+testes_android/apk/
+testes_android/saida/

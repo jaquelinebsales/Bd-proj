@@ -27,7 +27,9 @@ RAIZ = Path(__file__).resolve().parents[2]
 PASTA = RAIZ / "documentacao" / "auditoria"
 # Retrato da auditoria de 06/10/2026, antes das correções (arquivos *_antes). O reteste depois das correções
 # está em remoto.json, automatizados.json e telas.json e aparece no Dashboard e na aba Bugs encontrados.
-SUITES = ["remoto_antes", "automatizados_antes", "telas_antes", "e2e", "android"]
+SUITES = ["remoto_antes", "automatizados_antes", "telas_antes", "e2e", "android", "android_emulador"]
+# Suítes novas: uma falha ainda sem bug catalogado entra na planilha marcada "a triar" em vez de travar a geração
+SUITES_A_TRIAR = {"android_emulador"}
 RETESTE = {"remoto": "Supabase real", "automatizados": "Testes locais (banco, app, funções, scripts)", "telas": "Telas em 7 tamanhos e fontes"}
 # Testes que mudaram de nome no reteste porque a checagem ficou mais precisa
 RENOMEADOS = {
@@ -49,6 +51,7 @@ ABAS = {
     "Performance": ("Performance", "PERF"),
     "Regressão": ("Regressão", "REG"),
     "Android (manual)": ("Android (manual)", "AND"),
+    "Android (emulador)": ("Android (emulador)", "EMU"),
 }
 STATUS = {"PASS": "🟢 PASS", "FAIL": "🔴 FAIL", "BLOCKED": "🟡 BLOCKED", "NOT TESTED": "⚪ NOT TESTED"}
 COLUNAS = ["ID", "Módulo", "Tela/Componente", "Tipo de Teste", "Cenário", "Pré-condições", "Passos", "Dados de Entrada",
@@ -254,7 +257,11 @@ def ligar_bugs(testes: list[dict]) -> list[str]:
                 t["bug"] = b["id"]
                 break
         else:
-            sem_bug.append(t["cenario"])
+            if t.get("_suite") in SUITES_A_TRIAR:
+                t["obs"] = ("A triar: falha nova, ainda sem bug catalogado. " + (t.get("obs") or "")).strip()
+                print(f"  a triar: {t['cenario']}")
+            else:
+                sem_bug.append(t["cenario"])
     return sem_bug
 
 
