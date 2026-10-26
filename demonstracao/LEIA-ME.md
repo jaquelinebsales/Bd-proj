@@ -1,9 +1,11 @@
 # Demonstração do GasPrice
 
-Pasta gerada por `scripts/docs/gerar_demonstracao.py`. Não vai para o GitHub.
+Pasta gerada por `scripts/docs/gerar_demonstracao.py`. Vai para o GitHub: a Vercel publica esta pasta (`vercel.json`
+na raiz do repositório).
 
 - `index.html` e `assets/`: a página da demonstração (aparelho em 3D que se abre de celular em tablet e painel ao vivo).
 - `app/`: o app em Flutter web, no modo demonstração (dados fictícios, sem servidor).
+- `previa/`: a primeira tela do app em imagem (tema claro e escuro), mostrada nos aparelhos enquanto o app carrega.
 
 ## Publicar no portfólio
 

@@ -85,6 +85,22 @@ body {
 }
 .sistema .conteudo iframe.pronto { opacity: 1; }
 .sistema .carregando { position: absolute; inset: 0; display: grid; place-items: center; }
+/* Prévia (a primeira tela do app em imagem) até o app ficar pronto; o app aparece por cima e então ela sai */
+.sistema .previa {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  opacity: 0; transition: opacity 0.35s ease-out; pointer-events: none;
+}
+.tela3d.com-previa .previa { opacity: 1; }
+.tela3d.com-previa .carregando { visibility: hidden; }
+.tela3d.revelado .previa, .tela3d.revelado .previa-aviso { visibility: hidden; }
+.sistema .previa-aviso {
+  position: absolute; left: 50%; bottom: 104px; transform: translateX(-50%); display: none; align-items: center; gap: 10px;
+  padding: 10px 18px; border-radius: 999px; white-space: nowrap; pointer-events: none;
+  background: rgba(16, 19, 23, 0.82); color: #e8eaed; font: 500 17px/1 "Segoe UI", Roboto, system-ui, sans-serif;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.sistema .previa-aviso i { width: 9px; height: 9px; border-radius: 50%; background: #a9c3e6; animation: respirar 1.1s ease-in-out infinite; }
+.tela3d.com-previa:not(.revelado) .previa-aviso { display: flex; }
 .sistema .carregando svg { width: 56px; height: 56px; animation: respirar 1.4s ease-in-out infinite; }
 .sistema .gestos { flex: none; height: var(--gestos, 20px); display: grid; place-items: center; }
 .sistema .gestos span { width: 108px; height: 4px; border-radius: 2px; background: var(--tinta-app); opacity: 0.4; }
@@ -97,10 +113,12 @@ body {
 .tela3d:fullscreen {
   pointer-events: auto !important; border-radius: 0 !important; background: #0a0e14 !important;
 }
-.tela3d:fullscreen .coluna { background: var(--tela-app); overflow: hidden; }
+/* o conteúdo cresce e encolhe (só transform: o navegador anima na GPU, sem engasgar) */
+.tela3d:fullscreen .coluna { background: var(--tela-app); overflow: hidden; transform-origin: 0 0; will-change: transform; }
+/* abrindo: até o app se reorganizar no tamanho da tela, só o fundo (App.jsx) */
+.tela3d.abrindo:fullscreen .coluna, .tela3d.abrindo:fullscreen .barra-cheia { opacity: 0; }
 /* em volta da tela que encolhe ao fechar: o fundo da página, não preto */
 .tela3d::backdrop { background: #0a0e14; }
-.tela3d:fullscreen .coluna { transform-origin: 0 0; }
 .tela3d:fullscreen .furo, .tela3d:fullscreen .status, .tela3d:fullscreen .gestos { display: none; }
 .tela3d:fullscreen .barra-cheia {
   position: absolute; inset: 0 0 auto 0; height: 44px; display: flex; align-items: center; justify-content: space-between;
@@ -134,5 +152,5 @@ body {
 @keyframes surgir { from { opacity: 0; transform: translateY(4px); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .surgir, .sistema .carregando svg, .dica-seta { animation: none; }
+  .surgir, .sistema .carregando svg, .dica-seta, .sistema .previa-aviso i { animation: none; }
 }

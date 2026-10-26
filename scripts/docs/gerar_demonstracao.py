@@ -8,7 +8,8 @@ Gera a pasta demonstracao/ (fora do Git): a demonstração web do app para o por
 O endereço base é relativo ("./"), então a pasta funciona em qualquer caminho do site.
 A página é compilada com o Deno (dev-tools/deno), que roda o Vite sem precisar do Node.
 
-Uso: py -3.12 scripts/docs/gerar_demonstracao.py [--sem-build]   (--sem-build: não recompila o Flutter)
+Uso: py -3.12 scripts/docs/gerar_demonstracao.py [--sem-build] [--sem-previas]
+  --sem-build: não recompila o Flutter; --sem-previas: mantém as imagens de prévia que já existem em previa/
 """
 from __future__ import annotations
 
@@ -140,14 +141,22 @@ DENSIDADE_MAPA = """
         var mapa = new Original(o);
         if (window.__mapasDemo.indexOf(mapa) < 0) window.__mapasDemo.push(mapa);
         // primeiro desenho completo do mapa (estilo, pedaços e pinos): a página mostra o app a partir daí
-        // ("idle" pode demorar se o mapa seguir desenhando: "load" + um instante vale também, o que vier antes)
+        // Pronto = mapa base carregado e os pinos dos postos já na tela (antes disso, a página mostraria o app pela
+        // metade, um passo atrás da prévia). Reserva: 5 s depois de carregar, para uma área sem postos.
         var avisou = false, avisar = function () {
           if (avisou || window.parent === window) return;
           avisou = true;
+          mapa.off('idle', conferir);
           window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'mapaPronto' }, '*');
         };
-        mapa.once('idle', avisar);
-        mapa.once('load', function () { setTimeout(avisar, 800); });
+        var conferir = function () {
+          try {
+            if (mapa.areTilesLoaded() && mapa.getLayer('gasprice-postos') &&
+                mapa.queryRenderedFeatures({ layers: ['gasprice-postos'] }).length) setTimeout(avisar, 250);
+          } catch (e) {}
+        };
+        mapa.on('idle', conferir);
+        mapa.once('load', function () { setTimeout(avisar, 5000); });
         return mapa;
       };
       maplibregl.Map.prototype = p;
@@ -193,10 +202,12 @@ DENSIDADE_MAPA = """
 
 LEIA_ME = """# Demonstração do GasPrice
 
-Pasta gerada por `scripts/docs/gerar_demonstracao.py`. Não vai para o GitHub.
+Pasta gerada por `scripts/docs/gerar_demonstracao.py`. Vai para o GitHub: a Vercel publica esta pasta (`vercel.json`
+na raiz do repositório).
 
 - `index.html` e `assets/`: a página da demonstração (aparelho em 3D que se abre de celular em tablet e painel ao vivo).
 - `app/`: o app em Flutter web, no modo demonstração (dados fictícios, sem servidor).
+- `previa/`: a primeira tela do app em imagem (tema claro e escuro), mostrada nos aparelhos enquanto o app carrega.
 
 ## Publicar no portfólio
 
@@ -234,6 +245,93 @@ def versionar() -> None:
             texto = texto.replace(antes, depois, 1)
         arquivo.write_text(texto, encoding="utf-8")
     print(f"versão do app: {v}")
+    return v
+
+
+# Área do app na tela de cada aparelho, em dp (palco.js, APARELHOS: tela menos as barras de status e de gestos), e a
+# densidade da imagem (o bastante para o tamanho em que o aparelho aparece, sem pesar no primeiro carregamento)
+PREVIAS = {
+    "celular-retrato": (412, 891 - 32 - 20, 2),
+    "tablet-deitado": (1480, 924 - 28 - 24, 1.25),
+    "tablet-empe": (924, 1480 - 28 - 24, 1.5),
+}
+# O app dentro de um iframe, como na página (os ajustes da demonstração só valem dentro de uma moldura); avisa
+# quando o mapa ficou pronto (com os pinos) e dá um tempo para os nomes assentarem
+MOLDURA_PREVIA = """<!doctype html><meta charset="utf-8">
+<style>html,body{margin:0;overflow:hidden}iframe{border:0;display:block;width:100vw;height:100vh}</style>
+<iframe id="app"></iframe>
+<script>
+  const q = new URLSearchParams(location.search);
+  document.getElementById('app').src = 'app/?dpr=' + q.get('dpr') + '&escala=1&v=' + q.get('v');
+  addEventListener('message', e => { if (e.data && e.data.tipo === 'mapaPronto') setTimeout(() => { document.title = 'pronto'; }, 1500); });
+</script>"""
+WEBP = """async b64 => { const i = new Image(); i.src = 'data:image/png;base64,' + b64; await i.decode();
+  const c = document.createElement('canvas'); c.width = i.width; c.height = i.height; c.getContext('2d').drawImage(i, 0, 0);
+  return c.toDataURL('image/webp', 0.8).split(',')[1]; }"""
+
+
+def gerar_previas(v: str) -> None:
+    """A primeira tela do app em imagem, para os aparelhos não ficarem só no ícone de carregamento enquanto o app
+    (uns 3 MB de motor Flutter) baixa e compila: a página mostra a imagem e troca pelo app de verdade quando ele fica
+    pronto. Usa o Playwright e a internet (blocos do mapa); sem eles, a página segue com o ícone."""
+    import base64
+    import functools
+    import threading
+    from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        print("Sem o Playwright: as prévias não foram geradas (a página mostra o ícone de carregamento)")
+        return
+
+    class Silencioso(SimpleHTTPRequestHandler):
+        def log_message(self, *_):
+            pass
+
+    moldura = DESTINO / "_previa.html"
+    moldura.write_text(MOLDURA_PREVIA, encoding="utf-8")
+    pasta = DESTINO / "previa"
+    pasta.mkdir(exist_ok=True)
+    servidor = ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(Silencioso, directory=str(DESTINO)))
+    threading.Thread(target=servidor.serve_forever, daemon=True).start()
+    try:
+        with sync_playwright() as p:
+            try:
+                navegador = p.chromium.launch()
+            except Exception:
+                navegador = p.chromium.launch(channel="msedge")
+            for tema, esquema in (("claro", "light"), ("escuro", "dark")):
+                for nome, (largura, altura, densidade) in PREVIAS.items():
+                    ctx = navegador.new_context(viewport={"width": largura, "height": altura}, device_scale_factor=densidade,
+                                                color_scheme=esquema)
+                    pg = ctx.new_page()
+                    pg.goto(f"http://127.0.0.1:{servidor.server_address[1]}/_previa.html?dpr={densidade}&v={v}")
+                    pg.wait_for_function("document.title === 'pronto'", timeout=90000)
+                    webp = pg.evaluate(WEBP, base64.b64encode(pg.screenshot()).decode())
+                    (pasta / f"{nome}-{tema}.webp").write_bytes(base64.b64decode(webp))
+                    ctx.close()
+            navegador.close()
+        print("prévias: " + ", ".join(f"{a.name} ({a.stat().st_size // 1024} KB)" for a in sorted(pasta.glob("*.webp"))))
+    except Exception as e:
+        print(f"Prévias não geradas ({e}); a página mostra o ícone de carregamento")
+    finally:
+        servidor.shutdown()
+        moldura.unlink(missing_ok=True)
+
+
+def adiantar_previas(v: str) -> None:
+    """As prévias que aparecem primeiro (celular em pé e tablet deitado) começam a baixar com a página, só as do tema
+    de quem visita; o endereço (com ?v) é o mesmo que palco.js pede."""
+    links = [
+        f'<link rel="preload" as="image" href="previa/{nome}-{tema}.webp?v={v}" media="(prefers-color-scheme: {esquema})">'
+        for nome in ("celular-retrato", "tablet-deitado")
+        for tema, esquema in (("claro", "light"), ("escuro", "dark"))
+        if (DESTINO / "previa" / f"{nome}-{tema}.webp").exists()
+    ]
+    if links:
+        indice = DESTINO / "index.html"
+        indice.write_text(indice.read_text(encoding="utf-8").replace("</head>", "\n".join(links) + "\n</head>", 1), encoding="utf-8")
 
 
 def main() -> int:
@@ -268,7 +366,10 @@ def main() -> int:
     if (DESTINO / "assets").exists():
         shutil.rmtree(DESTINO / "assets")
     shutil.copytree(PAGINA / "dist", DESTINO, dirs_exist_ok=True)
-    versionar()
+    v = versionar()
+    if "--sem-previas" not in sys.argv:
+        gerar_previas(v)
+    adiantar_previas(v)
     endereco_mapa = re.search(r'src="([^"]+)"', mapa.group(0)).group(1)
     if endereco_mapa not in (DESTINO / "index.html").read_text(encoding="utf-8"):
         print(f"Aviso: a página não adianta o {endereco_mapa} (atualize o prefetch em demonstracao_web/index.html)")

@@ -141,14 +141,22 @@
         var mapa = new Original(o);
         if (window.__mapasDemo.indexOf(mapa) < 0) window.__mapasDemo.push(mapa);
         // primeiro desenho completo do mapa (estilo, pedaços e pinos): a página mostra o app a partir daí
-        // ("idle" pode demorar se o mapa seguir desenhando: "load" + um instante vale também, o que vier antes)
+        // Pronto = mapa base carregado e os pinos dos postos já na tela (antes disso, a página mostraria o app pela
+        // metade, um passo atrás da prévia). Reserva: 5 s depois de carregar, para uma área sem postos.
         var avisou = false, avisar = function () {
           if (avisou || window.parent === window) return;
           avisou = true;
+          mapa.off('idle', conferir);
           window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'mapaPronto' }, '*');
         };
-        mapa.once('idle', avisar);
-        mapa.once('load', function () { setTimeout(avisar, 800); });
+        var conferir = function () {
+          try {
+            if (mapa.areTilesLoaded() && mapa.getLayer('gasprice-postos') &&
+                mapa.queryRenderedFeatures({ layers: ['gasprice-postos'] }).length) setTimeout(avisar, 250);
+          } catch (e) {}
+        };
+        mapa.on('idle', conferir);
+        mapa.once('load', function () { setTimeout(avisar, 5000); });
         return mapa;
       };
       maplibregl.Map.prototype = p;

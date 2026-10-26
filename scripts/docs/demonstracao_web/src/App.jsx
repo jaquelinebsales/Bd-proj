@@ -27,6 +27,13 @@ const progresso = () => window.scrollY / ALTURA;
 // Aparelho de quem visita (só com toque): celular se o lado menor da tela tem menos de 600 px, senão tablet
 const aparelhoDoVisitante = () =>
   !window.matchMedia('(pointer: coarse)').matches ? null : Math.min(screen.width, screen.height) < 600 ? 'celular' : 'tablet';
+const espera = ms => new Promise(r => setTimeout(r, ms));
+const quadro = (w = window) => new Promise(r => w.requestAnimationFrame(r));
+// O app (Flutter, no iframe) já desenhou o tamanho ou a escala nova: alguns quadros dele depois do aviso, com teto
+async function appRedesenhou(iframe, teto = 700) {
+  const w = iframe.contentWindow;
+  await Promise.race([(async () => { await espera(40); for (let i = 0; i < 3; i++) await quadro(w); })(), espera(teto)]);
+}
 // Transformação que leva o elemento (sem transformação, origem no canto) a ocupar o retângulo r
 function transformarPara(el, r) {
   const b = el.getBoundingClientRect();
@@ -166,10 +173,28 @@ export default function App() {
       // onde a tela do app está na página: ao fechar, ela encolhe até aqui antes de sair da tela cheia
       Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo, modo: 'aparelho',
                          origem: ap.iframe.getBoundingClientRect(), alturaAntes: window.innerHeight });
+      // a cena 3D para por trás (não anda nem se refaz): ao voltar, o aparelho já está no lugar, com a borda
       motor.current.palco.pausar();
-      ap.telaEl.requestFullscreen({ navigationUI: 'hide' })
-        .then(() => ap.mensagem('escala', 1))   // em tela cheia o app desenha 1:1, no tamanho real da tela
+      const tela = ap.telaEl, coluna = tela.querySelector('.coluna');
+      // "abrindo": em tela cheia, o conteúdo fica escondido até o app se reorganizar no tamanho da tela; então
+      // ele cresce a partir do aparelho, já no layout final (só posição e tamanho: o navegador anima sem engasgar)
+      tela.classList.add('abrindo');
+      tela.requestFullscreen({ navigationUI: 'hide' })
+        .then(async () => {
+          ap.mensagem('escala', 1);   // em tela cheia o app desenha 1:1, no tamanho real da tela
+          await appRedesenhou(ap.iframe);
+          await quadro();
+          tela.classList.remove('abrindo');
+          if (!c.aberta || c.fechando || document.fullscreenElement !== tela) return;
+          const o = c.origem, b = coluna.getBoundingClientRect(), desce = window.innerHeight - c.alturaAntes;
+          coluna.animate([
+            { transform: `translate(${o.left - b.left}px, ${o.top + desce - b.top}px) scale(${o.width / b.width}, ${o.height / b.height})` },
+            { transform: 'none' },
+          ], { duration: 400, easing: 'cubic-bezier(.2,.8,.2,1)' });
+          tela.querySelector('.barra-cheia').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, easing: 'ease-out' });
+        })
         .catch(() => {
+          tela.classList.remove('abrindo');
           Object.assign(c, { aberta: false, modo: null });
           motor.current.palco.retomar();
           abrirCopia(tipo);
@@ -213,43 +238,35 @@ export default function App() {
     if (!c.aberta || c.fechando || !ap) return;
     c.fechando = true;
     if (c.modo === 'aparelho') {
-      const coluna = ap.sistemaEl.querySelector('.coluna');
+      const tela = ap.telaEl, coluna = tela.querySelector('.coluna'), barra = tela.querySelector('.barra-cheia');
       let encolhida = null;
-      if (document.fullscreenElement === ap.telaEl) {
-        // Fechar: a tela encolhe ainda na tela cheia (o app parado, o movimento fica liso) até o lugar do aparelho;
-        // a barra do navegador volta em cima, então o lugar desce o quanto a janela cresceu ao entrar
+      if (document.fullscreenElement === tela) {
+        // Fechar: o conteúdo encolhe ainda na tela cheia até o lugar exato da tela do aparelho (a barra do navegador
+        // volta em cima: o lugar desce o quanto a janela cresceu). Só posição e tamanho: liso mesmo no tablet.
         const o = c.origem, b = coluna.getBoundingClientRect(), desce = window.innerHeight - c.alturaAntes;
-        const curva = 'cubic-bezier(.4,0,.2,1)';
-        ap.telaEl.querySelector('.barra-cheia').animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards' });
+        barra.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, fill: 'forwards' });
         encolhida = coluna.animate([
-          { transform: 'none', borderRadius: '0px' },
-          { transform: `translate(${o.left - b.left}px, ${o.top + desce - b.top}px) scale(${o.width / b.width}, ${o.height / b.height})`, borderRadius: '18px' },
-        ], { duration: 420, easing: curva, fill: 'forwards' });
+          { transform: 'none' },
+          { transform: `translate(${o.left - b.left}px, ${o.top + desce - b.top}px) scale(${o.width / b.width}, ${o.height / b.height})` },
+        ], { duration: 380, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
         await encolhida.finished.catch(() => {});
+        // sai da tela cheia com o app ainda parado (nada pesado segurando o navegador)
+        await document.exitFullscreen?.().catch(() => {});
       }
-      // o app volta à escala do aparelho junto com a saída da tela cheia: reorganiza uma vez só
-      ap.mensagem('escala', ap.k);
-      if (document.fullscreenElement) await document.exitFullscreen?.().catch(() => {});
+      // De volta à página: o aparelho está no lugar, com a borda. O app se reorganiza no tamanho do aparelho
+      // escondido por um instante (sem mostrar o desenho antigo cortado) e aparece suave quando terminar.
+      ap.iframe.style.transition = 'none';
+      ap.iframe.style.opacity = '0';
+      encolhida?.cancel();
+      barra.getAnimations().forEach(a => a.cancel());
       motor.current.palco.retomar();
       window.scrollTo(0, c.scroll);
-      if (encolhida) {
-        encolhida.cancel();
-        ap.telaEl.querySelectorAll('.barra-cheia').forEach(el => el.getAnimations().forEach(a => a.cancel()));
-        Object.assign(c, { aberta: false, fechando: false, modo: null });
-        return;
-      }
-      // saiu pelo navegador (voltar do Android, Esc): encolhe já na página, do tamanho da tela até o aparelho
-      await new Promise(r => requestAnimationFrame(r));
-      const sis = ap.sistemaEl, base = sis.style.transform, R = sis.getBoundingClientRect(), e = R.width / sis.offsetWidth;
-      if (R.width > 0 && e > 0) {
-        const vw = window.innerWidth, vh = window.innerHeight;
-        const de = `${base} translate(${(vw / 2 - (R.left + R.width / 2)) / e}px, ${(vh / 2 - (R.top + R.height / 2)) / e}px) scale(${vw / R.width}, ${vh / R.height})`;
-        ap.telaEl.style.overflow = 'visible';
-        // o corpo do aparelho (camada WebGL, por cima) some enquanto a tela encolhe e volta em volta dela
-        document.querySelector('.camada-gl')?.animate([{ opacity: 0 }, { opacity: 0, offset: 0.55 }, { opacity: 1 }], { duration: 520 });
-        await sis.animate([{ transform: de }, { transform: base }], { duration: 480, easing: 'cubic-bezier(.4,0,.2,1)' }).finished.catch(() => {});
-        ap.telaEl.style.overflow = '';
-      }
+      motor.current.redesenhar?.();
+      ap.mensagem('escala', ap.k);
+      await appRedesenhou(ap.iframe);
+      ap.iframe.style.transition = 'opacity .22s ease-out';
+      ap.iframe.style.opacity = '';
+      setTimeout(() => { ap.iframe.style.transition = ''; }, 260);
       Object.assign(c, { aberta: false, fechando: false, modo: null });
       return;
     }
@@ -324,7 +341,7 @@ export default function App() {
     for (const tipo of TIPOS) {
       aparelhos[tipo] = new Aparelho(palco, tipo, { enderecoApp: ENDERECO_APP });
     }
-    motor.current = { palco, aparelhos };
+    motor.current = { palco, aparelhos, redesenhar: () => { sujo.valor = true; } };
     const inicial = alvos(progresso(), palco.largura, palco.altura, giros.current);
     const atual = {};
     for (const tipo of TIPOS) {
@@ -387,6 +404,8 @@ export default function App() {
     const passo = agora => {
       const dt = Math.min(0.05, (agora - ultimo) / 1000);
       ultimo = agora;
+      // tela cheia aberta: a cena não anda (a janela muda de tamanho e a rolagem pode variar por trás)
+      if (palco.pausado) { id = requestAnimationFrame(passo); return; }
       const p = progresso();
       // Fora da sua seção, o aparelho volta à orientação natural: nunca fica "preso" na última forma
       if (giros.current.celular && (p < CEL[0] - 0.2 || p > CEL[1] + 0.2)) giros.current.celular = false;
@@ -522,7 +541,7 @@ export default function App() {
       try { d = JSON.parse(ev.data); } catch { return; }
       if (!d || d.fonte !== 'gasprice') return;
       // o app já desenhou; se a tela dele não tiver mapa (ou o mapa demorar), aparece assim mesmo
-      aps[tipo].revelarEm(6000);
+      aps[tipo].revelarEm(10000);
       if (d.tipo === 'tela' && typeof d.nome === 'string') {
         const mudou = telas.current[tipo] !== d.nome;
         telas.current[tipo] = d.nome;
@@ -536,7 +555,8 @@ export default function App() {
       }
     };
     window.addEventListener('message', ouvir);
-    const reserva = setTimeout(() => TIPOS.forEach(t => motor.current.aparelhos?.[t].revelar()), 12000);
+    // reserva para avisos que nunca chegam (enquanto isso, a prévia segura a tela: melhor que um app pela metade)
+    const reserva = setTimeout(() => TIPOS.forEach(t => motor.current.aparelhos?.[t].carregado && motor.current.aparelhos[t].revelar()), 30000);
     return () => { window.removeEventListener('message', ouvir); clearTimeout(reserva); };
   }, [focar, voltarABase, abrirTelaCheia]);
 

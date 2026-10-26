@@ -272,7 +272,8 @@ export class Aparelho {
       <div class="sistema">
         <div class="coluna">
           <div class="status"><span class="hora"></span><span class="icones">${ICONES}</span></div>
-          <div class="conteudo"><div class="carregando">${LOGO}</div></div>
+          <div class="conteudo"><div class="carregando">${LOGO}</div><img class="previa" alt="" decoding="async">
+            <span class="previa-aviso"><i></i>Carregando o app…</span></div>
           <div class="gestos"><span></span></div>
         </div>
       </div>
@@ -284,6 +285,10 @@ export class Aparelho {
     this.sistemaEl = tela.querySelector('.sistema');
     this.horaEl = tela.querySelector('.hora');
     this.carregandoEl = tela.querySelector('.carregando');
+    // Prévia: a primeira tela do app em imagem (gerar_demonstracao.py), até o app de verdade ficar pronto
+    this.previaEl = tela.querySelector('.previa');
+    this.previaEl.addEventListener('load', () => tela.classList.add('com-previa'));
+    this.previaEl.addEventListener('error', () => { tela.classList.remove('com-previa'); this.previaEl.removeAttribute('src'); });
     this.iframe = document.createElement('iframe');
     this.iframe.title = `GasPrice no ${this.tipo === 'celular' ? 'celular' : 'tablet'}`;
     tela.querySelector('.conteudo').append(this.iframe);
@@ -316,6 +321,10 @@ export class Aparelho {
   carregar(s) {
     this.dpr = Math.min(3, window.devicePixelRatio || 1);
     this.k = s;
+    // o tamanho do app foi medido ao montar o aparelho, antes de haver escala: refaz já na escala certa (sem isto o
+    // app de um aparelho parado, como o tablet na primeira tela, achava que a tela era 1/k maior)
+    this.app = { w: 0, h: 0, quando: 0 };
+    if (this.pose) this.aplicar(this.pose, true);
     // v = versão do app (gerar_demonstracao.py): um app novo nunca abre com arquivos antigos guardados pelo navegador
     const versao = document.querySelector('meta[name="versao-app"]')?.content;
     this.iframe.src = `${this.enderecoApp}?dpr=${this.dpr}&escala=${s}${versao ? `&v=${versao}` : ''}`;
@@ -332,6 +341,9 @@ export class Aparelho {
     this.esperaRevelar = null;
     this.iframe.classList.remove('pronto');
     this.carregandoEl.style.display = '';
+    this.telaEl.classList.remove('revelado');
+    this.previaPedida = undefined;
+    this.definirPrevia(this.orientacaoPrevia);
     this.iframe.src = 'about:blank';
   }
 
@@ -356,6 +368,7 @@ export class Aparelho {
     const recuo = (a.furoDeitado || 0) * r;
     s.setProperty('--recuo', recuo + 'px');
     const w = sw - recuo, h = sh - status - a.gestos;
+    this.definirPrevia(this.tipo === 'celular' ? (r > 0.5 ? null : 'retrato') : (r > 0.5 ? 'empe' : 'deitado'));
     this.ajustarApp(w, h, forcarApp);
     this.aoMedir?.({ w: Math.round(w), h: Math.round(h), densidade: this.dpr });
   }
@@ -459,6 +472,18 @@ export class Aparelho {
     this.telaEl.classList.toggle('interativo', sim);
   }
 
+  // A prévia na orientação da tela (o celular deitado não tem: fica o ícone); só enquanto o app não aparece
+  definirPrevia(orientacao) {
+    this.orientacaoPrevia = orientacao;
+    if (this.revelado || orientacao === this.previaPedida) return;
+    this.previaPedida = orientacao;
+    this.telaEl.classList.remove('com-previa');
+    if (!orientacao) { this.previaEl.removeAttribute('src'); return; }
+    const tema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'escuro' : 'claro';
+    const versao = document.querySelector('meta[name="versao-app"]')?.content;
+    this.previaEl.src = `previa/${this.tipo}-${orientacao}-${tema}.webp${versao ? `?v=${versao}` : ''}`;
+  }
+
   revelarEm(ms) {
     if (this.revelado || this.esperaRevelar) return;
     this.esperaRevelar = setTimeout(() => this.revelar(), ms);
@@ -470,6 +495,11 @@ export class Aparelho {
     if (this.revelado) return;
     this.revelado = true;
     this.iframe.classList.add('pronto');
-    setTimeout(() => { if (this.revelado) this.carregandoEl.style.display = 'none'; }, 500);
+    // o app aparece por cima da prévia (0,4 s); depois a prévia e o ícone saem de baixo
+    setTimeout(() => {
+      if (!this.revelado) return;
+      this.carregandoEl.style.display = 'none';
+      this.telaEl.classList.add('revelado');
+    }, 500);
   }
 }
