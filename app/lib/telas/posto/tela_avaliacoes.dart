@@ -96,15 +96,18 @@ class _TelaAvaliacoesState extends State<TelaAvaliacoes> {
         icon: const Icon(Icons.rate_review_outlined),
         label: Text(_posto?.minhaAvaliacao == null ? 'Avaliar' : 'Editar minha avaliação'),
       ),
-      body: LarguraMaxima(
-        child: NotificationListener<ScrollNotification>(
-          onNotification: (n) {
-            if (n.metrics.pixels > n.metrics.maxScrollExtent - 300) _maisItens();
-            return false;
-          },
-          child: RefreshIndicator(
-            onRefresh: _recarregar,
-            child: ListView(padding: const EdgeInsets.fromLTRB(16, 16, 16, 96), children: [
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (n) {
+          if (n.metrics.pixels > n.metrics.maxScrollExtent - 300) _maisItens();
+          return false;
+        },
+        child: RefreshIndicator(
+          onRefresh: _recarregar,
+          // No tablet em paisagem: resumo das notas à esquerda, avaliações em duas colunas à direita
+          child: ColunasAdaptaveis(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
+            flexDireita: 2,
+            esquerda: [
               if (_posto != null)
                 Card(
                   child: Padding(
@@ -129,6 +132,8 @@ class _TelaAvaliacoesState extends State<TelaAvaliacoes> {
                 },
               ),
               const SizedBox(height: 12),
+            ],
+            direita: [
               if (_erro != null) EstadoErro(_erro!, _recarregar),
               if (_lista.isEmpty && !_carregando && _erro == null)
                 const EstadoVazio(
@@ -136,10 +141,11 @@ class _TelaAvaliacoesState extends State<TelaAvaliacoes> {
                   titulo: 'Nenhuma avaliação ainda',
                   texto: 'Seja a primeira pessoa a avaliar este posto.',
                 ),
-              for (final a in _lista)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Card(
+              LinhasDeCartoes(
+                colunas: tamanhoDe(context) == Tamanho.expandido ? 2 : 1,
+                cartoes: [
+                  for (final a in _lista)
+                    Card(
                     child: Padding(
                       padding: const EdgeInsets.all(14),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -161,9 +167,10 @@ class _TelaAvaliacoesState extends State<TelaAvaliacoes> {
                       ]),
                     ),
                   ),
-                ),
+                ],
+              ),
               if (_carregando) const Padding(padding: EdgeInsets.all(16), child: Center(child: CircularProgressIndicator())),
-            ]),
+            ],
           ),
         ),
       ),

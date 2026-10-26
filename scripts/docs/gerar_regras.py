@@ -19,7 +19,8 @@ e = html.escape
 # ------------------------------------------------------------------ caminho de um preço
 def fluxo() -> str:
     s = ['<svg viewBox="0 0 1160 312" role="img" aria-label="Caminho de um preço: a foto é lida e apagada no celular; '
-         'só valores e posição vão ao servidor, que valida; o banco confirma com duas pessoas em 24 horas.">',
+         'valores, texto reconhecido e posição vão ao servidor, sem a foto; o servidor valida e o banco confirma com '
+         'duas pessoas em 24 horas.">',
          '<defs>'
          '<marker id="f-ponta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" '
          'markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>'
@@ -57,7 +58,7 @@ def fluxo() -> str:
     m = y + h / 2
     seta([(152, m), (190, m)], "foto local", 171, 78)
     seta([(346, m), (386, m)], "valores lidos", 366, 78)
-    seta([(522, m), (576, m)], "só valores + posição", 550, 78, destaque=True)
+    seta([(522, m), (576, m)], "sem a foto", 550, 78, destaque=True)
     seta([(778, m), (834, m)], "proposta", 807, 78)
     seta([(976, m), (1010, m)], "confirma", 993, 78)
 
@@ -272,7 +273,8 @@ REGRAS = [
     ("Conta e acesso", [
         ("Consultar mapa, busca, filtros, preços, histórico, avaliações e ranking não exige conta.", [C, B], ""),
         ("Enviar preços, avaliar, votar em avaliações e guardar favoritos na conta exigem login.", [S, B], ""),
-        ("O cadastro pede só nome, e-mail e senha. Não pede CPF, data de nascimento nem endereço.", [C], ""),
+        ("O cadastro pede nome, e-mail e senha. Sobrenome, gênero e data de nascimento são opcionais; a data, quando "
+         "informada, indica pelo menos 13 anos. Não pede CPF nem endereço.", [C, S], "13+ anos"),
         ("A senha precisa ter pelo menos 8 caracteres, com letra maiúscula, letra minúscula, número e caractere especial.",
          [C, S], "8+"),
         ("O e-mail precisa ser confirmado pelo link antes do primeiro envio de preço.", [S], ""),

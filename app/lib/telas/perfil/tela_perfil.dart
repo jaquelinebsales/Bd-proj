@@ -114,8 +114,10 @@ class _Logado extends StatelessWidget {
       ]),
       body: RefreshIndicator(
         onRefresh: Sessao.instancia.carregarPerfil,
+        // Uma coluna só: os números e, abaixo deles, as opções da conta
         child: LarguraMaxima(
-          child: ListView(padding: const EdgeInsets.all(16), children: [
+          maxima: larguraListas,
+          child: ListView(physics: const AlwaysScrollableScrollPhysics(), padding: const EdgeInsets.all(16), children: [
             Row(children: [
               CircleAvatar(
                 radius: 36,
@@ -146,58 +148,33 @@ class _Logado extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 20),
-            Row(children: [
-              _Numero(valor: '${p?.pontos ?? 0}', rotulo: 'pontos', aoTocar: () => context.push('/pontos')),
-              _Numero(
-                valor: p == null || p.posicaoRanking == 0 ? '–' : '${p.posicaoRanking}º',
-                rotulo: 'no ranking',
-                aoTocar: () => context.push('/ranking'),
-              ),
-              _Numero(valor: p?.nivel ?? '–', rotulo: 'nível', pequeno: true),
-            ]),
-            const SizedBox(height: 8),
-            Row(children: [
-              _Numero(valor: '${p?.totalEnvios ?? 0}', rotulo: 'preços enviados'),
-              _Numero(valor: '${p?.enviosConfirmados ?? 0}', rotulo: 'confirmados'),
-              _Numero(valor: '${p?.totalAvaliacoes ?? 0}', rotulo: 'avaliações'),
-            ]),
+            ...() {
+              final numeros = [
+                _Numero(valor: '${p?.pontos ?? 0}', rotulo: 'pontos', aoTocar: () => context.push('/pontos')),
+                _Numero(
+                  valor: p == null || p.posicaoRanking == 0 ? '–' : '${p.posicaoRanking}º',
+                  rotulo: 'no ranking',
+                  aoTocar: () => context.push('/ranking'),
+                ),
+                _Numero(valor: p?.nivel ?? '–', rotulo: 'nível', pequeno: true),
+                // os cards abrem a lista inteira: todos os preços enviados e todas as avaliações da conta
+                _Numero(
+                  valor: '${p?.totalEnvios ?? 0}',
+                  rotulo: 'preços enviados',
+                  aoTocar: () => context.push('/perfil/envios'),
+                ),
+                _Numero(valor: '${p?.enviosConfirmados ?? 0}', rotulo: 'confirmados'),
+                _Numero(
+                  valor: '${p?.totalAvaliacoes ?? 0}',
+                  rotulo: 'avaliações',
+                  aoTocar: () => context.push('/perfil/avaliacoes'),
+                ),
+              ];
+              // no tablet em paisagem, os seis numa linha; no celular e em retrato, duas linhas de três
+              if (tamanhoDe(context) == Tamanho.expandido) return [Row(children: numeros)];
+              return [Row(children: numeros.sublist(0, 3)), const SizedBox(height: 8), Row(children: numeros.sublist(3))];
+            }(),
             const SizedBox(height: 24),
-            if (p != null && p.ultimosEnvios.isNotEmpty) ...[
-              Text('Últimos preços enviados', style: tt.titleMedium),
-              const SizedBox(height: 8),
-              Card(
-                child: Column(children: [
-                  for (final e in p.ultimosEnvios.take(5))
-                    ListTile(
-                      onTap: () => context.push('/posto/${e['posto_id']}'),
-                      title: Text(nomeExibicao(e['posto'].toString())),
-                      subtitle: Text('${Produto.porId((e['produto_id'] as num).toInt()).nome} · '
-                          '${_status(e['status'].toString())} · '
-                          '${tempoRelativo(DateTime.parse(e['criado_em'].toString()).toLocal())}'),
-                      trailing: Text(preco((e['preco'] as num).toDouble()), style: const TextStyle(fontWeight: FontWeight.w700)),
-                    ),
-                ]),
-              ),
-              const SizedBox(height: 16),
-            ],
-            if (p != null && p.ultimasAvaliacoes.isNotEmpty) ...[
-              Text('Últimas avaliações', style: tt.titleMedium),
-              const SizedBox(height: 8),
-              Card(
-                child: Column(children: [
-                  for (final a in p.ultimasAvaliacoes)
-                    ListTile(
-                      onTap: () => context.push('/posto/${a['posto_id']}'),
-                      title: Text(nomeExibicao(a['posto'].toString())),
-                      subtitle: a['comentario'] == null
-                          ? null
-                          : Text(a['comentario'].toString(), maxLines: 2, overflow: TextOverflow.ellipsis),
-                      trailing: Estrelas((a['nota'] as num).toDouble(), tamanho: 14),
-                    ),
-                ]),
-              ),
-              const SizedBox(height: 16),
-            ],
             Card(
               child: Column(children: [
                 ListTile(
@@ -244,14 +221,6 @@ class _Logado extends StatelessWidget {
       ),
     );
   }
-
-  String _status(String s) => switch (s) {
-        'confirmado' => 'confirmado',
-        'pendente' => 'aguardando',
-        'contestado' => 'contrariado',
-        'expirado' => 'sem confirmação',
-        _ => s,
-      };
 }
 
 /// Confirmação da exclusão: exige digitar EXCLUIR para evitar toque acidental.

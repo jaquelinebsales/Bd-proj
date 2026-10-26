@@ -40,6 +40,7 @@ class _TelaNotificacoesState extends State<TelaNotificacoes> {
         ),
       ]),
       body: LarguraMaxima(
+        maxima: larguraListas,
         child: FutureBuilder<List<Notificacao>>(
           future: _lista,
           builder: (context, snap) {
@@ -53,27 +54,25 @@ class _TelaNotificacoesState extends State<TelaNotificacoes> {
                 texto: 'Quando o preço de um posto favorito mudar pelo menos R\$ 0,05, o aviso aparece aqui.',
               );
             }
-            return ListView.separated(
+            return GradeDeCartoes(
+              colunas: colunasDeCartoes(context),
               padding: const EdgeInsets.all(16),
-              itemCount: lista.length,
-              separatorBuilder: (_, _) => const SizedBox(height: 6),
-              itemBuilder: (context, i) {
+              quantidade: lista.length,
+              cartao: (context, i) {
                 final n = lista[i];
                 final caiu = n.precoNovo < n.precoAnterior;
                 final produto = Produto.porId(n.produtoId).nome;
-                return Card(
-                  color: n.lida ? null : cs.secondaryContainer,
-                  child: ListTile(
-                    // Toque abre o gráfico do histórico de preço daquele combustível
-                    onTap: () => context.push('/posto/${n.postoId}/historico?produto=${n.produtoId}'),
-                    leading: CircleAvatar(
-                      backgroundColor: (caiu ? cs.primary : cs.error).withValues(alpha: 0.15),
-                      child: Icon(caiu ? Icons.trending_down : Icons.trending_up, color: caiu ? cs.primary : cs.error),
-                    ),
-                    title: Text(n.nomePosto ?? 'Posto favorito'),
-                    subtitle: Text(produto),
-                    trailing: Text(preco(n.precoNovo), style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+                return CartaoLinha(
+                  cor: n.lida ? null : cs.secondaryContainer,
+                  // Toque abre o gráfico do histórico de preço daquele combustível
+                  aoTocar: () => context.push('/posto/${n.postoId}/historico?produto=${n.produtoId}'),
+                  inicio: CircleAvatar(
+                    backgroundColor: (caiu ? cs.primary : cs.error).withValues(alpha: 0.15),
+                    child: Icon(caiu ? Icons.trending_down : Icons.trending_up, color: caiu ? cs.primary : cs.error),
                   ),
+                  titulo: n.nomePosto ?? 'Posto favorito',
+                  detalhe: produto,
+                  fim: Text(preco(n.precoNovo), style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
                 );
               },
             );

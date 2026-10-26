@@ -166,7 +166,7 @@ footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rul
     <div class="principios">
       <div class="principio"><b>Consultar é livre</b><span>Mapa, busca, preços, histórico e avaliações funcionam sem conta.</span></div>
       <div class="principio"><b>Enviar é propor</b><span>Ninguém altera um preço direto. O envio vira preço quando outra pessoa confirma.</span></div>
-      <div class="principio"><b>A foto fica no celular</b><span>O painel é lido no aparelho e a foto é apagada. Só os valores vão para o servidor.</span></div>
+      <div class="principio"><b>A foto fica no celular</b><span>O painel é lido no aparelho e a foto é apagada. Ela nunca é enviada: vão os valores e o texto reconhecido.</span></div>
       <div class="principio"><b>A ANP desempata</b><span>Quando os envios da comunidade discordam, vale a pesquisa oficial.</span></div>
       <div class="principio"><b>Todo preço diz de onde veio</b><span>Comunidade, pesquisa ANP ou estimativa, sempre com a idade do dado.</span></div>
     </div>
@@ -179,7 +179,7 @@ footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rul
     </div>
     <figure>
       <div class="painel">{{FLUXO}}</div>
-      <figcaption>Da foto ao preço exibido. A leitura acontece no celular; o servidor recebe só os valores revisados e a posição do aparelho, valida e registra uma proposta. O banco confirma quando duas pessoas diferentes informam o mesmo valor, com diferença de até R$ 0,02, em 24 horas. Envios que destoam mais de 20% da referência precisam de três pessoas.</figcaption>
+      <figcaption>Da foto ao preço exibido. A leitura acontece no celular; o servidor nunca recebe a foto, só os valores revisados, o texto reconhecido no painel e a posição do aparelho, valida e registra uma proposta. O banco confirma quando duas pessoas diferentes informam o mesmo valor, com diferença de até R$ 0,02, em 24 horas. Envios que destoam mais de 20% da referência precisam de três pessoas.</figcaption>
     </figure>
   </section>
 
@@ -321,7 +321,7 @@ footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rul
       <table>
         <thead><tr><th>No seu diagrama</th><th>No banco</th><th>O que mudou e por quê</th></tr></thead>
         <tbody>
-          <tr><td><code>user</code></td><td><code>auth.users</code> + <code>perfis</code></td><td>A senha fica no Supabase Auth, com hash, e não numa coluna. CPF, data de nascimento e CEP saíram porque nenhuma regra os usa, e a LGPD pede guardar só o necessário. <code>isTruthfull</code> virou <code>confiabilidade</code>, <code>isBaned</code> virou <code>banido</code> e <code>hasAdvice</code> virou <code>notificacoes_ativas</code>.</td></tr>
+          <tr><td><code>user</code></td><td><code>auth.users</code> + <code>perfis</code></td><td>A senha fica no Supabase Auth, com hash, e não numa coluna. CPF e CEP saíram porque nenhuma regra os usa, e a LGPD pede guardar só o necessário. A data de nascimento voltou como campo opcional do cadastro, junto com sobrenome e gênero, e fica nos dados da conta no Supabase Auth. <code>isTruthfull</code> virou <code>confiabilidade</code>, <code>isBaned</code> virou <code>banido</code> e <code>hasAdvice</code> virou <code>notificacoes_ativas</code>.</td></tr>
           <tr><td><code>GasStation</code></td><td><code>postos</code></td><td>Chave numérica interna com o CNPJ único do cadastro da ANP. <code>reputation</code> virou <code>nota_media</code>, calculada no servidor. Latitude e longitude viraram um ponto geográfico, que permite buscar por área e distância com índice.</td></tr>
           <tr><td><code>location</code>, <code>Streat</code></td><td>colunas de <code>postos</code></td><td>O endereço já vem pronto do cadastro da ANP. Tabelas separadas duplicariam dados sem ganho de consulta.</td></tr>
           <tr><td><code>my_indications</code></td><td><code>envios</code></td><td>Um registro por foto enviada, com a posição e a distância até o posto no momento do envio.</td></tr>

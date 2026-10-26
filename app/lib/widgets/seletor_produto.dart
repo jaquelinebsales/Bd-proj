@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 import '../modelos/modelos.dart';
+import '../servicos/monitor_demo.dart';
 import '../servicos/preferencias.dart';
 
 /// Dropdown compacto para escolher um ou mais combustíveis. A lista abre abaixo do botão e continua
@@ -19,7 +20,13 @@ class _SeletorProdutoState extends State<SeletorProduto> {
   final _portal = OverlayPortalController();
   final _ancora = LayerLink();
 
-  void _alternarMenu() => _portal.isShowing ? _portal.hide() : _portal.show();
+  void _alternarMenu() => _portal.isShowing ? _fechar() : _portal.show();
+
+  // A lista é uma sobreposição própria (não uma rota): avisa a demonstração ao fechar, como as folhas e menus
+  void _fechar() {
+    _portal.hide();
+    MonitorDemo.fechou();
+  }
 
   void _alternarItem(int id) {
     final set = Set<int>.from(Preferencias.produto.value);
@@ -95,7 +102,7 @@ class _SeletorProdutoState extends State<SeletorProduto> {
           intercepting: kIsWeb,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: _portal.hide,
+            onTap: _fechar,
             child: const SizedBox.expand(),
           ),
         ),

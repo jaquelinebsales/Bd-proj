@@ -73,7 +73,7 @@ class _TelaFavoritosState extends State<TelaFavoritos> {
     return Scaffold(
       appBar: AppBar(title: const Text('Favoritos')),
       body: LarguraMaxima(
-        maxima: 900,
+        maxima: larguraListas,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
@@ -109,15 +109,13 @@ class _TelaFavoritosState extends State<TelaFavoritos> {
                     ),
                   );
                 }
-                final colunas = tamanhoDe(context) == Tamanho.compacto ? 1 : 2;
                 return RefreshIndicator(
                   onRefresh: () async {
                     setState(() => _lista = _carregar());
                     await _lista;
                   },
                   child: GradeDeCartoes(
-                    colunas: colunas,
-                    alturaBase: logado ? 172 : 142,
+                    colunas: colunasDeCartoes(context),
                     padding: const EdgeInsets.all(12),
                     quantidade: postos.length,
                     cartao: (context, i) {

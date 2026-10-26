@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../modelos/modelos.dart';
 import '../../servicos/api.dart';
+import '../../servicos/monitor_demo.dart';
 import '../../tema.dart';
 import '../../util/formatos.dart';
 import '../../widgets/comuns.dart';
 
 /// Folha "Contribuições": quem enviou o preço, variações reportadas e o dado oficial da ANP.
-Future<void> mostrarContribuicoes(BuildContext context, PostoDetalhe posto, int produtoId) => showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      builder: (_) => _Contribuicoes(posto: posto, produtoId: produtoId),
-    );
+Future<void> mostrarContribuicoes(BuildContext context, PostoDetalhe posto, int produtoId) {
+  MonitorDemo.toque('Contribuições');
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (_) => _Contribuicoes(posto: posto, produtoId: produtoId),
+  );
+}
 
 class _Contribuicoes extends StatefulWidget {
   final PostoDetalhe posto;

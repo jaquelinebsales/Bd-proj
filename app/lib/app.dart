@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import 'config.dart';
+import 'servicos/monitor_demo.dart';
 import 'servicos/notificacoes.dart';
 import 'servicos/sessao.dart';
 import 'tema.dart';
@@ -19,6 +20,7 @@ import 'telas/mapa/tela_mapa.dart';
 import 'telas/notificacoes/tela_notificacoes.dart';
 import 'telas/perfil/tela_alterar_senha.dart';
 import 'telas/perfil/tela_editar_perfil.dart';
+import 'telas/perfil/tela_minhas_listas.dart';
 import 'telas/perfil/tela_perfil.dart';
 import 'telas/perfil/tela_pontos.dart';
 import 'telas/perfil/tela_ranking.dart';
@@ -42,15 +44,21 @@ class _GaspriceAppState extends State<GaspriceApp> {
   late final GoRouter _rotas = criarRotas(widget.mostrarBoasVindas);
 
   @override
+  void initState() {
+    super.initState();
+    MonitorDemo.iniciar(_rotas);
+  }
+
+  @override
   Widget build(BuildContext context) => MaterialApp.router(
         title: 'gasprice',
         debugShowCheckedModeBanner: false,
         theme: Tema.claro(),
         darkTheme: Tema.escuro(),
         routerConfig: _rotas,
-        builder: (context, child) => Config.demo
+        builder: (context, child) => MonitorDemo.envolver(Config.demo && !Config.semFaixaDemo
             ? Banner(message: 'DEMO', location: BannerLocation.topEnd, child: child ?? const SizedBox())
-            : child ?? const SizedBox(),
+            : child ?? const SizedBox()),
         locale: const Locale('pt', 'BR'),
         supportedLocales: const [Locale('pt', 'BR')],
         localizationsDelegates: const [
@@ -66,10 +74,11 @@ int _id(GoRouterState s) => int.tryParse(s.pathParameters['id'] ?? '') ?? 0;
 GoRouter criarRotas(bool boasVindas) => GoRouter(
       initialLocation: boasVindas ? '/boas-vindas' : '/',
       refreshListenable: Sessao.instancia,
+      observers: [MonitorDemo.observador()],
       redirect: (context, estado) {
         final sessao = Sessao.instancia;
         if (sessao.recuperandoSenha && estado.matchedLocation != '/nova-senha') return '/nova-senha';
-        const soLogado = ['/perfil/editar', '/perfil/senha', '/pontos', '/notificacoes'];
+        const soLogado = ['/perfil/editar', '/perfil/senha', '/perfil/envios', '/perfil/avaliacoes', '/pontos', '/notificacoes'];
         if (!sessao.logado && soLogado.contains(estado.matchedLocation)) return '/entrar';
         const soDeslogado = ['/entrar', '/cadastro'];
         if (sessao.logado && soDeslogado.contains(estado.matchedLocation)) return '/perfil';
@@ -79,10 +88,17 @@ GoRouter criarRotas(bool boasVindas) => GoRouter(
         StatefulShellRoute.indexedStack(
           builder: (context, estado, navegacao) => Estrutura(navegacao: navegacao),
           branches: [
-            StatefulShellBranch(routes: [GoRoute(path: '/', builder: (_, _) => const TelaMapa())]),
-            StatefulShellBranch(routes: [GoRoute(path: '/buscar', builder: (_, _) => const TelaBusca())]),
-            StatefulShellBranch(routes: [GoRoute(path: '/favoritos', builder: (_, _) => const TelaFavoritos())]),
-            StatefulShellBranch(routes: [GoRoute(path: '/perfil', builder: (_, _) => const TelaPerfil())]),
+            StatefulShellBranch(
+                observers: [MonitorDemo.observador()], routes: [GoRoute(path: '/', builder: (_, _) => const TelaMapa())]),
+            StatefulShellBranch(
+                observers: [MonitorDemo.observador()],
+                routes: [GoRoute(path: '/buscar', builder: (_, _) => const TelaBusca())]),
+            StatefulShellBranch(
+                observers: [MonitorDemo.observador()],
+                routes: [GoRoute(path: '/favoritos', builder: (_, _) => const TelaFavoritos())]),
+            StatefulShellBranch(
+                observers: [MonitorDemo.observador()],
+                routes: [GoRoute(path: '/perfil', builder: (_, _) => const TelaPerfil())]),
           ],
         ),
         GoRoute(path: '/boas-vindas', builder: (_, _) => const TelaBoasVindas()),
@@ -105,6 +121,8 @@ GoRouter criarRotas(bool boasVindas) => GoRouter(
         ),
         GoRoute(path: '/perfil/editar', builder: (_, _) => const TelaEditarPerfil()),
         GoRoute(path: '/perfil/senha', builder: (_, _) => const TelaAlterarSenha()),
+        GoRoute(path: '/perfil/envios', builder: (_, _) => const TelaMeusEnvios()),
+        GoRoute(path: '/perfil/avaliacoes', builder: (_, _) => const TelaMinhasAvaliacoes()),
         GoRoute(path: '/pontos', builder: (_, _) => const TelaPontos()),
         GoRoute(path: '/ranking', builder: (_, _) => const TelaRanking()),
         GoRoute(path: '/notificacoes', builder: (_, _) => const TelaNotificacoes()),

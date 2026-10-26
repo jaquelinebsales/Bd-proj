@@ -74,6 +74,24 @@ class Demo {
         ),
       ],
     ),
+    // Com coordenada: entra no mapa com o pino tracejado da estimativa
+    PostoResumo(
+      id: 7, nome: 'Posto Bom Jardim', bandeira: 'Bandeira branca', endereco: 'Rua Oscar Araripe, 900',
+      bairro: 'Bom Jardim', municipio: 'Fortaleza', uf: 'CE', lat: -3.7850, lon: -38.5830, totalAvaliacoes: 0,
+      precos: [
+        PrecoAtual(
+          produtoId: 1, preco: 6.14, fonte: FontePreco.estimativa, situacao: SituacaoPreco.estimado,
+          atualizadoEm: _ha(const Duration(days: 2)), margem: 0.25, distanciaKm: 7.4,
+        ),
+      ],
+    ),
+    // Vende só diesel e GNV: no mapa de gasolina aparece sem preço
+    PostoResumo(
+      id: 8, nome: 'Posto Mondubim', bandeira: 'Vibra', endereco: 'Av. Presidente Costa e Silva, 3100',
+      bairro: 'Mondubim', municipio: 'Fortaleza', uf: 'CE', lat: -3.7980, lon: -38.5200, notaMedia: 4.0,
+      totalAvaliacoes: 9, municipioPesquisadoAnp: true,
+      precos: [_anp(5, 6.27, 5), _com(6, 4.69, const Duration(hours: 6), conf: 2)],
+    ),
   ];
 
   static List<PostoResumo> buscar(String texto) {
@@ -141,16 +159,45 @@ class Demo {
         totalEnvios: 37,
         enviosConfirmados: 33,
         posicaoRanking: 1,
-        ultimosEnvios: [
-          {'posto_id': 1, 'posto': 'Posto Vale Verde', 'produto_id': 1, 'status': 'confirmado', 'preco': 5.99, 'criado_em': _ha(const Duration(hours: 2)).toUtc().toIso8601String()},
-          {'posto_id': 4, 'posto': 'Posto Messejana', 'produto_id': 3, 'status': 'pendente', 'preco': 4.19, 'criado_em': _ha(const Duration(days: 1)).toUtc().toIso8601String()},
-          {'posto_id': 2, 'posto': 'Auto Posto Aldeota', 'produto_id': 1, 'status': 'confirmado', 'preco': 6.09, 'criado_em': _ha(const Duration(days: 3)).toUtc().toIso8601String()},
-        ],
-        ultimasAvaliacoes: const [
-          {'posto_id': 1, 'posto': 'Posto Vale Verde', 'nota': 5, 'comentario': 'Atendimento rápido e o preço da gasolina bate com o painel.'},
-          {'posto_id': 3, 'posto': 'Posto Beira Mar', 'nota': 4, 'comentario': null},
-        ],
+        ultimosEnvios: envios().take(10).toList(),
+        ultimasAvaliacoes: minhasAvaliacoes(),
       );
+
+  /// Os 37 preços enviados pela usuária de exemplo, do mais recente ao mais antigo: 33 confirmados, 1 aguardando,
+  /// 2 contrariados e 1 sem confirmação, como no resumo do perfil
+  static List<Map<String, dynamic>> envios() {
+    const postos = [(1, 'Posto Vale Verde'), (4, 'Posto Messejana'), (2, 'Auto Posto Aldeota'), (5, 'Posto Parangaba'),
+                    (3, 'Posto Beira Mar'), (8, 'Posto Mondubim')];
+    const produtos = [(1, 5.99), (3, 4.19), (1, 6.09), (5, 6.32), (3, 4.29), (6, 4.79)];
+    return [
+      for (var i = 0; i < 37; i++)
+        {
+          'id': 37 - i,
+          'posto_id': postos[i % 6].$1,
+          'posto': postos[i % 6].$2,
+          'produto_id': produtos[i % 6].$1,
+          // os mais antigos, um pouco mais altos (o preço veio caindo)
+          'preco': ((produtos[i % 6].$2 + 0.03 * (i ~/ 6)) * 100).round() / 100,
+          'status': i == 1 ? 'pendente' : (i == 9 || i == 22) ? 'contestado' : i == 30 ? 'expirado' : 'confirmado',
+          'criado_em': _ha(Duration(hours: 2 + i * 19)).toUtc().toIso8601String(),
+        },
+    ];
+  }
+
+  /// As 4 avaliações da usuária de exemplo
+  static List<Map<String, dynamic>> minhasAvaliacoes() => [
+        {'id': 41, 'posto_id': 1, 'posto': 'Posto Vale Verde', 'nota': 5, 'votos_uteis': 12,
+         'comentario': 'Atendimento rápido e o preço da gasolina bate com o painel.',
+         'criado_em': _ha(const Duration(days: 2)).toUtc().toIso8601String()},
+        {'id': 37, 'posto_id': 3, 'posto': 'Posto Beira Mar', 'nota': 4, 'votos_uteis': 3, 'comentario': null,
+         'criado_em': _ha(const Duration(days: 9)).toUtc().toIso8601String()},
+        {'id': 22, 'posto_id': 4, 'posto': 'Posto Messejana', 'nota': 5, 'votos_uteis': 7,
+         'comentario': 'O preço do etanol está sempre atualizado no painel.',
+         'criado_em': _ha(const Duration(days: 23)).toUtc().toIso8601String()},
+        {'id': 9, 'posto_id': 2, 'posto': 'Auto Posto Aldeota', 'nota': 3, 'votos_uteis': 1,
+         'comentario': 'Fila grande no fim da tarde, mas o atendimento é cordial.',
+         'criado_em': _ha(const Duration(days: 41)).toUtc().toIso8601String()},
+      ];
 
   static List<MovimentoPontos> extrato() => [
         MovimentoPontos('envio_confirmado', 10, 'Preço confirmado: Gasolina comum no Posto Vale Verde', _ha(const Duration(hours: 2))),

@@ -7,7 +7,7 @@ import '../../util/formatos.dart';
 import '../../util/responsivo.dart';
 import '../../widgets/comuns.dart';
 
-/// Extrato de pontos e as regras de como ganhar e perder pontos.
+/// Total e extrato de pontos. As regras de como ganhar e perder pontos ficam no ícone de informação.
 class TelaPontos extends StatefulWidget {
   const TelaPontos({super.key});
   @override
@@ -26,20 +26,47 @@ class _TelaPontosState extends State<TelaPontos> {
     (Icons.timer_outlined, '200', 'Máximo de pontos ganhos por dia'),
   ];
 
+  void _comoFunciona() {
+    final tt = Theme.of(context).textTheme;
+    final cs = Theme.of(context).colorScheme;
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (context) => SafeArea(
+        child: ListView(shrinkWrap: true, padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+            child: Text('Como funciona', style: tt.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+          ),
+          for (final (icone, valor, texto) in _regras)
+            ListTile(
+              leading: Icon(icone, color: cs.primary),
+              title: Text(texto),
+              trailing: Text(valor, style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+            ),
+        ]),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
     final cs = Theme.of(context).colorScheme;
     final perfil = Sessao.instancia.perfil;
     return Scaffold(
-      appBar: AppBar(title: const Text('Meus pontos')),
+      appBar: AppBar(title: const Text('Meus pontos'), actions: [
+        IconButton(tooltip: 'Como funciona', onPressed: _comoFunciona, icon: const Icon(Icons.info_outline)),
+      ]),
       body: LarguraMaxima(
+        maxima: larguraListas,
         child: RefreshIndicator(
           onRefresh: () async {
             setState(() => _extrato = Api.instancia.extratoPontos());
             await Sessao.instancia.carregarPerfil();
           },
-          child: ListView(padding: const EdgeInsets.all(16), children: [
+          child: ListView(physics: const AlwaysScrollableScrollPhysics(), padding: const EdgeInsets.all(16), children: [
             Card(
               color: cs.primaryContainer,
               child: Padding(
@@ -57,19 +84,6 @@ class _TelaPontosState extends State<TelaPontos> {
                 ]),
               ),
             ),
-            const SizedBox(height: 16),
-            Text('Como funciona', style: tt.titleMedium),
-            const SizedBox(height: 8),
-            Card(
-              child: Column(children: [
-                for (final (icone, valor, texto) in _regras)
-                  ListTile(
-                    leading: Icon(icone, color: cs.primary),
-                    title: Text(texto),
-                    trailing: Text(valor, style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
-                  ),
-              ]),
-            ),
             const SizedBox(height: 20),
             Text('Extrato', style: tt.titleMedium),
             const SizedBox(height: 8),
@@ -86,13 +100,14 @@ class _TelaPontosState extends State<TelaPontos> {
                     texto: 'Envie a foto do painel de um posto. Quando alguém confirmar o mesmo preço, seus pontos aparecem aqui.',
                   );
                 }
-                return Card(
-                  child: Column(children: [
+                return LinhasDeCartoes(
+                  colunas: colunasDeCartoes(context),
+                  cartoes: [
                     for (final m in lista)
-                      ListTile(
-                        title: Text(m.descricao),
-                        subtitle: Text(tempoRelativo(m.criadoEm)),
-                        trailing: Text(
+                      CartaoLinha(
+                        titulo: m.descricao,
+                        detalhe: tempoRelativo(m.criadoEm),
+                        fim: Text(
                           m.pontos > 0 ? '+${m.pontos}' : '${m.pontos}',
                           style: tt.titleMedium?.copyWith(
                             fontWeight: FontWeight.w800,
@@ -100,7 +115,7 @@ class _TelaPontosState extends State<TelaPontos> {
                           ),
                         ),
                       ),
-                  ]),
+                  ],
                 );
               },
             ),

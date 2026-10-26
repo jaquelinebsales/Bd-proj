@@ -8,6 +8,7 @@ import '../modelos/modelos.dart';
 import '../util/nova_tentativa.dart';
 import '../util/senha.dart';
 import 'demo.dart';
+import 'monitor_demo.dart';
 
 /// Erro com mensagem pronta para mostrar ao usuário.
 class ErroApp implements Exception {
@@ -43,6 +44,12 @@ class Api {
 
   void invalidarPosto(int id) => _cache.removeWhere((k, _) => k.startsWith('posto:$id') || k.startsWith('area:'));
 
+  /// Demonstração: devolve o dado local e conta ao painel qual chamada o app real faria.
+  Future<T> _demo<T>(T valor, String chamada, {String? detalhe, List<String> camadas = const ['api', 'banco']}) {
+    MonitorDemo.evento(chamada, detalhe: detalhe, camadas: camadas);
+    return Future.value(valor);
+  }
+
   Future<T> _proteger<T>(Future<T> Function() f) async {
     if (!Config.configurado) {
       throw const ErroApp('O app ainda não foi ligado ao Supabase. Veja config/app.example.json.');
@@ -72,9 +79,10 @@ class Api {
   /// Postos na área visível do mapa. A área é arredondada para reaproveitar o cache.
   Future<List<PostoResumo>> postosNaArea(double latMin, double lonMin, double latMax, double lonMax) {
     if (Config.demo) {
-      return Future.value(Demo.postos
+      final lista = Demo.postos
           .where((p) => p.precisao.noMapa && p.lat! >= latMin && p.lat! <= latMax && p.lon! >= lonMin && p.lon! <= lonMax)
-          .toList());
+          .toList();
+      return _demo(lista, 'RPC postos_na_area', detalhe: '${lista.length} postos na área visível · PostGIS');
     }
     double r(double v) => (v * 50).floorToDouble() / 50;
     double r2(double v) => (v * 50).ceilToDouble() / 50;
@@ -94,7 +102,8 @@ class Api {
   }
 
   Future<List<PostoResumo>> postosProximos(double lat, double lon, {double raioKm = 20, int limite = 300}) => Config.demo
-      ? Future.value(Demo.postos.where((p) => p.precisao.noMapa).toList())
+      ? _demo(Demo.postos.where((p) => p.precisao.noMapa).toList(), 'RPC postos_proximos',
+          detalhe: 'raio de ${raioKm.toStringAsFixed(0)} km · PostGIS')
       : _proteger(() => _comCache('prox:${lat.toStringAsFixed(3)}:${lon.toStringAsFixed(3)}:$raioKm:$limite',
           const Duration(minutes: 3), () async {
         final d = await _db.rpc('postos_proximos', params: {'p_lat': lat, 'p_lon': lon, 'p_raio_km': raioKm, 'p_limite': limite});
@@ -102,13 +111,13 @@ class Api {
       }));
 
   Future<List<PostoResumo>> buscar(String texto, {double? lat, double? lon}) =>
-      Config.demo ? Future.value(Demo.buscar(texto)) : _proteger(() async {
+      Config.demo ? _demo(Demo.buscar(texto), 'RPC buscar_postos', detalhe: '"$texto"') : _proteger(() async {
         final d = await _db.rpc('buscar_postos', params: {'p_texto': texto, 'p_lat': lat, 'p_lon': lon, 'p_limite': 60});
         return _postos(d);
       });
 
   Future<List<PostoResumo>> postosPorIds(List<int> ids) => Config.demo
-      ? Future.value(Demo.postos.where((p) => ids.contains(p.id)).toList())
+      ? _demo(Demo.postos.where((p) => ids.contains(p.id)).toList(), 'RPC postos_por_ids', detalhe: '${ids.length} postos')
       : _proteger(() async {
         if (ids.isEmpty) return <PostoResumo>[];
         final d = await _db.rpc('postos_por_ids', params: {'p_ids': ids});
@@ -116,7 +125,10 @@ class Api {
       });
 
   Future<PostoDetalhe> detalhe(int id, {bool forcar = false}) {
-    if (Config.demo) return Future.value(Demo.detalhe(id));
+    if (Config.demo) {
+      final d = Demo.detalhe(id);
+      return _demo(d, 'RPC detalhe_posto', detalhe: d.resumo.nome);
+    }
     if (forcar) _cache.remove('posto:$id');
     return _proteger(() => _comCache('posto:$id', const Duration(minutes: 2), () async {
           final d = await _db.rpc('detalhe_posto', params: {'p_id': id});
@@ -126,42 +138,50 @@ class Api {
   }
 
   Future<List<PontoHistorico>> historico(int posto, int produto, int dias) =>
-      Config.demo ? Future.value(Demo.historico(produto, dias)) : _proteger(() =>
+      Config.demo
+          ? _demo(Demo.historico(produto, dias), 'RPC historico_precos', detalhe: '${Produto.porId(produto).nome} · $dias dias')
+          : _proteger(() =>
       _comCache('posto:$posto:hist:$produto:$dias', const Duration(minutes: 10), () async {
         final d = await _db.rpc('historico_precos', params: {'p_posto': posto, 'p_produto': produto, 'p_dias': dias});
         return (d as List).map((e) => PontoHistorico.deJson(Map<String, dynamic>.from(e as Map))).toList();
       }));
 
   Future<List<Contribuicao>> contribuicoes(int posto, int produto) =>
-      Config.demo ? Future.value(Demo.contribuicoes()) : _proteger(() async {
+      Config.demo ? _demo(Demo.contribuicoes(), 'RPC contribuicoes', detalhe: Produto.porId(produto).nome) : _proteger(() async {
         final d = await _db.rpc('contribuicoes', params: {'p_posto': posto, 'p_produto': produto});
         return (d as List).map((e) => Contribuicao.deJson(Map<String, dynamic>.from(e as Map))).toList();
       });
 
   Future<List<Avaliacao>> avaliacoes(int posto, {String ordem = 'recentes', int offset = 0}) =>
-      Config.demo ? Future.value(offset > 0 ? <Avaliacao>[] : Demo.avaliacoes()) : _proteger(() async {
+      Config.demo
+          ? _demo(offset > 0 ? <Avaliacao>[] : Demo.avaliacoes(), 'RPC avaliacoes_posto', detalhe: 'ordem: $ordem')
+          : _proteger(() async {
         final d = await _db.rpc('avaliacoes_posto',
             params: {'p_posto': posto, 'p_ordem': ordem, 'p_limite': 20, 'p_offset': offset});
         return (d as List).map((e) => Avaliacao.deJson(Map<String, dynamic>.from(e as Map))).toList();
       });
 
-  Future<List<ItemRanking>> ranking() => Config.demo ? Future.value(Demo.ranking()) : _proteger(() async {
+  Future<List<ItemRanking>> ranking() => Config.demo ? _demo(Demo.ranking(), 'RPC ranking') : _proteger(() async {
         final d = await _db.rpc('ranking', params: {'p_limite': 50});
         return (d as List).map((e) => ItemRanking.deJson(Map<String, dynamic>.from(e as Map))).toList();
       });
 
   // ------------------------------------------------------------------ usuário logado
 
-  Future<ResumoPerfil?> meuResumo() => Config.demo ? Future.value(Demo.perfil()) : _proteger(() async {
+  Future<ResumoPerfil?> meuResumo() => Config.demo
+      ? _demo<ResumoPerfil?>(Demo.perfil(), 'RPC meu_resumo', detalhe: 'sessão autenticada · RLS')
+      : _proteger(() async {
         final d = await _db.rpc('meu_resumo');
         return d == null ? null : ResumoPerfil.deJson(Map<String, dynamic>.from(d as Map));
       });
 
   Future<List<PostoResumo>> meusFavoritos() => Config.demo
-      ? Future.value(Demo.postos.where((p) => p.id == 1 || p.id == 2).toList())
+      ? _demo(Demo.postos.where((p) => p.id == 1 || p.id == 2).toList(), 'RPC meus_favoritos', detalhe: 'RLS · só a própria conta')
       : _proteger(() async => _postos(await _db.rpc('meus_favoritos')));
 
-  Future<void> favoritar(int posto, bool favorito) => Config.demo ? Future.value() : _proteger(() async {
+  Future<void> favoritar(int posto, bool favorito) => Config.demo
+      ? _demo<void>(null, favorito ? 'favoritos · insert' : 'favoritos · delete', detalhe: 'RLS · só a própria conta')
+      : _proteger(() async {
         final uid = _db.auth.currentUser!.id;
         if (favorito) {
           await _db.from('favoritos').upsert({'usuario_id': uid, 'posto_id': posto});
@@ -171,12 +191,16 @@ class Api {
         _cache.remove('posto:$posto');
       });
 
-  Future<void> notificarFavorito(int posto, bool notificar) => Config.demo ? Future.value() : _proteger(() async {
+  Future<void> notificarFavorito(int posto, bool notificar) => Config.demo
+      ? _demo<void>(null, 'favoritos · update', detalhe: notificar ? 'avisar quando o preço mudar' : 'sem aviso')
+      : _proteger(() async {
         final uid = _db.auth.currentUser!.id;
         await _db.from('favoritos').update({'notificar': notificar}).eq('usuario_id', uid).eq('posto_id', posto);
       });
 
-  Future<void> salvarAvaliacao(int posto, int nota, String? comentario, {int? id}) => _proteger(() async {
+  Future<void> salvarAvaliacao(int posto, int nota, String? comentario, {int? id}) => Config.demo
+      ? _demo<void>(null, id == null ? 'avaliacoes · insert' : 'avaliacoes · update', detalhe: '$nota estrelas')
+      : _proteger(() async {
         final texto = (comentario ?? '').trim();
         final dados = {'nota': nota, 'comentario': texto.isEmpty ? null : texto};
         if (id == null) {
@@ -187,12 +211,16 @@ class Api {
         invalidarPosto(posto);
       });
 
-  Future<void> apagarAvaliacao(int posto, int id) => _proteger(() async {
+  Future<void> apagarAvaliacao(int posto, int id) => Config.demo
+      ? _demo<void>(null, 'avaliacoes · delete')
+      : _proteger(() async {
         await _db.from('avaliacoes').delete().eq('id', id);
         invalidarPosto(posto);
       });
 
-  Future<void> votarUtil(int avaliacao, bool util) => _proteger(() async {
+  Future<void> votarUtil(int avaliacao, bool util) => Config.demo
+      ? _demo<void>(null, util ? 'avaliacao_votos · insert' : 'avaliacao_votos · delete')
+      : _proteger(() async {
         final uid = _db.auth.currentUser!.id;
         if (util) {
           await _db.from('avaliacao_votos').upsert({'avaliacao_id': avaliacao, 'usuario_id': uid});
@@ -201,7 +229,33 @@ class Api {
         }
       });
 
-  Future<List<MovimentoPontos>> extratoPontos() => Config.demo ? Future.value(Demo.extrato()) : _proteger(() async {
+  /// Todos os preços enviados pela conta, do mais recente ao mais antigo, em páginas
+  Future<List<Map<String, dynamic>>> meusEnvios({int limite = 50, int offset = 0}) => Config.demo
+      ? _demo(Demo.envios().skip(offset).take(limite).toList(), 'RPC meus_envios', detalhe: 'sessão autenticada · RLS')
+      : _proteger(() => _listaDoPerfil('meus_envios', limite, offset, (r) => r.ultimosEnvios));
+
+  /// Todas as avaliações da conta, da mais recente à mais antiga, em páginas
+  Future<List<Map<String, dynamic>>> minhasAvaliacoes({int limite = 50, int offset = 0}) => Config.demo
+      ? _demo(Demo.minhasAvaliacoes().skip(offset).take(limite).toList(), 'RPC minhas_avaliacoes',
+          detalhe: 'sessão autenticada · RLS')
+      : _proteger(() => _listaDoPerfil('minhas_avaliacoes', limite, offset, (r) => r.ultimasAvaliacoes));
+
+  Future<List<Map<String, dynamic>>> _listaDoPerfil(
+      String funcao, int limite, int offset, List<Map<String, dynamic>> Function(ResumoPerfil) doResumo) async {
+    try {
+      final d = await _db.rpc(funcao, params: {'p_limite': limite, 'p_offset': offset});
+      return (d as List).map((e) => Map<String, dynamic>.from(e as Map)).toList();
+    } on PostgrestException catch (e) {
+      // Servidor ainda sem a migração 20261025000010: mostra os últimos itens que o resumo do perfil já traz
+      if (e.code != 'PGRST202' || offset > 0) rethrow;
+      final r = await _db.rpc('meu_resumo');
+      return r == null ? const [] : doResumo(ResumoPerfil.deJson(Map<String, dynamic>.from(r as Map)));
+    }
+  }
+
+  Future<List<MovimentoPontos>> extratoPontos() => Config.demo
+      ? _demo(Demo.extrato(), 'pontos_movimentos · select')
+      : _proteger(() async {
         final d = await _db
             .from('pontos_movimentos')
             .select('tipo, pontos, descricao, criado_em')
@@ -210,7 +264,9 @@ class Api {
         return d.map((e) => MovimentoPontos.deJson(e)).toList();
       });
 
-  Future<List<Notificacao>> notificacoes() => Config.demo ? Future.value(Demo.notificacoes()) : _proteger(() async {
+  Future<List<Notificacao>> notificacoes() => Config.demo
+      ? _demo(Demo.notificacoes(), 'notificacoes · select')
+      : _proteger(() async {
         final d = await _db
             .from('notificacoes')
             .select('id, posto_id, produto_id, preco_anterior, preco_novo, lida, criado_em, postos(nome_exibicao, razao_social)')
@@ -219,11 +275,13 @@ class Api {
         return d.map((e) => Notificacao.deJson(e)).toList();
       });
 
-  Future<void> marcarLidas() => Config.demo ? Future.value() : _proteger(() async {
+  Future<void> marcarLidas() => Config.demo
+      ? _demo<void>(null, 'notificacoes · update', detalhe: 'marcar como lidas')
+      : _proteger(() async {
         await _db.from('notificacoes').update({'lida': true}).eq('lida', false);
       });
 
-  /// Envia os preços revisados. A foto não é enviada: só os valores e o texto lido.
+  /// Envia os preços revisados. A foto não é enviada: vão os valores, o texto lido e a posição.
   Future<Map<String, dynamic>> enviarPrecos({
     required int postoId,
     required double latitude,
@@ -233,7 +291,7 @@ class Api {
     int? duracaoLeituraMs,
   }) =>
       Config.demo
-          ? Future.value({
+          ? _demo<Map<String, dynamic>>({
               'itens': [
                 for (final (i, item) in itens.indexed)
                   {
@@ -245,7 +303,9 @@ class Api {
               ],
               'ignorados': <int>[],
               'mensagem': '1 preço confirmado com outros usuários. Seus pontos já foram creditados.',
-            })
+            }, 'Edge Function enviar-precos',
+              detalhe: '${itens.length} preços, texto lido e posição · sem a foto',
+              camadas: const ['api', 'funcao', 'banco'])
           : _proteger(() async {
         final r = await _db.functions.invoke('enviar-precos', body: {
           'posto_id': postoId,
@@ -268,11 +328,12 @@ class Api {
     required double precisaoGpsM,
   }) =>
       Config.demo
-          ? Future.value({
+          ? _demo<Map<String, dynamic>>({
               'status': 'aguardando',
               'mensagem': 'Obrigado! Quando outra pessoa que esteja neste posto também informar a posição, '
                   'ela será confirmada e você ganha pontos.',
-            })
+            }, 'Edge Function corrigir-posicao',
+              detalhe: 'GPS ±${precisaoGpsM.round()} m', camadas: const ['api', 'funcao', 'banco'])
           : _proteger(() async {
               final r = await _db.functions.invoke('corrigir-posicao', body: {
                 'posto_id': postoId,

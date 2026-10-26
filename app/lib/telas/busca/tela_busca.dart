@@ -114,7 +114,7 @@ class _TelaBuscaState extends State<TelaBusca> {
     return Scaffold(
       body: SafeArea(
         child: LarguraMaxima(
-          maxima: 900,
+          maxima: larguraListas,
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
@@ -216,12 +216,10 @@ class _TelaBuscaState extends State<TelaBusca> {
             : null,
       );
     }
-    final colunas = tamanhoDe(context) == Tamanho.compacto ? 1 : 2;
     return RefreshIndicator(
       onRefresh: _carregar,
       child: GradeDeCartoes(
-        colunas: colunas,
-        alturaBase: 142,
+        colunas: colunasDeCartoes(context),
         padding: const EdgeInsets.fromLTRB(12, 4, 12, 24),
         quantidade: visiveis.length,
         cartao: (context, i) => CartaoPosto(

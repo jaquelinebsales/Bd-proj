@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>GasPrice · portfólio</title>
+<style>
+  @page { size: A4; margin: 15mm 16mm 16mm; }
+  :root {
+    --tinta: #1C2633; --suave: #556170; --marca: #2C3E57; --linha: #D6DCE4; --fundo-claro: #F2F4F7;
+    --verde: #1F8A5B;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #fff; color: var(--tinta); }
+  body { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 10.4pt; line-height: 1.5; }
+  h1 { font-size: 34pt; line-height: 1; margin: 0; letter-spacing: -0.5pt; color: var(--marca); }
+  h2 { font-size: 13pt; margin: 0 0 2.5mm; color: var(--marca); text-wrap: balance; }
+  p { margin: 0 0 2.6mm; text-wrap: pretty; }
+  .rotulo { font-size: 8pt; font-weight: 700; letter-spacing: 1.2pt; color: var(--suave); text-transform: uppercase; }
+  .capa .linha1 { margin-top: 3mm; font-size: 14pt; color: var(--tinta); max-width: 150mm; }
+  .capa .meta { margin-top: 3mm; color: var(--suave); font-size: 9.5pt; }
+  .heroi { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; margin-top: 8mm; }
+  .heroi img { width: 100%; border-radius: 4mm; border: 0.3mm solid var(--linha); }
+  .legenda { font-size: 8.4pt; color: var(--suave); margin-top: 2mm; }
+  .numeros { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; margin-top: 7mm; }
+  .numeros div { background: var(--fundo-claro); border-radius: 3mm; padding: 3mm 3.5mm; }
+  .numeros b { display: block; font-size: 15pt; color: var(--marca); font-variant-numeric: tabular-nums; }
+  .numeros span { font-size: 8.4pt; color: var(--suave); line-height: 1.3; display: block; }
+  .bloco { display: grid; grid-template-columns: 1fr 50mm; gap: 8mm; align-items: start; margin-top: 7mm;
+           break-inside: avoid; page-break-inside: avoid; }
+  .bloco.sem-imagem { grid-template-columns: 1fr; }
+  .bloco figure { margin: 0; }
+  .bloco figure img { width: 100%; border-radius: 3.5mm; border: 0.3mm solid var(--linha); }
+  .bloco figcaption, figure.largo figcaption { font-size: 8.2pt; color: var(--suave); margin-top: 1.6mm; line-height: 1.35; }
+  figure.largo { margin: 7mm 0 0; break-inside: avoid; page-break-inside: avoid; }
+  figure.largo img { width: 100%; border-radius: 3mm; border: 0.3mm solid var(--linha); }
+  @page paisagem { size: A4 landscape; margin: 12mm 14mm 14mm; }
+  .paisagem { page: paisagem; break-before: page; break-after: page; }
+  .paisagem img { width: 100%; border-radius: 2mm; border: 0.3mm solid var(--linha); }
+  .paisagem figcaption { font-size: 8.6pt; color: var(--suave); margin-top: 2mm; }
+  .destaque { border-left: 1mm solid var(--verde); padding-left: 3mm; }
+  .limites li { margin-bottom: 1.4mm; }
+  .limites { margin: 0; padding-left: 5mm; }
+  .rodape { margin-top: 8mm; padding-top: 3mm; border-top: 0.3mm solid var(--linha); font-size: 8.2pt; color: var(--suave); }
+</style>
+</head>
+<body>
+
+<section class="capa">
+  <div class="rotulo">Projeto de desenvolvimento · aplicativo móvel</div>
+  <h1 style="margin-top:3mm">GasPrice</h1>
+  <p class="linha1">Comparador de preços de combustíveis que une a pesquisa oficial da ANP aos preços enviados pela comunidade por foto do painel.</p>
+  <div class="meta">Flutter · Supabase · PostgreSQL + PostGIS · Edge Functions em TypeScript · ML Kit · Python</div>
+  <div class="heroi">
+    <figure style="margin:0"><img src="{{P}}/01-mapa-claro.png" alt="Mapa com os pinos de preço e a folha do posto"></figure>
+    <figure style="margin:0"><img src="{{P}}/02-mapa-folha-expandida-claro.png" alt="Folha do posto expandida com todos os preços"></figure>
+    <figure style="margin:0"><img src="{{P}}/01-mapa-escuro.png" alt="Mapa no tema escuro"></figure>
+  </div>
+  <div class="legenda">Mapa com os quatro tipos de pino (atualizado recentemente, atualização antiga, estimativa ≈ e sem preço –), a folha do posto expandida e o tema escuro.</div>
+  <div class="numeros">
+    <div><b>45,8 mil</b><span>postos do cadastro oficial da ANP</span></div>
+    <div><b>5,47 mi</b><span>linhas de preços da ANP tratadas (2020–2026)</span></div>
+    <div><b>R$ 0,25–0,39</b><span>erro médio medido da estimativa regional</span></div>
+    <div><b>873</b><span>casos de teste na auditoria antes de lançar</span></div>
+  </div>
+</section>
+
+<section class="bloco sem-imagem">
+  <div>
+    <h2>Origem</h2>
+    <p>O GasPrice é um aplicativo para comparar os preços de combustíveis nos postos do Brasil. Ele nasceu na disciplina de banco de dados, com o objetivo de aprender a trabalhar com grandes volumes de dados, visão computacional e machine learning. Eu já tinha feito uma análise exploratória dos preços da ANP e decidi reaproveitá-la como base do app. Antes de usar esses dados, era preciso tratá-los.</p>
+  </div>
+</section>
+
+<section class="bloco">
+  <div>
+    <h2>Dados oficiais, tratados antes de usar</h2>
+    <p>Os preços da ANP chegam em planilhas semestrais: 5,47 milhões de linhas de 2020 a 2026. Removi só linhas vazias e duplicadas (0,17%). Os 388 preços suspeitos foram marcados como anomalia, não apagados, porque postos de rodovia e de áreas nobres cobram caro de forma consistente, e apagar esses preços distorceria a média.</p>
+    <p>O plano gratuito do Supabase limitava o banco a 500 MB, e a série completa ocuparia cerca de 460 MB. Primeiro guardei no banco só os últimos dois anos, com a série completa num arquivo compactado de 20 MB. Por causa desse limite, depois migrei o projeto para um servidor próprio: o mesmo Supabase em Docker, numa máquina virtual, acessado pela internet por HTTPS.</p>
+    <p>Mesmo tratados, os dados da ANP têm um limite: saem uma vez por semana e cobrem só parte dos postos. Faltava um jeito de manter o preço atual.</p>
+  </div>
+  <figure><img src="{{P}}/07-busca.png" alt="Busca de postos"><figcaption>Busca por nome, endereço ou cidade, com a distância e a origem de cada preço.</figcaption></figure>
+</section>
+
+<section class="bloco">
+  <div>
+    <h2>Comunidade e pontos</h2>
+    <p>A resposta foi a comunidade. A pessoa fotografa o painel do posto e o preço é validado por outros usuários. Cada envio confirmado vale 10 pontos. Quem atualiza primeiro um posto parado há mais de 24 horas ganha 5 pontos de bônus, e em cidades sem pesquisa da ANP os pontos valem o dobro. Os pontos aparecem no ranking da comunidade. Mas, se qualquer pessoa pode enviar, como saber em qual preço confiar?</p>
+    <h2 style="margin-top:5mm">Onde fica o posto</h2>
+    <p>O primeiro filtro é o lugar: para um envio valer, a pessoa precisa estar no posto. O envio é aceito a até 300 m quando a posição do posto é exata, e a até 1 km quando é aproximada. Mas 6.942 dos 45.823 postos do cadastro da ANP não têm coordenada. Para eles, criei o botão "Estou neste posto": a posição só vale quando duas pessoas diferentes informam pontos a até 150 m uma da outra. Com o lugar garantido, falta concordar sobre o valor.</p>
+  </div>
+  <figure><img src="{{P}}/11-pontos.png" alt="Extrato de pontos"><figcaption>Extrato e regras de pontuação.</figcaption></figure>
+</section>
+
+<section class="bloco">
+  <div>
+    <h2>Validação sem moderador</h2>
+    <p>Um envio só vira preço confirmado quando duas pessoas diferentes informam valores com diferença de até R$ 0,02 em 24 horas. Se o valor destoa mais de 20% da referência, são necessárias três pessoas. Uma pontuação de confiabilidade reduz o peso de quem é contestado com frequência, e três contestações em 7 dias pausam os envios da pessoa. O objetivo é tornar a fraude cara sem depender de moderação manual. Tudo isso parte da foto, e a foto levanta uma questão de privacidade.</p>
+  </div>
+  <figure><img src="{{P}}/03-contribuicoes.png" alt="Contribuições de um preço"><figcaption>Cada preço mostra a origem: comunidade, pesquisa da ANP ou estimativa.</figcaption></figure>
+</section>
+
+<section class="bloco">
+  <div class="destaque">
+    <h2>A foto fica no celular</h2>
+    <p>O painel é lido no próprio aparelho, com reconhecimento de texto offline, e a foto é apagada logo depois. O servidor nunca recebe a imagem: recebe os valores revisados pela pessoa, a posição do aparelho e o texto que o leitor reconheceu, usado para corrigir erros de leitura. É uma decisão de privacidade que também reduz o custo de armazenamento. Mesmo assim, nem todo posto recebe fotos.</p>
+  </div>
+  <figure><img src="{{P}}/05-envio-revisao.png" alt="Revisão dos preços lidos da foto"><figcaption>Revisão dos valores lidos antes do envio.</figcaption></figure>
+</section>
+
+<section class="bloco">
+  <div>
+    <h2>Estimativa com erro medido</h2>
+    <p>Para os postos sem nenhum preço, o app mostra um valor aproximado: a mediana dos cinco postos pesquisados mais próximos, num raio de até 200 km. A margem exibida vem de um teste com 3.951 postos, e o erro médio fica entre R$ 0,25 e R$ 0,39, conforme a distância. O app assume o limite: a estimativa serve para comparar regiões, não para decidir entre dois postos vizinhos. A estimativa descreve o presente. A pergunta seguinte era se dava para prever o futuro.</p>
+  </div>
+  <figure><img src="{{P}}/04-posto-estimativa.png" alt="Posto com preço estimado"><figcaption>Preço estimado, marcado com ≈ e com a margem de erro.</figcaption></figure>
+</section>
+
+<section class="bloco">
+  <div>
+    <h2>Dificuldade: previsão de preços, testada e não publicada</h2>
+    <p>Treinei um modelo com 606 mil preços semanais por município, calculados a partir de 5,4 milhões de preços da ANP, e o comparei com a regra ingênua de repetir o preço da semana. Em uma semana os dois empatam, e em quatro semanas o modelo erra mais. Ele acerta mais quando o preço muda, mas erra mais quando o preço fica parado, que é a maioria das semanas.</p>
+    <p>Por isso ficou fora do app, com uma regra de publicação definida: só entra se vencer a regra ingênua em dois testes seguidos. O experimento também mostrou que guardar dois anos de histórico basta para prever tão bem quanto a série inteira. E deixou uma lição prática: com milhões de linhas, a forma de calcular importa tanto quanto o que se calcula.</p>
+  </div>
+  <figure><img src="{{P}}/06-historico.png" alt="Histórico de preços"><figcaption>Histórico com a pesquisa da ANP e os envios da comunidade.</figcaption></figure>
+</section>
+
+<section class="bloco sem-imagem">
+  <div>
+    <h2>Desempenho medido</h2>
+    <p>O recálculo dos preços exibidos, feito posto a posto, levava mais de 10 minutos. Passei a calcular em bloco e o resultado ficou idêntico, conferido em 5 mil combinações. A rotina semanal leva hoje alguns segundos. No mapa, os pinos passaram de widgets do Flutter para uma camada nativa, o que eliminou o atraso em relação ao movimento da câmera. Em testes locais com dados do tamanho real, o mapa de um bairro com 400 postos responde em 42 ms, e a busca por nome ou endereço em 48 a 73 ms. Velocidade, porém, não adianta se as regras puderem ser contornadas.</p>
+  </div>
+</section>
+<figure class="largo">
+  <img src="{{P}}/09-tablet-mapa.png" alt="App no tablet com mapa e lista">
+  <figcaption>No tablet, mapa e lista ficam lado a lado, ordenados pelo menor preço.</figcaption>
+</figure>
+
+<section class="bloco sem-imagem">
+  <div>
+    <h2>Regras no servidor, não no app</h2>
+    <p>O app, feito em Flutter, conversa com um Supabase: PostgreSQL com PostGIS para as consultas geográficas, autenticação, funções em TypeScript e avisos em tempo real. As regras de consenso, pontos e limites ficam em funções SQL no banco, e as regras de acesso (RLS) valem para todas as tabelas. Assim, um app modificado não consegue pular o consenso nem os limites de envio. Para outras pessoas, o nome aparece sempre abreviado ("Carla M."), e quem avaliou um posto não fica exposto pela API. Com as regras concentradas no servidor, dava para testá-las de ponta a ponta.</p>
+  </div>
+</section>
+<figure class="paisagem" style="margin:0">
+  <img src="{{P}}/12-arquitetura-claro.png" alt="Diagrama de arquitetura do GasPrice">
+  <figcaption>Arquitetura: o celular, o servidor próprio com o Supabase, o banco e os serviços externos. A linha verde é o caminho da foto: ela não sai do aparelho.</figcaption>
+</figure>
+
+<section class="bloco sem-imagem">
+  <div>
+    <h2>Auditoria antes de lançar</h2>
+    <p>Rodei 873 casos de teste contra o servidor real, o banco, as funções e o layout em 7 tamanhos de tela. A auditoria encontrou 10 problemas, entre eles envios simultâneos que furavam o limite de 6 horas e a identidade de quem avaliou exposta pela API. Os problemas foram corrigidos ou documentados, e a planilha guarda o resultado de antes e depois. O que a auditoria não resolve são os limites do projeto.</p>
+  </div>
+</section>
+
+<section class="bloco">
+  <div>
+    <h2>Limitações conhecidas</h2>
+    <ul class="limites">
+      <li>A leitura da foto foi testada com texto simulado, ainda não com painéis reais.</li>
+      <li>O modelo de previsão está fora do app até vencer a regra ingênua.</li>
+      <li>A estimativa não serve para escolher entre postos vizinhos.</li>
+      <li>Cerca de 15% dos postos não têm coordenada e ficam fora do mapa e sem estimativa.</li>
+      <li>O servidor roda numa máquina virtual própria e já ficou fora do ar por horas.</li>
+      <li>A pesquisa da ANP depende de uma carga semanal.</li>
+      <li>Avisos de preço com o app fechado ainda exigem integrar o Firebase.</li>
+      <li>Os e-mails de conta saem por um serviço externo, sem domínio próprio.</li>
+    </ul>
+  </div>
+  <figure><img src="{{P}}/10-perfil.png" alt="Perfil com pontos e ranking"><figcaption>Perfil com pontos, posição no ranking e nível.</figcaption></figure>
+</section>
+
+<div class="rodape">
+  As telas são do modo demonstração do app, com dados fictícios. Dados de preços e do cadastro de postos: dados abertos da ANP.
+  Mapa © colaboradores do OpenStreetMap, estilos do OpenFreeMap.
+</div>
+
+</body>
+</html>

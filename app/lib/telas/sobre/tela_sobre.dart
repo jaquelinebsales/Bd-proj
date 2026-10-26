@@ -23,8 +23,9 @@ class TelaSobre extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Sobre os dados e privacidade')),
-      body: LarguraMaxima(
-        child: ListView(padding: const EdgeInsets.fromLTRB(16, 0, 16, 32), children: [
+      body: ColunasAdaptaveis(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+        esquerda: [
           titulo('De onde vêm os preços'),
           Card(
             child: Column(children: [
@@ -48,6 +49,8 @@ class TelaSobre extends StatelessWidget {
               item(Icons.circle_outlined, cores.semPreco, 'Posto sem preço', 'Pino com contorno cinza e um traço no lugar do preço.'),
             ]),
           ),
+        ],
+        direita: [
           titulo('Cadastro dos postos'),
           Text(
             'Nome, endereço, bandeira, localização e combustíveis vendidos vêm do cadastro oficial de revendedores da ANP, '
@@ -58,11 +61,13 @@ class TelaSobre extends StatelessWidget {
           Card(
             child: Column(children: [
               item(Icons.photo_camera_outlined, cs.primary, 'Foto do painel',
-                  'A única informação que utilizamos são os valores dos preços capturados por meio da foto.'),
+                  'A foto é lida no seu celular e apagada logo depois: ela nunca é enviada. Vão para o servidor os '
+                  'preços que você conferiu e o texto reconhecido no painel, usado para corrigir erros de leitura.'),
               item(Icons.place_outlined, cs.primary, 'Localização',
                   'Usada para mostrar postos próximos. Ao enviar preços, registramos a posição daquele momento para confirmar que você estava no posto.'),
               item(Icons.badge_outlined, cs.primary, 'Dados da conta',
-                  'Nome, e-mail e foto de perfil opcional. Outras pessoas veem só o seu nome abreviado, por exemplo "Carla M.".'),
+                  'Nome e e-mail. Sobrenome, gênero, data de nascimento e foto de perfil são opcionais. Outras pessoas '
+                  'veem só o seu nome abreviado, por exemplo "Carla M.".'),
               item(Icons.delete_outline, cs.primary, 'Exclusão da conta',
                   'Você pode excluir a conta no perfil. Apagamos perfil, avaliações, favoritos e pontos; os preços enviados ficam no histórico sem o seu nome.'),
             ]),
@@ -75,7 +80,7 @@ class TelaSobre extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Center(child: Text('gasprice ${Config.versao}', style: tt.bodySmall)),
-        ]),
+        ],
       ),
     );
   }

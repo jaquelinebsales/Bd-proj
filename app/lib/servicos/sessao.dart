@@ -50,6 +50,7 @@ class Sessao extends ChangeNotifier {
   }
 
   Future<void> _executar(Future<void> Function() f) async {
+    if (Config.demo) throw const ErroApp('Esta ação não está disponível na demonstração.');
     if (!Config.configurado) {
       throw const ErroApp('O app ainda não foi ligado ao Supabase. Veja config/app.example.json.');
     }

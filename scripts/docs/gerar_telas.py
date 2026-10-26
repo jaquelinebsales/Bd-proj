@@ -45,7 +45,7 @@ CELULAR = [
     ]),
     ("Conta", "Cadastro, entrada e recuperação", [
         ("14-entrar", "Entrar", "/entrar", "E-mail e senha."),
-        ("15-cadastro", "Criar conta", "/cadastro", "Só nome, e-mail e senha. Não pede CPF nem endereço."),
+        ("15-cadastro", "Criar conta", "/cadastro", "Nome, e-mail e senha; sobrenome, gênero e data de nascimento opcionais. Não pede CPF nem endereço."),
         ("29-verificar-email", "Confirme seu e-mail", "/verificar-email", "Depois do cadastro. O link por e-mail ativa a conta, e há botão para reenviar."),
         ("16-recuperar-senha", "Recuperar senha", "/recuperar-senha", "Envia um link de redefinição para o e-mail."),
         ("28-nova-senha", "Nova senha", "/nova-senha", "Abre pelo link do e-mail. Mínimo de 8 caracteres, com maiúscula, minúscula, número e caractere especial."),

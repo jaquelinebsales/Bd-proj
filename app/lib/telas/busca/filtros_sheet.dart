@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../modelos/modelos.dart';
 import '../../servicos/filtros.dart';
+import '../../servicos/monitor_demo.dart';
 import '../../servicos/preferencias.dart';
 import '../../util/formatos.dart';
 
@@ -67,7 +68,10 @@ class _FiltrosSheetState extends State<_FiltrosSheet> {
               max: _precoMax,
               divisions: 105,
               labels: RangeLabels(reais(_faixa.start), reais(_faixa.end)),
-              onChanged: (v) => setState(() => _faixa = v),
+              onChanged: (v) {
+                setState(() => _faixa = v);
+                MonitorDemo.toque('${reais(v.start)} a ${reais(v.end)}');
+              },
             ),
             titulo('Distância'),
             Wrap(spacing: 8, runSpacing: 8, children: [

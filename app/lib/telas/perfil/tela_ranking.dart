@@ -22,6 +22,7 @@ class _TelaRankingState extends State<TelaRanking> {
     return Scaffold(
       appBar: AppBar(title: const Text('Ranking da comunidade')),
       body: LarguraMaxima(
+        maxima: larguraListas,
         child: FutureBuilder<List<ItemRanking>>(
           future: _ranking,
           builder: (context, snap) {
@@ -40,11 +41,12 @@ class _TelaRankingState extends State<TelaRanking> {
                 setState(() => _ranking = Api.instancia.ranking());
                 await _ranking;
               },
-              child: ListView.separated(
+              // No tablet em paisagem, três por linha: a primeira linha vira o pódio
+              child: GradeDeCartoes(
+                colunas: colunasDeCartoes(context),
                 padding: const EdgeInsets.all(16),
-                itemCount: lista.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 6),
-                itemBuilder: (context, i) {
+                quantidade: lista.length,
+                cartao: (context, i) {
                   final r = lista[i];
                   final medalha = switch (r.posicao) {
                     1 => const Color(0xFFD4A017),
@@ -52,17 +54,15 @@ class _TelaRankingState extends State<TelaRanking> {
                     3 => const Color(0xFFB0703A),
                     _ => null,
                   };
-                  return Card(
-                    color: r.souEu ? cs.secondaryContainer : null,
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: medalha ?? cs.surfaceContainerHighest,
-                        foregroundColor: medalha == null ? cs.onSurface : Colors.white,
-                        child: Text('${r.posicao}', style: const TextStyle(fontWeight: FontWeight.w800)),
-                      ),
-                      title: Text(r.souEu ? '${r.autor} (você)' : r.autor),
-                      trailing: Text('${r.pontos} pts', style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+                  return CartaoLinha(
+                    cor: r.souEu ? cs.secondaryContainer : null,
+                    inicio: CircleAvatar(
+                      backgroundColor: medalha ?? cs.surfaceContainerHighest,
+                      foregroundColor: medalha == null ? cs.onSurface : Colors.white,
+                      child: Text('${r.posicao}', style: const TextStyle(fontWeight: FontWeight.w800)),
                     ),
+                    titulo: r.souEu ? '${r.autor} (você)' : r.autor,
+                    fim: Text('${r.pontos} pts', style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
                   );
                 },
               ),

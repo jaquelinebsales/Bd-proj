@@ -22,6 +22,9 @@ class Config {
   /// Com DEMO, entra como uma usuária de exemplo já logada (--dart-define=DEMO_LOGADO=true).
   /// Serve para ver as telas que exigem conta.
   static const demoLogado = demo && bool.fromEnvironment('DEMO_LOGADO');
+
+  /// Esconde a faixa "DEMO" do canto (capturas do portfólio, que já avisam que os dados são fictícios).
+  static const semFaixaDemo = bool.fromEnvironment('SEM_FAIXA_DEMO');
   static const esquemaRetorno = 'br.com.gasprice.app://auth-callback';
 
   static bool get configurado => supabaseUrl.isNotEmpty && supabaseChavePublica.isNotEmpty;

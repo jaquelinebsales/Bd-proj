@@ -211,6 +211,46 @@ class CartaoPosto extends StatelessWidget {
   }
 }
 
+/// Uma linha de lista em forma de cartão (início, título, detalhe e valor à direita), para as grades de cartões.
+/// Diferente do ListTile, informa a altura certa quando o texto quebra ao lado do valor, e a linha da grade
+/// (que tem a altura do cartão mais alto) não corta o texto.
+class CartaoLinha extends StatelessWidget {
+  final Widget? inicio;
+  final String titulo;
+  final String? detalhe;
+  final Widget? fim;
+  final VoidCallback? aoTocar;
+  final Color? cor;
+  const CartaoLinha({super.key, this.inicio, required this.titulo, this.detalhe, this.fim, this.aoTocar, this.cor});
+
+  @override
+  Widget build(BuildContext context) {
+    final tt = Theme.of(context).textTheme;
+    final cs = Theme.of(context).colorScheme;
+    return Card(
+      color: cor,
+      margin: EdgeInsets.zero,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: aoTocar,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(children: [
+            if (inicio != null) ...[inicio!, const SizedBox(width: 16)],
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+                Text(titulo, style: tt.bodyLarge),
+                if (detalhe != null) Text(detalhe!, style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant)),
+              ]),
+            ),
+            if (fim != null) ...[const SizedBox(width: 12), fim!],
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
 class EstadoVazio extends StatelessWidget {
   final IconData icone;
   final String titulo;

@@ -33,10 +33,12 @@ class _TelaHistoricoState extends State<TelaHistorico> {
   @override
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
+    // No tablet em paisagem, gráfico à esquerda e registros à direita
+    final expandido = tamanhoDe(context) == Tamanho.expandido;
     return Scaffold(
       appBar: AppBar(title: const Text('Histórico de preços')),
       body: LarguraMaxima(
-        maxima: 900,
+        maxima: expandido ? larguraListas : 900,
         child: ListView(padding: const EdgeInsets.all(16), children: [
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -68,17 +70,16 @@ class _TelaHistoricoState extends State<TelaHistorico> {
               final pontos = snap.data!;
               final anp = pontos.where((p) => p.anp).toList();
               final com = pontos.where((p) => !p.anp).toList();
-              return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      GraficoHistorico(pontos: pontos),
-                      const Padding(padding: EdgeInsets.fromLTRB(8, 12, 0, 4), child: LegendaHistorico()),
-                    ]),
-                  ),
+              final grafico = Card(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    GraficoHistorico(pontos: pontos),
+                    const Padding(padding: EdgeInsets.fromLTRB(8, 12, 0, 4), child: LegendaHistorico()),
+                  ]),
                 ),
-                const SizedBox(height: 16),
+              );
+              final registros = Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                 if (pontos.isNotEmpty) ...[
                   Text('Todos os registros', style: tt.titleMedium),
                   const SizedBox(height: 8),
@@ -101,6 +102,17 @@ class _TelaHistoricoState extends State<TelaHistorico> {
                   Text('${anp.length} registros da ANP e ${com.length} da comunidade no período.', style: tt.bodySmall),
                 ],
               ]);
+              if (expandido) {
+                return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Expanded(flex: 3, child: grafico),
+                  const SizedBox(width: 24),
+                  Expanded(flex: 2, child: registros),
+                ]);
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [grafico, const SizedBox(height: 16), registros],
+              );
             },
           ),
         ]),

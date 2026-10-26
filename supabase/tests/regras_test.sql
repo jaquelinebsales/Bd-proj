@@ -341,6 +341,35 @@ begin
 end
 $$;
 
+-- listas do perfil: só os registros da própria conta, e só com login
+do $$
+declare
+  envios int;
+  esperado_envios int;
+  avaliacoes int;
+  esperado_avaliacoes int;
+  negado boolean := false;
+begin
+  select count(*) into esperado_envios from public.envio_itens where usuario_id = '00000000-0000-0000-0000-00000000000a';
+  select count(*) into esperado_avaliacoes from public.avaliacoes where usuario_id = '00000000-0000-0000-0000-00000000000a';
+  perform set_config('request.jwt.claims', '{"sub": "00000000-0000-0000-0000-00000000000a", "role": "authenticated"}', true);
+  set local role authenticated;
+  select count(*) into envios from public.meus_envios(100, 0);
+  select count(*) into avaliacoes from public.minhas_avaliacoes(100, 0);
+  reset role;
+  perform pg_temp.checar(envios = esperado_envios and avaliacoes = esperado_avaliacoes and avaliacoes > 0,
+                         'listas do perfil trazem os envios e as avaliações da própria conta');
+  set local role anon;
+  begin
+    perform public.meus_envios();
+  exception when insufficient_privilege then
+    negado := true;
+  end;
+  reset role;
+  perform pg_temp.checar(negado, 'listas do perfil exigem login');
+end
+$$;
+
 -- ============================================================ precisão da localização dos postos
 insert into public.postos (id, cnpj, razao_social, municipio, uf, localizacao, localizacao_fonte, precisao_localizacao) values
   (20, '20000000000191', 'POSTO RUA UM LTDA',        'FORTALEZA', 'CE', 'SRID=4326;POINT(-38.5200 -3.7500)', 'geocodificacao', 'rua'),

@@ -51,7 +51,7 @@ class _TelaAvaliarState extends State<TelaAvaliar> {
       await Api.instancia.salvarAvaliacao(widget.postoId, _nota!, texto, id: _posto?.minhaAvaliacao?.id);
       if (mounted) {
         mostrarMensagem(context, 'Avaliação publicada.');
-        Navigator.pop(context, true);
+        voltarAoPosto(context, widget.postoId, true);
       }
     } catch (e) {
       if (mounted) mostrarMensagem(context, e);
@@ -77,7 +77,7 @@ class _TelaAvaliarState extends State<TelaAvaliar> {
     if (ok != true) return;
     try {
       await Api.instancia.apagarAvaliacao(widget.postoId, id);
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) voltarAoPosto(context, widget.postoId, true);
     } catch (e) {
       if (mounted) mostrarMensagem(context, e);
     }

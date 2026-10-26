@@ -129,7 +129,7 @@ class _TelaPosicaoPostoState extends State<TelaPosicaoPosto> {
       const SizedBox(height: 8),
       Text(_resultado?['mensagem']?.toString() ?? '', style: tt.bodyLarge, textAlign: TextAlign.center),
       const SizedBox(height: 24),
-      FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Voltar ao posto')),
+      FilledButton(onPressed: () => voltarAoPosto(context, widget.postoId, true), child: const Text('Voltar ao posto')),
     ];
   }
 }

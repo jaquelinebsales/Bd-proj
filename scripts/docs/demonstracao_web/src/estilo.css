@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* Página de produto: fundo escuro com os neutros puxados para o azul do GasPrice (paleta Asfalto).
+   O app dentro de cada aparelho segue o tema do sistema. */
+/* telas de toque (celular, tablet): "deslize" em vez de "role" */
+@custom-variant toque (@media (pointer: coarse));
+
+@theme {
+  --font-texto: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --font-cupom: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  --color-asfalto-950: #0a0e14;
+  --color-asfalto-900: #10161f;
+  --color-asfalto-850: #141b26;
+  --color-asfalto-800: #1a2331;
+  --color-asfalto-700: #273244;
+  --color-asfalto-600: #34415a;
+  --color-asfalto-400: #7f8ba0;
+  --color-asfalto-300: #a9b4c6;
+  --color-asfalto-100: #e8edf4;
+  --color-marca: #2c3e57;
+  --color-marca-claro: #a9c3e6;
+}
+
+/* Página travada no aparelho (App.jsx): a rolagem para; a reserva da barra evita que o conteúdo pule de lado */
+html { scrollbar-gutter: stable; }
+html.travado { overflow: hidden; }
+
+body {
+  margin: 0;
+  background: var(--color-asfalto-950);
+  color: var(--color-asfalto-100);
+  font-family: var(--font-texto);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+.fundo-palco {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(55% 50% at 50% 60%, rgba(169, 195, 230, 0.1), transparent 70%),
+    radial-gradient(90% 60% at 50% 120%, rgba(44, 62, 87, 0.5), transparent 70%),
+    var(--color-asfalto-950);
+}
+
+/* ---------- palco 3D ---------- */
+.palco3d { position: fixed; inset: 0; }
+.camada-css, .camada-gl { position: absolute !important; inset: 0; pointer-events: none; }
+/* O app só recebe toque quando o aparelho está de frente na sua seção; fora disso, rolar a página não vira zoom do mapa */
+/* Sem will-change: com ele o navegador rasteriza a tela numa escala só e a amplia (imagem embaçada).
+   O fundo é a cor do app: no giro, o que aparece por trás do conteúdo é a tela acesa, nunca preto. */
+.tela3d {
+  --tela-app: #f6f7f9; --tinta-app: #202124;
+  pointer-events: none !important; position: relative; overflow: hidden; background: var(--tela-app);
+  backface-visibility: hidden; /* de costas (no giro de pião), a tela some e aparecem as costas do aparelho */
+}
+@media (prefers-color-scheme: dark) {
+  .tela3d { --tela-app: #101317; --tinta-app: #e8eaed; }
+}
+.tela3d.interativo { pointer-events: auto !important; }
+.tela3d.movendo .conteudo { pointer-events: none; }
+/* câmera frontal do S26 Ultra: furo de ~3,2 mm no alto da tela */
+.tela3d .furo {
+  position: absolute; z-index: 3; top: 10px; left: 50%; margin-left: -9px; width: 18px; height: 18px; border-radius: 50%;
+  background: #000; box-shadow: inset 0 0 0 2.5px #15181c;
+}
+.sistema {
+  position: absolute; left: 50%; top: 50%; display: flex; box-sizing: border-box; padding-left: var(--recuo, 0px);
+  background: var(--tela-app);
+}
+.sistema .coluna { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.sistema .status {
+  flex: none; height: var(--status, 32px); display: flex; align-items: center; justify-content: space-between;
+  padding-inline: var(--margem, 24px); color: var(--tinta-app); font: 600 13px/1 "Segoe UI", Roboto, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums; overflow: hidden;
+}
+.sistema .icones { display: flex; align-items: center; gap: 5px; }
+.sistema .conteudo { flex: 1; min-height: 0; position: relative; overflow: hidden; }
+.sistema .conteudo iframe {
+  position: absolute; left: 0; top: 0; border: 0; display: block; background: var(--tela-app);
+  transform-origin: 0 0; opacity: 0; transition: opacity 0.4s ease;
+}
+.sistema .conteudo iframe.pronto { opacity: 1; }
+.sistema .carregando { position: absolute; inset: 0; display: grid; place-items: center; }
+.sistema .carregando svg { width: 56px; height: 56px; animation: respirar 1.4s ease-in-out infinite; }
+.sistema .gestos { flex: none; height: var(--gestos, 20px); display: grid; place-items: center; }
+.sistema .gestos span { width: 108px; height: 4px; border-radius: 2px; background: var(--tinta-app); opacity: 0.4; }
+@keyframes respirar { 50% { transform: scale(0.88); opacity: 0.55; } }
+
+/* ---------- textos das telas ---------- */
+.cena { position: fixed; z-index: 10; pointer-events: none; opacity: 0; will-change: opacity, transform; }
+.titulo { font-weight: 600; letter-spacing: -0.03em; line-height: 1; text-wrap: balance; color: #fff; }
+
+/* ---------- seta de "role para explorar": um balanço lento ---------- */
+.dica-seta { animation: balancar 2.2s ease-in-out infinite; }
+@keyframes balancar { 50% { transform: translateY(4px); } }
+
+/* ---------- guia: só um esmaecer curto quando o conteúdo muda ---------- */
+.surgir { animation: surgir 0.28s ease-out; }
+@keyframes surgir { from { opacity: 0; transform: translateY(4px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .surgir, .sistema .carregando svg, .dica-seta { animation: none; }
+}

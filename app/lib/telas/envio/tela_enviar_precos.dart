@@ -7,6 +7,7 @@ import '../../modelos/modelos.dart';
 import '../../servicos/api.dart';
 import '../../servicos/leitor_painel.dart';
 import '../../servicos/localizacao.dart';
+import '../../servicos/monitor_demo.dart';
 import '../../servicos/parser_painel.dart';
 import '../../servicos/sessao.dart';
 import '../../util/formatos.dart';
@@ -82,6 +83,10 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
     });
     final distancia = _atualizarDistancia();
     try {
+      if (Config.demo) {
+        MonitorDemo.evento('Leitura do painel', detalhe: 'OCR no aparelho (ML Kit) · a foto não sai do celular',
+            camadas: const ['ocr']);
+      }
       final leitura = Config.demo ? LeitorPainel.demonstracao() : await LeitorPainel().fotografarELer();
       await distancia;
       if (leitura == null) {
@@ -110,6 +115,8 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
       _leitura = leitura;
       _etapa = _Etapa.revisao;
     });
+    // na demonstração, o guia passa a explicar a conferência dos valores lidos
+    MonitorDemo.toque('Leitura concluída');
   }
 
   Future<void> _enviar() async {
@@ -142,6 +149,7 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
       );
       Sessao.instancia.carregarPerfil();
       setState(() => _etapa = _Etapa.concluido);
+      MonitorDemo.toque('Envio concluído');
     } catch (e) {
       setState(() => _etapa = _Etapa.revisao);
       if (mounted) mostrarMensagem(context, e);
@@ -261,7 +269,23 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
                       inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9,\.]'))],
                       textAlign: TextAlign.end,
                       style: tt.titleLarge?.copyWith(fontWeight: FontWeight.w800),
-                      decoration: const InputDecoration(prefixText: 'R\$ ', isDense: true, hintText: '0,00'),
+                      decoration: InputDecoration(
+                        prefixText: 'R\$ ',
+                        prefixStyle: tt.titleMedium?.copyWith(color: cs.onSurfaceVariant),
+                        isDense: true,
+                        hintText: '0,00',
+                        filled: true,
+                        fillColor: cs.surface,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: cs.outlineVariant),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: cs.primary, width: 2),
+                        ),
+                      ),
                       onChanged: (t) => setState(() => _incluir[e.key] = t.trim().isNotEmpty),
                     ),
                   ),
@@ -312,7 +336,7 @@ class _TelaEnviarPrecosState extends State<TelaEnviarPrecos> {
       const SizedBox(height: 12),
       Text('Obrigado por contribuir!', style: tt.headlineSmall, textAlign: TextAlign.center),
       const SizedBox(height: 24),
-      FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Voltar ao posto')),
+      FilledButton(onPressed: () => voltarAoPosto(context, widget.postoId, true), child: const Text('Voltar ao posto')),
       TextButton(onPressed: () => context.push('/pontos'), child: const Text('Ver meus pontos')),
     ]);
   }

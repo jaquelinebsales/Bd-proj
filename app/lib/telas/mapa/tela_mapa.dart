@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import 'package:maplibre/maplibre.dart'
     show
         CameraChangeReason,
@@ -32,6 +33,7 @@ import '../../config.dart';
 import '../../modelos/modelos.dart';
 import '../../servicos/api.dart';
 import '../../servicos/localizacao.dart';
+import '../../servicos/monitor_demo.dart';
 import '../../servicos/preferencias.dart';
 import '../../tema.dart';
 import '../../util/diagnostico.dart';
@@ -80,6 +82,7 @@ class TelaMapa extends StatefulWidget {
 class _TelaMapaState extends State<TelaMapa> {
   // Zoom do MapLibre (mundo de 512 px no zoom 0): um nível abaixo do mesmo enquadramento no OpenStreetMap raster
   static const _brasil = Geographic(lon: -47.88, lat: -15.79);
+  static const _centroDemo = Geographic(lon: -38.535, lat: -3.785);
   static const _zoomBrasil = 3.2;
   static const _zoomMinimo = 10.0;
   static const _zoomLocal = 12.0;
@@ -89,9 +92,14 @@ class _TelaMapaState extends State<TelaMapa> {
   /// Nos testes de widget não existe mapa nativo: a tela desenha os pinos lado a lado sobre um fundo liso.
   static final _semMapaNativo = !kIsWeb && Platform.environment.containsKey('FLUTTER_TEST');
 
+  /// Estilos com os rótulos em português, já baixados (por URL do estilo).
+  static final _estilosPt = <String, String>{};
+
   MapController? _mapa;
   MapOptions? _opcoes;
   String? _estilo;
+  String? _fonteAtual;
+  bool _estiloPronto = false;
   List<PostoResumo> _postos = [];
   PostoResumo? _selecionado;
   bool _carregando = false;
@@ -110,6 +118,9 @@ class _TelaMapaState extends State<TelaMapa> {
   /// Estilo atual do mapa e as imagens de pino já registradas nele (uma por aparência).
   StyleController? _estiloMapa;
   Map<String, Future<void>> _imagens = {};
+  // Imagens dos pinos já postas no estilo atual e as que podem ter sobrado do anterior
+  Set<String> _imagensAdicionadas = {};
+  Set<String> _imagensAntigas = {};
   int _desenhos = 0;
   Object? _desenhado;
 
@@ -122,6 +133,13 @@ class _TelaMapaState extends State<TelaMapa> {
     if (_semMapaNativo) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _iniciar());
     } else {
+      // O mapa espera o estilo em português por até 3 s; sem ele, abre com o original e troca quando chegar
+      Future.any<void>([
+        Future.wait([_traduzirEstilo(_estiloClaro), _traduzirEstilo(_estiloEscuro)]).then((_) {}),
+        Future<void>.delayed(const Duration(seconds: 3)),
+      ]).whenComplete(() {
+        if (mounted) setState(() => _estiloPronto = true);
+      });
       // Se o mapa nativo não for criado, a tela avisa em vez de ficar vazia sem explicação
       _vigia = Timer(const Duration(seconds: 15), () {
         if (mounted && _mapa == null) {
@@ -136,8 +154,55 @@ class _TelaMapaState extends State<TelaMapa> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final estilo = Theme.of(context).brightness == Brightness.dark ? _estiloEscuro : _estiloClaro;
-    if (_estilo != null && estilo != _estilo) _mapa?.setStyle(estilo);
+    final mudou = _estilo != null && estilo != _estilo;
     _estilo = estilo;
+    if (mudou) _aplicarEstilo();
+  }
+
+  /// O estilo do OpenFreeMap prefere o nome em inglês dos lugares ("Centre" no lugar de "Centro").
+  /// Os rótulos passam a usar o nome em português, com o nome local de reserva.
+  static Future<String?> _traduzirEstilo(String url) async {
+    final pronto = _estilosPt[url];
+    if (pronto != null) return pronto;
+    try {
+      final r = await http.get(Uri.parse(url)).timeout(const Duration(seconds: 8));
+      if (r.statusCode != 200) return null;
+      final estilo = jsonDecode(utf8.decode(r.bodyBytes)) as Map<String, dynamic>;
+      for (final camada in (estilo['layers'] as List).whereType<Map<String, dynamic>>()) {
+        // A textura de mata não existe no sprite do OpenFreeMap: sem ela, a área usa só a cor de preenchimento
+        final pintura = camada['paint'];
+        if (pintura is Map && pintura['fill-pattern'] == 'wood-pattern') pintura.remove('fill-pattern');
+        final layout = camada['layout'];
+        if (layout is Map && jsonEncode(layout['text-field']).contains('name_en')) {
+          layout['text-field'] = [
+            'coalesce',
+            ['get', 'name:pt'],
+            ['get', 'name'],
+          ];
+        }
+      }
+      return _estilosPt[url] = jsonEncode(estilo);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  String _fonteEstilo(String url) => _estilosPt[url] ?? url;
+
+  /// Usa o estilo em português assim que estiver baixado; até lá, o original pela URL.
+  void _aplicarEstilo() {
+    final url = _estilo, mapa = _mapa;
+    if (url == null || mapa == null) return;
+    final fonte = _fonteEstilo(url);
+    if (fonte != _fonteAtual) {
+      _fonteAtual = fonte;
+      mapa.setStyle(fonte);
+    }
+    if (!_estilosPt.containsKey(url)) {
+      _traduzirEstilo(url).then((_) {
+        if (mounted && _estilo == url) _aplicarEstilo();
+      });
+    }
   }
 
   @override
@@ -172,15 +237,16 @@ class _TelaMapaState extends State<TelaMapa> {
       }
     }
     // O posto aberto pode ter ficado fora do novo raio
-    setState(() => _selecionado = null);
+    _desselecionar();
     if (_porRaio) unawaited(_enquadrarRaio());
     _carregarArea();
   }
 
   MapOptions _criarOpcoes() {
     final pos = Localizacao.instancia.atual;
+    _fonteAtual = _fonteEstilo(_estilo ?? _estiloClaro);
     return MapOptions(
-      initStyle: _estilo ?? _estiloClaro,
+      initStyle: _fonteAtual!,
       initCenter: pos == null ? _brasil : Geographic(lon: pos.longitude, lat: pos.latitude),
       initZoom: pos == null ? _zoomBrasil : _zoomLocal,
       minZoom: 2,
@@ -195,8 +261,8 @@ class _TelaMapaState extends State<TelaMapa> {
     _mapa = mapa;
     _vigia?.cancel();
     if (_erro != null) setState(() => _erro = null);
-    // O tema pode ter mudado entre a criação das opções e a do mapa
-    if (_estilo != null && _estilo != _opcoes?.initStyle) mapa.setStyle(_estilo!);
+    // O tema pode ter mudado entre a criação das opções e a do mapa, ou o estilo em português pode ter chegado
+    _aplicarEstilo();
     _iniciar();
   }
 
@@ -206,8 +272,28 @@ class _TelaMapaState extends State<TelaMapa> {
     _imagens = {};
     _desenhado = null;
     final marca = _hex(Theme.of(context).colorScheme.primary);
+    const fontes = ['gasprice-raio', 'gasprice-usuario', CamadaPinos.fonte, CamadaPinos.idSelecionado];
+    const camadas = ['gasprice-raio-area', 'gasprice-raio-borda', 'gasprice-usuario-halo', 'gasprice-usuario',
+        CamadaPinos.id, CamadaPinos.idSelecionado];
     try {
-      for (final id in ['gasprice-raio', 'gasprice-usuario', CamadaPinos.fonte, CamadaPinos.idSelecionado]) {
+      // Na web, trocar o estilo pode manter as camadas do app do estilo anterior: só essas saem antes de voltar.
+      // Remover às cegas faz o MapLibre registrar um erro no console para cada camada que não existe.
+      // ignore: invalid_use_of_visible_for_testing_member
+      final existentes = estilo.getLayerIds().toSet();
+      final herdou = existentes.contains(CamadaPinos.id);
+      _imagensAntigas = herdou ? {..._imagensAdicionadas} : {};
+      _imagensAdicionadas = {};
+      for (final c in camadas.reversed.where(existentes.contains)) {
+        await estilo.removeLayer(c);
+      }
+      if (herdou) {
+        for (final f in fontes) {
+          try {
+            await estilo.removeSource(f);
+          } catch (_) {}
+        }
+      }
+      for (final id in fontes) {
         await estilo.addSource(GeoJsonSource(id: id, data: _geoVazio));
       }
       await estilo.addLayer(FillStyleLayer(
@@ -270,8 +356,8 @@ class _TelaMapaState extends State<TelaMapa> {
     final posto = id == null ? null : _postos.where((p) => p.id == id).firstOrNull;
     if (posto != null) {
       _selecionar(posto, mover: false);
-    } else if (_selecionado != null) {
-      setState(() => _selecionado = null);
+    } else {
+      _desselecionar();
     }
   }
 
@@ -285,10 +371,15 @@ class _TelaMapaState extends State<TelaMapa> {
       if (_porRaio) {
         await _enquadrarRaio(animar: false);
       } else {
-        // Também sem posição: na web os pinos só aparecem depois do primeiro movimento da câmera
+        // Também sem posição: na web os pinos só aparecem depois do primeiro movimento da câmera.
+        // Na demonstração o mapa abre um pouco ao sul, para Fortaleza não aparecer com metade da tela no mar.
         await mapa.moveCamera(
-          center: pos == null ? mapa.getCamera().center : Geographic(lon: pos.longitude, lat: pos.latitude),
-          zoom: pos == null ? null : _zoomLocal,
+          center: Config.demo
+              ? _centroDemo
+              : pos == null
+                  ? mapa.getCamera().center
+                  : Geographic(lon: pos.longitude, lat: pos.latitude),
+          zoom: Config.demo ? 11.2 : (pos == null ? null : _zoomLocal),
         );
       }
     }
@@ -410,7 +501,15 @@ class _TelaMapaState extends State<TelaMapa> {
     }
   }
 
+  // Na demonstração, o resumo do posto aberto é explicado ao lado; ao fechar, volta a explicação do mapa
+  void _desselecionar() {
+    if (_selecionado == null) return;
+    setState(() => _selecionado = null);
+    MonitorDemo.fechou();
+  }
+
   void _selecionar(PostoResumo p, {bool mover = true}) {
+    if (_selecionado?.id != p.id) MonitorDemo.toque('Posto selecionado');
     setState(() => _selecionado = p);
     if (mover && p.lat != null) _irPara(Geographic(lon: p.lon!, lat: p.lat!));
   }
@@ -478,7 +577,17 @@ class _TelaMapaState extends State<TelaMapa> {
       final imagens = _imagens;
       await Future.wait([
         for (final a in aparencias.values)
-          imagens.putIfAbsent(a.id, () async => estilo.addImage(a.id, await a.png(densidade))),
+          imagens.putIfAbsent(a.id, () async {
+            final png = await a.png(densidade);
+            // A imagem só pode ter sobrado se o estilo anterior foi mantido (troca de tema na web)
+            if (_imagensAntigas.remove(a.id)) {
+              try {
+                await estilo.removeImage(a.id);
+              } catch (_) {}
+            }
+            await estilo.addImage(a.id, png);
+            _imagensAdicionadas.add(a.id);
+          }),
       ]);
       if (desenho != _desenhos || estilo != _estiloMapa) return;
       await estilo.updateGeoJsonSource(
@@ -552,6 +661,8 @@ class _TelaMapaState extends State<TelaMapa> {
               ),
           ]),
         )
+      else if (!_estiloPronto)
+        Positioned.fill(child: ColoredBox(color: cs.surfaceContainerHighest))
       else
         MapLibreMap(
           options: _opcoes ??= _criarOpcoes(),
@@ -639,26 +750,27 @@ class _TelaMapaState extends State<TelaMapa> {
           child: _sobreOMapa(_FolhaPosto(
             posto: _selecionado!,
             produtoId: Preferencias.primario,
-            aoFechar: () => setState(() => _selecionado = null),
+            aoFechar: _desselecionar,
           )),
         ),
     ]);
 
+    // A mesma estrutura nos dois tamanhos: ao girar o tablet (ou redimensionar a janela) o mapa continua o mesmo
+    // widget. Se ele mudasse de lugar na árvore, o Flutter criaria outro mapa e o app desenharia no antigo.
     return Scaffold(
-      body: expandido
-          ? Row(children: [
-              Expanded(child: mapa),
-              SizedBox(
-                width: 380,
-                child: _ListaLateral(
-                  postos: _ordenadosPorPreco(visiveis),
-                  selecionado: _selecionado,
-                  aoSelecionar: _selecionar,
-                  longeDemais: _longeDemais,
-                ),
-              ),
-            ])
-          : mapa,
+      body: Row(children: [
+        Expanded(child: mapa),
+        if (expandido)
+          SizedBox(
+            width: 380,
+            child: _ListaLateral(
+              postos: _ordenadosPorPreco(visiveis),
+              selecionado: _selecionado,
+              aoSelecionar: _selecionar,
+              longeDemais: _longeDemais,
+            ),
+          ),
+      ]),
     );
   }
 }
@@ -1004,7 +1116,7 @@ class _FolhaPostoState extends State<_FolhaPosto> {
                       Icon(Icons.star_rounded, size: 16, color: cs.primary),
                       const SizedBox(width: 4),
                       Text(
-                        '${posto.notaMedia!.toStringAsFixed(1)}  (${posto.totalAvaliacoes} avaliações)',
+                        '${posto.notaMedia!.toStringAsFixed(1).replaceAll('.', ',')}  (${posto.totalAvaliacoes} avaliações)',
                         style: tt.bodySmall,
                       ),
                     ]),

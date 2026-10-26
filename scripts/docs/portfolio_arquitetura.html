@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>GasPrice · arquitetura</title>
+<style>
+  :root {
+    --fundo: #F6F7F9; --faixa: #FFFFFF; --borda-faixa: #D6DCE4; --caixa: #EEF2F7; --borda: #2C3E57;
+    --texto: #1C2633; --suave: #556170; --banco: #E4EBF3; --chip: #FFFFFF; --linha: #2C3E57;
+    --destaque: #1F8A5B; --destaque-fundo: #E6F4EC; --nota: #7A8594;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fundo: #12171E; --faixa: #1A212B; --borda-faixa: #2E3A49; --caixa: #222C38; --borda: #8FA6C4;
+      --texto: #E6EBF1; --suave: #A7B3C2; --banco: #1E2833; --chip: #26313E; --linha: #8FA6C4;
+      --destaque: #4CC38A; --destaque-fundo: #173327; --nota: #8E99A8;
+    }
+  }
+  html, body { margin: 0; background: var(--fundo); }
+  svg { display: block; font-family: "Segoe UI", "Inter", Arial, sans-serif; }
+  .faixa { fill: var(--faixa); stroke: var(--borda-faixa); stroke-width: 1.5; }
+  .caixa { fill: var(--caixa); stroke: var(--borda); stroke-width: 1.5; }
+  .banco { fill: var(--banco); stroke: var(--borda); stroke-width: 1.5; }
+  .chip { fill: var(--chip); stroke: var(--borda-faixa); stroke-width: 1; }
+  .foto { fill: var(--destaque-fundo); stroke: var(--destaque); stroke-width: 2; }
+  .t { fill: var(--texto); font-size: 15px; font-weight: 700; }
+  .s { fill: var(--suave); font-size: 12px; }
+  .c { fill: var(--texto); font-size: 12.5px; font-weight: 700; font-family: Consolas, "Cascadia Mono", monospace; }
+  .cab { fill: var(--suave); font-size: 12px; font-weight: 700; letter-spacing: 1.4px; }
+  .titulo { fill: var(--texto); font-size: 26px; font-weight: 800; }
+  .sub { fill: var(--suave); font-size: 14px; }
+  .rot { fill: var(--suave); font-size: 11px; }
+  .rotf { fill: var(--destaque); font-size: 11px; font-weight: 700; }
+  .nota { fill: var(--nota); font-size: 11px; }
+  .l { fill: none; stroke: var(--linha); stroke-width: 1.6; }
+  .lf { fill: none; stroke: var(--destaque); stroke-width: 2.4; }
+  .seta { fill: var(--linha); }
+  .setaf { fill: var(--destaque); }
+</style>
+</head>
+<body>
+<svg id="diagrama" width="1600" height="960" viewBox="0 0 1600 960" role="img"
+     aria-label="Arquitetura do GasPrice: o app no celular conversa com um Supabase próprio por HTTPS; a foto do painel é lida no aparelho e nunca é enviada, só os valores, o texto reconhecido e a posição chegam ao servidor; o banco PostgreSQL com PostGIS guarda postos, preços, envios e pontos; ANP, OpenFreeMap e Brevo são serviços externos.">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="seta"/>
+    </marker>
+    <marker id="mf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" class="setaf"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="960" style="fill: var(--fundo)"/>
+
+  <text x="40" y="52" class="titulo">GasPrice · arquitetura</text>
+  <text x="40" y="80" class="sub">Do celular ao banco. A linha verde é o caminho da foto do painel: ela é lida no aparelho e nunca sai dele; seguem só os valores, o texto reconhecido e a posição.</text>
+
+  <!-- Cabeçalhos das faixas -->
+  <text x="40" y="128" class="cab">NO CELULAR</text>
+  <text x="460" y="128" class="cab">SERVIDOR PRÓPRIO · SUPABASE EM DOCKER NUMA VM UBUNTU</text>
+  <text x="1240" y="128" class="cab">SERVIÇOS EXTERNOS</text>
+  <rect x="40" y="140" width="340" height="630" rx="14" class="faixa"/>
+  <rect x="460" y="140" width="720" height="630" rx="14" class="faixa"/>
+  <rect x="1240" y="140" width="320" height="630" rx="14" class="faixa"/>
+
+  <!-- Celular -->
+  <rect x="60" y="170" width="300" height="90" rx="10" class="caixa"/>
+  <text x="76" y="198" class="t">App Flutter</text>
+  <text x="76" y="220" class="s">Android, iOS e web · Material 3</text>
+  <text x="76" y="238" class="s">celular e tablet, tema claro e escuro</text>
+
+  <rect x="60" y="290" width="300" height="80" rx="10" class="caixa"/>
+  <text x="76" y="318" class="t">Mapa MapLibre</text>
+  <text x="76" y="340" class="s">pinos desenhados em camada nativa,</text>
+  <text x="76" y="357" class="s">sem atraso ao mover o mapa</text>
+
+  <rect x="60" y="400" width="300" height="120" rx="10" class="foto"/>
+  <text x="76" y="428" class="t">Leitor do painel</text>
+  <text x="76" y="450" class="s">foto → texto com o ML Kit, no aparelho,</text>
+  <text x="76" y="467" class="s">sem internet; a pessoa confere os valores</text>
+  <text x="76" y="496" class="rotf">a foto é apagada logo após a leitura</text>
+
+  <rect x="60" y="550" width="300" height="80" rx="10" class="caixa"/>
+  <text x="76" y="578" class="t">GPS e favoritos</text>
+  <text x="76" y="600" class="s">posição do aparelho; favoritos ficam</text>
+  <text x="76" y="617" class="s">no celular até a pessoa criar conta</text>
+
+  <rect x="60" y="660" width="300" height="80" rx="10" class="caixa"/>
+  <text x="76" y="688" class="t">Modo demonstração</text>
+  <text x="76" y="710" class="s">dados fictícios, sem servidor:</text>
+  <text x="76" y="727" class="s">usado nas telas deste portfólio</text>
+
+  <!-- Entrada do servidor -->
+  <rect x="480" y="170" width="680" height="56" rx="10" class="caixa"/>
+  <text x="496" y="194" class="t">HTTPS público · Tailscale Funnel</text>
+  <text x="496" y="214" class="s">só /rest, /auth, /functions, /storage e /realtime; o painel administrativo não fica exposto</text>
+
+  <!-- Serviços -->
+  <rect x="480" y="250" width="130" height="110" rx="10" class="caixa"/>
+  <text x="494" y="276" class="t">API REST</text>
+  <text x="494" y="297" class="s">PostgREST</text>
+  <text x="494" y="314" class="s">mapa, busca e</text>
+  <text x="494" y="331" class="s">página do posto</text>
+
+  <rect x="620" y="250" width="110" height="110" rx="10" class="caixa"/>
+  <text x="634" y="276" class="t">Realtime</text>
+  <text x="634" y="297" class="s">aviso quando o</text>
+  <text x="634" y="314" class="s">preço de um</text>
+  <text x="634" y="331" class="s">favorito muda</text>
+
+  <rect x="740" y="250" width="100" height="110" rx="10" class="caixa"/>
+  <text x="754" y="276" class="t">Storage</text>
+  <text x="754" y="297" class="s">fotos de</text>
+  <text x="754" y="314" class="s">perfil</text>
+
+  <rect x="850" y="250" width="120" height="110" rx="10" class="caixa"/>
+  <text x="864" y="276" class="t">Auth</text>
+  <text x="864" y="297" class="s">contas, senha</text>
+  <text x="864" y="314" class="s">e confirmação</text>
+  <text x="864" y="331" class="s">de e-mail</text>
+
+  <rect x="980" y="250" width="180" height="110" rx="10" class="caixa"/>
+  <text x="994" y="276" class="t">Edge Functions</text>
+  <text x="994" y="297" class="s">Deno · TypeScript</text>
+  <text x="994" y="314" class="s">enviar preços, posição do</text>
+  <text x="994" y="331" class="s">posto, excluir conta,</text>
+  <text x="994" y="348" class="s">cadastro da ANP</text>
+
+  <!-- Banco -->
+  <rect x="480" y="400" width="680" height="230" rx="12" class="banco"/>
+  <text x="496" y="428" class="t">PostgreSQL + PostGIS</text>
+  <text x="496" y="448" class="s">regras de acesso (RLS) em todas as tabelas · regras de negócio em funções SQL, cobertas por testes</text>
+
+  <rect x="500" y="464" width="208" height="50" rx="8" class="chip"/>
+  <text x="512" y="485" class="c">postos</text>
+  <text x="512" y="503" class="s">45,8 mil · ponto no mapa</text>
+  <rect x="726" y="464" width="208" height="50" rx="8" class="chip"/>
+  <text x="738" y="485" class="c">precos_anp</text>
+  <text x="738" y="503" class="s">últimos 2 anos no banco</text>
+  <rect x="952" y="464" width="188" height="50" rx="8" class="chip"/>
+  <text x="964" y="485" class="c">envios → consenso</text>
+  <text x="964" y="503" class="s">2 pessoas · R$ 0,02 · 24 h</text>
+
+  <rect x="500" y="522" width="208" height="50" rx="8" class="chip"/>
+  <text x="512" y="543" class="c">precos_atuais</text>
+  <text x="512" y="561" class="s">preço exibido, por prioridade</text>
+  <rect x="726" y="522" width="208" height="50" rx="8" class="chip"/>
+  <text x="738" y="543" class="c">precos_estimados</text>
+  <text x="738" y="561" class="s">5 vizinhos até 200 km</text>
+  <rect x="952" y="522" width="188" height="50" rx="8" class="chip"/>
+  <text x="964" y="543" class="c">perfis · pontos</text>
+  <text x="964" y="561" class="s">avaliações e favoritos</text>
+
+  <text x="500" y="604" class="s">pg_cron: fecha envios sem confirmação (toda hora) · estimativas e preço exibido (segunda) · cadastro da ANP (domingo)</text>
+
+  <!-- Carga semanal -->
+  <rect x="480" y="660" width="680" height="80" rx="10" class="caixa"/>
+  <text x="496" y="688" class="t">Carga semanal da pesquisa da ANP</text>
+  <text x="496" y="710" class="s">timer do systemd na VM · script Python que importa a planilha nova e recalcula os preços exibidos</text>
+
+  <!-- Externos -->
+  <rect x="1260" y="170" width="280" height="70" rx="10" class="caixa"/>
+  <text x="1276" y="196" class="t">OpenFreeMap · OSM</text>
+  <text x="1276" y="218" class="s">blocos vetoriais do mapa, sem chave</text>
+
+  <rect x="1260" y="255" width="280" height="66" rx="10" class="caixa"/>
+  <text x="1276" y="281" class="t">Brevo</text>
+  <text x="1276" y="303" class="s">e-mails de conta (SMTP)</text>
+
+  <rect x="1260" y="336" width="280" height="74" rx="10" class="caixa"/>
+  <text x="1276" y="362" class="t">ANP · API de Revendedores</text>
+  <text x="1276" y="384" class="s">cadastro oficial dos postos</text>
+
+  <rect x="1260" y="660" width="280" height="80" rx="10" class="caixa"/>
+  <text x="1276" y="688" class="t">ANP · pesquisa de preços</text>
+  <text x="1276" y="710" class="s">levantamento semanal por posto</text>
+
+  <text x="1260" y="450" class="nota">Dados abertos da ANP.</text>
+  <text x="1260" y="466" class="nota">Mapa © OpenStreetMap, estilos</text>
+  <text x="1260" y="482" class="nota">do OpenFreeMap.</text>
+
+  <!-- Ligações -->
+  <!-- app ↔ servidor -->
+  <path d="M360,198 L478,198" class="l" marker-start="url(#m)" marker-end="url(#m)"/>
+  <text x="420" y="190" class="rot" text-anchor="middle">consultas e login</text>
+  <!-- caminho da foto -->
+  <path d="M360,460 L430,460 L430,214 L478,214" class="lf" marker-end="url(#mf)"/>
+  <text x="424" y="482" class="rotf" text-anchor="end">sem a</text>
+  <text x="424" y="496" class="rotf" text-anchor="end">foto</text>
+  <!-- mapa direto do celular -->
+  <path d="M1258,195 L1225,195 L1225,154 L300,154 L300,168" class="l" marker-end="url(#m)"/>
+  <text x="820" y="166" class="rot" text-anchor="middle">blocos do mapa vão direto para o celular, sem passar pelo servidor</text>
+  <!-- serviços ↔ banco -->
+  <path d="M545,362 L545,398" class="l" marker-start="url(#m)" marker-end="url(#m)"/>
+  <path d="M675,398 L675,362" class="l" marker-end="url(#m)"/>
+  <path d="M910,362 L910,398" class="l" marker-end="url(#m)"/>
+  <path d="M1070,362 L1070,398" class="lf" marker-end="url(#mf)"/>
+  <text x="1062" y="386" class="rotf" text-anchor="end">proposta de preço</text>
+  <!-- Auth → Brevo -->
+  <path d="M910,250 L910,238 L1215,238 L1215,288 L1258,288" class="l" marker-end="url(#m)"/>
+  <!-- ANP → Edge -->
+  <path d="M1258,373 L1162,373" class="l" marker-end="url(#m)"/>
+  <text x="1210" y="393" class="rot" text-anchor="middle">por UF</text>
+  <!-- ANP pesquisa → carga → banco -->
+  <path d="M1258,700 L1162,700" class="l" marker-end="url(#m)"/>
+  <text x="1210" y="692" class="rot" text-anchor="middle">planilha</text>
+  <path d="M820,660 L820,632" class="l" marker-end="url(#m)"/>
+  <text x="828" y="650" class="rot">preços oficiais</text>
+
+  <!-- Fora do app -->
+  <text x="40" y="808" class="cab">FORA DO APP · ANÁLISE EM PYTHON</text>
+  <rect x="40" y="820" width="490" height="96" rx="10" class="caixa"/>
+  <text x="56" y="848" class="t">Limpeza das planilhas da ANP</text>
+  <text x="56" y="870" class="s">5,47 milhões de linhas de 2020 a 2026; 0,17% removidas</text>
+  <text x="56" y="887" class="s">(vazias e duplicadas); 388 preços suspeitos marcados, não apagados</text>
+
+  <rect x="555" y="820" width="490" height="96" rx="10" class="caixa"/>
+  <text x="571" y="848" class="t">Experimento de previsão de preços</text>
+  <text x="571" y="870" class="s">scikit-learn contra a regra "repetir o preço da semana";</text>
+  <text x="571" y="887" class="s">não superou a regra no geral e ficou fora do app</text>
+
+  <rect x="1070" y="820" width="490" height="96" rx="10" class="caixa"/>
+  <text x="1086" y="848" class="t">Auditoria e testes</text>
+  <text x="1086" y="870" class="s">873 casos no servidor, banco, funções e telas;</text>
+  <text x="1086" y="887" class="s">testes das regras SQL e suíte de QA para Android</text>
+</svg>
+</body>
+</html>

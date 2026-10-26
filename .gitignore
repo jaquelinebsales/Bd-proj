@@ -49,3 +49,8 @@ app/test_auditoria/failures/
 # QA no Android: APKs gerados e arquivos de execução
 testes_android/apk/
 testes_android/saida/
+
+# Demonstração web para o portfólio (gerada por scripts/docs/gerar_demonstracao.py)
+demonstracao/
+scripts/docs/demonstracao_web/node_modules/
+scripts/docs/demonstracao_web/dist/

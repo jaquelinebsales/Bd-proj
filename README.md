@@ -1,6 +1,6 @@
 # gasprice
 
-App de preços de combustíveis para Android e iOS, em celular e tablet. Combina a pesquisa oficial da ANP com preços enviados pela comunidade por foto do painel. A foto é lida no próprio aparelho e apagada: só o valor lido vai para o servidor.
+App de preços de combustíveis para Android e iOS, em celular e tablet. Combina a pesquisa oficial da ANP com preços enviados pela comunidade por foto do painel. A foto é lida no próprio aparelho e apagada: ela nunca é enviada. Vão para o servidor os preços conferidos pela pessoa, a posição e o texto reconhecido no painel.
 
 | Pasta | Conteúdo |
 |---|---|
