@@ -76,6 +76,24 @@ DENSIDADE = """
         var f = ev.deltaMode === 1 ? 40 : ev.deltaMode === 2 ? window.innerHeight : 1;
         window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'rolar', dy: ev.deltaY * f }, '*');
       }, { capture: true, passive: false });
+      // Duplo toque (dedo, dois toques curtos e parados no mesmo lugar): a página abre o app em tela cheia
+      var inicio = null, ultimo = null;
+      window.addEventListener('pointerdown', function (ev) {
+        inicio = ev.pointerType === 'touch' ? { t: Date.now(), x: ev.clientX, y: ev.clientY } : null;
+      }, true);
+      window.addEventListener('pointerup', function (ev) {
+        var agora = Date.now();
+        if (!inicio || agora - inicio.t > 300 || Math.abs(ev.clientX - inicio.x) > 12 || Math.abs(ev.clientY - inicio.y) > 12) {
+          ultimo = null;
+          return;
+        }
+        if (ultimo && agora - ultimo.t < 350 && Math.abs(ev.clientX - ultimo.x) < 40 && Math.abs(ev.clientY - ultimo.y) < 40) {
+          ultimo = null;
+          window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'telaCheia' }, '*');
+        } else {
+          ultimo = { t: agora, x: ev.clientX, y: ev.clientY };
+        }
+      }, true);
     })();
   </script>"""
 
