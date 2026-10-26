@@ -90,7 +90,29 @@ body {
 .sistema .gestos span { width: 108px; height: 4px; border-radius: 2px; background: var(--tinta-app); opacity: 0.4; }
 @keyframes respirar { 50% { transform: scale(0.88); opacity: 0.55; } }
 
-/* app em tela cheia: cresce e encolhe a partir do canto (App.jsx, transformarPara), na cor de fundo do app */
+/* Tela cheia do próprio aparelho (App.jsx): a tela vai inteira para a tela de quem visita, com o mesmo app (sem
+   recarregar), sem a barra de status e a de gestos de mentira; no lugar delas, a barra com "Fechar" */
+.tela3d .barra-cheia { display: none; }
+.tela3d:fullscreen {
+  pointer-events: auto !important; border-radius: 0 !important; background: var(--tela-app);
+}
+.tela3d:fullscreen .furo, .tela3d:fullscreen .status, .tela3d:fullscreen .gestos { display: none; }
+.tela3d:fullscreen .barra-cheia {
+  position: absolute; inset: 0 0 auto 0; height: 44px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px; background: #0a0e14; color: #a9b4c6; font: 13px/1 "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+.tela3d:fullscreen .barra-cheia button {
+  display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: 0; border-radius: 999px; background: none;
+  color: #fff; font: 500 13px/1 "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+.tela3d:fullscreen .sistema {
+  left: 0 !important; top: 44px !important; right: 0; bottom: 0; width: auto !important; height: auto !important;
+  transform: none !important; padding-left: 0 !important; opacity: 1 !important;
+}
+.tela3d:fullscreen .conteudo { pointer-events: auto !important; }
+.tela3d:fullscreen .conteudo iframe { width: 100% !important; height: 100% !important; transform: none !important; }
+
+/* app em tela cheia (reserva, sem a tela cheia do navegador): cresce e encolhe a partir do canto (App.jsx, transformarPara), na cor de fundo do app */
 .caixa-cheia { transform-origin: 0 0; background: #f6f7f9; }
 @media (prefers-color-scheme: dark) { .caixa-cheia { background: #101317; } }
 

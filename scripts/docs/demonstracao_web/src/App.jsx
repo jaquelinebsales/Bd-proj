@@ -160,12 +160,31 @@ export default function App() {
     const c = cheia.current, ap = motor.current.aparelhos?.[tipo];
     // cada aparelho abre em tela cheia só no aparelho do mesmo tipo: o celular num celular, o tablet num tablet
     if (c.aberta || !ap || tipo !== aparelhoDoVisitante()) return;
+    // O normal: a própria tela do aparelho vai para a tela cheia do navegador, com o mesmo app (abre na hora, na
+    // mesma tela e com o mesmo mapa, sem outra cópia do app pesando na memória e nos contextos WebGL)
+    if (document.fullscreenEnabled && ap.telaEl.requestFullscreen) {
+      Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo, modo: 'aparelho' });
+      motor.current.palco.pausar();
+      ap.telaEl.requestFullscreen({ navigationUI: 'hide' })
+        .then(() => ap.mensagem('escala', 1))   // em tela cheia o app desenha 1:1, no tamanho real da tela
+        .catch(() => {
+          Object.assign(c, { aberta: false, modo: null });
+          motor.current.palco.retomar();
+          abrirCopia(tipo);
+        });
+      return;
+    }
+    abrirCopia(tipo);
+  }, []);
+  // Reserva (navegador sem tela cheia de elemento, como o Safari do iPhone): uma cópia do app por cima da página
+  const abrirCopia = useCallback(tipo => {
+    const c = cheia.current, ap = motor.current.aparelhos[tipo];
     ap.mensagem('guardar', true);
     let rota = '';
     try { rota = ap.iframe.contentWindow.location.hash; } catch { /* carregando */ }
     const dpr = Math.min(3, window.devicePixelRatio || 1);
     const versao = document.querySelector('meta[name="versao-app"]')?.content;
-    Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo });
+    Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo, modo: 'copia' });
     motor.current.palco.pausar();
     // o outro aparelho fica escondido: libera o app dele para o da tela cheia não passar do limite de contextos
     // WebGL do celular (passando, o navegador apaga o mapa deste aparelho); volta quando a pessoa chegar nele
@@ -191,6 +210,26 @@ export default function App() {
     const c = cheia.current, ap = motor.current.aparelhos?.[c.tipo];
     if (!c.aberta || c.fechando || !ap) return;
     c.fechando = true;
+    if (c.modo === 'aparelho') {
+      // o app volta à escala do aparelho e o conteúdo encolhe, do tamanho da tela de quem visita até ele
+      ap.mensagem('escala', ap.k);
+      if (document.fullscreenElement) await document.exitFullscreen?.().catch(() => {});
+      motor.current.palco.retomar();
+      window.scrollTo(0, c.scroll);
+      await new Promise(r => requestAnimationFrame(r));
+      const sis = ap.sistemaEl, base = sis.style.transform, R = sis.getBoundingClientRect(), e = R.width / sis.offsetWidth;
+      if (R.width > 0 && e > 0) {
+        const vw = window.innerWidth, vh = window.innerHeight;
+        const de = `${base} translate(${(vw / 2 - (R.left + R.width / 2)) / e}px, ${(vh / 2 - (R.top + R.height / 2)) / e}px) scale(${vw / R.width}, ${vh / R.height})`;
+        ap.telaEl.style.overflow = 'visible';
+        // o corpo do aparelho (camada WebGL, por cima) some enquanto a tela encolhe e volta em volta dela
+        document.querySelector('.camada-gl')?.animate([{ opacity: 0 }, { opacity: 0, offset: 0.55 }, { opacity: 1 }], { duration: 520 });
+        await sis.animate([{ transform: de }, { transform: base }], { duration: 480, easing: 'cubic-bezier(.4,0,.2,1)' }).finished.catch(() => {});
+        ap.telaEl.style.overflow = '';
+      }
+      Object.assign(c, { aberta: false, fechando: false, modo: null });
+      return;
+    }
     barraCheia.current?.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' });
     // o aparelho do site passa para a tela em que a pessoa estava na tela cheia
     try {

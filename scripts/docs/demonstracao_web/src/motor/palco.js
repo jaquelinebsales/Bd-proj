@@ -275,7 +275,10 @@ export class Aparelho {
           <div class="conteudo"><div class="carregando">${LOGO}</div></div>
           <div class="gestos"><span></span></div>
         </div>
-      </div>`;
+      </div>
+      <div class="barra-cheia"><span>GasPrice · demonstração</span><button type="button">Fechar
+        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>`;
+    tela.querySelector('.barra-cheia button').addEventListener('click', () => document.exitFullscreen?.().catch(() => {}));
     this.telaEl = tela;
     this.sistemaEl = tela.querySelector('.sistema');
     this.horaEl = tela.querySelector('.hora');
