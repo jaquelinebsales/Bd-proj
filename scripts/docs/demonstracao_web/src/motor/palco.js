@@ -88,9 +88,15 @@ export class Palco {
     caixa.append(this.css.domElement, this.gl.domElement);
 
     this.cena = new THREE.Scene();
-    const pmrem = new THREE.PMREMGenerator(this.gl);
-    this.cena.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    pmrem.dispose();
+    this.criarAmbiente();
+    // Os apps também usam WebGL e, passando do limite do navegador (no tablet, por exemplo), ele descarta o contexto
+    // mais antigo: o deste palco. Quando ele volta, o three.js reenvia formas e materiais, mas o ambiente dos
+    // reflexos é desenhado na GPU e se perde (o corpo ficaria escuro, sem borda à vista): é refeito aqui
+    this.gl.domElement.addEventListener('webglcontextrestored', () => {
+      this.criarAmbiente();
+      this.aoRedimensionar?.();
+      this.desenhar();
+    });
     const luz = new THREE.DirectionalLight(0xf2f6ff, 1.5);
     luz.position.set(-200, 1200, 900);
     this.cena.add(luz, new THREE.AmbientLight(0xffffff, 0.12));
@@ -109,6 +115,14 @@ export class Palco {
     this.observador = new ResizeObserver(() => this.redimensionar());
     this.observador.observe(caixa);
     this.redimensionar();
+  }
+
+  criarAmbiente() {
+    const pmrem = new THREE.PMREMGenerator(this.gl);
+    const antigo = this.cena.environment;
+    this.cena.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    antigo?.dispose();
+    pmrem.dispose();
   }
 
   // Pausado (app em tela cheia por cima): a janela muda de tamanho ao entrar e sair da tela cheia do navegador,
