@@ -45,7 +45,9 @@ body {
 }
 
 /* ---------- palco 3D ---------- */
-.palco3d { position: fixed; inset: 0; }
+/* Altura fixa (tela com as barras do navegador à vista): no celular, as barras somem e voltam durante a rolagem,
+   e redimensionar o palco a cada vez refaz o WebGL e os dois apps (a página trava por um instante) */
+.palco3d { position: fixed; left: 0; right: 0; top: 0; height: 100vh; height: 100svh; }
 .camada-css, .camada-gl { position: absolute !important; inset: 0; pointer-events: none; }
 /* O app só recebe toque quando o aparelho está de frente na sua seção; fora disso, rolar a página não vira zoom do mapa */
 /* Sem will-change: com ele o navegador rasteriza a tela numa escala só e a amplia (imagem embaçada).

@@ -21,7 +21,9 @@ const limitar = x => Math.min(1, Math.max(0, x));
 const suave = x => { const t = limitar(x); return t * t * (3 - 2 * t); };
 const misturar = (a, b, e) => a + (b - a) * e;
 const misturarPose = (p, q, e) => ({ x: misturar(p.x, q.x, e), y: misturar(p.y, q.y, e), z: misturar(p.z, q.z, e), s: misturar(p.s, q.s, e) });
-const progresso = () => window.scrollY / window.innerHeight;
+// Altura do palco (estável: não muda quando as barras do navegador do celular somem ou voltam)
+let ALTURA = window.innerHeight;
+const progresso = () => window.scrollY / ALTURA;
 
 // Fundo das telas 1 a 3: os dois juntos, em exposição, abaixo dos textos — o tablet à esquerda virado para a
 // esquerda, o celular à direita virado para a direita (INCL), com as bordas de dentro mais perto de quem olha
@@ -115,7 +117,7 @@ export default function App() {
   // Trava: ao chegar num aparelho (com mouse), a página para e a roda passa a agir no app, até um clique fora dele
   const [travado, setTravado] = useState(null);       // aparelho travado
   const [aviso, setAviso] = useState(null);           // { x, y }: o alto do aparelho, onde fica o aviso
-  const [altura, setAltura] = useState(() => window.innerHeight);
+  const [altura, setAltura] = useState(() => ALTURA);
   const telas = useRef({ celular: 'Mapa', tablet: 'Mapa' });
   const ativoRef = useRef(null);
   const lateral = largura >= LARGURA_LATERAL;
@@ -133,22 +135,21 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    let w = window.innerWidth;
-    const medir = () => {
-      if (window.innerWidth !== w || Math.abs(window.innerHeight - altura) > 160) {
-        w = window.innerWidth;
-        setLargura(w);
-        setAltura(window.innerHeight);
-      }
-    };
+    const medir = () => setLargura(window.innerWidth);
     window.addEventListener('resize', medir);
     return () => window.removeEventListener('resize', medir);
-  }, [altura]);
+  }, []);
 
   // Palco, aparelhos e o laço que faz cada aparelho perseguir a pose-alvo com amortecimento
   useEffect(() => {
     const sujo = { valor: true };
-    const palco = new Palco(caixa.current, { aoRedimensionar: () => { sujo.valor = true; } });
+    const palco = new Palco(caixa.current, {
+      aoRedimensionar: () => {
+        sujo.valor = true;
+        ALTURA = caixa.current?.clientHeight || ALTURA;
+        setAltura(ALTURA);
+      },
+    });
     const aparelhos = {};
     for (const tipo of TIPOS) {
       aparelhos[tipo] = new Aparelho(palco, tipo, { enderecoApp: ENDERECO_APP });
@@ -180,7 +181,7 @@ export default function App() {
       trava.tipo = tipo;
       document.documentElement.classList.add('travado');
       // centraliza no aparelho (a rolagem programada continua valendo com a página travada)
-      window.scrollTo({ top: (tipo === 'celular' ? P_CEL : P_TAB) * window.innerHeight, behavior: 'smooth' });
+      window.scrollTo({ top: (tipo === 'celular' ? P_CEL : P_TAB) * ALTURA, behavior: 'smooth' });
       aparelhos[tipo].mensagem('travar', true);
       setTravado(tipo);
     };
@@ -351,7 +352,7 @@ export default function App() {
   // os botões de navegação destravam e levam à seção (lá o aparelho trava de novo, ao chegar)
   const irPara = p => {
     motor.current.destravar?.();
-    window.scrollTo({ top: p * window.innerHeight, behavior: 'smooth' });
+    window.scrollTo({ top: p * ALTURA, behavior: 'smooth' });
   };
 
   function girar() {
@@ -455,7 +456,7 @@ export default function App() {
       {/* com que o app foi feito: o que um recrutador de TI procura primeiro */}
       <footer style={{ opacity: 1 - presenca }}
               className="pointer-events-none fixed bottom-3 left-8 z-10 text-[11px] uppercase tracking-[0.2em] text-asfalto-400 max-md:inset-x-0 max-md:left-0 max-md:text-center max-md:text-[10px] max-md:tracking-[0.12em]">
-        <span className="max-md:hidden">Projeto acadêmico · </span>Flutter, Supabase e PostGIS · dados fictícios
+        <span className="max-md:hidden">Projeto acadêmico · </span>Dados fictícios
       </footer>
     </>
   );
