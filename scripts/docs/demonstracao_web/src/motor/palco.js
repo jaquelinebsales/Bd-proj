@@ -93,10 +93,14 @@ export class Palco {
     // mais antigo: o deste palco. Quando ele volta, o three.js reenvia formas e materiais, mas o ambiente dos
     // reflexos é desenhado na GPU e se perde (o corpo ficaria escuro, sem borda à vista): é refeito aqui
     this.gl.domElement.addEventListener('webglcontextrestored', () => {
+      caixa.classList.remove('sem-corpo');
       this.criarAmbiente();
       this.aoRedimensionar?.();
       this.desenhar();
     });
+    // Enquanto o contexto estiver perdido, cada tela ganha uma moldura em CSS no lugar do corpo (estilo.css): o
+    // aparelho nunca vira uma "folha" solta
+    this.gl.domElement.addEventListener('webglcontextlost', () => caixa.classList.add('sem-corpo'));
     const luz = new THREE.DirectionalLight(0xf2f6ff, 1.5);
     luz.position.set(-200, 1200, 900);
     this.cena.add(luz, new THREE.AmbientLight(0xffffff, 0.12));
@@ -276,11 +280,21 @@ export class Aparelho {
             <span class="previa-aviso"><i></i>Carregando o app…</span></div>
           <div class="gestos"><span></span></div>
         </div>
-      </div>
-      <div class="barra-cheia"><span>GasPrice · demonstração</span><button type="button">Fechar
-        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>`;
-    // a página (App.jsx) fecha: primeiro encolhe a tela até o aparelho, depois sai da tela cheia
-    tela.querySelector('.barra-cheia button').addEventListener('click', () => window.dispatchEvent(new Event('gasprice-fechar-cheia')));
+      </div>`;
+    // Tela cheia (App.jsx): fundo que escurece a página em volta, e o "Fechar" no meio da barra de status
+    const fundo = document.createElement('div');
+    fundo.className = 'fundo-cheia';
+    tela.prepend(fundo);
+    const fechar = document.createElement('button');
+    fechar.type = 'button';
+    fechar.className = 'fechar-cheia';
+    fechar.innerHTML = 'Fechar <svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+    fechar.addEventListener('click', () => window.dispatchEvent(new Event('gasprice-fechar-cheia')));
+    tela.querySelector('.status').append(fechar);
+    // medidas da moldura em CSS (reserva sem WebGL) e do canto arredondado da tela, em dp
+    tela.style.setProperty('--borda', ((a.bordaH + a.bordaV) / 2).toFixed(1) + 'px');
+    tela.style.setProperty('--raio-tela', a.raioTela.toFixed(1) + 'px');
+    this.fundoCheiaEl = fundo;
     this.telaEl = tela;
     this.sistemaEl = tela.querySelector('.sistema');
     this.horaEl = tela.querySelector('.hora');
@@ -316,6 +330,12 @@ export class Aparelho {
     this.k = s;
     this.mensagem('escala', s);
     this.app = { w: 0, h: 0, quando: 0 };
+  }
+
+  // Densidade em que o app desenha, sem mudar o tamanho nem o layout dele: na tela cheia, o mesmo app maior e
+  // nítido (fator = ampliação em relação ao aparelho); de volta, 1. Só redesenha: nada se reorganiza.
+  densidadeDoApp(fator) {
+    this.mensagem('densidade', Math.min(3, window.devicePixelRatio || 1) * fator);
   }
 
   carregar(s) {

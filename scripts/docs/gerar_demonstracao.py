@@ -35,6 +35,22 @@ DENSIDADE = """
     // por mensagem, que funciona também com a página em outro site) e abre direto no mapa
     (function () {
       if (window.parent === window) return;
+      // Contextos WebGL de teste: o carregador e o motor do Flutter só perguntam se há WebGL numa tela 1×1 solta e a
+      // abandonam. Abandonados, contam no limite de contextos ativos do navegador até o coletor de lixo passar, e
+      // passando do limite (baixo em tablets) o navegador apaga o mais antigo: a cena 3D da página, o corpo dos
+      // aparelhos. Soltos aqui logo depois da pergunta, os dois apps ficam com só os contextos que usam.
+      var obterContexto = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (tipo) {
+        var gl = obterContexto.apply(this, arguments), tela = this;
+        if (gl && /webgl/.test(tipo) && !tela.isConnected && tela.width <= 1 && tela.height <= 1) {
+          setTimeout(function () {
+            if (tela.isConnected || tela.width > 1 || tela.height > 1 || gl.isContextLost()) return;
+            var soltar = gl.getExtension('WEBGL_lose_context');
+            if (soltar) soltar.loseContext();
+          }, 0);
+        }
+        return gl;
+      };
       var busca = new URLSearchParams(location.search);
       var inicial = Number(busca.get('dpr'));
       var atual = inicial > 0 ? inicial : (window.devicePixelRatio || 1);

@@ -27,13 +27,22 @@ const progresso = () => window.scrollY / ALTURA;
 // Aparelho de quem visita (só com toque): celular se o lado menor da tela tem menos de 600 px, senão tablet
 const aparelhoDoVisitante = () =>
   !window.matchMedia('(pointer: coarse)').matches ? null : Math.min(screen.width, screen.height) < 600 ? 'celular' : 'tablet';
-const espera = ms => new Promise(r => setTimeout(r, ms));
-const quadro = (w = window) => new Promise(r => w.requestAnimationFrame(r));
-// O app (Flutter, no iframe) já desenhou o tamanho ou a escala nova: alguns quadros dele depois do aviso, com teto
-async function appRedesenhou(iframe, teto = 700) {
-  const w = iframe.contentWindow;
-  await Promise.race([(async () => { await espera(40); for (let i = 0; i < 3; i++) await quadro(w); })(), espera(teto)]);
+// Curva cubic-bezier do CSS como função (para saber onde uma animação está num instante qualquer)
+function bezier(x1, y1, x2, y2) {
+  const f = (a, b, t) => 3 * a * t * (1 - t) ** 2 + 3 * b * t * t * (1 - t) + t ** 3;
+  return x => {
+    if (x <= 0) return 0;
+    if (x >= 1) return 1;
+    let lo = 0, hi = 1, t = x;
+    for (let i = 0; i < 24; i++) { t = (lo + hi) / 2; if (f(x1, x2, t) < x) lo = t; else hi = t; }
+    return f(y1, y2, t);
+  };
 }
+const ENCOLHER = 420, CURVA_ENCOLHER = 'cubic-bezier(.4,0,.2,1)', curvaEncolher = bezier(0.4, 0, 0.2, 1);
+const retangulo = r => ({ x: r.left, y: r.top, w: r.width, h: r.height });
+const misturarRet = (a, b, e) => ({ x: misturar(a.x, b.x, e), y: misturar(a.y, b.y, e), w: misturar(a.w, b.w, e), h: misturar(a.h, b.h, e) });
+// Transformação (origem no canto) que põe um elemento de sw × sh no retângulo r da janela
+const noRetangulo = (r, sw, sh) => `translate(${r.x}px, ${r.y}px) scale(${r.w / sw}, ${r.h / sh})`;
 // Transformação que leva o elemento (sem transformação, origem no canto) a ocupar o retângulo r
 function transformarPara(el, r) {
   const b = el.getBoundingClientRect();
@@ -170,35 +179,20 @@ export default function App() {
     // O normal: a própria tela do aparelho vai para a tela cheia do navegador, com o mesmo app (abre na hora, na
     // mesma tela e com o mesmo mapa, sem outra cópia do app pesando na memória e nos contextos WebGL)
     if (document.fullscreenEnabled && ap.telaEl.requestFullscreen) {
-      // onde a tela do app está na página: ao fechar, ela encolhe até aqui antes de sair da tela cheia
+      // A tela do aparelho na janela (de pé, com a barra de status): é dela que a tela cheia sai e para ela que
+      // volta. A cena 3D para por trás (não anda nem se refaz): o aparelho fica exatamente nesse lugar.
       Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo, modo: 'aparelho',
-                         origem: ap.iframe.getBoundingClientRect(), alturaAntes: window.innerHeight });
-      // a cena 3D para por trás (não anda nem se refaz): ao voltar, o aparelho já está no lugar, com a borda
+                         origem: retangulo(ap.sistemaEl.getBoundingClientRect()), base: ap.sistemaEl.style.transform,
+                         encolher: null, deEncolher: null, encaixe: null });
       motor.current.palco.pausar();
-      const tela = ap.telaEl, coluna = tela.querySelector('.coluna');
-      // "abrindo": em tela cheia, o conteúdo fica escondido até o app se reorganizar no tamanho da tela; então
-      // ele cresce a partir do aparelho, já no layout final (só posição e tamanho: o navegador anima sem engasgar)
-      tela.classList.add('abrindo');
-      tela.requestFullscreen({ navigationUI: 'hide' })
-        .then(async () => {
-          ap.mensagem('escala', 1);   // em tela cheia o app desenha 1:1, no tamanho real da tela
-          await appRedesenhou(ap.iframe);
-          await quadro();
-          tela.classList.remove('abrindo');
-          if (!c.aberta || c.fechando || document.fullscreenElement !== tela) return;
-          const o = c.origem, b = coluna.getBoundingClientRect(), desce = window.innerHeight - c.alturaAntes;
-          coluna.animate([
-            { transform: `translate(${o.left - b.left}px, ${o.top + desce - b.top}px) scale(${o.width / b.width}, ${o.height / b.height})` },
-            { transform: 'none' },
-          ], { duration: 400, easing: 'cubic-bezier(.2,.8,.2,1)' });
-          tela.querySelector('.barra-cheia').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, easing: 'ease-out' });
-        })
-        .catch(() => {
-          tela.classList.remove('abrindo');
-          Object.assign(c, { aberta: false, modo: null });
-          motor.current.palco.retomar();
-          abrirCopia(tipo);
-        });
+      // escondida até a mudança de tela cheia pô-la no lugar (entrouNaTelaCheia), antes do primeiro quadro
+      ap.telaEl.classList.add('abrindo');
+      ap.telaEl.requestFullscreen({ navigationUI: 'hide' }).catch(() => {
+        ap.telaEl.classList.remove('abrindo');
+        Object.assign(c, { aberta: false, modo: null });
+        motor.current.palco.retomar();
+        abrirCopia(tipo);
+      });
       return;
     }
     abrirCopia(tipo);
@@ -235,41 +229,8 @@ export default function App() {
   }, [telaCheia]);
   const fecharTelaCheia = useCallback(async () => {
     const c = cheia.current, ap = motor.current.aparelhos?.[c.tipo];
-    if (!c.aberta || c.fechando || !ap) return;
+    if (!c.aberta || c.fechando || !ap || c.modo !== 'copia') return;
     c.fechando = true;
-    if (c.modo === 'aparelho') {
-      const tela = ap.telaEl, coluna = tela.querySelector('.coluna'), barra = tela.querySelector('.barra-cheia');
-      let encolhida = null;
-      if (document.fullscreenElement === tela) {
-        // Fechar: o conteúdo encolhe ainda na tela cheia até o lugar exato da tela do aparelho (a barra do navegador
-        // volta em cima: o lugar desce o quanto a janela cresceu). Só posição e tamanho: liso mesmo no tablet.
-        const o = c.origem, b = coluna.getBoundingClientRect(), desce = window.innerHeight - c.alturaAntes;
-        barra.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, fill: 'forwards' });
-        encolhida = coluna.animate([
-          { transform: 'none' },
-          { transform: `translate(${o.left - b.left}px, ${o.top + desce - b.top}px) scale(${o.width / b.width}, ${o.height / b.height})` },
-        ], { duration: 380, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
-        await encolhida.finished.catch(() => {});
-        // sai da tela cheia com o app ainda parado (nada pesado segurando o navegador)
-        await document.exitFullscreen?.().catch(() => {});
-      }
-      // De volta à página: o aparelho está no lugar, com a borda. O app se reorganiza no tamanho do aparelho
-      // escondido por um instante (sem mostrar o desenho antigo cortado) e aparece suave quando terminar.
-      ap.iframe.style.transition = 'none';
-      ap.iframe.style.opacity = '0';
-      encolhida?.cancel();
-      barra.getAnimations().forEach(a => a.cancel());
-      motor.current.palco.retomar();
-      window.scrollTo(0, c.scroll);
-      motor.current.redesenhar?.();
-      ap.mensagem('escala', ap.k);
-      await appRedesenhou(ap.iframe);
-      ap.iframe.style.transition = 'opacity .22s ease-out';
-      ap.iframe.style.opacity = '';
-      setTimeout(() => { ap.iframe.style.transition = ''; }, 260);
-      Object.assign(c, { aberta: false, fechando: false, modo: null });
-      return;
-    }
     barraCheia.current?.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' });
     // o aparelho do site passa para a tela em que a pessoa estava na tela cheia
     try {
@@ -303,21 +264,109 @@ export default function App() {
     TIPOS.forEach(t => motor.current.garantir?.(t));
     if (!motor.current.trava?.tipo) document.documentElement.classList.remove('travado');
   }, []);
+  // ---- Tela cheia do próprio aparelho: a tela inteira do aparelho, no mesmo layout, ampliada até caber ----
+  // O app nunca se reorganiza: só a densidade em que desenha muda (nítido na tela cheia). Os movimentos são só
+  // transform (a GPU anima liso). O fundo atrás da tela cheia é transparente: a página e o corpo do aparelho aparecem
+  // em volta, e como a tela cheia e a página usam as mesmas coordenadas da janela (inclusive enquanto o navegador
+  // ainda está saindo da tela cheia), a tela volta exatamente para dentro do aparelho, sem salto.
   useEffect(() => {
-    // O voltar do Android primeiro volta as telas do app (cada navegação no iframe entra no histórico) e, na
-    // entrada criada ao abrir, fecha. "Fechar", Esc e sair da tela cheia do navegador fecham direto.
-    const voltou = () => fecharTelaCheia();
-    const saiu = () => { if (!document.fullscreenElement) fecharTelaCheia(); };
-    const tecla = e => { if (e.key === 'Escape') fecharTelaCheia(); };
-    window.addEventListener('gasprice-fechar-cheia', fecharTelaCheia);
+    const aparelho = () => motor.current.aparelhos?.[cheia.current.tipo];
+    const encaixe = ap => {
+      const sis = ap.sistemaEl, vw = window.innerWidth, vh = window.innerHeight, sw = sis.offsetWidth, sh = sis.offsetHeight;
+      const S = Math.min(vw / sw, vh / sh);
+      return { x: (vw - sw * S) / 2, y: (vh - sh * S) / 2, w: sw * S, h: sh * S, S, sw, sh };
+    };
+    // entrou: a tela sai de dentro do aparelho e cresce até caber; depois o app passa a desenhar nítido nesse tamanho
+    const entrou = (ap, c) => {
+      const sis = ap.sistemaEl, e = encaixe(ap);
+      c.encaixe = e;
+      sis.style.transform = noRetangulo(e, e.sw, e.sh);
+      ap.telaEl.classList.remove('abrindo');
+      sis.animate([{ transform: noRetangulo(c.origem, e.sw, e.sh) }, { transform: sis.style.transform }],
+        { duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)' })
+        .finished.then(() => { if (c.aberta && !c.fechando) ap.densidadeDoApp(e.S / ap.k); }, () => {});
+      ap.fundoCheiaEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, easing: 'ease-out' });
+    };
+    // Fechar: a tela encolhe até o aparelho e o fundo escuro some, ao mesmo tempo em que o navegador sai da tela cheia
+    const fechar = () => {
+      const c = cheia.current, ap = aparelho();
+      if (c.modo === 'copia') { fecharTelaCheia(); return; }
+      if (c.modo !== 'aparelho' || !c.aberta || c.fechando || !ap || document.fullscreenElement !== ap.telaEl) return;
+      c.fechando = true;
+      const sis = ap.sistemaEl, e = encaixe(ap);
+      c.deEncolher = e;
+      c.encolher = sis.animate([{ transform: noRetangulo(e, e.sw, e.sh) }, { transform: noRetangulo(c.origem, e.sw, e.sh) }],
+        { duration: ENCOLHER, easing: CURVA_ENCOLHER, fill: 'forwards' });
+      ap.fundoCheiaEl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ENCOLHER, easing: 'ease-out', fill: 'forwards' });
+      document.exitFullscreen?.().catch(() => {});
+    };
+    // saiu (pelo Fechar ou pelo navegador, como o voltar do Android): a tela volta para dentro do aparelho na página
+    const saiu = (ap, c) => {
+      const sis = ap.sistemaEl, tela = ap.telaEl, de = c.deEncolher || c.encaixe || c.origem;
+      let feito = 0;
+      if (c.encolher) {
+        const t = c.encolher.currentTime;
+        feito = c.encolher.playState === 'finished' ? 1 : t == null ? 0 : Math.min(1, t / ENCOLHER);
+      }
+      const agora = misturarRet(de, c.origem, curvaEncolher(feito));   // onde a tela está à vista neste instante
+      sis.getAnimations().forEach(a => a.cancel());
+      ap.fundoCheiaEl.getAnimations().forEach(a => a.cancel());
+      tela.classList.remove('abrindo');
+      sis.style.transform = c.base;
+      window.scrollTo(0, c.scroll);
+      motor.current.palco.retomar();
+      motor.current.redesenhar?.();
+      motor.current.palco.desenhar();   // o corpo dos aparelhos já neste quadro (escondido, o desenho pode ter sumido)
+      const terminar = () => {
+        tela.style.overflow = '';
+        ap.densidadeDoApp(1);
+        Object.assign(c, { aberta: false, fechando: false, modo: null, encolher: null, deEncolher: null });
+      };
+      const resto = 1 - feito;
+      const R = sis.getBoundingClientRect(), k = R.width / sis.offsetWidth;
+      if (resto < 0.02 || !(R.width > 0 && k > 0)) { terminar(); return; }
+      // ainda a caminho (o navegador saiu antes de a tela chegar, ou saiu sozinho): o resto do caminho na página
+      const inicio = `${c.base} translate(${(agora.x + agora.w / 2 - (R.left + R.width / 2)) / k}px, ` +
+        `${(agora.y + agora.h / 2 - (R.top + R.height / 2)) / k}px) scale(${agora.w / R.width}, ${agora.h / R.height})`;
+      const ms = Math.max(220, ENCOLHER * resto);
+      tela.style.overflow = 'visible';
+      // o corpo (camada WebGL, por cima) some enquanto a tela maior que ele passa e volta em volta dela
+      document.querySelector('.camada-gl')?.animate([{ opacity: 0 }, { opacity: 0, offset: 0.55 }, { opacity: 1 }], { duration: ms + 80 });
+      sis.animate([{ transform: inicio }, { transform: c.base }], { duration: ms, easing: CURVA_ENCOLHER }).finished.then(terminar, terminar);
+    };
+    const mudou = () => {
+      const c = cheia.current, ap = aparelho();
+      if (c.modo === 'copia') { if (!document.fullscreenElement) fecharTelaCheia(); return; }
+      if (c.modo !== 'aparelho' || !c.aberta || !ap) return;
+      if (document.fullscreenElement === ap.telaEl) entrou(ap, c);
+      else if (!document.fullscreenElement) saiu(ap, c);
+    };
+    // a janela mudou de tamanho com a tela cheia aberta (a barra do navegador terminando de sumir, o giro da tela)
+    let densidadeDepois;
+    const reencaixar = () => {
+      const c = cheia.current, ap = aparelho();
+      if (c.modo !== 'aparelho' || !c.aberta || c.fechando || !ap || document.fullscreenElement !== ap.telaEl) return;
+      const e = encaixe(ap);
+      c.encaixe = e;
+      ap.sistemaEl.style.transform = noRetangulo(e, e.sw, e.sh);
+      clearTimeout(densidadeDepois);
+      densidadeDepois = setTimeout(() => { if (c.aberta && !c.fechando) ap.densidadeDoApp(e.S / ap.k); }, 250);
+    };
+    // reserva (cópia do app): o voltar do Android primeiro volta as telas do app e, na entrada criada ao abrir, fecha
+    const voltou = () => { if (cheia.current.modo === 'copia') fecharTelaCheia(); };
+    const tecla = e => { if (e.key === 'Escape' && cheia.current.modo === 'copia') fecharTelaCheia(); };
+    window.addEventListener('gasprice-fechar-cheia', fechar);
+    document.addEventListener('fullscreenchange', mudou);
+    window.addEventListener('resize', reencaixar);
     window.addEventListener('popstate', voltou);
-    document.addEventListener('fullscreenchange', saiu);
     window.addEventListener('keydown', tecla);
     return () => {
-      window.removeEventListener('gasprice-fechar-cheia', fecharTelaCheia);
+      window.removeEventListener('gasprice-fechar-cheia', fechar);
+      document.removeEventListener('fullscreenchange', mudou);
+      window.removeEventListener('resize', reencaixar);
       window.removeEventListener('popstate', voltou);
-      document.removeEventListener('fullscreenchange', saiu);
       window.removeEventListener('keydown', tecla);
+      clearTimeout(densidadeDepois);
     };
   }, [fecharTelaCheia]);
 
