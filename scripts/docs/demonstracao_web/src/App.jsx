@@ -24,6 +24,9 @@ const misturarPose = (p, q, e) => ({ x: misturar(p.x, q.x, e), y: misturar(p.y, 
 // Altura do palco (estável: não muda quando as barras do navegador do celular somem ou voltam)
 let ALTURA = window.innerHeight;
 const progresso = () => window.scrollY / ALTURA;
+// Aparelho de quem visita (só com toque): celular se o lado menor da tela tem menos de 600 px, senão tablet
+const aparelhoDoVisitante = () =>
+  !window.matchMedia('(pointer: coarse)').matches ? null : Math.min(screen.width, screen.height) < 600 ? 'celular' : 'tablet';
 // Transformação que leva o elemento (sem transformação, origem no canto) a ocupar o retângulo r
 function transformarPara(el, r) {
   const b = el.getBoundingClientRect();
@@ -155,7 +158,9 @@ export default function App() {
   const fundoCheio = useRef(null), barraCheia = useRef(null), caixaCheia = useRef(null), appCheio = useRef(null);
   const abrirTelaCheia = useCallback(tipo => {
     const c = cheia.current, ap = motor.current.aparelhos?.[tipo];
-    if (c.aberta || !ap) return;
+    // cada aparelho abre em tela cheia só no aparelho do mesmo tipo: o celular num celular, o tablet num tablet
+    if (c.aberta || !ap || tipo !== aparelhoDoVisitante()) return;
+    ap.mensagem('guardar', true);
     let rota = '';
     try { rota = ap.iframe.contentWindow.location.hash; } catch { /* carregando */ }
     const dpr = Math.min(3, window.devicePixelRatio || 1);
@@ -266,7 +271,8 @@ export default function App() {
     // escala do aparelho parado na sua seção, na orientação dada: é nela que o app desenha (nítido, 1:1)
     const escalaParado = (tipo, rz) => deFrente(tipo, rz, palco.largura, palco.altura).s;
     aparelhos.celular.carregar(escalas().celular);
-    const tabletDepois = setTimeout(() => motor.current.carregarTablet(), 1800);
+    // reserva: o tablet carrega mesmo que o mapa do celular não avise que ficou pronto
+    const tabletDepois = setTimeout(() => motor.current.carregarTablet(), 10000);
     motor.current.tabletDepois = tabletDepois;
     // carrega o app do aparelho se ainda não está (ou foi liberado pela tela cheia), na escala da sua pose atual
     motor.current.garantir = tipo => {
@@ -423,13 +429,20 @@ export default function App() {
       if (!aps || ev.origin !== ORIGEM_APP) return;
       // o app da tela cheia avisou que desenhou a primeira tela: aparece
       if (appCheio.current && ev.source === appCheio.current.contentWindow) {
-        if (typeof ev.data === 'string') setAppCheioPronto(true);
+        if (typeof ev.data === 'string' || ev.data?.tipo === 'mapaPronto') setAppCheioPronto(true);
         return;
       }
       const tipo = TIPOS.find(t => ev.source === aps[t].iframe.contentWindow);
       if (!tipo) return;
-      // Roda do mouse sobre o aparelho (sem clique no app): rola a página
       const r = ev.data;
+      // O aparelho mostra o app quando o mapa está desenhado (sem a fase de tela branca); o tablet só começa a
+      // carregar depois do celular, para os dois apps não disputarem a rede e o processador do celular
+      if (r && typeof r === 'object' && r.fonte === 'gasprice-app' && r.tipo === 'mapaPronto') {
+        aps[tipo].revelar();
+        if (tipo === 'celular' && !cheia.current.aberta) setTimeout(() => motor.current.carregarTablet?.(), 400);
+        return;
+      }
+      // Roda do mouse sobre o aparelho (sem clique no app): rola a página
       if (r && typeof r === 'object' && r.fonte === 'gasprice-app' && r.tipo === 'rolar' && Number.isFinite(r.dy)) {
         // com a página travada, a roda não a move (o app ainda não sabia da trava: avisa de novo)
         if (motor.current.trava?.tipo) aps[tipo].mensagem('travar', motor.current.trava.tipo === tipo);
@@ -444,8 +457,8 @@ export default function App() {
       let d;
       try { d = JSON.parse(ev.data); } catch { return; }
       if (!d || d.fonte !== 'gasprice') return;
-      aps[tipo].revelar();
-      if (tipo === 'celular' && !cheia.current.aberta) motor.current.carregarTablet?.();
+      // o app já desenhou; se a tela dele não tiver mapa (ou o mapa demorar), aparece assim mesmo
+      aps[tipo].revelarEm(6000);
       if (d.tipo === 'tela' && typeof d.nome === 'string') {
         const mudou = telas.current[tipo] !== d.nome;
         telas.current[tipo] = d.nome;
@@ -467,7 +480,7 @@ export default function App() {
   const [dicaCheia, setDicaCheia] = useState(false);
   const viuDica = useRef({});
   useEffect(() => {
-    if (!ativo || presenca < 0.95 || viuDica.current[ativo] || !window.matchMedia('(pointer: coarse)').matches) return;
+    if (!ativo || presenca < 0.95 || viuDica.current[ativo] || ativo !== aparelhoDoVisitante()) return;
     viuDica.current[ativo] = true;
     setDicaCheia(true);
   }, [ativo, presenca]);

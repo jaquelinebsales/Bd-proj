@@ -310,6 +310,8 @@ export class Aparelho {
     if (!this.carregado) return;
     this.carregado = false;
     this.revelado = false;
+    clearTimeout(this.esperaRevelar);
+    this.esperaRevelar = null;
     this.iframe.classList.remove('pronto');
     this.carregandoEl.style.display = '';
     this.iframe.src = 'about:blank';
@@ -439,7 +441,14 @@ export class Aparelho {
     this.telaEl.classList.toggle('interativo', sim);
   }
 
+  revelarEm(ms) {
+    if (this.revelado || this.esperaRevelar) return;
+    this.esperaRevelar = setTimeout(() => this.revelar(), ms);
+  }
+
   revelar() {
+    clearTimeout(this.esperaRevelar);
+    this.esperaRevelar = null;
     if (this.revelado) return;
     this.revelado = true;
     this.iframe.classList.add('pronto');

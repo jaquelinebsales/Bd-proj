@@ -43,6 +43,9 @@ DENSIDADE = """
       var escala = Number(busca.get('escala'));
       window.__escalaApp = escala > 0 ? escala : 1;
       try { localStorage.setItem('flutter.viu_boas_vindas', 'true'); } catch (e) {}
+      function mapasVivos() {
+        return (window.__mapasDemo || []).filter(function (m) { try { return m.getContainer().isConnected; } catch (e) { return false; } });
+      }
       function redimensionar() {
         window.dispatchEvent(new Event('resize'));
         if (window.visualViewport) window.visualViewport.dispatchEvent(new Event('resize'));
@@ -55,10 +58,23 @@ DENSIDADE = """
         var d = ev.data;
         if (ev.source !== window.parent || !d || d.fonte !== 'gasprice-moldura') return;
         if (d.tipo === 'travar') { travado = !!d.valor; return; }
-        // de volta da tela cheia: o mapa redesenha (escondido, o navegador pode ter descartado a imagem dele)
+        // Tela cheia por cima: guarda onde o mapa está e, na volta, põe ele de novo ali (escondido, o navegador
+        // do celular pode ter descartado o desenho dele, e o mapa refeito abriria fora dos postos)
+        if (d.tipo === 'guardar') {
+          var m0 = mapasVivos()[0];
+          if (m0) window.__cameraDemo = { center: m0.getCenter(), zoom: m0.getZoom() };
+          return;
+        }
         if (d.tipo === 'reavivar') {
           redimensionar();
-          (window.__mapasDemo || []).forEach(function (m) { try { m.triggerRepaint(); } catch (e) {} });
+          var repor = function () {
+            mapasVivos().forEach(function (m) {
+              try { if (window.__cameraDemo) m.jumpTo(window.__cameraDemo); m.triggerRepaint(); } catch (e) {}
+            });
+          };
+          repor();
+          setTimeout(repor, 700);
+          setTimeout(repor, 1800);
           return;
         }
         if (!(d.valor > 0)) return;
@@ -103,6 +119,13 @@ DENSIDADE = """
     })();
   </script>"""
 
+PRECONEXAO = """
+  <!-- O mapa depende de dois servidores: conecta já e pede os estilos (claro e escuro) enquanto o app carrega -->
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin>
+  <link rel="preload" href="https://tiles.openfreemap.org/styles/positron" as="fetch" crossorigin>
+  <link rel="preload" href="https://tiles.openfreemap.org/styles/dark" as="fetch" crossorigin>"""
+
 DENSIDADE_MAPA = """
   <script>
     // O MapLibre fixa a densidade ao criar o mapa; aqui ele relê a cada redimensionamento. Como o app desenha
@@ -116,6 +139,10 @@ DENSIDADE_MAPA = """
         var o = Object.assign({}, opcoes, { pixelRatio: window.devicePixelRatio * (window.__escalaApp || 1) });
         var mapa = new Original(o);
         window.__mapasDemo.push(mapa);
+        // primeiro desenho completo do mapa (estilo, pedaços e pinos): a página mostra o app a partir daí
+        mapa.once('idle', function () {
+          if (window.parent !== window) window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'mapaPronto' }, '*');
+        });
         return mapa;
       };
       maplibregl.Map.prototype = p;
@@ -195,7 +222,7 @@ def main() -> int:
     html = html.replace('<base href="/">', '<base href="./">')
     html = html.replace("<title>gasprice</title>", "<title>GasPrice · demonstração</title>")
     html = html.replace(mapa.group(0), mapa.group(0) + DENSIDADE_MAPA, 1)
-    html = html.replace("<head>", "<head>" + DENSIDADE, 1)
+    html = html.replace("<head>", "<head>" + PRECONEXAO + DENSIDADE, 1)
     indice.write_text(html, encoding="utf-8")
 
     # Página (React + Tailwind + three.js): dependências e build pelo Deno; o resultado vai ao lado de app/
@@ -205,6 +232,9 @@ def main() -> int:
         shutil.rmtree(DESTINO / "assets")
     shutil.copytree(PAGINA / "dist", DESTINO, dirs_exist_ok=True)
     versionar()
+    endereco_mapa = re.search(r'src="([^"]+)"', mapa.group(0)).group(1)
+    if endereco_mapa not in (DESTINO / "index.html").read_text(encoding="utf-8"):
+        print(f"Aviso: a página não adianta o {endereco_mapa} (atualize o prefetch em demonstracao_web/index.html)")
     (DESTINO / "LEIA-ME.md").write_text(LEIA_ME, encoding="utf-8")
 
     total = sum(f.stat().st_size for f in DESTINO.rglob("*") if f.is_file())

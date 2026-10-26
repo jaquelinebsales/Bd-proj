@@ -2,5 +2,15 @@
   "buildCommand": null,
   "outputDirectory": "demonstracao",
   "installCommand": null,
-  "framework": null
+  "framework": null,
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/app/(main\\.dart\\.js|flutter_bootstrap\\.js)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
 }

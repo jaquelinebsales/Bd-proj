@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- O mapa depende de dois servidores: conecta já e pede os estilos (claro e escuro) enquanto o app carrega -->
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin>
+  <link rel="preload" href="https://tiles.openfreemap.org/styles/positron" as="fetch" crossorigin>
+  <link rel="preload" href="https://tiles.openfreemap.org/styles/dark" as="fetch" crossorigin>
   <script>
     // Na moldura da demonstração: desenha na densidade em que o app aparece (escala × DPR, recebida da página
     // por mensagem, que funciona também com a página em outro site) e abre direto no mapa
@@ -15,6 +20,9 @@
       var escala = Number(busca.get('escala'));
       window.__escalaApp = escala > 0 ? escala : 1;
       try { localStorage.setItem('flutter.viu_boas_vindas', 'true'); } catch (e) {}
+      function mapasVivos() {
+        return (window.__mapasDemo || []).filter(function (m) { try { return m.getContainer().isConnected; } catch (e) { return false; } });
+      }
       function redimensionar() {
         window.dispatchEvent(new Event('resize'));
         if (window.visualViewport) window.visualViewport.dispatchEvent(new Event('resize'));
@@ -27,10 +35,23 @@
         var d = ev.data;
         if (ev.source !== window.parent || !d || d.fonte !== 'gasprice-moldura') return;
         if (d.tipo === 'travar') { travado = !!d.valor; return; }
-        // de volta da tela cheia: o mapa redesenha (escondido, o navegador pode ter descartado a imagem dele)
+        // Tela cheia por cima: guarda onde o mapa está e, na volta, põe ele de novo ali (escondido, o navegador
+        // do celular pode ter descartado o desenho dele, e o mapa refeito abriria fora dos postos)
+        if (d.tipo === 'guardar') {
+          var m0 = mapasVivos()[0];
+          if (m0) window.__cameraDemo = { center: m0.getCenter(), zoom: m0.getZoom() };
+          return;
+        }
         if (d.tipo === 'reavivar') {
           redimensionar();
-          (window.__mapasDemo || []).forEach(function (m) { try { m.triggerRepaint(); } catch (e) {} });
+          var repor = function () {
+            mapasVivos().forEach(function (m) {
+              try { if (window.__cameraDemo) m.jumpTo(window.__cameraDemo); m.triggerRepaint(); } catch (e) {}
+            });
+          };
+          repor();
+          setTimeout(repor, 700);
+          setTimeout(repor, 1800);
           return;
         }
         if (!(d.valor > 0)) return;
@@ -119,6 +140,10 @@
         var o = Object.assign({}, opcoes, { pixelRatio: window.devicePixelRatio * (window.__escalaApp || 1) });
         var mapa = new Original(o);
         window.__mapasDemo.push(mapa);
+        // primeiro desenho completo do mapa (estilo, pedaços e pinos): a página mostra o app a partir daí
+        mapa.once('idle', function () {
+          if (window.parent !== window) window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'mapaPronto' }, '*');
+        });
         return mapa;
       };
       maplibregl.Map.prototype = p;
