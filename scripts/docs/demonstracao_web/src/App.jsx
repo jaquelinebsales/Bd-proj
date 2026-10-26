@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Palco, Aparelho, APARELHOS, escalaPara, tamanhoNaTela } from './motor/palco.js';
 import Guia, { focoDoToque } from './componentes/Guia.jsx';
 
@@ -24,6 +24,11 @@ const misturarPose = (p, q, e) => ({ x: misturar(p.x, q.x, e), y: misturar(p.y, 
 // Altura do palco (estável: não muda quando as barras do navegador do celular somem ou voltam)
 let ALTURA = window.innerHeight;
 const progresso = () => window.scrollY / ALTURA;
+// Transformação que leva o elemento (sem transformação, origem no canto) a ocupar o retângulo r
+function transformarPara(el, r) {
+  const b = el.getBoundingClientRect();
+  return `translate(${r.left - b.left}px, ${r.top - b.top}px) scale(${r.width / b.width}, ${r.height / b.height})`;
+}
 
 // Fundo das telas 1 a 3: os dois juntos, em exposição, abaixo dos textos — o tablet à esquerda virado para a
 // esquerda, o celular à direita virado para a direita (INCL), com as bordas de dentro mais perto de quem olha
@@ -142,37 +147,85 @@ export default function App() {
 
   // Tela cheia (duplo toque no aparelho): o app ocupa o celular de quem visita, na tela em que estava.
   // O voltar do Android fecha (uma entrada no histórico), como num app de verdade.
-  const [telaCheia, setTelaCheia] = useState(null);   // endereço do app aberto em tela cheia
+  // Abre crescendo a partir da tela do aparelho e fecha encolhendo de volta até ela, já na tela em que a pessoa
+  // estava. Enquanto aberta, o palco fica pausado (não se refaz quando o navegador entra e sai da tela cheia).
+  const [telaCheia, setTelaCheia] = useState(null);   // { src, origem }: endereço do app e o retângulo de onde cresce
+  const [appCheioPronto, setAppCheioPronto] = useState(false);
+  const cheia = useRef({ aberta: false, fechando: false, scroll: 0, tipo: null });
+  const fundoCheio = useRef(null), barraCheia = useRef(null), caixaCheia = useRef(null), appCheio = useRef(null);
   const abrirTelaCheia = useCallback(tipo => {
-    const ap = motor.current.aparelhos?.[tipo];
+    const c = cheia.current, ap = motor.current.aparelhos?.[tipo];
+    if (c.aberta || !ap) return;
     let rota = '';
     try { rota = ap.iframe.contentWindow.location.hash; } catch { /* carregando */ }
     const dpr = Math.min(3, window.devicePixelRatio || 1);
     const versao = document.querySelector('meta[name="versao-app"]')?.content;
-    setTelaCheia(`${ENDERECO_APP}?dpr=${dpr}&escala=1${versao ? `&v=${versao}` : ''}${rota}`);
+    Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo });
+    motor.current.palco.pausar();
     document.documentElement.classList.add('travado');
     try { history.pushState({ telaCheia: true }, ''); } catch { /* sem histórico */ }
-    document.documentElement.requestFullscreen?.().catch(() => {});
+    setAppCheioPronto(false);
+    setTelaCheia({ src: `${ENDERECO_APP}?dpr=${dpr}&escala=1${versao ? `&v=${versao}` : ''}${rota}`, origem: ap.iframe.getBoundingClientRect() });
+  }, []);
+  useLayoutEffect(() => {
+    if (!telaCheia) return;
+    const caixa = caixaCheia.current, ms = 420, curva = 'cubic-bezier(.2,.8,.2,1)';
+    caixa.animate([{ transform: transformarPara(caixa, telaCheia.origem), borderRadius: '22px' }, { transform: 'none', borderRadius: '0px' }],
+      { duration: ms, easing: curva });
+    [fundoCheio.current, barraCheia.current].forEach(el => el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: ms, easing: curva }));
+    // tela cheia do navegador (some a barra de endereço) só depois de crescer: o redimensionar não briga com o movimento
+    const t = setTimeout(() => document.documentElement.requestFullscreen?.({ navigationUI: 'hide' }).catch(() => {}), ms);
+    const reserva = setTimeout(() => setAppCheioPronto(true), 6000);
+    return () => { clearTimeout(t); clearTimeout(reserva); };
+  }, [telaCheia]);
+  const fecharTelaCheia = useCallback(async () => {
+    const c = cheia.current, ap = motor.current.aparelhos?.[c.tipo];
+    if (!c.aberta || c.fechando || !ap) return;
+    c.fechando = true;
+    barraCheia.current?.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' });
+    // o aparelho do site passa para a tela em que a pessoa estava na tela cheia
+    try {
+      const rota = appCheio.current.contentWindow.location.hash;
+      if (rota && ap.iframe.contentWindow.location.hash !== rota) ap.iframe.contentWindow.location.hash = rota;
+    } catch { /* carregando */ }
+    if (document.fullscreenElement) {
+      await document.exitFullscreen?.().catch(() => {});
+      await new Promise(r => {
+        const t = setTimeout(r, 350);
+        window.addEventListener('resize', () => { clearTimeout(t); setTimeout(r, 120); }, { once: true });
+      });
+    }
+    motor.current.palco.retomar();
+    window.scrollTo(0, c.scroll);
+    for (let i = 0; i < 3; i++) await new Promise(r => requestAnimationFrame(r));
+    const caixa = caixaCheia.current, ms = 460, curva = 'cubic-bezier(.4,0,.2,1)';
+    if (caixa) {
+      const fim = caixa.animate([{ transform: 'none', borderRadius: '0px' }, { transform: transformarPara(caixa, ap.iframe.getBoundingClientRect()), borderRadius: '22px' }],
+        { duration: ms, easing: curva, fill: 'forwards' });
+      fundoCheio.current?.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ms * 0.8, easing: curva, fill: 'forwards' });
+      await fim.finished.catch(() => {});
+      // já no lugar e na mesma tela: some por cima do aparelho
+      await caixa.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards' }).finished.catch(() => {});
+    }
+    setTelaCheia(null);
+    Object.assign(c, { aberta: false, fechando: false });
+    if (!motor.current.trava?.tipo) document.documentElement.classList.remove('travado');
   }, []);
   useEffect(() => {
-    if (!telaCheia) return;
-    const fechar = () => {
-      setTelaCheia(null);
-      if (!motor.current.trava?.tipo) document.documentElement.classList.remove('travado');
-      if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
-    };
-    // o voltar do Android primeiro sai da tela cheia do navegador: aí já fecha também
-    const saiuDaTelaCheia = () => { if (!document.fullscreenElement) history.back(); };
-    const tecla = e => { if (e.key === 'Escape') history.back(); };
-    window.addEventListener('popstate', fechar);
-    document.addEventListener('fullscreenchange', saiuDaTelaCheia);
+    // O voltar do Android primeiro volta as telas do app (cada navegação no iframe entra no histórico) e, na
+    // entrada criada ao abrir, fecha. "Fechar", Esc e sair da tela cheia do navegador fecham direto.
+    const voltou = () => fecharTelaCheia();
+    const saiu = () => { if (!document.fullscreenElement) fecharTelaCheia(); };
+    const tecla = e => { if (e.key === 'Escape') fecharTelaCheia(); };
+    window.addEventListener('popstate', voltou);
+    document.addEventListener('fullscreenchange', saiu);
     window.addEventListener('keydown', tecla);
     return () => {
-      window.removeEventListener('popstate', fechar);
-      document.removeEventListener('fullscreenchange', saiuDaTelaCheia);
+      window.removeEventListener('popstate', voltou);
+      document.removeEventListener('fullscreenchange', saiu);
       window.removeEventListener('keydown', tecla);
     };
-  }, [telaCheia]);
+  }, [fecharTelaCheia]);
 
   useEffect(() => {
     const medir = () => setLargura(window.innerWidth);
@@ -356,6 +409,11 @@ export default function App() {
     const ouvir = ev => {
       const aps = motor.current.aparelhos;
       if (!aps || ev.origin !== ORIGEM_APP) return;
+      // o app da tela cheia avisou que desenhou a primeira tela: aparece
+      if (appCheio.current && ev.source === appCheio.current.contentWindow) {
+        if (typeof ev.data === 'string') setAppCheioPronto(true);
+        return;
+      }
       const tipo = TIPOS.find(t => ev.source === aps[t].iframe.contentWindow);
       if (!tipo) return;
       // Roda do mouse sobre o aparelho (sem clique no app): rola a página
@@ -478,15 +536,20 @@ export default function App() {
       )}
 
       {telaCheia && (
-        <div role="dialog" aria-modal="true" aria-label="GasPrice em tela cheia" className="fixed inset-0 z-[60] flex flex-col bg-asfalto-950">
-          <div className="flex h-11 flex-none items-center justify-between px-4 text-[13px] text-asfalto-300">
+        <div role="dialog" aria-modal="true" aria-label="GasPrice em tela cheia" className="fixed inset-0 z-[60]">
+          <div ref={fundoCheio} className="absolute inset-0 bg-asfalto-950" />
+          <div ref={barraCheia} className="absolute inset-x-0 top-0 flex h-11 items-center justify-between px-4 text-[13px] text-asfalto-300">
             <span>GasPrice · demonstração</span>
-            <button type="button" onClick={() => history.back()} className="flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium text-white focus-visible:outline-2 focus-visible:outline-marca-claro">
+            <button type="button" onClick={fecharTelaCheia}
+                    className="flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium text-white focus-visible:outline-2 focus-visible:outline-marca-claro">
               Fechar
               <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
             </button>
           </div>
-          <iframe src={telaCheia} title="GasPrice" className="block min-h-0 w-full flex-1 border-0" />
+          <div ref={caixaCheia} className="caixa-cheia absolute inset-x-0 bottom-0 top-11 overflow-hidden">
+            <iframe ref={appCheio} src={telaCheia.src} title="GasPrice"
+                    className={`block h-full w-full border-0 transition-opacity duration-300 ${appCheioPronto ? 'opacity-100' : 'opacity-0'}`} />
+          </div>
         </div>
       )}
 

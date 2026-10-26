@@ -90,6 +90,10 @@ body {
 .sistema .gestos span { width: 108px; height: 4px; border-radius: 2px; background: var(--tinta-app); opacity: 0.4; }
 @keyframes respirar { 50% { transform: scale(0.88); opacity: 0.55; } }
 
+/* app em tela cheia: cresce e encolhe a partir do canto (App.jsx, transformarPara), na cor de fundo do app */
+.caixa-cheia { transform-origin: 0 0; background: #f6f7f9; }
+@media (prefers-color-scheme: dark) { .caixa-cheia { background: #101317; } }
+
 /* ---------- textos das telas ---------- */
 .cena { position: fixed; z-index: 10; pointer-events: none; opacity: 0; will-change: opacity, transform; }
 .titulo { font-weight: 600; letter-spacing: -0.03em; line-height: 1; text-wrap: balance; color: #fff; }

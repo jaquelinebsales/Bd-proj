@@ -111,9 +111,19 @@ export class Palco {
     this.redimensionar();
   }
 
+  // Pausado (app em tela cheia por cima): a janela muda de tamanho ao entrar e sair da tela cheia do navegador,
+  // e o palco não deve se refazer por trás; ao retomar, mede de novo se o tamanho mudou
+  pausar() { this.pausado = true; }
+  retomar() {
+    this.pausado = false;
+    if (this.pendente) { this.pendente = false; this.redimensionar(); }
+  }
+
   redimensionar() {
+    if (this.pausado) { this.pendente = true; return; }
     const w = this.caixa.clientWidth, h = this.caixa.clientHeight;
     if (!w || !h) return;
+    if (w === this.largura && h === this.altura) return;
     this.largura = w;
     this.altura = h;
     this.camera.aspect = w / h;
