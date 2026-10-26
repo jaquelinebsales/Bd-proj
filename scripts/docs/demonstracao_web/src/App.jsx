@@ -220,6 +220,8 @@ export default function App() {
     }
     setTelaCheia(null);
     Object.assign(c, { aberta: false, fechando: false });
+    // o outro aparelho, liberado ao abrir, volta a carregar já (fica pronto antes de a pessoa chegar nele)
+    TIPOS.forEach(t => motor.current.garantir?.(t));
     if (!motor.current.trava?.tipo) document.documentElement.classList.remove('travado');
   }, []);
   useEffect(() => {
@@ -271,8 +273,8 @@ export default function App() {
     // escala do aparelho parado na sua seção, na orientação dada: é nela que o app desenha (nítido, 1:1)
     const escalaParado = (tipo, rz) => deFrente(tipo, rz, palco.largura, palco.altura).s;
     aparelhos.celular.carregar(escalas().celular);
-    // reserva: o tablet carrega mesmo que o mapa do celular não avise que ficou pronto
-    const tabletDepois = setTimeout(() => motor.current.carregarTablet(), 10000);
+    // os dois apps carregam juntos (o celular sai um instante antes, para o pedido dele ir primeiro)
+    const tabletDepois = setTimeout(() => motor.current.carregarTablet(), 150);
     motor.current.tabletDepois = tabletDepois;
     // carrega o app do aparelho se ainda não está (ou foi liberado pela tela cheia), na escala da sua pose atual
     motor.current.garantir = tipo => {
@@ -435,11 +437,9 @@ export default function App() {
       const tipo = TIPOS.find(t => ev.source === aps[t].iframe.contentWindow);
       if (!tipo) return;
       const r = ev.data;
-      // O aparelho mostra o app quando o mapa está desenhado (sem a fase de tela branca); o tablet só começa a
-      // carregar depois do celular, para os dois apps não disputarem a rede e o processador do celular
+      // O aparelho mostra o app quando o mapa dele está desenhado (sem a fase de tela branca)
       if (r && typeof r === 'object' && r.fonte === 'gasprice-app' && r.tipo === 'mapaPronto') {
         aps[tipo].revelar();
-        if (tipo === 'celular' && !cheia.current.aberta) setTimeout(() => motor.current.carregarTablet?.(), 400);
         return;
       }
       // Roda do mouse sobre o aparelho (sem clique no app): rola a página

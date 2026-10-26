@@ -140,9 +140,14 @@ DENSIDADE_MAPA = """
         var mapa = new Original(o);
         if (window.__mapasDemo.indexOf(mapa) < 0) window.__mapasDemo.push(mapa);
         // primeiro desenho completo do mapa (estilo, pedaços e pinos): a página mostra o app a partir daí
-        mapa.once('idle', function () {
-          if (window.parent !== window) window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'mapaPronto' }, '*');
-        });
+        // ("idle" pode demorar se o mapa seguir desenhando: "load" + um instante vale também, o que vier antes)
+        var avisou = false, avisar = function () {
+          if (avisou || window.parent === window) return;
+          avisou = true;
+          window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'mapaPronto' }, '*');
+        };
+        mapa.once('idle', avisar);
+        mapa.once('load', function () { setTimeout(avisar, 800); });
         return mapa;
       };
       maplibregl.Map.prototype = p;
