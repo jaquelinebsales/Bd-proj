@@ -138,7 +138,7 @@ DENSIDADE_MAPA = """
       maplibregl.Map = function (opcoes) {
         var o = Object.assign({}, opcoes, { pixelRatio: window.devicePixelRatio * (window.__escalaApp || 1) });
         var mapa = new Original(o);
-        window.__mapasDemo.push(mapa);
+        if (window.__mapasDemo.indexOf(mapa) < 0) window.__mapasDemo.push(mapa);
         // primeiro desenho completo do mapa (estilo, pedaços e pinos): a página mostra o app a partir daí
         mapa.once('idle', function () {
           if (window.parent !== window) window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'mapaPronto' }, '*');
@@ -148,9 +148,41 @@ DENSIDADE_MAPA = """
       maplibregl.Map.prototype = p;
       p.resize = function () {
         if (window.__mapasDemo.indexOf(this) < 0) window.__mapasDemo.push(this);
-        this._pixelRatio = window.devicePixelRatio * (window.__escalaApp || 1);
+        var densidade = window.devicePixelRatio * (window.__escalaApp || 1);
+        // MapLibre 5: a densidade muda por setPixelRatio (o campo antigo não é mais lido); ele mesmo refaz o tamanho
+        if (typeof this.setPixelRatio === 'function') {
+          if (Math.abs(this.getPixelRatio() - densidade) > 0.001) this.setPixelRatio(densidade);
+        } else {
+          this._pixelRatio = densidade;
+        }
         return redimensionar.apply(this, arguments);
       };
+      // Reserva: no celular, o aviso de que o mapa mudou de tamanho às vezes se perde (no giro do tablet, por
+      // exemplo) e a imagem fica com o tamanho antigo, esticada. Se a imagem não bate com a área, refaz no tamanho
+      setInterval(function () {
+        window.__mapasDemo.forEach(function (m) {
+          try {
+            var k = m.getContainer(), c = m.getCanvas();
+            if (!k.isConnected || !k.clientWidth || !k.clientHeight) return;
+            var r = m.getPixelRatio();
+            var alvo = window.devicePixelRatio * (window.__escalaApp || 1);
+            if (Math.abs(r - alvo) > 0.001 && m.__densidadePedida !== alvo) {
+              m.__densidadePedida = alvo;
+              m.resize();
+              return;
+            }
+            if (Math.abs(c.width - k.clientWidth * r) <= 2 && Math.abs(c.height - k.clientHeight * r) <= 2) {
+              m.__ajustado = null;
+              return;
+            }
+            // uma tentativa por tamanho de área: se o MapLibre limitar a imagem, não refaz sem parar
+            var chave = k.clientWidth + 'x' + k.clientHeight + '@' + r;
+            if (m.__ajustado === chave) return;
+            m.__ajustado = chave;
+            m.resize();
+          } catch (e) {}
+        });
+      }, 400);
     })();
   </script>"""
 
