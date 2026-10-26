@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    // Na moldura da demonstração: desenha na densidade em que o app aparece (escala × DPR, recebida da página
+    // por mensagem, que funciona também com a página em outro site) e abre direto no mapa
+    (function () {
+      if (window.parent === window) return;
+      var busca = new URLSearchParams(location.search);
+      var inicial = Number(busca.get('dpr'));
+      var atual = inicial > 0 ? inicial : (window.devicePixelRatio || 1);
+      Object.defineProperty(window, 'devicePixelRatio', { configurable: true, get: function () { return atual; } });
+      // Escala em que o aparelho aparece na página: o app desenha já nesse tamanho (pixel a pixel, sem a página
+      // reduzir a imagem dele), lendo window.__escalaApp (app/lib/servicos/monitor_demo_saida_web.dart)
+      var escala = Number(busca.get('escala'));
+      window.__escalaApp = escala > 0 ? escala : 1;
+      try { localStorage.setItem('flutter.viu_boas_vindas', 'true'); } catch (e) {}
+      function redimensionar() {
+        window.dispatchEvent(new Event('resize'));
+        if (window.visualViewport) window.visualViewport.dispatchEvent(new Event('resize'));
+        // o mapa não muda de tamanho em dp quando só a escala muda: redesenha na nova densidade
+        (window.__mapasDemo || []).forEach(function (m) { try { m.resize(); } catch (e) {} });
+      }
+      // Página travada no aparelho (App.jsx): a roda sempre fica no app, mesmo sem clique nele
+      var travado = false;
+      window.addEventListener('message', function (ev) {
+        var d = ev.data;
+        if (ev.source !== window.parent || !d || d.fonte !== 'gasprice-moldura') return;
+        if (d.tipo === 'travar') { travado = !!d.valor; return; }
+        if (!(d.valor > 0)) return;
+        if (d.tipo === 'densidade' && d.valor !== atual) { atual = d.valor; redimensionar(); }
+        if (d.tipo === 'escala' && d.valor !== window.__escalaApp) {
+          window.__escalaApp = d.valor;
+          if (window.__aoMudarEscala) window.__aoMudarEscala();
+          redimensionar();
+        }
+      });
+      // A roda do mouse sobre o aparelho rola a página (como num vídeo embutido). Depois de um clique no app, ela
+      // move o mapa e as listas até o cursor sair do aparelho; Ctrl + roda sempre dá zoom no mapa.
+      var focado = false;
+      window.addEventListener('pointerdown', function () { focado = true; }, true);
+      document.addEventListener('mouseleave', function () { focado = false; });
+      window.addEventListener('blur', function () { focado = false; });
+      window.addEventListener('wheel', function (ev) {
+        if (focado || travado || ev.ctrlKey) return;
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        var f = ev.deltaMode === 1 ? 40 : ev.deltaMode === 2 ? window.innerHeight : 1;
+        window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'rolar', dy: ev.deltaY * f }, '*');
+      }, { capture: true, passive: false });
+    })();
+  </script>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="./">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="gasprice">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>GasPrice · demonstração</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- MapLibre GL JS: desenha o mapa do OpenFreeMap na versão web (pacote maplibre do Flutter) -->
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+  <script>
+    // O MapLibre fixa a densidade ao criar o mapa; aqui ele relê a cada redimensionamento. Como o app desenha
+    // reduzido pela escala do aparelho, o mapa também: densidade × escala (1:1 com a tela, nítido)
+    (function () {
+      if (window.parent === window || !window.maplibregl) return;
+      var p = maplibregl.Map.prototype, redimensionar = p.resize, Original = maplibregl.Map;
+      window.__mapasDemo = [];
+      // já nasce na densidade certa (o plugin cria o mapa por maplibregl.Map)
+      maplibregl.Map = function (opcoes) {
+        var o = Object.assign({}, opcoes, { pixelRatio: window.devicePixelRatio * (window.__escalaApp || 1) });
+        var mapa = new Original(o);
+        window.__mapasDemo.push(mapa);
+        return mapa;
+      };
+      maplibregl.Map.prototype = p;
+      p.resize = function () {
+        if (window.__mapasDemo.indexOf(this) < 0) window.__mapasDemo.push(this);
+        this._pixelRatio = window.devicePixelRatio * (window.__escalaApp || 1);
+        return redimensionar.apply(this, arguments);
+      };
+    })();
+  </script>
+  <link href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" rel="stylesheet">
+</head>
+<body>
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js?v=bca13c467b" async></script>
+</body>
+</html>
