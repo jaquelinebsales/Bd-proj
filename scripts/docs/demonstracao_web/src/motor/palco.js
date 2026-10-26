@@ -278,7 +278,8 @@ export class Aparelho {
       </div>
       <div class="barra-cheia"><span>GasPrice · demonstração</span><button type="button">Fechar
         <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>`;
-    tela.querySelector('.barra-cheia button').addEventListener('click', () => document.exitFullscreen?.().catch(() => {}));
+    // a página (App.jsx) fecha: primeiro encolhe a tela até o aparelho, depois sai da tela cheia
+    tela.querySelector('.barra-cheia button').addEventListener('click', () => window.dispatchEvent(new Event('gasprice-fechar-cheia')));
     this.telaEl = tela;
     this.sistemaEl = tela.querySelector('.sistema');
     this.horaEl = tela.querySelector('.hora');

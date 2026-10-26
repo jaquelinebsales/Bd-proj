@@ -93,9 +93,14 @@ body {
 /* Tela cheia do próprio aparelho (App.jsx): a tela vai inteira para a tela de quem visita, com o mesmo app (sem
    recarregar), sem a barra de status e a de gestos de mentira; no lugar delas, a barra com "Fechar" */
 .tela3d .barra-cheia { display: none; }
+/* em volta, a cor da página: ao fechar, só o conteúdo (.coluna) encolhe, sem clarão da cor do app */
 .tela3d:fullscreen {
-  pointer-events: auto !important; border-radius: 0 !important; background: var(--tela-app);
+  pointer-events: auto !important; border-radius: 0 !important; background: #0a0e14 !important;
 }
+.tela3d:fullscreen .coluna { background: var(--tela-app); overflow: hidden; }
+/* em volta da tela que encolhe ao fechar: o fundo da página, não preto */
+.tela3d::backdrop { background: #0a0e14; }
+.tela3d:fullscreen .coluna { transform-origin: 0 0; }
 .tela3d:fullscreen .furo, .tela3d:fullscreen .status, .tela3d:fullscreen .gestos { display: none; }
 .tela3d:fullscreen .barra-cheia {
   position: absolute; inset: 0 0 auto 0; height: 44px; display: flex; align-items: center; justify-content: space-between;
@@ -107,7 +112,7 @@ body {
 }
 .tela3d:fullscreen .sistema {
   left: 0 !important; top: 44px !important; right: 0; bottom: 0; width: auto !important; height: auto !important;
-  transform: none !important; padding-left: 0 !important; opacity: 1 !important;
+  transform: none !important; padding-left: 0 !important; opacity: 1 !important; background: transparent !important;
 }
 .tela3d:fullscreen .conteudo { pointer-events: auto !important; }
 .tela3d:fullscreen .conteudo iframe { width: 100% !important; height: 100% !important; transform: none !important; }

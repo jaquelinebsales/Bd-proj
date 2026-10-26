@@ -163,7 +163,9 @@ export default function App() {
     // O normal: a própria tela do aparelho vai para a tela cheia do navegador, com o mesmo app (abre na hora, na
     // mesma tela e com o mesmo mapa, sem outra cópia do app pesando na memória e nos contextos WebGL)
     if (document.fullscreenEnabled && ap.telaEl.requestFullscreen) {
-      Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo, modo: 'aparelho' });
+      // onde a tela do app está na página: ao fechar, ela encolhe até aqui antes de sair da tela cheia
+      Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo, modo: 'aparelho',
+                         origem: ap.iframe.getBoundingClientRect(), alturaAntes: window.innerHeight });
       motor.current.palco.pausar();
       ap.telaEl.requestFullscreen({ navigationUI: 'hide' })
         .then(() => ap.mensagem('escala', 1))   // em tela cheia o app desenha 1:1, no tamanho real da tela
@@ -211,11 +213,32 @@ export default function App() {
     if (!c.aberta || c.fechando || !ap) return;
     c.fechando = true;
     if (c.modo === 'aparelho') {
-      // o app volta à escala do aparelho e o conteúdo encolhe, do tamanho da tela de quem visita até ele
+      const coluna = ap.sistemaEl.querySelector('.coluna');
+      let encolhida = null;
+      if (document.fullscreenElement === ap.telaEl) {
+        // Fechar: a tela encolhe ainda na tela cheia (o app parado, o movimento fica liso) até o lugar do aparelho;
+        // a barra do navegador volta em cima, então o lugar desce o quanto a janela cresceu ao entrar
+        const o = c.origem, b = coluna.getBoundingClientRect(), desce = window.innerHeight - c.alturaAntes;
+        const curva = 'cubic-bezier(.4,0,.2,1)';
+        ap.telaEl.querySelector('.barra-cheia').animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards' });
+        encolhida = coluna.animate([
+          { transform: 'none', borderRadius: '0px' },
+          { transform: `translate(${o.left - b.left}px, ${o.top + desce - b.top}px) scale(${o.width / b.width}, ${o.height / b.height})`, borderRadius: '18px' },
+        ], { duration: 420, easing: curva, fill: 'forwards' });
+        await encolhida.finished.catch(() => {});
+      }
+      // o app volta à escala do aparelho junto com a saída da tela cheia: reorganiza uma vez só
       ap.mensagem('escala', ap.k);
       if (document.fullscreenElement) await document.exitFullscreen?.().catch(() => {});
       motor.current.palco.retomar();
       window.scrollTo(0, c.scroll);
+      if (encolhida) {
+        encolhida.cancel();
+        ap.telaEl.querySelectorAll('.barra-cheia').forEach(el => el.getAnimations().forEach(a => a.cancel()));
+        Object.assign(c, { aberta: false, fechando: false, modo: null });
+        return;
+      }
+      // saiu pelo navegador (voltar do Android, Esc): encolhe já na página, do tamanho da tela até o aparelho
       await new Promise(r => requestAnimationFrame(r));
       const sis = ap.sistemaEl, base = sis.style.transform, R = sis.getBoundingClientRect(), e = R.width / sis.offsetWidth;
       if (R.width > 0 && e > 0) {
@@ -269,10 +292,12 @@ export default function App() {
     const voltou = () => fecharTelaCheia();
     const saiu = () => { if (!document.fullscreenElement) fecharTelaCheia(); };
     const tecla = e => { if (e.key === 'Escape') fecharTelaCheia(); };
+    window.addEventListener('gasprice-fechar-cheia', fecharTelaCheia);
     window.addEventListener('popstate', voltou);
     document.addEventListener('fullscreenchange', saiu);
     window.addEventListener('keydown', tecla);
     return () => {
+      window.removeEventListener('gasprice-fechar-cheia', fecharTelaCheia);
       window.removeEventListener('popstate', voltou);
       document.removeEventListener('fullscreenchange', saiu);
       window.removeEventListener('keydown', tecla);
@@ -594,8 +619,8 @@ export default function App() {
 
       {dicaCheia && controles && (
         <p role="status" key={ativo}
-           className="surgir pointer-events-none fixed left-1/2 top-[64px] z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/[0.08] bg-asfalto-900/95 px-4 py-2 text-[13px] text-asfalto-100 shadow-[0_20px_40px_-15px_rgba(0,0,0,.8)]">
-          Toque duas vezes no aparelho para abrir em tela cheia
+           className="surgir pointer-events-none fixed left-1/2 top-[9px] z-50 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/[0.08] bg-asfalto-900/95 px-4 py-2 text-[13px] text-asfalto-100 shadow-[0_20px_40px_-15px_rgba(0,0,0,.8)]">
+          Toque duas vezes no aparelho para tela cheia
         </p>
       )}
 
