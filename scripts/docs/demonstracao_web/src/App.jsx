@@ -162,6 +162,10 @@ export default function App() {
     const versao = document.querySelector('meta[name="versao-app"]')?.content;
     Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo });
     motor.current.palco.pausar();
+    // o outro aparelho fica escondido: libera o app dele para o da tela cheia não passar do limite de contextos
+    // WebGL do celular (passando, o navegador apaga o mapa deste aparelho); volta quando a pessoa chegar nele
+    clearTimeout(motor.current.tabletDepois);
+    motor.current.aparelhos[tipo === 'celular' ? 'tablet' : 'celular'].descarregar();
     document.documentElement.classList.add('travado');
     try { history.pushState({ telaCheia: true }, ''); } catch { /* sem histórico */ }
     setAppCheioPronto(false);
@@ -197,6 +201,8 @@ export default function App() {
     }
     motor.current.palco.retomar();
     window.scrollTo(0, c.scroll);
+    // o mapa deste aparelho ficou escondido: redesenha antes de a tela encolher até ele
+    ap.mensagem('reavivar', true);
     for (let i = 0; i < 3; i++) await new Promise(r => requestAnimationFrame(r));
     const caixa = caixaCheia.current, ms = 460, curva = 'cubic-bezier(.4,0,.2,1)';
     if (caixa) {
@@ -261,9 +267,14 @@ export default function App() {
     const escalaParado = (tipo, rz) => deFrente(tipo, rz, palco.largura, palco.altura).s;
     aparelhos.celular.carregar(escalas().celular);
     const tabletDepois = setTimeout(() => motor.current.carregarTablet(), 1800);
+    motor.current.tabletDepois = tabletDepois;
+    // carrega o app do aparelho se ainda não está (ou foi liberado pela tela cheia), na escala da sua pose atual
+    motor.current.garantir = tipo => {
+      if (!aparelhos[tipo].carregado) aparelhos[tipo].carregar(escalaParado(tipo, atual[tipo].rc));
+    };
     motor.current.carregarTablet = () => {
       clearTimeout(tabletDepois);
-      if (!aparelhos.tablet.iframe.src) aparelhos.tablet.carregar(escalas().tablet);
+      motor.current.garantir('tablet');
     };
     const relogio = setInterval(() => TIPOS.forEach(t => aparelhos[t].marcarHora()), 15000);
 
@@ -321,7 +332,7 @@ export default function App() {
       }
       if (sujo.valor) {
         TIPOS.forEach(t => {
-          if (aparelhos[t].iframe.src) aparelhos[t].fixarEscala(escalaParado(t, atual[t].rc));
+          if (aparelhos[t].carregado) aparelhos[t].fixarEscala(escalaParado(t, atual[t].rc));
         });
       }
       // A coreografia é a experiência: anima sempre, mesmo com "movimento reduzido" no sistema
@@ -375,6 +386,7 @@ export default function App() {
           ativoRef.current = novoAtivo;
           setAtivo(novoAtivo);
           if (novoAtivo === 'tablet') motor.current.carregarTablet();
+          else if (novoAtivo) motor.current.garantir(novoAtivo);
         }
         // Controles e guia aparecem inteiros em toda a faixa da seção e somem nas transições
         const pres = novoAtivo === 'celular'
@@ -433,7 +445,7 @@ export default function App() {
       try { d = JSON.parse(ev.data); } catch { return; }
       if (!d || d.fonte !== 'gasprice') return;
       aps[tipo].revelar();
-      if (tipo === 'celular') motor.current.carregarTablet?.();
+      if (tipo === 'celular' && !cheia.current.aberta) motor.current.carregarTablet?.();
       if (d.tipo === 'tela' && typeof d.nome === 'string') {
         const mudou = telas.current[tipo] !== d.nome;
         telas.current[tipo] = d.nome;

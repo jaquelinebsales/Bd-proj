@@ -27,6 +27,12 @@
         var d = ev.data;
         if (ev.source !== window.parent || !d || d.fonte !== 'gasprice-moldura') return;
         if (d.tipo === 'travar') { travado = !!d.valor; return; }
+        // de volta da tela cheia: o mapa redesenha (escondido, o navegador pode ter descartado a imagem dele)
+        if (d.tipo === 'reavivar') {
+          redimensionar();
+          (window.__mapasDemo || []).forEach(function (m) { try { m.triggerRepaint(); } catch (e) {} });
+          return;
+        }
         if (!(d.valor > 0)) return;
         if (d.tipo === 'densidade' && d.valor !== atual) { atual = d.valor; redimensionar(); }
         if (d.tipo === 'escala' && d.valor !== window.__escalaApp) {

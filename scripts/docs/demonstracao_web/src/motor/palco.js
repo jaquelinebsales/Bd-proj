@@ -301,6 +301,18 @@ export class Aparelho {
     // v = versão do app (gerar_demonstracao.py): um app novo nunca abre com arquivos antigos guardados pelo navegador
     const versao = document.querySelector('meta[name="versao-app"]')?.content;
     this.iframe.src = `${this.enderecoApp}?dpr=${this.dpr}&escala=${s}${versao ? `&v=${versao}` : ''}`;
+    this.carregado = true;
+  }
+
+  // Libera o app (cada app Flutter usa 5 contextos WebGL e o navegador do celular descarta os mais antigos
+  // quando passa do limite); volta a carregar quando a pessoa chegar a este aparelho
+  descarregar() {
+    if (!this.carregado) return;
+    this.carregado = false;
+    this.revelado = false;
+    this.iframe.classList.remove('pronto');
+    this.carregandoEl.style.display = '';
+    this.iframe.src = 'about:blank';
   }
 
   aplicar(q, forcarApp = false) {
@@ -431,6 +443,6 @@ export class Aparelho {
     if (this.revelado) return;
     this.revelado = true;
     this.iframe.classList.add('pronto');
-    setTimeout(() => this.carregandoEl.remove(), 500);
+    setTimeout(() => { if (this.revelado) this.carregandoEl.style.display = 'none'; }, 500);
   }
 }
