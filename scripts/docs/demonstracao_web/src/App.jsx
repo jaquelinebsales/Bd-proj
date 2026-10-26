@@ -38,7 +38,8 @@ function bezier(x1, y1, x2, y2) {
     return f(y1, y2, t);
   };
 }
-const ENCOLHER = 420, CURVA_ENCOLHER = 'cubic-bezier(.4,0,.2,1)', curvaEncolher = bezier(0.4, 0, 0.2, 1);
+const ENCOLHER = 420, curvaEncolher = bezier(0.4, 0, 0.2, 1);
+const ABRIR = 420, curvaAbrir = bezier(0.2, 0.8, 0.2, 1);
 const retangulo = r => ({ x: r.left, y: r.top, w: r.width, h: r.height });
 const misturarRet = (a, b, e) => ({ x: misturar(a.x, b.x, e), y: misturar(a.y, b.y, e), w: misturar(a.w, b.w, e), h: misturar(a.h, b.h, e) });
 // Transformação (origem no canto) que põe um elemento de sw × sh no retângulo r da janela
@@ -143,7 +144,9 @@ export default function App() {
   const [largura, setLargura] = useState(() => window.innerWidth);
   const [guiaAberto, setGuiaAberto] = useState(false); // só em telas estreitas (no computador o guia fica sempre ao lado)
   const [focos, setFocos] = useState({ celular: null, tablet: null });
-  const [xControles, setXControles] = useState(null);
+  // posição dos controles direto no estilo: ela muda a cada quadro na troca de aparelhos, e por estado a página
+  // inteira se refazia a cada quadro
+  const navControles = useRef(null);
   // Trava: ao chegar num aparelho (com mouse), a página para e a roda passa a agir no app, até um clique fora dele
   const [travado, setTravado] = useState(null);       // aparelho travado
   const [aviso, setAviso] = useState(null);           // { x, y }: o alto do aparelho, onde fica o aviso
@@ -180,15 +183,20 @@ export default function App() {
     // mesma tela e com o mesmo mapa, sem outra cópia do app pesando na memória e nos contextos WebGL)
     if (document.fullscreenEnabled && ap.telaEl.requestFullscreen) {
       // A tela do aparelho na janela (de pé, com a barra de status): é dela que a tela cheia sai e para ela que
-      // volta. A cena 3D para por trás (não anda nem se refaz): o aparelho fica exatamente nesse lugar.
+      // volta, com o corpo junto. A cena para por trás (não anda nem se refaz): só este aparelho se move.
+      const sis = ap.sistemaEl, palco = motor.current.palco;
       Object.assign(c, { aberta: true, fechando: false, scroll: window.scrollY, tipo, modo: 'aparelho',
-                         origem: retangulo(ap.sistemaEl.getBoundingClientRect()), base: ap.sistemaEl.style.transform,
-                         encolher: null, deEncolher: null, encaixe: null });
-      motor.current.palco.pausar();
-      // escondida até a mudança de tela cheia pô-la no lugar (entrouNaTelaCheia), antes do primeiro quadro
+                         origem: retangulo(sis.getBoundingClientRect()), pose0: { ...ap.pose }, ajuste: null,
+                         sw: sis.offsetWidth, sh: sis.offsetHeight, janela: { w: window.innerWidth, h: window.innerHeight } });
+      c.ret = c.origem;
+      palco.pausar();
+      palco.estender();
+      document.documentElement.classList.add('em-cheia');
+      // escondida até a mudança de tela cheia pô-la no lugar (entrou), antes do primeiro quadro
       ap.telaEl.classList.add('abrindo');
       ap.telaEl.requestFullscreen({ navigationUI: 'hide' }).catch(() => {
         ap.telaEl.classList.remove('abrindo');
+        document.documentElement.classList.remove('em-cheia');
         Object.assign(c, { aberta: false, modo: null });
         motor.current.palco.retomar();
         abrirCopia(tipo);
@@ -264,75 +272,119 @@ export default function App() {
     TIPOS.forEach(t => motor.current.garantir?.(t));
     if (!motor.current.trava?.tipo) document.documentElement.classList.remove('travado');
   }, []);
-  // ---- Tela cheia do próprio aparelho: a tela inteira do aparelho, no mesmo layout, ampliada até caber ----
-  // O app nunca se reorganiza: só a densidade em que desenha muda (nítido na tela cheia). Os movimentos são só
-  // transform (a GPU anima liso). O fundo atrás da tela cheia é transparente: a página e o corpo do aparelho aparecem
-  // em volta, e como a tela cheia e a página usam as mesmas coordenadas da janela (inclusive enquanto o navegador
-  // ainda está saindo da tela cheia), a tela volta exatamente para dentro do aparelho, sem salto.
+  // ---- Tela cheia do próprio aparelho: o aparelho inteiro (corpo e tela) cresce até a tela ocupar a de quem visita ----
+  // O app nunca se reorganiza: só a densidade em que desenha muda (nítido na tela cheia). A cada quadro, um retângulo
+  // (onde a tela está na janela) dá a pose do aparelho: o corpo (WebGL) e a tela andam juntos, sem descolar. Na tela
+  // cheia do navegador, a tela está fora da cena (posta por transform no retângulo) e o corpo segue por trás; fora
+  // dela, o aparelho todo anda pela própria cena. Como a tela cheia e a página usam as mesmas coordenadas da janela
+  // (inclusive enquanto o navegador ainda está saindo da tela cheia), a passagem de uma para a outra não salta.
   useEffect(() => {
     const aparelho = () => motor.current.aparelhos?.[cheia.current.tipo];
-    const encaixe = ap => {
-      const sis = ap.sistemaEl, vw = window.innerWidth, vh = window.innerHeight, sw = sis.offsetWidth, sh = sis.offsetHeight;
-      const S = Math.min(vw / sw, vh / sh);
-      return { x: (vw - sw * S) / 2, y: (vh - sh * S) / 2, w: sw * S, h: sh * S, S, sw, sh };
+    const encaixe = c => {
+      const vw = window.innerWidth, vh = window.innerHeight, S = Math.min(vw / c.sw, vh / c.sh);
+      return { x: (vw - c.sw * S) / 2, y: (vh - c.sh * S) / 2, w: c.sw * S, h: c.sh * S, S };
     };
-    // entrou: a tela sai de dentro do aparelho e cresce até caber; depois o app passa a desenhar nítido nesse tamanho
+    // Pose em que a tela do aparelho aparece no retângulo r: a tela fica à frente do centro do corpo (zt), e a
+    // perspectiva amplia e afasta do meio o que está mais perto, então escala e posição descontam isso
+    const poseCrua = (ap, q, r) => {
+      const palco = motor.current.palco, a = ap.a, d = palco.camera.position.z, zt = a.espessura / 2 + 1.5;
+      const lado = Math.max(r.w, r.h), ladoDp = Math.max(a.w, a.h);
+      const s = (lado * (d - q.z)) / (ladoDp * d + lado * zt);
+      const F = d / (d - q.z - s * zt), cx = palco.largura / 2, cy = palco.altura / 2;
+      return { ...q, s, x: cx + (r.x + r.w / 2 - cx) / F, y: cy + (r.y + r.h / 2 - cy) / F };
+    };
+    // com a diferença de arredondamento da tela parada descontada: no retângulo de origem, a pose é a de antes
+    const poseDaTela = (ap, c, r) => {
+      if (!c.ajuste) {
+        const p = poseCrua(ap, c.pose0, c.origem);
+        c.ajuste = { x: c.pose0.x - p.x, y: c.pose0.y - p.y, s: c.pose0.s / p.s };
+      }
+      const p = poseCrua(ap, c.pose0, r);
+      return { ...p, x: p.x + c.ajuste.x, y: p.y + c.ajuste.y, s: p.s * c.ajuste.s };
+    };
+    const mostrar = (ap, c, r) => {
+      const palco = motor.current.palco, pose = poseDaTela(ap, c, r);
+      c.ret = r;
+      if (document.fullscreenElement === ap.telaEl) {
+        ap.sistemaEl.style.transform = noRetangulo(r, c.sw, c.sh);
+        ap.posicionarCorpo(pose);
+        palco.desenharCorpo();
+      } else {
+        ap.movimento(true, pose);
+        ap.aplicar(pose);
+        palco.desenhar();
+      }
+    };
+    // Um só laço de quadros move tela e corpo; o destino 'encaixe' é medido a cada quadro (a janela muda de tamanho
+    // enquanto a barra do navegador some)
+    const animar = (ap, c, para, ms, curva, fim) => {
+      cancelAnimationFrame(c.raf);
+      const de = c.ret, t0 = performance.now();
+      const quadro = agora => {
+        const t = limitar((agora - t0) / ms);
+        mostrar(ap, c, misturarRet(de, para === 'encaixe' ? encaixe(c) : para, curva(t)));
+        if (t < 1) c.raf = requestAnimationFrame(quadro);
+        else { c.raf = 0; fim?.(); }
+      };
+      c.raf = requestAnimationFrame(quadro);
+    };
+    // A volta termina com o aparelho no lugar e o navegador fora da tela cheia (o que vier por último)
+    const finalizar = (ap, c) => {
+      if (c.raf || document.fullscreenElement === ap.telaEl) return;
+      const palco = motor.current.palco;
+      ap.movimento(false, c.pose0);
+      ap.aplicar(c.pose0, true);
+      palco.desenhar();
+      // o app volta à densidade da página (redesenha tudo) só depois de o cabeçalho e o guia voltarem
+      setTimeout(() => { if (!c.aberta) ap.densidadeDoApp(1); }, 350);
+      Object.assign(c, { aberta: false, fechando: false, modo: null });
+      palco.continuar();
+      const html = document.documentElement;
+      html.classList.replace('em-cheia', 'voltando-da-cheia');
+      setTimeout(() => html.classList.remove('voltando-da-cheia'), 400);
+      soltarQuandoAssentar(c);
+    };
+    // O tamanho do palco só é medido de novo quando a janela assenta (no Android a barra do navegador volta ~0,7 s
+    // depois): no tamanho de antes, nada se refaz
+    const soltarQuandoAssentar = c => {
+      let t;
+      const igual = () => window.innerWidth === c.janela.w && window.innerHeight === c.janela.h;
+      const pronto = () => {
+        window.removeEventListener('resize', mexeu);
+        if (!cheia.current.aberta) motor.current.palco.soltarTamanho();
+      };
+      const mexeu = () => { clearTimeout(t); t = setTimeout(pronto, igual() ? 100 : 500); };
+      window.addEventListener('resize', mexeu);
+      t = setTimeout(pronto, igual() ? 300 : 1200);
+    };
+    // entrou: o aparelho sai do lugar e cresce até a tela caber; depois o app passa a desenhar nítido nesse tamanho
     const entrou = (ap, c) => {
-      const sis = ap.sistemaEl, e = encaixe(ap);
-      c.encaixe = e;
-      sis.style.transform = noRetangulo(e, e.sw, e.sh);
+      mostrar(ap, c, c.origem);
       ap.telaEl.classList.remove('abrindo');
-      sis.animate([{ transform: noRetangulo(c.origem, e.sw, e.sh) }, { transform: sis.style.transform }],
-        { duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)' })
-        .finished.then(() => { if (c.aberta && !c.fechando) ap.densidadeDoApp(e.S / ap.k); }, () => {});
-      ap.fundoCheiaEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, easing: 'ease-out' });
+      // o fundo escuro só cobre no fim: até lá, o corpo do aparelho aparece crescendo em volta da tela
+      ap.fundoCheiaEl.animate([{ opacity: 0 }, { opacity: 0, offset: 0.55 }, { opacity: 1 }], { duration: ABRIR, easing: 'ease-in' });
+      animar(ap, c, 'encaixe', ABRIR, curvaAbrir, () => { if (c.aberta && !c.fechando) ap.densidadeDoApp(encaixe(c).S / ap.k); });
     };
-    // Fechar: a tela encolhe até o aparelho e o fundo escuro some, ao mesmo tempo em que o navegador sai da tela cheia
+    // Fechar: o aparelho encolhe de volta ao lugar ao mesmo tempo em que o navegador sai da tela cheia
     const fechar = () => {
       const c = cheia.current, ap = aparelho();
       if (c.modo === 'copia') { fecharTelaCheia(); return; }
-      if (c.modo !== 'aparelho' || !c.aberta || c.fechando || !ap || document.fullscreenElement !== ap.telaEl) return;
+      if (c.modo !== 'aparelho' || !c.aberta || c.fechando || !ap) return;
       c.fechando = true;
-      const sis = ap.sistemaEl, e = encaixe(ap);
-      c.deEncolher = e;
-      c.encolher = sis.animate([{ transform: noRetangulo(e, e.sw, e.sh) }, { transform: noRetangulo(c.origem, e.sw, e.sh) }],
-        { duration: ENCOLHER, easing: CURVA_ENCOLHER, fill: 'forwards' });
-      ap.fundoCheiaEl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ENCOLHER, easing: 'ease-out', fill: 'forwards' });
-      document.exitFullscreen?.().catch(() => {});
+      ap.fundoCheiaEl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ENCOLHER * 0.45, easing: 'ease-out', fill: 'forwards' });
+      animar(ap, c, c.origem, ENCOLHER, curvaEncolher, () => finalizar(ap, c));
+      if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
     };
-    // saiu (pelo Fechar ou pelo navegador, como o voltar do Android): a tela volta para dentro do aparelho na página
+    // saiu (pelo Fechar ou pelo navegador, como o voltar do Android): o aparelho segue, já na página, do ponto em que
+    // estava até o seu lugar
     const saiu = (ap, c) => {
-      const sis = ap.sistemaEl, tela = ap.telaEl, de = c.deEncolher || c.encaixe || c.origem;
-      let feito = 0;
-      if (c.encolher) {
-        const t = c.encolher.currentTime;
-        feito = c.encolher.playState === 'finished' ? 1 : t == null ? 0 : Math.min(1, t / ENCOLHER);
-      }
-      const agora = misturarRet(de, c.origem, curvaEncolher(feito));   // onde a tela está à vista neste instante
-      sis.getAnimations().forEach(a => a.cancel());
       ap.fundoCheiaEl.getAnimations().forEach(a => a.cancel());
-      tela.classList.remove('abrindo');
-      sis.style.transform = c.base;
+      ap.telaEl.classList.remove('abrindo');
       window.scrollTo(0, c.scroll);
-      motor.current.palco.retomar();
-      motor.current.redesenhar?.();
-      motor.current.palco.desenhar();   // o corpo dos aparelhos já neste quadro (escondido, o desenho pode ter sumido)
-      const terminar = () => {
-        tela.style.overflow = '';
-        ap.densidadeDoApp(1);
-        Object.assign(c, { aberta: false, fechando: false, modo: null, encolher: null, deEncolher: null });
-      };
-      const resto = 1 - feito;
-      const R = sis.getBoundingClientRect(), k = R.width / sis.offsetWidth;
-      if (resto < 0.02 || !(R.width > 0 && k > 0)) { terminar(); return; }
-      // ainda a caminho (o navegador saiu antes de a tela chegar, ou saiu sozinho): o resto do caminho na página
-      const inicio = `${c.base} translate(${(agora.x + agora.w / 2 - (R.left + R.width / 2)) / k}px, ` +
-        `${(agora.y + agora.h / 2 - (R.top + R.height / 2)) / k}px) scale(${agora.w / R.width}, ${agora.h / R.height})`;
-      const ms = Math.max(220, ENCOLHER * resto);
-      tela.style.overflow = 'visible';
-      // o corpo (camada WebGL, por cima) some enquanto a tela maior que ele passa e volta em volta dela
-      document.querySelector('.camada-gl')?.animate([{ opacity: 0 }, { opacity: 0, offset: 0.55 }, { opacity: 1 }], { duration: ms + 80 });
-      sis.animate([{ transform: inicio }, { transform: c.base }], { duration: ms, easing: CURVA_ENCOLHER }).finished.then(terminar, terminar);
+      mostrar(ap, c, c.ret);
+      if (c.fechando) { finalizar(ap, c); return; }
+      c.fechando = true;
+      animar(ap, c, c.origem, ENCOLHER, curvaEncolher, () => finalizar(ap, c));
     };
     const mudou = () => {
       const c = cheia.current, ap = aparelho();
@@ -346,9 +398,10 @@ export default function App() {
     const reencaixar = () => {
       const c = cheia.current, ap = aparelho();
       if (c.modo !== 'aparelho' || !c.aberta || c.fechando || !ap || document.fullscreenElement !== ap.telaEl) return;
-      const e = encaixe(ap);
-      c.encaixe = e;
-      ap.sistemaEl.style.transform = noRetangulo(e, e.sw, e.sh);
+      motor.current.palco.estender();
+      if (c.raf) return;   // ainda crescendo: o laço já segue o encaixe novo
+      const e = encaixe(c);
+      mostrar(ap, c, e);
       clearTimeout(densidadeDepois);
       densidadeDepois = setTimeout(() => { if (c.aberta && !c.fechando) ap.densidadeDoApp(e.S / ap.k); }, 250);
     };
@@ -367,6 +420,7 @@ export default function App() {
       window.removeEventListener('popstate', voltou);
       window.removeEventListener('keydown', tecla);
       clearTimeout(densidadeDepois);
+      cancelAnimationFrame(cheia.current.raf);
     };
   }, [fecharTelaCheia]);
 
@@ -532,12 +586,13 @@ export default function App() {
         const pres = novoAtivo === 'celular'
           ? Math.min(suave((p - (CEL[0] - 0.3)) / 0.3), 1 - suave((p - CEL[1]) / 0.3))
           : novoAtivo === 'tablet' ? suave((p - (TAB[0] - 0.3)) / 0.3) : 0;
-        const presLim = Math.round(limitar(pres) * 50) / 50;
+        // em 20 passos: cada passo refaz a página (guia e controles), e mais que isso pesava no tablet
+        const presLim = Math.round(limitar(pres) * 20) / 20;
         if (presLim !== ultPresenca) { ultPresenca = presLim; setPresenca(presLim); }
         // os controles ficam sob o aparelho da seção
-        if (novoAtivo) {
+        if (novoAtivo && navControles.current) {
           const x = Math.round(alvo[novoAtivo].x);
-          if (Math.abs(x - ultX) > 1) { ultX = x; setXControles(x); }
+          if (Math.abs(x - ultX) > 1) { ultX = x; navControles.current.style.left = x + 'px'; }
         }
       }
       // O app só recebe toque com o aparelho parado, de frente e na sua seção
@@ -643,7 +698,8 @@ export default function App() {
       <div className="fundo-palco" aria-hidden="true" />
       <div ref={caixa} className="palco3d" />
 
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-white/[0.05] bg-asfalto-950/70 backdrop-blur-xl">
+      {/* no toque, sem desfoque: refeito a cada quadro sobre a cena em movimento, ele pesava no tablet */}
+      <header className="apagar-na-cheia fixed inset-x-0 top-0 z-40 border-b border-white/[0.05] bg-asfalto-950/70 backdrop-blur-xl toque:bg-asfalto-950/95 toque:backdrop-blur-none">
         <div className="mx-auto flex h-[52px] max-w-[1500px] items-center justify-between px-5 md:px-8">
           <button type="button" onClick={() => irPara(0)} className="flex items-center gap-2.5">
             <svg viewBox="0 0 40 40" className="h-7 w-7" aria-hidden="true">
@@ -712,8 +768,8 @@ export default function App() {
       )}
 
       {/* controles sob o aparelho da seção */}
-      <nav aria-label="Aparelho" style={{ opacity: Math.max(presenca, 0.002), pointerEvents: controles ? 'auto' : 'none', left: xControles ?? '50%' }}
-           className="fixed bottom-5 z-30 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white/[0.08] bg-asfalto-900/95 p-1 shadow-[0_20px_40px_-15px_rgba(0,0,0,.8)]">
+      <nav ref={navControles} aria-label="Aparelho" style={{ opacity: Math.max(presenca, 0.002), pointerEvents: controles ? 'auto' : 'none' }}
+           className="apagar-na-cheia fixed bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white/[0.08] bg-asfalto-900/95 p-1 shadow-[0_20px_40px_-15px_rgba(0,0,0,.8)]">
         {ativo === 'tablet' && (
           <button type="button" onClick={() => irPara(P_CEL)} className={botao}>
             <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" strokeWidth="1.6" /></svg>

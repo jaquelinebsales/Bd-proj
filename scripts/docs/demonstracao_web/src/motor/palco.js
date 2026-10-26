@@ -81,7 +81,10 @@ export class Palco {
     this.css.domElement.className = 'camada-css';
     this.gl = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
     this.gl.setClearColor(0x000000, 0);
-    this.gl.setPixelRatio(Math.min(window.devicePixelRatio || 1, 3));
+    // Em tela de toque (celular, tablet), a cena desenha em até 1,5× a cada quadro: na densidade cheia da tela a GPU
+    // do aparelho não acompanhava o movimento (engasgos na troca de aparelhos e na tela cheia)
+    const toque = window.matchMedia('(pointer: coarse)').matches;
+    this.gl.setPixelRatio(Math.min(window.devicePixelRatio || 1, toque ? 1.5 : 3));
     this.gl.outputColorSpace = THREE.SRGBColorSpace;
     this.gl.toneMapping = THREE.ACESFilmicToneMapping;
     this.gl.domElement.className = 'camada-gl';
@@ -131,14 +134,45 @@ export class Palco {
 
   // Pausado (app em tela cheia por cima): a janela muda de tamanho ao entrar e sair da tela cheia do navegador,
   // e o palco não deve se refazer por trás; ao retomar, mede de novo se o tamanho mudou
-  pausar() { this.pausado = true; }
-  retomar() {
-    this.pausado = false;
+  pausar() { this.pausado = true; this.preso = true; }
+  retomar() { this.pausado = false; this.soltarTamanho(); }
+  // A cena volta a andar, mas o tamanho segue preso: ao sair da tela cheia a janela ainda muda (a barra do navegador
+  // volta depois) e refazer o palco no meio disso (WebGL e a escala dos dois apps) engasgava
+  continuar() { this.pausado = false; }
+  soltarTamanho() {
+    this.preso = false;
+    this.recolher();
     if (this.pendente) { this.pendente = false; this.redimensionar(); }
   }
 
+  // Tela cheia: a janela cresce (some a barra do navegador), mas a cena fica nas mesmas coordenadas. As camadas passam
+  // a cobrir a tela inteira sem mudar a projeção, para o aparelho ampliado não ser cortado na borda antiga.
+  estender() {
+    const deitada = window.innerWidth > window.innerHeight;
+    const maior = Math.max(screen.width, screen.height), menor = Math.min(screen.width, screen.height);
+    const w = Math.max(this.largura, window.innerWidth, deitada ? maior : menor);
+    const h = Math.max(this.altura, window.innerHeight, deitada ? menor : maior);
+    this.css.domElement.style.overflow = 'visible';
+    if (this.coberto ? w <= this.coberto.w && h <= this.coberto.h : w === this.largura && h === this.altura) return;
+    this.coberto = { w, h };
+    // câmera à parte só para o WebGL: a camada CSS também lê o recorte da câmera (e ficaria achatada)
+    this.cameraGl = this.camera.clone();
+    this.cameraGl.setViewOffset(this.largura, this.altura, 0, 0, w, h);
+    this.gl.setSize(w, h);
+    this.desenharCorpo();   // mudar o tamanho apaga o desenho
+  }
+
+  recolher() {
+    this.css.domElement.style.overflow = 'hidden';
+    if (!this.coberto) return;
+    this.coberto = null;
+    this.cameraGl = null;
+    this.gl.setSize(this.largura, this.altura);
+    this.desenharCorpo();
+  }
+
   redimensionar() {
-    if (this.pausado) { this.pendente = true; return; }
+    if (this.preso) { this.pendente = true; return; }
     const w = this.caixa.clientWidth, h = this.caixa.clientHeight;
     if (!w || !h) return;
     if (w === this.largura && h === this.altura) return;
@@ -158,9 +192,14 @@ export class Palco {
   }
 
   desenhar() {
-    this.gl.render(this.cena, this.camera);
+    this.desenharCorpo();
     this.css.render(this.cena, this.camera);
     this.achatar();
+  }
+
+  // Só os corpos (camada WebGL): na tela cheia a tela do aparelho está fora da cena, e a camada CSS fica como está
+  desenharCorpo() {
+    this.gl.render(this.cena, this.cameraGl || this.camera);
   }
 
   // Nitidez: dentro da perspectiva do CSS3D o navegador nunca põe a tela do app no grid de pixels (filtra a imagem,
@@ -367,13 +406,19 @@ export class Aparelho {
     this.iframe.src = 'about:blank';
   }
 
-  aplicar(q, forcarApp = false) {
-    const p = this.palco, a = this.a;
-    this.pose = q;
+  // Só o corpo na pose (sem mexer na tela): na tela cheia, ele acompanha a tela que está fora da cena
+  posicionarCorpo(q) {
+    const p = this.palco;
     this.raiz.position.set(q.x - p.largura / 2, p.altura / 2 - q.y, q.z);
     this.raiz.scale.setScalar(q.s);
     this.raiz.rotation.set(q.inclX, q.inclY, 0);
     this.giro.rotation.z = q.rz;
+  }
+
+  aplicar(q, forcarApp = false) {
+    const a = this.a;
+    this.pose = q;
+    this.posicionarCorpo(q);
     // Conteúdo: gira ao contrário do corpo na medida de rc e troca de proporção junto (tela até a borda, sem faixa)
     const r = Math.min(1, Math.abs(q.rc) / (Math.PI / 2));
     const sw = misturar(a.w, a.h, r), sh = misturar(a.h, a.w, r);
@@ -424,8 +469,15 @@ export class Aparelho {
     q.rc = rcFinal;
     this.aplicar(q, true);
     this.palco.desenhar();
-    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    // acende só depois de o app terminar de se reorganizar: num aparelho mais lento isso leva bem mais que um tempo
+    // fixo, e o app aparecia ainda se ajustando. Assentado = dois quadros seguidos curtos (até 700 ms)
     await espera(90);
+    const limite = performance.now() + 700;
+    for (let ant = performance.now(), curtos = 0; curtos < 2 && performance.now() < limite;) {
+      const t = await new Promise(r => requestAnimationFrame(r));
+      curtos = t - ant < 24 ? curtos + 1 : 0;
+      ant = t;
+    }
     s.transition = 'opacity 0.26s ease-out';
     s.opacity = '1';
     await espera(270);

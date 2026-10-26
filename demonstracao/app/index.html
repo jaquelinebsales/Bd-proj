@@ -91,13 +91,15 @@
         var f = ev.deltaMode === 1 ? 40 : ev.deltaMode === 2 ? window.innerHeight : 1;
         window.parent.postMessage({ fonte: 'gasprice-app', tipo: 'rolar', dy: ev.deltaY * f }, '*');
       }, { capture: true, passive: false });
-      // Duplo toque (dedo, dois toques curtos e parados no mesmo lugar): a página abre o app em tela cheia
+      // Duplo toque (dedo, dois toques curtos e parados no mesmo lugar): a página abre o app em tela cheia.
+      // Tempo do próprio toque (timeStamp), não o de quando o evento é tratado: num celular mais lento o app ocupa a
+      // página por ~300 ms depois do primeiro toque, e o segundo chegava "atrasado" e não contava
       var inicio = null, ultimo = null;
       window.addEventListener('pointerdown', function (ev) {
-        inicio = ev.pointerType === 'touch' ? { t: Date.now(), x: ev.clientX, y: ev.clientY } : null;
+        inicio = ev.pointerType === 'touch' ? { t: ev.timeStamp, x: ev.clientX, y: ev.clientY } : null;
       }, true);
       window.addEventListener('pointerup', function (ev) {
-        var agora = Date.now();
+        var agora = ev.timeStamp;
         if (!inicio || agora - inicio.t > 300 || Math.abs(ev.clientX - inicio.x) > 12 || Math.abs(ev.clientY - inicio.y) > 12) {
           ultimo = null;
           return;
@@ -151,11 +153,20 @@
       if (window.parent === window || !window.maplibregl) return;
       var p = maplibregl.Map.prototype, redimensionar = p.resize, Original = maplibregl.Map;
       window.__mapasDemo = [];
+      // No toque, o duplo toque é da tela cheia (a página): com o zoom do mapa junto, ele baixava e desenhava blocos
+      // no meio da animação de abrir (engasgava) e a tela cheia abria com o mapa ampliado. O plugin do Flutter religa
+      // os gestos depois de criar o mapa: o religar deste fica sem efeito.
+      var toque = window.matchMedia('(pointer: coarse)').matches;
+      function semZoomDuplo(m) {
+        if (!toque || m.__semZoomDuplo) return;
+        try { m.doubleClickZoom.disable(); m.doubleClickZoom.enable = function () {}; m.__semZoomDuplo = true; } catch (e) {}
+      }
       // já nasce na densidade certa (o plugin cria o mapa por maplibregl.Map)
       maplibregl.Map = function (opcoes) {
         var o = Object.assign({}, opcoes, { pixelRatio: window.devicePixelRatio * (window.__escalaApp || 1) });
         var mapa = new Original(o);
         if (window.__mapasDemo.indexOf(mapa) < 0) window.__mapasDemo.push(mapa);
+        semZoomDuplo(mapa);
         // primeiro desenho completo do mapa (estilo, pedaços e pinos): a página mostra o app a partir daí
         // Pronto = mapa base carregado e os pinos dos postos já na tela (antes disso, a página mostraria o app pela
         // metade, um passo atrás da prévia). Reserva: 5 s depois de carregar, para uma área sem postos.
@@ -178,6 +189,7 @@
       maplibregl.Map.prototype = p;
       p.resize = function () {
         if (window.__mapasDemo.indexOf(this) < 0) window.__mapasDemo.push(this);
+        semZoomDuplo(this);
         var densidade = window.devicePixelRatio * (window.__escalaApp || 1);
         // MapLibre 5: a densidade muda por setPixelRatio (o campo antigo não é mais lido); ele mesmo refaz o tamanho
         if (typeof this.setPixelRatio === 'function') {

@@ -176,8 +176,8 @@ export default function Guia({ aparelho, nomeAparelho, foco, visivel, lateral, a
     <aside aria-label="Guia da tela" aria-live="polite"
            style={{ opacity: Math.max(mostrar, 0.002), pointerEvents: mostrar > 0.95 ? 'auto' : 'none' }}
            className={lateral
-             ? 'fixed right-14 top-1/2 z-30 w-[380px] -translate-y-1/2'
-             : `fixed inset-x-0 bottom-0 z-30 max-h-[70vh] overflow-y-auto rounded-t-3xl bg-asfalto-900 px-6 pb-[max(24px,env(safe-area-inset-bottom))] pt-6
+             ? 'apagar-na-cheia fixed right-14 top-1/2 z-30 w-[380px] -translate-y-1/2'
+             : `apagar-na-cheia fixed inset-x-0 bottom-0 z-30 max-h-[70vh] overflow-y-auto rounded-t-3xl bg-asfalto-900 px-6 pb-[max(24px,env(safe-area-inset-bottom))] pt-6
                 shadow-[0_-30px_60px_-20px_rgba(0,0,0,.8)] transition-transform duration-300 ${aberto ? 'translate-y-0' : 'translate-y-full'}`}>
       {!lateral && (
         <button type="button" onClick={aoFechar} aria-label="Fechar o guia" className="absolute right-4 top-4 rounded-full p-2 text-asfalto-400">

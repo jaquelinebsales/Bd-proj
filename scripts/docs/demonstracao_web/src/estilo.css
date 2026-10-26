@@ -131,10 +131,17 @@ body {
   font: 600 12px/1 "Segoe UI", Roboto, system-ui, sans-serif; pointer-events: auto;
 }
 
+/* Enquanto o aparelho cresce até a tela cheia e volta, cabeçalho, guia e controles saem (o corpo passaria por baixo
+   deles, e a tela por cima); voltam esmaecendo no fim */
+html.em-cheia .apagar-na-cheia { opacity: 0 !important; pointer-events: none !important; transition: opacity 0.2s ease-out; }
+html.voltando-da-cheia .apagar-na-cheia { animation: reaparecer 0.3s ease-out; }
+@keyframes reaparecer { from { opacity: 0; } }
+
 /* Sem a cena 3D (navegador com limite baixo de WebGL descartou o contexto): moldura em CSS no lugar do corpo */
-.palco3d.sem-corpo .tela3d {
+.palco3d.sem-corpo .tela3d, .palco3d.sem-corpo .tela3d:fullscreen .sistema {
   box-shadow: 0 0 0 var(--borda) #08090c, 0 0 0 calc(var(--borda) + 2.5px) #6b7381, 0 30px 60px -20px rgba(0, 0, 0, 0.7);
 }
+.palco3d.sem-corpo .tela3d:fullscreen { box-shadow: none; }
 
 /* app em tela cheia (reserva, sem a tela cheia do navegador): cresce e encolhe a partir do canto (App.jsx, transformarPara), na cor de fundo do app */
 .caixa-cheia { transform-origin: 0 0; background: #f6f7f9; }
