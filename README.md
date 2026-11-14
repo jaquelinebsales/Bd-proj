@@ -1,6 +1,52 @@
-# gasprice
+# GasPrice
 
-App de preços de combustíveis para Android e iOS, em celular e tablet. Combina a pesquisa oficial da ANP com preços enviados pela comunidade por foto do painel. A foto é lida no próprio aparelho e apagada: ela nunca é enviada. Vão para o servidor os preços conferidos pela pessoa, a posição e o texto reconhecido no painel.
+App de preços de combustíveis para Android e iOS, em celular e tablet, desenvolvido como projeto acadêmico da disciplina de **Banco de Dados**.
+
+Demonstração no navegador: [gasprice-demo.vercel.app](https://gasprice-demo.vercel.app) (dados fictícios).
+
+## Sobre o projeto
+
+O preço do combustível muda toda semana e varia muito de um posto para outro, mas a pesquisa oficial da ANP é amostral: visita cerca de 9 mil dos 45 mil postos do país, e perto de 65% dos postos nunca tiveram um preço oficial publicado. O GasPrice junta essa pesquisa com preços enviados pela comunidade para mostrar, no mapa, quanto custa o litro em cada posto e de onde vem cada número.
+
+**Objetivo:** ajudar o motorista a escolher onde abastecer com a informação mais recente e confiável disponível, deixando claro se o preço é oficial (ANP), enviado pela comunidade, ou estimado pela região.
+
+## Tratamento dos dados
+
+- **Limpeza das planilhas da ANP:** 13 semestres (2020 a 2026), 5,47 milhões de linhas lidas. Saíram só linhas vazias e repetidas (0,17%). Preços que destoam não são apagados: ficam no banco marcados como anomalia e nunca viram preço exibido.
+- **Carga semanal:** toda semana o sistema baixa a planilha nova da ANP com o preço de cada posto pesquisado, grava sem duplicar, aplica a mesma regra de anomalia (comparação com a mediana do estado e com o histórico do próprio posto) e recalcula os preços exibidos.
+- **Cadastro dos postos:** sincronizado com a API de Revendedores da ANP, estado por estado. Coordenadas que caem fora do estado do posto (conferidas pelo contorno dos estados do IBGE) são recusadas.
+- **Preço exibido:** uma regra no banco escolhe, para cada posto e combustível, o preço mais confiável. A ordem é: comunidade confirmada nos últimos 7 dias, comunidade recente sem divergência, ANP e, sem nenhum dos dois, a estimativa regional.
+- **Estimativa regional:** para postos sem preço, a mediana dos 5 postos mais próximos com preço da ANP recente (até 200 km), com margem de erro pela distância, medida no estudo de cobertura.
+- **Plano gratuito:** o banco guarda só os últimos ~2 anos de preços da ANP. A série completa fica como arquivo no Storage. Um experimento mostrou que 2 anos bastam para o modelo de previsão.
+- **Privacidade:** a foto do painel é lida no próprio aparelho e apagada; ela nunca é enviada. Vão para o servidor só os preços conferidos pela pessoa, a posição e o texto reconhecido.
+
+## Funções do app
+
+- Mapa com os postos ao redor e pinos coloridos pela idade do preço.
+- Busca de postos por nome ou endereço, com filtros por combustível, faixa de preço, distância e data da atualização, e ordenação por preço, distância, avaliação ou atualização.
+- Página do posto com preços por combustível, origem de cada preço, histórico em gráfico e rota até o posto.
+- Envio de preços por foto do painel: o texto é reconhecido no aparelho e a pessoa confere os valores antes de enviar.
+- Confirmação da comunidade: outros usuários no posto confirmam ou corrigem o preço enviado.
+- "Estou neste posto": corrige a posição de um posto no mapa quando duas pessoas confirmam o mesmo lugar.
+- Avaliações dos postos, com nota e votos de utilidade.
+- Favoritos e notificações quando o preço de um posto favorito muda.
+- Pontos por contribuição (em dobro em municípios sem pesquisa da ANP), ranking e nível de confiabilidade.
+- Conta com login por e-mail, recuperação de senha e exclusão da conta.
+- Tema claro e escuro, em português.
+
+## Ferramentas utilizadas
+
+| Parte | Ferramentas |
+|---|---|
+| App (front) | Flutter e Dart, Material 3, go_router, fl_chart (gráficos), Google ML Kit (leitura do painel no aparelho) |
+| Mapa | OpenFreeMap, com dados do OpenStreetMap e OpenMapTiles, desenhado pelo MapLibre |
+| Banco de dados | Supabase (PostgreSQL com PostGIS para as consultas por distância), regras de acesso por usuário (RLS), regras de negócio em funções SQL e tarefas agendadas com pg_cron |
+| Backend | Supabase Edge Functions em TypeScript (Deno): envio de preços, posição dos postos, sincronização com a ANP e exclusão de conta |
+| Dados e análises | Python: limpeza das planilhas, carga semanal, estudo de cobertura e experimento do modelo de previsão |
+| APIs e fontes de dados | ANP: planilhas semestrais e semanais da pesquisa de preços e API de Revendedores (cadastro e coordenadas dos postos). IBGE: malhas dos estados e municípios |
+| Testes e publicação | flutter test, deno test, testes das regras no banco, GitHub Actions (testes, publicação do banco e carga semanal), Vercel (demonstração web) |
+
+## Estrutura do repositório
 
 | Pasta | Conteúdo |
 |---|---|
